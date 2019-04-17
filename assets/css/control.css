@@ -1,0 +1,166 @@
+      .fullscreen:-moz-full-screen {
+        height: 100%;
+        background-color:white;
+      }
+      .fullscreen:-webkit-full-screen {
+        height: 100%;
+      }
+      .fullscreen:-ms-fullscreen {
+        height: 100%;
+      }
+
+      .fullscreen:fullscreen {
+        height: 100%;
+      }
+
+      .fullscreen {
+        margin-bottom: 10px;
+        width: 100%;
+        height: 100%;
+        background-color:white;
+      }
+
+      .ol-rotate {
+        top: 3em;
+      }
+
+      .right_button{
+        position: fixed;
+        bottom: 50%;
+        /*right: 0;*/
+        height: 50px;
+        width: 50px;
+        background-color:  dodgerblue;
+      }
+      
+      .right_icon{
+        width:45px;
+        height:45px;
+        border: none;
+        color: black;
+        z-index: 55;
+      }
+
+      .map {
+        width: 100%;
+        height: 100%;
+        float: left;
+      }
+
+      body{
+        height: 100%;
+        overflow:hidden;
+      }
+
+      #filterDiv{
+        overflow-y:auto !important; 
+      }
+
+      .sidepanel {
+        background: #1F6B75;
+        width: 10%;
+        height: 100%;
+        float: left;
+      }
+
+      .sidepanel-title {
+        width: 100%;
+        font-size: 3em;
+        color: #ffffff;
+        display: block;
+        text-align: center;
+      }
+
+      html {
+    height: 100%;
+}
+.glyph-icon svg {
+width:16px;
+height:16px;
+}
+.si-glyph * {
+fill: red;
+}
+
+.icon{
+width:20px;
+height:20px;
+border: none;
+background: none;
+}
+
+.card-body{
+  background-color:   dodgerblue;
+}
+
+#accordionLayerControl .card{
+   background-color:  dodgerblue;
+
+}
+
+.selected {
+    background-color: #999;
+}
+
+.arrival{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index:100;
+}
+
+.ramps {
+    float: left;
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+}
+
+
+.bar rect {
+  fill: steelblue;
+}
+
+
+
+    #title {
+      font-size: 20px;
+      padding-bottom: 10px;
+      padding-top: 20px;
+      font-weight: 300;
+    }
+
+    #explanation {
+      font-size: 12px;
+      max-width: 620px;
+      margin: 0 auto;
+      padding-top: 10px;
+      color: #ababab;
+      font-weight: 300;
+    }
+
+    .y.axis line {
+      fill: none;
+    }
+
+    .x.axis line {
+      fill: none;
+      stroke: #e0e0e0;
+      shape-rendering: crispEdges;
+    }
+
+    .axis path {
+      display: none;
+    }
+
+    .brush .extent {
+      fill-opacity: .125;
+      shape-rendering: crispEdges;
+    }
+
+    .resize {
+      display: inline !important; /* show when empty */
+      fill: #7A7A7A;
+      fill-opacity: 1;
+      stroke: #7A7A7A;
+      stroke-width: 2px;
+    }

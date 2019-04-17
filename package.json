@@ -1,0 +1,41 @@
+{
+  "name": "new-hope",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "json-loader": "^0.5.7",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "@types/jquery": "2.0.33",
+    "@types/spectrum-colorpicker": "1.5.27",
+    "bootstrap": "^4.3.1",
+    "bootstrap-select": "^1.13.9",
+    "css-loader": "^2.1.1",
+    "d3": "^5.9.2",
+    "jquery": "^3.4.0",
+    "ol": "^5.3.2",
+    "papaparse": "^4.6.3",
+    "popper.js": "^1.15.0",
+    "proj4": "^2.5.0",
+    "raw-loader": "^2.0.0",
+    "spectrum-colorpicker": "^1.8.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2"
+  }
+}

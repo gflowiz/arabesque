@@ -1,0 +1,296 @@
+{
+	
+	"country":{
+		"files":{
+			"node": "public/data/swissLoc.csv",
+			"link": "public/data/swissFlow.csv",
+			"Ltype":"csv",
+			"Ntype":"csv"
+		},
+		"base_layer":[
+		{
+					"name":"countries",
+					"style":{
+						"stroke":"#CD5C5C",
+						"fill":"#E9967A",
+						"opacity": 0.7
+					},
+					"app": true
+				}
+			
+		],
+		"style":{  
+			"link":{
+        		"color":{
+          			"palette":"BuGn",
+			        "cat":"number",
+			        "var":"count",
+			        "max":6143,
+			        "min":0
+        		},          
+        		"opa":{
+			        "cat": "Linear",
+			        "var":"count",
+			        "max":0.6,
+			        "min":0.15,
+			        "vmax":6143
+          		},
+	        	"size":{
+		          	"cat":"Linear",
+		            "var":"count",
+		            "max":6143,
+		            "min":0,
+		            "ratio":100
+          		},
+          		"text":null
+        	},
+  		"node":{
+    		"color":{
+          		"palette":"PuOr",
+		        "cat":"number",
+		        "var":"balance",
+		        "max":1949,
+		        "min":-2114
+        	},
+        	"size":{
+          		"cat":"Linear",
+          		"ratio":100,
+          		"var":"degree",
+          		"max":180854,
+          		"min":1520
+          	},
+         	"opa":{
+          		"cat":"Linear",
+          		"var":"count",
+          		"vmax":180854,
+          		"max":0.9,
+          		"min":0.5
+          	},
+        "text":"name"
+        }
+    },
+		"filter":[
+			{
+				"filter": "evaluateSingleCat",
+				"layer": "node",
+				"variable": "name",
+				"values": ["Vaud","Zürich","Uri","Fribourg","Neuchâtel","Genève"]
+			},
+			{
+				"filter": "evaluateRange",
+				"layer": "link",
+				"variable": "count",
+				"values": [2000,6143]
+			}
+		],
+		"ids":{
+			"nodeID":"id",
+			"linkID":["origin","dest"],
+			"vol":"count",
+			"long":"lat",
+			"lat":"lon"
+		},
+		"projection":{
+			"name":"ESRI:53009",
+			"proj4":null,
+			"extent":null
+		},
+		"date":{
+			"creation":null,
+			"last_modification":null
+		}
+	},
+
+	"local":
+	{	
+		"files":{
+			"node": "public/data/londonLoc.csv",
+			"link": "public/data/londonFlow.csv",
+			"Ltype":"csv",
+			"Ntype":"csv"
+		},
+		"base_layer":[
+		{
+					"name":"countries",
+					"style":{
+						"stroke":"#CD5C5C",
+						"fill":"#E9967A",
+						"opacity": 0.7
+					},
+					"app": true
+				},
+				{
+					"name":"river",
+					"style":{
+						"stroke":"#0000CD",
+						"fill":"#0000CD",
+						"opacity": 0.9
+					},
+					"app": true
+				}
+		],
+		"style":{  
+			"link":{
+        		"color":{
+          			"palette":"Viridis",
+			        "cat":"number",
+			        "var":"count",
+			        "max":2426,
+			        "min":0
+        		},          
+        		"opa":{
+			        "cat":null,
+			        "var":"fixed",
+			        "max":null,
+			        "min":null,
+			        "vmax":0.65
+          		},
+	        	"size":{
+		          	"cat":"Linear",
+		            "var":"count",
+		            "max":2426,
+		            "min":0,
+		            "ratio":100
+          		},
+          		"text":null
+        	},
+  		"node":{
+    		"color":{
+          		"palette":"PuOr",
+		        "cat":"number",
+		        "var":"balance",
+		        "max":1949,
+		        "min":-2114
+        	},
+        	"size":{
+          		"cat":"Sqrt",
+          		"ratio":150,
+          		"var":"degree",
+          		"max":180854,
+          		"min":1520
+          	},
+         	"opa":{
+          		"cat":"Linear",
+          		"var":"count",
+          		"max":0.75,
+          		"min":0.3
+          	},
+          	"text":null
+        }
+    },
+		"filter":[
+			{
+				"filter": "evaluateRange",
+				"layer": "link",
+				"variable": "distance",
+				"values": [0,1.5]
+			},
+			{
+				"filter": "evaluateRange",
+				"layer": "link",
+				"variable": "count",
+				"values": [0,200]
+			}
+		],
+		"ids":{
+			"nodeID":"id",
+			"linkID":["origin","dest"],
+			"vol":"count",
+			"long":"lat",
+			"lat":"lon"
+		},
+		"projection":{
+			"name":null ,
+			"proj4":null,
+			"extent":null
+		},
+		"date":{
+			"creation":null,
+			"last_modification":null
+		}
+	},
+	"World":{
+"files":{
+			"node": "public/data/countries.geojson",
+			"link": "public/data/link.json",
+			"Ltype":"json",
+			"Ntype":"geojson"
+		},
+		"base_layer":[
+			{
+				"countries":{
+					"style":null,
+					"Zindex":0,
+					"app": true
+				}
+			}
+		],
+		"style":{  
+			"link":{
+        		"color":{
+          			"palette":"BuGn",
+			        "cat":"number",
+			        "var":"count",
+			        "max":2426,
+			        "min":0
+        		},          
+        		"opa":{
+			        "cat":null,
+			        "var":"fixed",
+			        "max":null,
+			        "min":null,
+			        "vmax":0.85
+          		},
+	        	"size":{
+		          	"cat":"Linear",
+		            "var":"count",
+		            "max":2426,
+		            "min":0,
+		            "ratio":100
+          		},
+          		"text":null
+        	},
+  		"node":{
+    		"color":{
+          		"palette":"PuOr",
+		        "cat":"number",
+		        "var":"balance",
+		        "max":1949,
+		        "min":-2114
+        	},
+        	"size":{
+          		"cat":"Linear",
+          		"ratio":100,
+          		"var":"degree",
+          		"max":180854,
+          		"min":1520
+          	},
+         	"opa":{
+          		"cat":"Linear",
+          		"var":"count",
+          		"max":0.9,
+          		"min":0.5
+          	},
+          	"text":null
+        }
+    },
+		"filter":[
+
+		],
+		"ids":{
+			"nodeID":"id",
+			"linkID":["Reporter ISO","Partner ISO"],
+			"vol":"count"
+		},
+		"projection":{
+			"name":"EPSG:3857",
+			"proj4":null,
+			"extent":null
+		},
+		"date":{
+			"creation":null,
+			"last_modification":null
+		}
+
+	}
+}

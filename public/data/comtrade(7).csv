@@ -1,0 +1,439 @@
+Classification,Year,Period,Period Desc.,Aggregate Level,Is Leaf Code,Trade Flow Code,Trade Flow,Reporter Code,Reporter,Reporter ISO,Partner Code,Partner,Partner ISO,2nd Partner Code,2nd Partner,2nd Partner ISO,Customs Proc. Code,Customs,Mode of Transport Code,Mode of Transport,Commodity Code,Commodity,Qty Unit Code,Qty Unit,Qty,Alt Qty Unit Code,Alt Qty Unit,Alt Qty,Netweight (kg),Gross weight (kg),Trade Value (US$),CIF Trade Value (US$),FOB Trade Value (US$),Flag
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3150301,,3150301,,22334095,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,12904917,,12904917,,60234683,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,583,,583,,4246,,,0
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3242624,,3242624,,21934718,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3280701,,3280701,,19026796,,,0
+H5,2017,2017,2017,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3280701,,3280701,,19026796,,,0
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,795522,,795522,,5300988,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,91807,,91807,,552144,,,0
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,23036069,,23036069,,179327056,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,860355,,860355,,5719406,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,59310,,59310,,286855,,,0
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,14337519,,14337519,,63162475,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,32397713,,32397713,,171926047,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,356422,,356422,,1490628,,,0
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,114086,,114086,,413625,,,0
+H5,2017,2017,2017,4,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1266,,1266,,12412,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,152,,152,,571,,,0
+H5,2017,2017,2017,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,152,,152,,571,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2352501,,2352501,,20181592,,,0
+H5,2017,2017,2017,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,832,,832,,6837,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1345,,1345,,33600,,,0
+H5,2017,2017,2017,4,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,346806,,346806,,1116740,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5121413,,5121413,,27507635,,,0
+H5,2017,2017,2017,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2015483,,2015483,,10097509,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,38022,,38022,,294525,,,6
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1251810,,1251810,,9302015,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1987767,,1987767,,12596525,,,0
+H5,2017,2017,2017,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1987767,,1987767,,12596525,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,60006,,60006,,312707,,,0
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,785373,,785373,,5240726,,,0
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,149384,,149384,,1766320,,,6
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,3704057,,3704057,,31342454,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,655520,,655520,,881232,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,11024,,11024,,127709,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,872494,,872494,,5741893,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,61266,,61266,,252995,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,31,,31,,216,,,0
+H5,2017,2017,2017,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,31,,31,,216,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,227707,,227707,,1388135,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,249472,,249472,,3477144,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1535204,,1535204,,8919324,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4934109,,4934109,,25437078,,,0
+H5,2017,2017,2017,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,23743,,23743,,137243,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,9720524,,9720524,,43419623,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,48524,,48524,,345374,,,0
+H5,2017,2017,2017,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,110,,110,,3590,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,156854,,156854,,869333,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,174193,,174193,,998772,,,0
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,358,,358,,7020,,,2
+H5,2017,2017,2017,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,358,,358,,7020,,,2
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,230069791,,1103972636,,,2
+H5,2017,2017,2017,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,407031,,407031,,3680860,,,2
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,16192173,,29538440,,,2
+H5,2017,2017,2017,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,12617775,,81802125,,,2
+H5,2017,2017,2017,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,99653,,847110,,,2
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,150108,,1389792,,,2
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,214565819,,856194408,,,2
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,19041695,,78820913,,,6
+H5,2017,2017,2017,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,19041695,,78820913,,,6
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,25530689,,20232820,,,6
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,1009940,,25139362,,,2
+H5,2017,2017,2017,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,9736426,,82656217,,,6
+H5,2017,2017,2017,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,162480564,,1802393224,,,6
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,9835,,9835,,17648,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,18149762,,18149762,,35725030,,,6
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,853970,,853970,,22085587,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,27149182,,27149182,,18043928,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,253971,,253971,,562022,,,0
+H5,2017,2017,2017,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,253971,,253971,,562022,,,0
+H5,2017,2017,2017,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,28917,,28917,,116066,,,0
+H5,2017,2017,2017,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,25278704,,25278704,,46864638,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,144310,,161729,,562711,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,13124702,,13124702,,74793795,,,0
+H5,2017,2017,2017,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,37291,,37291,,216000,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,498884188,,1917501754,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,6871014,,6871014,,71460701,,,0
+H5,2017,2017,2017,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,15323,,15323,,88175,,,0
+H5,2017,2017,2017,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,0,,22535372,,58873932,,,6
+H5,2017,2017,2017,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,162313,,162313,,281507,,,0
+H5,2017,2017,2017,0,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,132369371926,,,4
+H5,2017,2017,2017,0,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,132369371926,,,4
+H5,2017,2017,2017,0,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,26805210300,,,4
+H5,2017,2017,2017,0,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,27963501958,,,4
+H5,2017,2017,2017,0,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,24388596208,,,4
+H5,2017,2017,2017,0,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,14808766628,,,4
+H5,2017,2017,2017,0,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,154441855874,,,4
+H5,2017,2017,2017,0,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,,,430328146524,,,4
+H5,2017,2017,2017,0,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,55401050257,,,4
+H5,2017,2017,2017,0,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,21292095767,,,4
+H5,2017,2017,2017,0,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5441400651,,,4
+H5,2017,2017,2017,0,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5441400651,,,4
+H5,2017,2017,2017,0,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,1235007887,,,4
+H5,2017,2017,2017,0,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,2016900595,,,4
+H5,2017,2017,2017,0,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,39676920877,,,4
+H5,2017,2017,2017,0,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,38414056721,,,4
+H5,2017,2017,2017,0,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,15223932557,,,4
+H5,2017,2017,2017,0,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,8666175203,,,4
+H5,2017,2017,2017,0,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,2091029690,,,4
+H5,2017,2017,2017,0,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,822695926,,,4
+H5,2017,2017,2017,0,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,,,331377827,,,4
+H5,2017,2017,2017,0,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,,,331377827,,,4
+H5,2017,2017,2017,0,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5486495291,,,4
+H5,2017,2017,2017,0,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6619571626,,,4
+H5,2017,2017,2017,0,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,526022307970,,,4
+H5,2017,2017,2017,0,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,129893514886,,,4
+H5,2017,2017,2017,0,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,9914664647,,,0
+H5,2017,2017,2017,0,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,50036407688,,,4
+H5,2017,2017,2017,0,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,34219959337,,,4
+H5,2017,2017,2017,0,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5053583108,,,0
+H5,2017,2017,2017,0,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,7893714586,,,4
+H5,2017,2017,2017,0,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5020030746,,,4
+H5,2017,2017,2017,0,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,638363495,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1915289,,1915289,,15773399,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,11635027,,11635027,,55644379,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,200,,200,,2045,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1998011,,1998011,,15491515,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,4309388,,4309388,,28320394,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,4309388,,4309388,,28320394,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,15,,15,,77,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,798982,,798982,,5717465,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,83495,,83495,,414625,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,22513519,,22513519,,205235581,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,972411,,972411,,6367896,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,38,,38,,33,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,77959,,77959,,486766,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,11913663,,11913663,,55236997,,,0
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,21923876,,21923876,,205878657,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,392377,,392377,,1422377,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,87342,,87342,,478830,,,0
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1889141,,1889141,,13927494,,,0
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,11667428,,11667428,,53598883,,,0
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,295,,295,,7266,,,0
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,199,,199,,2815,,,0
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,2139752,,2139752,,14077278,,,0
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,4608678,,4608678,,20396366,,,6
+H4,2015,2015,2015,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,4608675,,4608675,,20396366,,,6
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,225,,225,,1473,,,0
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,937039,,937039,,6405573,,,0
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,70389,,70389,,397759,,,0
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,22493499,,22493499,,175512178,,,6
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1023178,,1023178,,5982459,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,291,,291,,52,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,61859,,61859,,378988,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,12292697,,12292697,,53516323,,,0
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,13386067,,13386067,,172306141,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,323346,,323346,,1275827,,,0
+H4,2015,2015,2015,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,7189,,7189,,25074,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,90066,,90066,,491749,,,0
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3492904,,3492904,,21031025,,,0
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,8956282,,8956282,,40975731,,,0
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,57,,57,,1374,,,0
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,4143,,4143,,7967,,,0
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,3462015,,3462015,,19795788,,,0
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,933840,,933840,,4805968,,,0
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,96229,,96229,,765431,,,0
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,24254147,,24254147,,182348924,,,6
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,963501,,963501,,5241279,,,0
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,56095,,56095,,327480,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,9905556,,9905556,,43304837,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,23055681,,13320620,,176515547,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,310856,,310856,,1347537,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,11389,,11389,,38444,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,100233,,100233,,431314,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,0406,Cheese and curd,8,Weight in kilograms,,,1315,,1315,,4440,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,49084,,49084,,551443,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,49084,,49084,,551443,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1717942,,1717942,,13098769,,,0
+H4,2014,2014,2014,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,497,,497,,3793,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,303,,303,,3521,,,0
+H4,2014,2014,2014,4,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,595068,,595068,,2485014,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4576660,,4576660,,24216136,,,0
+H4,2014,2014,2014,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1692114,,1692114,,9189129,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,11579,,11579,,134052,,,6
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1422406,,1422406,,9692852,,,6
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4356440,,4356440,,16986664,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4356440,,4356440,,16986664,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,35690,,35690,,240153,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,595785,,595785,,4444183,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,92161,,92161,,1388247,,,6
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5317733,,5317733,,41150048,,,6
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,933268,,933268,,2661977,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,682377,,682377,,4847922,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,34377,,34377,,220365,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,7,,7,,322,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,7,,7,,322,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,424233,,424233,,2610759,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,16921,,16921,,192014,,,0
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,858246,,858246,,6971784,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5054770,,5054770,,22794011,,,0
+H4,2014,2014,2014,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,57559,,57559,,318248,,,0
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5810722,,5810722,,46050630,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,140146,,140146,,637353,,,0
+H4,2014,2014,2014,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2883,,2883,,14443,,,0
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,15025,,15025,,193506,,,0
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,435960,,435960,,1785476,,,0
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,3409,,3409,,51944,,,0
+H4,2015,2015,2015,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,3409,,3409,,51944,,,0
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2023029,,2023029,,14954101,,,0
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5106,,5106,,40187,,,0
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,370897,,370897,,1199161,,,0
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5465853,,5465853,,28477464,,,0
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1531328,,1531328,,9599161,,,0
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,20779,,20779,,220590,,,6
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1591038,,1591038,,9639771,,,6
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4336761,,4336761,,16391026,,,6
+H4,2015,2015,2015,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4336755,,4336755,,16391026,,,6
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,35157,,35157,,214760,,,0
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1007290,,1007290,,6004183,,,6
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,121050,,121050,,1577889,,,6
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4592983,,4592983,,36138772,,,6
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,511007,,511007,,1255142,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1049954,,1049954,,6404471,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,39699,,39699,,238669,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,250,,250,,589,,,0
+H4,2015,2015,2015,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,250,,250,,589,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,356043,,356043,,1755885,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,48839,,48839,,596214,,,0
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,868809,,868809,,7737956,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5128309,,5128309,,24212587,,,0
+H4,2015,2015,2015,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,105089,,105089,,470869,,,0
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5348766,,5348766,,43207122,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,33302,,33302,,240189,,,0
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,20148,,20148,,239184,,,0
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,520185,,520185,,1905018,,,0
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2078612,,2078612,,15589320,,,6
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5006,,5006,,40041,,,0
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,71,,71,,169,,,0
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,245232,,245232,,899916,,,0
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4603191,,4603191,,25733069,,,6
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,2012926,,2012926,,10229998,,,0
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,10992,,10992,,123998,,,6
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,1369644,,1369644,,10001639,,,6
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,38893,,38893,,208190,,,0
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,667275,,667275,,4280775,,,6
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,105786,,105786,,1301243,,,6
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,3583347,,3583347,,29564270,,,6
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,287003,,287003,,504775,,,0
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,845,,845,,5802,,,0
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,748440,,748440,,4850991,,,0
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,34677,,34677,,167943,,,0
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,17,,17,,223,,,0
+H4,2016,2016,2016,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,17,,17,,223,,,0
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,376541,,376541,,1428531,,,0
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,93379,,93379,,1184783,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,766257,,766257,,7470496,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,4616995,,4616995,,21687316,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,36874,,36874,,294381,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,5698694,,5524057,,41821596,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,43732,,43732,,282163,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,70,,70,,2727,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,14485,,14485,,264770,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,1806,Chocolate and other food preparations containing cocoa,8,Weight in kilograms,,,230139,,230139,,1027839,,,0
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,897,,897,,26703,,,4
+H4,2014,2014,2014,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,897,,897,,26703,,,4
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,129646003,,129646003,,661601068,,,4
+H4,2014,2014,2014,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,225225,,225225,,4260124,,,4
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,7012541,,7012541,,23623649,,,4
+H4,2014,2014,2014,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,16565836,,16565836,,72781513,,,4
+H4,2014,2014,2014,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,22649,,22649,,75470,,,4
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,65453,,64465,,141975,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,125865553,,126309947,,584496642,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,3451178,,3814133,,67462441,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,3451178,,3814133,,67462441,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,22396565,,22440995,,21577709,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,864780,,867713,,21157816,,,0
+H4,2014,2014,2014,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,6185237,,6234015,,49334412,,,0
+H4,2014,2014,2014,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,117623678,,117762492,,1424833784,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,712,,712,,1204,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,6733228,,6733228,,19947010,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,783939,,783939,,22323834,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,24488305,,24488305,,17502190,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,253196,,253196,,443055,,,0
+H4,2014,2014,2014,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,253196,,253196,,443055,,,0
+H4,2014,2014,2014,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,38554,,38554,,154812,,,0
+H4,2014,2014,2014,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,24456865,,24456865,,39603197,,,0
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,43707,,163054,,,4
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,,,69247884,,,0
+H4,2014,2014,2014,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,188676,,838372,,,4
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,404395210,,1555323180,,,4
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,,,40173430,,,0
+H4,2014,2014,2014,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,130341,,401308,,,4
+H4,2014,2014,2014,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,15923494,,54504788,,,4
+H4,2014,2014,2014,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,,,779799,,,0
+H4,2014,2014,2014,4,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",1,No Quantity,,,,,110805,,322682,,,4
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,4038,,4038,,19414,,,4
+H4,2015,2015,2015,4,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,4038,,4038,,19414,,,4
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,171879311,,171879311,,903014592,,,4
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,334651,,334651,,3620839,,,4
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11759566,,11759566,,40541634,,,4
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,395,,395,,738,,,4
+H4,2015,2015,2015,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,12761370,,12761370,,56909834,,,4
+H4,2015,2015,2015,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,38907,,38907,,294367,,,4
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,135034,,135034,,330288,,,2
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,164571411,,164571411,,617179961,,,2
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,3318274,,3318274,,53431404,,,6
+H4,2015,2015,2015,4,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,3318240,,3318240,,53431404,,,6
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,25112994,,25112994,,19285103,,,6
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,799440,,799440,,22239982,,,2
+H4,2015,2015,2015,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,6455720,,6455720,,53781468,,,6
+H4,2015,2015,2015,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,129390602,,129390602,,1479225756,,,6
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,88,,88,,832,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,10332043,,10332043,,37063409,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,800690,,800690,,21214928,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,29950906,,29950906,,18655786,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,860756,,860756,,1373818,,,0
+H4,2015,2015,2015,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,860756,,860756,,1373818,,,0
+H4,2015,2015,2015,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,23651,,23651,,97359,,,0
+H4,2015,2015,2015,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11449072,,11449072,,41355858,,,0
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,55058,,55058,,188100,,,4
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,12504348,,12504348,,52539313,,,4
+H4,2015,2015,2015,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,13887,,13887,,145509,,,4
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,127496625,,127496625,,1592477073,,,4
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,5617466,,5617466,,42718438,,,4
+H4,2015,2015,2015,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11977,,11977,,82026,,,4
+H4,2015,2015,2015,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11410169,,11410169,,55350595,,,4
+H4,2015,2015,2015,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,186228,,186228,,538868,,,4
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,195936562,,195936562,,997475083,,,4
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,260842,,260842,,2246905,,,4
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,15909676,,15909676,,38361141,,,4
+H4,2016,2016,2016,4,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,13329183,,13329183,,59720829,,,4
+H4,2016,2016,2016,4,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,19187,,19187,,592356,,,4
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,73689,,73689,,876452,,,2
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,178996267,,179000578,,677007759,,,2
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,28119346,,28119346,,20092372,,,2
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,1063475,,1063475,,23971045,,,2
+H4,2016,2016,2016,4,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,6387928,,6387928,,61597098,,,6
+H4,2016,2016,2016,4,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,138543131,,142340939,,1544921157,,,6
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,22,,22,,193,,,4
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,21495563,,21495563,,37274987,,,4
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,1079714,,1079714,,23068146,,,4
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,30542823,,30542823,,17511334,,,4
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,640006,,640006,,686423,,,4
+H4,2016,2016,2016,4,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,640006,,640006,,686423,,,4
+H4,2016,2016,2016,4,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11819,,11819,,42894,,,4
+H4,2016,2016,2016,4,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,11072019,,11072019,,38106573,,,4
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,58914,,58914,,952772,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,13433880,,13433880,,75955369,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,37619,,37619,,329333,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,139554201,,139554201,,1656986834,,,6
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,4117067,,4117067,,58958620,,,0
+H4,2016,2016,2016,4,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,95649,,95649,,967650,,,0
+H4,2016,2016,2016,4,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,10607061,,10607061,,50018544,,,0
+H4,2016,2016,2016,4,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,2204,"Wine of fresh grapes, including fortified wines; grape must other than that of heading no. 2009",7,Volume in litres,,,107280,,107280,,782443,,,0
+H4,2014,2014,2014,0,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,144880436618,,,0
+H4,2014,2014,2014,0,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,144880436618,,,0
+H4,2014,2014,2014,0,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,27074419529,,,0
+H4,2014,2014,2014,0,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,28975790976,,,0
+H4,2014,2014,2014,0,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,44568129974,,,0
+H4,2014,2014,2014,0,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,15699145579,,,0
+H4,2014,2014,2014,0,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,160064513783,,,0
+H4,2014,2014,2014,0,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,397099249674,,,0
+H4,2014,2014,2014,0,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,56416479646,,,0
+H4,2014,2014,2014,0,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,21469259822,,,0
+H4,2014,2014,2014,0,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,6462196448,,,0
+H4,2014,2014,2014,0,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,6462196448,,,0
+H4,2014,2014,2014,0,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,1161809985,,,0
+H4,2014,2014,2014,0,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,2585209162,,,0
+H4,2014,2014,2014,0,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,41858288400,,,0
+H4,2014,2014,2014,0,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,36382467218,,,0
+H4,2014,2014,2014,0,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,15439064040,,,0
+H4,2014,2014,2014,0,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,8770889953,,,4
+H4,2014,2014,2014,0,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,2210377172,,,0
+H4,2014,2014,2014,0,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,909774181,,,4
+H4,2014,2014,2014,0,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,286436090,,,0
+H4,2014,2014,2014,0,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,286436090,,,0
+H4,2014,2014,2014,0,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6587372001,,,0
+H4,2014,2014,2014,0,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6479284065,,,4
+H4,2014,2014,2014,0,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,486296238006,,,0
+H4,2014,2014,2014,0,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,123675622756,,,0
+H4,2014,2014,2014,0,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,8094518678,,,0
+H4,2014,2014,2014,0,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,47750027418,,,0
+H4,2014,2014,2014,0,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,32449632078,,,0
+H4,2014,2014,2014,0,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,3885678373,,,0
+H4,2014,2014,2014,0,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,8466309968,,,0
+H4,2014,2014,2014,0,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,6368196133,,,0
+H4,2014,2014,2014,0,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,825626746,,,0
+H4,2015,2015,2015,0,0,1,Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,143369308743,,,0
+H4,2015,2015,2015,0,0,4,Re-Import,156,China,CHN,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,143369308743,,,0
+H4,2015,2015,2015,0,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,24631699637,,,0
+H4,2015,2015,2015,0,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,27051526502,,,0
+H4,2015,2015,2015,0,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,30151410452,,,0
+H4,2015,2015,2015,0,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,15857921952,,,0
+H4,2015,2015,2015,0,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,148693056205,,,0
+H4,2015,2015,2015,0,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,409979244393,,,0
+H4,2015,2015,2015,0,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,51871364118,,,0
+H4,2015,2015,2015,0,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,19909795201,,,0
+H4,2015,2015,2015,0,0,1,Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,5182646135,,,0
+H4,2015,2015,2015,0,0,4,Re-Import,251,France,FRA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,5182646135,,,0
+H4,2015,2015,2015,0,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,929950254,,,0
+H4,2015,2015,2015,0,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,2001177828,,,0
+H4,2015,2015,2015,0,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,38775095282,,,0
+H4,2015,2015,2015,0,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,36216033003,,,0
+H4,2015,2015,2015,0,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,15671111086,,,0
+H4,2015,2015,2015,0,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,7420282077,,,4
+H4,2015,2015,2015,0,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,1926855205,,,0
+H4,2015,2015,2015,0,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,750489359,,,4
+H4,2015,2015,2015,0,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,210498771,,,0
+H4,2015,2015,2015,0,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,210498771,,,0
+H4,2015,2015,2015,0,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6012119992,,,0
+H4,2015,2015,2015,0,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6168601280,,,4
+H4,2015,2015,2015,0,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,504028116963,,,0
+H4,2015,2015,2015,0,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,116071708830,,,0
+H4,2015,2015,2015,0,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,8304432773,,,0
+H4,2015,2015,2015,0,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,48864400404,,,0
+H4,2015,2015,2015,0,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,31480817422,,,0
+H4,2015,2015,2015,0,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,3949392123,,,0
+H4,2015,2015,2015,0,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,7441353516,,,0
+H4,2015,2015,2015,0,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,5458228360,,,0
+H4,2015,2015,2015,0,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,617463038,,,0
+H4,2016,2016,2016,0,0,1,Import,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,22511003294,,,0
+H4,2016,2016,2016,0,0,2,Export,156,China,CHN,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,24958617484,,,0
+H4,2016,2016,2016,0,0,1,Import,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,22228893549,,,0
+H4,2016,2016,2016,0,0,2,Export,156,China,CHN,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,12849507644,,,0
+H4,2016,2016,2016,0,0,1,Import,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,135120133073,,,0
+H4,2016,2016,2016,0,0,2,Export,156,China,CHN,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,385677759424,,,0
+H4,2016,2016,2016,0,0,1,Import,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,51032597789,,,0
+H4,2016,2016,2016,0,0,2,Export,251,France,FRA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,17705737323,,,0
+H4,2016,2016,2016,0,0,1,Import,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,1039848357,,,0
+H4,2016,2016,2016,0,0,2,Export,251,France,FRA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,2012412391,,,0
+H4,2016,2016,2016,0,0,1,Import,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,39678969318,,,0
+H4,2016,2016,2016,0,0,2,Export,251,France,FRA,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,36127096199,,,0
+H4,2016,2016,2016,0,0,1,Import,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,13536720179,,,0
+H4,2016,2016,2016,0,0,2,Export,710,South Africa,ZAF,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,6812080879,,,0
+H4,2016,2016,2016,0,0,1,Import,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,2249866412,,,0
+H4,2016,2016,2016,0,0,2,Export,710,South Africa,ZAF,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,745781784,,,0
+H4,2016,2016,2016,0,0,1,Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,361906316,,,0
+H4,2016,2016,2016,0,0,4,Re-Import,710,South Africa,ZAF,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,361906316,,,0
+H4,2016,2016,2016,0,0,1,Import,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,4977674733,,,0
+H4,2016,2016,2016,0,0,2,Export,710,South Africa,ZAF,842,USA,USA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,,,,,5473767809,,,0
+H4,2016,2016,2016,0,0,1,Import,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,481516029544,,,4
+H4,2016,2016,2016,0,0,2,Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,115602060260,,,4
+H4,2016,2016,2016,0,0,3,Re-Export,842,USA,USA,156,China,CHN,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,8637374334,,,0
+H4,2016,2016,2016,0,0,1,Import,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,47769520324,,,4
+H4,2016,2016,2016,0,0,2,Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,32618447002,,,4
+H4,2016,2016,2016,0,0,3,Re-Export,842,USA,USA,251,France,FRA,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,5026877963,,,0
+H4,2016,2016,2016,0,0,1,Import,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,6903496232,,,4
+H4,2016,2016,2016,0,0,2,Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,4605156731,,,4
+H4,2016,2016,2016,0,0,3,Re-Export,842,USA,USA,710,South Africa,ZAF,,,,,,,,TOTAL,All Commodities,1,No Quantity,,,0,,0,,542254918,,,0
