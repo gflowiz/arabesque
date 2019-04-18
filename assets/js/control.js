@@ -2,7 +2,38 @@
 Last Update : 19/03/2019
 Bapaume Thomas
 */
-import {changeSemioParameter} from "./semiology.js"
+import {changeSemioParameter} from "./semiology.js";
+import 'jquery-ui';
+
+require('jquery-ui-bundle');
+ $(function($) {
+        var panelList = $('#accordionLayerControl');
+
+        panelList.sortable({
+            // Only make the .panel-heading child elements support dragging.
+            // Omit this to make then entire <li>...</li> draggable.
+            handle: '.card-body', 
+            update: function() {
+                $('.card', panelList).each(function(index, elem) {
+                     var $listItem = $(elem),
+                         newIndex = $listItem.index();
+                    console.log($listItem.index())
+                    console.log(elem.textContent)
+                    if (typeof global_data.layers.base[elem.textContent] !== 'undefined')
+                    {
+                      global_data.layers.base[elem.textContent].setZIndex(- $listItem.index() )
+                    }
+                    if (typeof global_data.layers.features[elem.textContent] !== 'undefined')
+                    {
+                     global_data.layers.features[elem.textContent].setZIndex(- $listItem.index() )
+                    }
+
+                });
+            }
+        });
+    });
+
+   
 
 export function changeZIndexLayer(name) {
     //len = layers.length;
@@ -60,93 +91,145 @@ export function removeFeaturesLayer(name) {
 }
 
 export function addLayerGestionMenu(name) {
-    //sel = document.getElementById("accordionLayerControl")
-    $("#accordionLayerControl").append($("<div>", {
-        class: "card p-0",
-        id: "card" + name
-    }));
-    $("#card" + name).append($("<div>", {
-            class: "card-header",
-            type: "button",
-            text: name,
-            id: "heading" + name
-        }).attr("data-toggle", "collapse")
-        .attr("data-toggle", "collapse")
-        .attr("aria-expanded", "true")
-        .attr("aria-controls", "collapse" + name)
-        .attr("data-target", "#collapse" + name)
+
+
+        $("#accordionLayerControl").prepend($("<li>", {
+        class: "card mt-2",
+        id : "card"+name,
+        value : name
+    })
+    .append($("<div>", {
+        class: "card-body panel-heading",
+        text : name,
+        id: "panel" + name
+        }
+    )
         .append($("<button>")
             .attr("type", "button")
             .attr("id", "buttonRemoveLayer" + name)
             .attr("class", "close center-block")
             .attr("aria-label", "Close")
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
-        ));
-    $("#card" + name).append($("<div>", {
-            class: "collapse",
-            id: "collapse" + name
-        }).attr("data-toggle", "collapse")
-        .attr("aria-labelledby", "headingFour")
-        .attr("data-parent", "#accordionLayerControl"));
-    $("#collapse" + name).append($("<div>").attr("class", "card-body"));
-    $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
-    $("#collapse" + name + ">div>div").append($("<div>")
-        .attr("class", "input-group-prepend")
-        .append($("<input>")
-            .attr("class", "btn btn-primary btn-block")
-            .attr("id", "buttonChangeZindexLayer" + name)
-            .attr("type", "button")
-            .attr("value", "Change")
+        )));
 
-        )
-        .append($("<input>")
-            .attr("class", "form-control")
-            .attr("type", "number")
-            .attr("id", "ZindexSelector" + name)));
+    //sel = document.getElementById("accordionLayerControl")
+    // $("#accordionLayerControl").append($("<div>", {
+    //     class: "card p-0",
+    //     id: "card" + name
+    // }));
+    // $("#card" + name).append($("<div>", {
+    //         class: "card-header",
+    //         type: "button",
+    //         text: name,
+    //         id: "heading" + name
+    //     }).attr("data-toggle", "collapse")
+    //     .attr("data-toggle", "collapse")
+    //     .attr("aria-expanded", "true")
+    //     .attr("aria-expanded", "true")
+    //     .attr("aria-controls", "collapse" + name)
+    //     .attr("data-target", "#collapse" + name)
+    //     .append($("<button>")
+    //         .attr("type", "button")
+    //         .attr("id", "buttonRemoveLayer" + name)
+    //         .attr("class", "close center-block")
+    //         .attr("aria-label", "Close")
+    //         .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+    //     ));
+    // $("#card" + name).append($("<div>", {
+    //         class: "collapse",
+    //         id: "collapse" + name
+    //     }).attr("data-toggle", "collapse")
+    //     .attr("aria-labelledby", "headingFour")
+    //     .attr("data-parent", "#accordionLayerControl"));
+    // $("#collapse" + name).append($("<div>").attr("class", "card-body"));
+    // $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
+    // $("#collapse" + name + ">div>div").append($("<div>")
+    //     .attr("class", "input-group-prepend")
+    //     .append($("<input>")
+    //         .attr("class", "btn btn-primary btn-block")
+    //         .attr("id", "buttonChangeZindexLayer" + name)
+    //         .attr("type", "button")
+    //         .attr("value", "Change")
+
+    //     )
+    //     .append($("<input>")
+    //         .attr("class", "form-control")
+    //         .attr("type", "number")
+    //         .attr("id", "ZindexSelector" + name)));
 
 
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
         removeLayer(name)
     });
-    document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
-        changeZIndexLayer(name)
-    });
+    // document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
+    //     changeZIndexLayer(name)
+    // });
 }
 
 
 export function addFLayerGestionMenu(name) {
     console.log(name)
-    //sel = document.getElementById("accordionLayerControl")
-    $("#accordionLayerControl").append($("<div>", {
-        class: "card p-0",
-        id: "card" + name
-    }));
-    $("#card" + name).append($("<div>", {
-            class: "card-header",
-            type: "button",
-            text: name,
-            id: "heading" + name
-        }).attr("data-toggle", "collapse")
-        .attr("data-toggle", "collapse")
-        .attr("aria-expanded", "true")
-        .attr("aria-controls", "collapse" + name)
-        .attr("data-target", "#collapse" + name)
-        .append($("<button>")
-            .attr("type", "button")
-            .attr("id", "buttonRemoveLayer" + name)
-            .attr("class", "close center-block")
-            .attr("aria-label", "Close")
-            .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+
+
+    $("#accordionLayerControl").prepend($("<li>", {
+        class: "card mt-2",
+        id : "card"+name,
+        value : name
+    })
+        .append($("<div>", {
+            class: "card-body h-5 panel-heading",
+            text : name,
+            id: "panel" + name
+            }
         )
-        .append($("<button>")
-            .attr("type", "button")
-            .attr("id", "buttonChangeLayer" + name)
-            .attr("class", "close center-block")
-            .attr("aria-label", "Close")
-            .attr("data-target", "#changeSemioModal")
-            .attr("data-toggle", "modal")
-            .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
-        ));
+            .append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonRemoveLayer" + name)
+                .attr("class", "close center-block")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+            ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonChangeLayer" + name)
+                .attr("class", "close center-block")
+                .attr("aria-label", "Close")
+                .attr("data-target", "#changeSemioModal")
+                .attr("data-toggle", "modal")
+                .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
+            )
+        )
+    );
+    //sel = document.getElementById("accordionLayerControl")
+    // $("#accordionLayerControl").append($("<div>", {
+    //     class: "card p-0",
+    //     id: "card" + name
+    // }));
+    // $("#card" + name).append($("<div>", {
+    //         class: "card-header",
+    //         type: "button",
+    //         text: name,
+    //         id: "heading" + name
+    //     }).attr("data-toggle", "collapse")
+    //     .attr("data-toggle", "collapse")
+    //     .attr("aria-expanded", "true")
+    //     .attr("aria-controls", "collapse" + name)
+    //     .attr("data-target", "#collapse" + name)
+    //     .append($("<button>")
+    //         .attr("type", "button")
+    //         .attr("id", "buttonRemoveLayer" + name)
+    //         .attr("class", "close center-block")
+    //         .attr("aria-label", "Close")
+    //         .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+    //     )
+    //     .append($("<button>")
+    //         .attr("type", "button")
+    //         .attr("id", "buttonChangeLayer" + name)
+    //         .attr("class", "close center-block")
+    //         .attr("aria-label", "Close")
+    //         .attr("data-target", "#changeSemioModal")
+    //         .attr("data-toggle", "modal")
+    //         .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
+    //     ));
 
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
         removeFeaturesLayer(name)
@@ -156,31 +239,31 @@ export function addFLayerGestionMenu(name) {
     });
 
 
-    $("#card" + name).append($("<div>", {
-            class: "collapse",
-            id: "collapse" + name
-        }).attr("data-toggle", "collapse")
-        .attr("aria-labelledby", "headingFour")
-        .attr("data-parent", "#accordionLayerControl"));
-    $("#collapse" + name).append($("<div>").attr("class", "card-body"));
-    $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
-    $("#collapse" + name + ">div>div").append($("<div>")
-        .attr("class", "input-group-prepend")
-        .append($("<input>")
-            .attr("class", "btn btn-primary btn-block")
-            .attr("id", "buttonChangeZindexLayer" + name)
-            .attr("type", "button")
-            .attr("value", "Change")
+    // $("#card" + name).append($("<div>", {
+    //         class: "collapse",
+    //         id: "collapse" + name
+    //     }).attr("data-toggle", "collapse")
+    //     .attr("aria-labelledby", "headingFour")
+    //     .attr("data-parent", "#accordionLayerControl"));
+    // $("#collapse" + name).append($("<div>").attr("class", "card-body"));
+    // $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
+    // $("#collapse" + name + ">div>div").append($("<div>")
+    //     .attr("class", "input-group-prepend")
+    //     .append($("<input>")
+    //         .attr("class", "btn btn-primary btn-block")
+    //         .attr("id", "buttonChangeZindexLayer" + name)
+    //         .attr("type", "button")
+    //         .attr("value", "Change")
 
-        )
-        .append($("<input>")
-            .attr("class", "form-control")
-            .attr("type", "number")
-            .attr("id", "ZindexFSelector" + name)));
+    //     )
+    //     .append($("<input>")
+    //         .attr("class", "form-control")
+    //         .attr("type", "number")
+    //         .attr("id", "ZindexFSelector" + name)));
 
-    document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
-        changeZIndexFeaturesLayer(name)
-    });
+    // document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
+    //     changeZIndexFeaturesLayer(name)
+    // });
 }
 
 

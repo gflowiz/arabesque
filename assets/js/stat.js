@@ -1,4 +1,5 @@
 import * as turf from "@turf/turf"
+import {transform, get as getProjection} from 'ol/proj.js';
 
 export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
@@ -26,21 +27,39 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
+export function checkIDLinks(links, nodes_list, id_ori, id_dest){
+  // var list_id_ori
+  // var list_id_dest
+  var has_link_removed = false;
+  var filtered_links = [];
+  var n = 0;
+  for(var p=0; p<links.length;p++){
+    if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest])){
+      filtered_links.push(links[p])
+    }
+    else{
+      n++;
+      has_link_removed = true;
+    }
+  }
+  console.log('-----------------------------------')
+
+  console.log(n)
+  if(has_link_removed){
+    alert(n+" Links have been removed. No equivalent nodes have been found.")
+  }
+return filtered_links
+}
+
 export function computeDistance(nodes, links, id_ori, id_dest,isCSV,  unit){
   var len = links.length
   for(var p = 0; p< len; p++){
-    // if(isCSV){
-    links[p].distance = turf.distance(nodes[links[p][id_ori]], nodes[links[p][id_dest]], {units: unit})
-    // }
-    // else{
-    //   if(typeof nodes[links[p][id_ori]] === 'undefined'){
-    //     nodes[links[p][id_ori]] = turf.point([0,0])
-    //   }
-    //   if(typeof nodes[links[p][id_dest]] === 'undefined'){
-    //     nodes[links[p][id_ori]] = turf.point([0,0])
-    //   }
-    //   links[p].distance = turf.distance(getTurfCentroid(nodes[links[p][id_ori]]),getTurfCentroid(nodes[links[p][id_dest]]),{units: unit})
-    // }
+    if(isCSV){
+      links[p].distance = turf.distance(nodes[links[p][id_ori]], nodes[links[p][id_dest]], {units: unit})
+    }
+    else{
+      links[p].distance = turf.distance(getTurfCentroid(nodes[links[p][id_ori]]),getTurfCentroid(nodes[links[p][id_dest]]),{units: unit})
+    }
   }
 }
 
@@ -51,9 +70,9 @@ function getTurfCentroid(feature){
 if (feature.geometry.type == "MultiPolygon") {
     var maxArea = 0;
     var area = -1;
-    ll = feature.geometry.coordinates.length;
-    for (i = 0; i < ll; i++) {
-      polyg = turf.polygon(feature.geometry.coordinates[i]);
+    var ll = feature.geometry.coordinates.length;
+    for (var i = 0; i < ll; i++) {
+      var polyg = turf.polygon(feature.geometry.coordinates[i]);
       var newArea = turf.area(polyg);
         if (area < newArea) {
           maxArea = i;

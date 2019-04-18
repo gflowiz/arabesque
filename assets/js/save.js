@@ -3,9 +3,9 @@ import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.
 import {addLayerGestionMenu} from "./control.js"
 import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, checkDataToFilter } from "./filter.js"
 import {addOSMLayer, addNewLayer, addLayerFromURL} from "./layer.js";
-import {computeMinStatNode, computeDistance} from "./stat.js";
+import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle} from "./semiology.js";
-applyNewStyle
+
 import {parse as papaparse} from "papaparse"
 
 
@@ -39,12 +39,13 @@ console.log(save_para)
  				if(save_para.files.Ltype === 'csv'){
  			    	computeDistance(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1],'kilometers');
  				}
- loadLayerData(save_para.base_layer, global_var.layers.base)
+
  loadFilter(save_para.filter)	
 
 // 				// featuresLayers.link = addLinkLayer(map, data.links, data.hashedStructureData)
 
 
+ loadLayerData(save_para.base_layer, global_var.layers.base)
  applyNewStyle("link")
  applyNewStyle("node")
 console.log(global_var)
@@ -189,7 +190,7 @@ var lx = maxX - minX
 var ly = maxY - minY
 global_var.style.ratioBounds = Math.max(lx,ly)* 0.0002
 global_var.center =  [minX+lx/2,minY+ly/2]
-
+data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_var.ids.linkID[0], global_var.ids.linkID[1])
 map.getView().setCenter(global_var.center)
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 

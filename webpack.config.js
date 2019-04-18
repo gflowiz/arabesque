@@ -58,7 +58,7 @@ var config = {
     new webpack.LoaderOptionsPlugin({
          // test: /\.xxx$/, // may apply this only for some modules
          options: {
-           types: ["jquery", "spectrum-colorpicker"]
+           types: ["jquery","spectrum-colorpicker"]
          }
        })
   ]

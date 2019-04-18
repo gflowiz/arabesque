@@ -76,7 +76,7 @@ export function setupStyleAndAddLayer(style){
   var ratio = document.getElementById('ratioMinMaxSizeAdd').value;
   var colorVar = document.getElementById('semioSelectorColorAdd').value
   
-  var colorType = document.getElementById('typeColorAdd').value  
+   
 
   
   var textVar = document.getElementById('semioSelectorTextAdd').value
@@ -114,10 +114,13 @@ var opaMinRatio, opaMaxRatio, typeopa;
     
     if(colorVar === 'fixed')
     {
-      var chosenPalette = $("#semioColorpickerAdd").spectrum('get').toHexString();
+      style[layer].color.palette = $("#semioColorpickerAdd").spectrum('get').toHexString();
     }
     else{
-      style[layer].color.palette = $("#colorPickerAdd>div").find(".selected").attr("value");
+
+      var colorType = document.getElementById('typeColorAdd').value 
+      style[layer].color.palette = $("#colorPickerAdd>div").find(".selected").attr("value");  
+      style[layer].color.cat = colorType
       colMM = [0,0]
       if(colorType==='number'){
         colMM = setupMaxAndMin(colorVar, layer)
@@ -128,7 +131,6 @@ var opaMinRatio, opaMaxRatio, typeopa;
      
     }
 
-      style[layer].color.cat = colorType
       style[layer].color.var = colorVar
       style[layer].color.max = colMM[1]
       style[layer].color.min = colMM[0]
@@ -380,9 +382,8 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr('class','custom-select')
                     .attr("id","typeSize"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
-                      .append($('<option>', {text:"Linear", value:'Linear'}))
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))                      
-                      .append($('<option>', {text:"Logarithmic", value:'Log'}))
+
+                      .append($('<option>', {text:"Square", value:'Sqrt'}))       
                     )
                   )
 }
@@ -418,27 +419,29 @@ if(document.getElementById('semioSelectorColor'+id_ele).value !== 'fixed'){
                       .append($('<option>', {text:"number", value:'number'}))
                     )
                   )
+  document.getElementById("typeColor"+id_ele).addEventListener("change", function(){showColors(id_ele, id_parent)});
   
 }
-
-document.getElementById("typeColor"+id_ele).addEventListener("change", function(){showColors(id_ele, id_parent)});
 showColors(id_ele, id_parent)
   return
       
 }
 
 function showColors(ide, idp){
-  if(document.getElementById("semioSelectorColor"+ide) !== null){
-      $('#colorPicker'+ide).remove();
-    }
-  if(document.getElementById('semioSelectorColor'+ide).value === 'fixed'){
-    showfixed(ide, idp)
+
+  if(document.getElementById("semioSelectorColorAdd").value === 'fixed'){
+    showfixed(ide, idp)  
     return
   }
 
-  var colorType = document.getElementById('typeColor'+ide).value      
-  if(document.getElementById('colorPicker'+ide) !== null){
-    $('#colorPicker'+ide).remove();
+  if(document.getElementById("semioSelectorColorAdd").value !== null){
+      $('#colorPicker'+ide).remove();
+    }
+
+
+  var colorType = document.getElementById("typeColor"+ide).value      
+  if(document.getElementById("colorPicker"+ide) !== null){
+    $("#colorPicker"+ide).remove();
   }
   if(colorType === "categorical"){
     showPalette(ide, idp)
@@ -729,7 +732,6 @@ function loadStyleToModify(layer_name, style){
 export function applyChangeStyle(name, style, layers){
   var widthVar = document.getElementById('semioSelectorSizeChange').value;
   var colorVar = document.getElementById('semioSelectorColorChange').value
-  var colorType = document.getElementById('typeColorChange').value  
 
   var ratio = document.getElementById('ratioMinMaxSizeChange').value;
   var typeSize = document.getElementById('typeSizeChange').value;
@@ -770,13 +772,13 @@ console.log(style)
 
 
 
-    colMM = [0,0]
     if(colorVar === 'fixed')
     {
       var chosenPalette = $("#semioColorpickerChange").spectrum('get').toHexString();
     }
     else{
-      colMM = [0,0]
+      var colorType = document.getElementById('typeColorChange').value  
+      style[name].color.cat = colorType
       if(colorType==='number'){
         colMM = setupMaxAndMin(colorVar, name)
       }
@@ -789,7 +791,7 @@ console.log(style)
     
 console.log(sizeMM)
       style[name].color.palette = chosenPalette
-      style[name].color.cat = colorType
+     
       style[name].color.var = colorVar
       style[name].color.max = colMM[1]
       style[name].color.min = colMM[0]

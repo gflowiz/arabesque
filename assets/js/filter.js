@@ -140,9 +140,13 @@ function addSingleCatFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
 $('#filterDiv').append($('<div>')
-                          .attr("class","row p-0")
+                          .attr("class","row align-items-center m-3")
+                          .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr('for',"filter"+id)
+                                  .attr('class',"h5")
+                                  )
                           .append($('<div>')
-                            .attr("class","col-sm-10 p-0")
+                            .attr("class","col-sm-10 align-items-center p-0")
                             .attr("id","filterCat")
 
                           .append($('<select multiple>')
@@ -268,8 +272,13 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
  export function loadNumFilter(name_layer, name_variable, values){
   
     var  id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
+
     $('#filterDiv').append($('<div>')
-                                .attr("class","row")
+                                .attr("class","row align-items-center m-3")
+                                .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr('for',"filter"+id)
+                                  .attr('class',"h5")
+                                  )
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
                                   .attr("id","filter"+id)
@@ -294,8 +303,13 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
 function addNumFilter(name_layer, name_variable){
   
     var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
+    
     $('#filterDiv').append($('<div>')
-                                .attr("class","row")
+                                .attr("class","row align-items-center m-3")
+                                .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr('for',"filter"+id)
+                                  .attr('class',"h5")
+                                  )
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
                                   .attr("id","filter"+id)
@@ -333,11 +347,11 @@ var formatCount = d3.format(",.0f");
 var svg = d3.select("#filter"+id).append('svg'),
     margin = {top: 10, right: 15, bottom: 5, left: 15},
     width = $("#filter"+id).width() - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom;
+    height = 100 - margin.top - margin.bottom - 5;
     svg.attr('width',$("#filter"+id).width() ).attr('height',130).attr('onchange',"alert()");
 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x = d3.scaleLinear().domain([Math.min(...data_histo),Math.max(...data_histo)])
+var x = d3.scaleLinear().domain([Math.min(...data_histo),Math.max(...data_histo) + 0.0001])
     .rangeRound([0, width]);
 
 var bins = d3.histogram()

@@ -37,22 +37,21 @@ export function styleLinkPoly(feature){
     }
 
     //color setup
-    if(global_data.style.link.color.cat === 'number'){
+    if (global_data.style.link.color.var === 'fixed'){
+
+        var oColor = d3.color(global_data.style.link.color.palette)
+        // get the corlor from a js object wer the name of the variable is link to 
+    }
+    else if (global_data.style.link.color.cat === 'categorical'){
+        var oColor = d3.color(global_data.style.link.categorialLinkOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
+    }    
+    else if(global_data.style.link.color.cat === 'number'){
         var NormalizeColor = (feature.get(global_data.style.link.color.var)-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
         // console.log(NormalizeColor)
         var oColor = d3.color(d3["interpolate"+global_data.style.link.color.palette](NormalizeColor))
        // oColor.opacity = opacityFunciton
 
     
-    }
-
-    else if (global_data.style.link.color.cat === 'categorical'){
-        var oColor = d3.color(global_data.style.link.categorialLinkOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
-    }    
-    else if (global_data.style.link.color.var === 'fixed'){
-
-        var oColor = d3.color(global_data.style.link.color.palette)
-        // get the corlor from a js object wer the name of the variable is link to 
     }
    
 
@@ -99,22 +98,22 @@ export function styleNodeCircle(feature){
          var zindex = global_data.style.node.size.max - feature.get(global_data.style.node.size.var)
     }
     //color setup
-    if(global_data.style.node.color.cat === 'number'){
-        
-        var NormalizeColor = (Number(feature.get(global_data.style.node.color.var))-global_data.style.node.color.min)/(global_data.style.node.color.max-global_data.style.node.color.min) 
-        var oColor = d3.color(d3["interpolate"+global_data.style.node.color.palette](NormalizeColor))
-       // oColor.opacity = opacityFunciton
-    
+    if (global_data.style.node.color.var === 'fixed'){
+
+        var oColor = d3.color(global_data.style.node.color.palette)
+        // get the corlor from a js object wer the name of the variable is link to 
     }
 
     else if (global_data.style.node.color.cat === 'categorical'){
         var oColor = d3.color(global_data.style.node.categorialNodeOrderedColors[feature.get(global_data.style.node.color.var).toString()])
         // get the corlor from a js object wer the name of the variable is link to 
     }
-    else if (global_data.style.node.color.var === 'fixed'){
-
-        var oColor = d3.color(global_data.style.node.color.palette)
-        // get the corlor from a js object wer the name of the variable is link to 
+    else if(global_data.style.node.color.cat === 'number'){
+        
+        var NormalizeColor = (Number(feature.get(global_data.style.node.color.var))-global_data.style.node.color.min)/(global_data.style.node.color.max-global_data.style.node.color.min) 
+        var oColor = d3.color(d3["interpolate"+global_data.style.node.color.palette](NormalizeColor))
+       // oColor.opacity = opacityFunciton
+    
     }
     
     if (global_data.style.node.opa.var === 'fixed'){

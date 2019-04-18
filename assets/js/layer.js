@@ -120,9 +120,7 @@ export function addNewLayer(map, layers) {
 function computeDistanceCanvas(layer_name, value, ratio_bounds, styles) {
 
     var cat = styles[layer_name].size.cat
-    if (cat === 'fixed') {
-        return Math.round(styles[layer_name].size.ratio) * ratio_bounds;
-    } else if (cat === 'Log') {
+    if (cat === 'Log') {
         var Catscale = d3["scale" + cat]().domain([1, styles[layer_name].size.max]).range([0, styles[layer_name].size.ratio])
         return Catscale(value + 1) * ratio_bounds
     } else {
@@ -159,18 +157,29 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
         //This example is usable only for the 2 given files
         //It will be an prelayer of data selection to choos the ids int hte two minimal file
 
-        if (typeof nodes[filter_links[j][id_dest]] !== "undefined" && typeof nodes[filter_links[j][id_ori]] !== "undefined") {
             var ori = nodes[filter_links[j][id_ori]].properties.centroid;
 
             var dest = nodes[filter_links[j][id_dest]].properties.centroid;
             var rad_ori = 0;
             var rad_dest = 0;
-            if (style.node.size.var !== null) {
+            if (style.node.size.var !== 'fixed' && style.node.size.var !== null) {
                 rad_ori = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
                 rad_dest = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
+                
             }
+            else if (style.node.size.var === 'fixed'){
+                rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
+                rad_dest = Number(styles.node.size.ratio) * style.ratioBounds ;
+                
+            }
+            if (style.link.size.var !== 'fixed') {
+                var distance = computeDistanceCanvas('link', Number(filter_links[j][style.link.size.var]), style.ratioBounds * 0.75, style);
+            }
+            else{
+                var distance = Number(style.link.size.ratio) * style.ratioBounds ;
+            }
+            
 
-            var distance = computeDistanceCanvas('link', Number(filter_links[j][style.link.size.var]), style.ratioBounds * 0.75, style);
             var rad_points = removeRadius(ori, dest, rad_ori, rad_dest);
             var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
 
@@ -185,7 +194,7 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
             //     feat.setProperties(links[j])
 
 
-        }
+        
     }
     var source = new VectorSource({
         features: featureList
@@ -238,7 +247,14 @@ export function addNodeLayer(map, links, nodes, style) {
       // console.log(feature)
         //var j = st[m]
         var point = nodes[feature].properties.centroid;
-        var radius = computeDistanceCanvas('node', Number(nodes[feature].properties[style.node.size.var]), style.ratioBounds, style);
+        if (style.node.size.var !== 'fixed') {
+            var radius = computeDistanceCanvas('node', Number(nodes[feature].properties[style.node.size.var]), style.ratioBounds, style);
+        }
+        else
+        {
+            var radius = Number(style.node.size.ratio) * style.ratioBounds ;
+        }
+        
         var feat = new Feature(new Circle(point, radius))
         //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
         feat.setProperties(nodes[feature].properties)

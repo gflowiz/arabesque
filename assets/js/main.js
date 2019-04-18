@@ -3,7 +3,7 @@ import {refreshFilterModal, addFilterToScreen, checkDataToFilter } from "./filte
 import {addOSMLayer, addNewLayer} from "./layer.js";
 import {loadMapFromPresetSave} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
-import {computeMinStatNode, computeDistance} from "./stat.js";
+import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 
 
 import {setupStyleAndAddLayer , showSemioParameter, generatePaletteMultiHue2, changeSemioParameter } from './semiology.js'
@@ -25,11 +25,132 @@ import 'spectrum-colorpicker/spectrum.css'
 
 import '../css/control.css'
 import  proj4 from 'proj4';
-var widthlayout = $("#filterDiv").width() + 25
 
+
+
+
+  var heighttokeep = $(".container-fluid").height()
+  document.getElementById('map').style.height=heighttokeep +"px"
+
+document.getElementById('removeFilterLayout').addEventListener("click", function(){
+  var el = document.getElementById('removeFilterLayout')
+
+  var widthlayout = $("#filterDiv").outerWidth() 
+  if(el.style.right === "0px"){
+
+    var newSize = $('#map').outerWidth()-widthlayout ;
+    var widthlayout = $("#filterDiv").outerWidth() 
+    $('#removeFilterLayout').animate({ 
+        right: widthlayout+"px",
+      }, 1000 );
+    
+
+    $("#filterDiv").animate(
+      {
+        right: "0px",
+      }, 1000);
+
+    $("#map").animate(
+      {
+        width: newSize +"px",
+        right: widthlayout+"px",
+      }, 1000, function(){map.updateSize()});
+
+
+    $('.right_icon').remove()
+    $('#removeFilterLayout').append('<img src="assets/svg/si-glyph-arrow-right.svg" class="right_icon"></img>')
+    // map.updateSize()
+  }
+  else{
+    
+    var newSize =$('#map').outerWidth()+widthlayout ;
+
+    $('#removeFilterLayout').animate({ 
+        right: "0px",
+              }, 1000 );
+    $("#filterDiv").animate(
+      {
+        right: "-"+widthlayout+"px",
+      }, 1000);
+
+    $("#map").animate(
+      {
+        width: newSize +"px",
+        right: "0px",
+      }, 1000, function(){map.updateSize()});
+
+
+    $('.right_icon').remove()
+
+    $('#removeFilterLayout').append('<img src="assets/svg/si-glyph-arrow-left.svg" class="right_icon"></img>')
+    // map.updateSize()
+}
+  });
+
+
+document.getElementById('removeLayerLayout').addEventListener("click", function(){
+  var el = document.getElementById('removeLayerLayout')
+  var widthlayout = $("#layerLayout").outerWidth() 
+  var buttonLeft =  $("#layerLayout").outerWidth() 
+  if(el.style.left === "0px"){
+    document.getElementById('map').style.position = 'absolute'
+    var newSize = $('#map').outerWidth()-widthlayout ;
+    
+
+    $('#removeLayerLayout').animate({ 
+        left: buttonLeft+"px",
+      }, 1000 );
+    
+    $("#layerLayout").animate(
+      {
+        left: "0px",
+      }, 1000);
+    $("#map").animate(
+      {
+        width: newSize +"px",
+        left: "0px",
+      }, 1000, function(){map.updateSize()});
+
+    $('.left_icon').remove()
+    $('#removeLayerLayout').append('<img src="assets/svg/si-glyph-arrow-left.svg" class="left_icon"></img>')
+     
+  }
+  else{
+
+    document.getElementById('map').style.position = 'absolute'
+    var newSize =$('#map').outerWidth()+widthlayout ;
+    // el.style.right = '0px' ;
+
+
+    $('#removeLayerLayout').animate({ 
+        left: "0px",
+              }, 1000 );
+    $("#layerLayout").animate(
+      {
+        left: "-"+widthlayout+"px",
+      }, 1000);
+
+    $("#map").animate(
+      {
+        width: newSize +"px",
+        left: "-"+widthlayout+"px",
+      }, 1000, function(){map.updateSize()});
+
+
+    $('.left_icon').remove()
+
+    $('#removeLayerLayout').append('<img src="assets/svg/si-glyph-arrow-right.svg" class="left_icon"></img>')
+    // map.updateSize()
+}
+
+  });
+
+var widthlayout = $("#layerLayout").outerWidth() ;
+document.getElementById("removeLayerLayout").style.left = widthlayout + 'px' ;
+
+var widthlayout = $("#filterDiv").outerWidth() ;
 document.getElementById("removeFilterLayout").style.right = widthlayout + 'px' ;
 
-console.log($("#filterDiv").width());
 
 generatePaletteMultiHue2()
 
@@ -154,6 +275,11 @@ document.getElementById('addSemioButton').addEventListener("click", function(){s
 // Modal -- import 
 document.getElementById('importIdButton').addEventListener("click", function(){importData()}); 
 // Modal -- Change
+// Button -- right
+// console.log(document.getElementById('removeFilterLayout'))
+// document.getElementById('removeFilterLayout').addEventListener("click", function(){
+ 
+// })
 
 
 (function(){
@@ -453,13 +579,14 @@ global_data.center = newCenter
 map.getView().setCenter(newCenter)
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 
+data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1])
 computeMinStatNode(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], global_data.ids.vol);
 
 data.links = prepareLinkData(data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], data.hashedStructureData, global_data.ids.vol);
 //TODO ADD GESTION OF UNDEFINED NODES REMOVE OR 0/0
-if(global_data.files.Ltype === 'csv'){
-  computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],'kilometers');
-}
+var isCSV = global_data.files.Ntype !== 'geojson'
+  computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],isCSV,'kilometers');
+
 
 document.getElementById("addFilterButton").disabled = false;
 
