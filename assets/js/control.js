@@ -12,7 +12,7 @@ require('jquery-ui-bundle');
         panelList.sortable({
             // Only make the .panel-heading child elements support dragging.
             // Omit this to make then entire <li>...</li> draggable.
-            handle: '.card-body', 
+            handle: '.card-header', 
             update: function() {
                 $('.card', panelList).each(function(index, elem) {
                      var $listItem = $(elem),
@@ -94,12 +94,12 @@ export function addLayerGestionMenu(name) {
 
 
         $("#accordionLayerControl").prepend($("<li>", {
-        class: "card mt-2",
+        class: "card mt-2 border-dark",
         id : "card"+name,
         value : name
     })
     .append($("<div>", {
-        class: "card-body panel-heading",
+        class: "card-header  text-dark panel-heading",
         text : name,
         id: "panel" + name
         }
@@ -107,10 +107,16 @@ export function addLayerGestionMenu(name) {
         .append($("<button>")
             .attr("type", "button")
             .attr("id", "buttonRemoveLayer" + name)
-            .attr("class", "close center-block")
+            .attr("class", "close center-block  ml-1")
             .attr("aria-label", "Close")
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
-        )));
+        ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonHideLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
+    )));
 
     //sel = document.getElementById("accordionLayerControl")
     // $("#accordionLayerControl").append($("<div>", {
@@ -157,7 +163,9 @@ export function addLayerGestionMenu(name) {
     //         .attr("type", "number")
     //         .attr("id", "ZindexSelector" + name)));
 
-
+    document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
+       hideLayer(name)
+    });
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
         removeLayer(name)
     });
@@ -166,18 +174,41 @@ export function addLayerGestionMenu(name) {
     // });
 }
 
+function hideFLayer(name_layer) {
+    var opa = global_data.layers.features[name_layer].getOpacity();
+    console.log(opa)
+    if(opa>0){
+        opa = 0
+    }
+    else{
+        opa = 0.8
+    }
+    global_data.layers.features[name_layer].setOpacity(opa)
+}
+
+function hideLayer(name_layer) {
+    var opa = global_data.layers.base[name_layer].getOpacity();
+    console.log(opa)
+    if(opa>0){
+        opa = 0
+    }
+    else{
+        opa = 0.8
+    }
+    global_data.layers.base[name_layer].setOpacity(opa)
+}
 
 export function addFLayerGestionMenu(name) {
     console.log(name)
 
 
     $("#accordionLayerControl").prepend($("<li>", {
-        class: "card mt-2",
+        class: "card mt-2 border-dark",
         id : "card"+name,
         value : name
     })
         .append($("<div>", {
-            class: "card-body h-5 panel-heading",
+            class: "card-header text-dark h-5 panel-heading",
             text : name,
             id: "panel" + name
             }
@@ -185,20 +216,25 @@ export function addFLayerGestionMenu(name) {
             .append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonRemoveLayer" + name)
-                .attr("class", "close center-block")
+                .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
                 .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
             ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonChangeLayer" + name)
-                .attr("class", "close center-block")
+                .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeSemioModal")
                 .attr("data-toggle", "modal")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
-            )
+            ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonHideLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
         )
-    );
+    ));
     //sel = document.getElementById("accordionLayerControl")
     // $("#accordionLayerControl").append($("<div>", {
     //     class: "card p-0",
@@ -230,6 +266,9 @@ export function addFLayerGestionMenu(name) {
     //         .attr("data-toggle", "modal")
     //         .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
     //     ));
+    document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
+       hideFLayer(name)
+    });
 
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
         removeFeaturesLayer(name)

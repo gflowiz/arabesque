@@ -31,8 +31,8 @@
         		"opa":{
 			        "cat": "Linear",
 			        "var":"count",
-			        "max":0.6,
-			        "min":0.15,
+			        "max":0.8,
+			        "min":0.6,
 			        "vmax":6143
           		},
 	        	"size":{
@@ -71,16 +71,16 @@
     },
 		"filter":[
 			{
-				"filter": "evaluateSingleCat",
-				"layer": "node",
-				"variable": "name",
-				"values": ["Vaud","Zürich","Uri","Fribourg","Neuchâtel","Genève"]
+				"filter": "evaluateRange",
+				"layer": "link",
+				"variable": "distance",
+				"values": [0,70]
 			},
 			{
 				"filter": "evaluateRange",
 				"layer": "link",
 				"variable": "count",
-				"values": [2000,6143]
+				"values": [0,2000]
 			}
 		],
 		"ids":{

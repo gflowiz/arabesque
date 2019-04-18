@@ -118,14 +118,6 @@ border: none;
 background: none;
 }
 
-.card-body{
-  background-color:   dodgerblue;
-}
-
-#accordionLayerControl .card{
-   background-color:  dodgerblue;
-
-}
 
 .selected {
     background-color: #999;
