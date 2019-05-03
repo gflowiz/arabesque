@@ -4,7 +4,7 @@ import {addLayerGestionMenu} from "./control.js"
 import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, checkDataToFilter } from "./filter.js"
 import {addOSMLayer, addNewLayer, addLayerFromURL} from "./layer.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
-import {applyNewStyle} from "./semiology.js";
+import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
 
 import {parse as papaparse} from "papaparse"
 
@@ -21,11 +21,10 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 		$.getJSON("public/data/save/saved_example.json",function(json){    
 		
         var save_para = json[name_savedMap];
-        console.log(save_para)
 		$.get(save_para.files.node,function(nodes){
 			$.get(save_para.files.link, function(links){
 
-console.log(save_para)
+
 
  global_var.projection = loadPojection(save_para.projection);
 
@@ -36,19 +35,23 @@ console.log(save_para)
  				computeMinStatNode(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], global_var.ids.vol);
  				datasets.links =prepareLinkData(datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], datasets.hashedStructureData, global_var.ids.vol);
 
- 				if(save_para.files.Ltype === 'csv'){
- 			    	computeDistance(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1],'kilometers');
- 				}
+ 				
+ 			    computeDistance(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], save_para.files.Ntype !== 'geojson' ,'kilometers');
+
 
  loadFilter(save_para.filter)	
 
-// 				// featuresLayers.link = addLinkLayer(map, data.links, data.hashedStructureData)
-
-
  loadLayerData(save_para.base_layer, global_var.layers.base)
+
+ 	if(save_para.style.link.color.cat==='categorical'){
+        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
+      }
+     if(save_para.style.node.color.cat==='categorical'){
+        nodeOrderedCategory(global_var.style.node.color.var, global_var.style.node)
+      }
+
  applyNewStyle("link")
  applyNewStyle("node")
-console.log(global_var)
 				document.getElementById("addFilterButton").disabled = false;
 				$('.arrival').fadeOut(450, function(){ $(this).remove();});
 
@@ -199,9 +202,13 @@ map.getView().setZoom(getZoomFromVerticalBounds(ly));
 }
 
 function loadLayerData(base_layers, layers){
+
 	for(var g= 0; g<base_layers.length;g++){
 		var layer = base_layers[g]
-		layers[layer.name] = addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
+		layers[layer.name] = {}
+			console.log(layer.style)
+		layers[layer.name].layer = addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
+		layers[layer.name].style = layer.style
 		addLayerGestionMenu(layer.name);
 	}
 }

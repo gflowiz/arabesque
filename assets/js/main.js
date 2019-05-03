@@ -1,15 +1,14 @@
-
+//TODO remove all funciton in other files like import files 
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter } from "./filter.js"
-import {addOSMLayer, addNewLayer} from "./layer.js";
+import {addOSMLayer, addBaseLayer, addGeoJsonLayer} from "./layer.js";
 import {loadMapFromPresetSave} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
-
-
+import {addLayerGestionMenu} from './control.js';
+import {showGeometryParameter,setupArrowParameter, setupHead} from './geometry.js';
 import {setupStyleAndAddLayer , showSemioParameter, generatePaletteMultiHue2, changeSemioParameter } from './semiology.js'
+
 import * as turf from "@turf/turf"
-
-
 
 import {register} from 'ol/proj/proj4.js';
 import {Map, View } from 'ol';
@@ -24,10 +23,26 @@ import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
 
 import '../css/control.css'
+
 import  proj4 from 'proj4';
 
 
+$("#layerControlList").tooltip({placement:"right",
+title:"Drag and drop layers to change Z-index"
+})
+    $("#strokeColorpickerAdd").spectrum({
+        color: "#1E90FF"
+    });
+    $("#fillColorpickerAdd").spectrum({
+        color: "aliceblue"
+    });
 
+    $("#strokeColorpickerGeoJson").spectrum({
+        color: "#1E90FF"
+    });
+    $("#fillColorpickerGeoJson").spectrum({
+        color: "aliceblue"
+    });
 
   var heighttokeep = $(".container-fluid").height()
   document.getElementById('map').style.height=heighttokeep +"px"
@@ -154,12 +169,7 @@ document.getElementById("removeFilterLayout").style.right = widthlayout + 'px' ;
 
 generatePaletteMultiHue2()
 
-$("#strokeColorpicker").spectrum({
-    color: "#1E90FF"
-});
-$("#fillColorpicker").spectrum({
-    color: "aliceblue"
-});
+
 
 var select = document.getElementById("projection"); 
 for(var i=0; i<Proj.length; i++){
@@ -209,8 +219,20 @@ global.global_data = {
                 "min":null,
                 "ratio":null
               },
-              "text":null
-          },
+            "geometry":{
+                "oriented":true,
+                "type": null,
+                "head":{
+                  "height":null,
+                  "width":null
+                  },
+                "place":{
+                  "base":null,
+                  "height": null
+                  }
+              }
+            },
+
       "node":{
         "color":{
             "palette":null,
@@ -247,7 +269,8 @@ global.global_data = {
     },
     "projection":{}
 };
-console.log(setupStyleAndAddLayer)
+
+
 global_data.projection = Proj[0]
 // Add listener to all button of application
 // onclick properties did'nt work with webpack so button must be update manually by adding an event listener
@@ -260,26 +283,61 @@ document.getElementById('worldMap').addEventListener("click", function(){loadMap
 // Main Page -- Layer
 document.getElementById('OSMbutton').addEventListener("click", function(){addOSMLayer(map, global_data.layers.base)}); 
 document.getElementById('buttonProjection').addEventListener("click", function(){changeProjection(global_data.layers, global_data.center)}); 
+document.getElementById('addNewNodeFeaturesButton').addEventListener("click", function(){showSemioParameter('Node')}); 
+document.getElementById('addNewLinkFeaturesButton').addEventListener("click", function(){
+  showSemioParameter('Link')
+  showGeometryParameter()
+}); 
+
+document.getElementById('arrowtype').addEventListener("change", function(){setupArrowParameter()}); 
+document.getElementById('arrowData').addEventListener("change", function(){setupHead()}); 
 // Main Page -- filter
-document.getElementById('selectFilterButton').addEventListener("click", function(){checkDataToFilter()}); 
+document.getElementById('selectFilterButton').addEventListener("click", function(){
+  refreshFilterModal();
+  checkDataToFilter()
+}); 
 // Modal -- Add
-document.getElementById('addNewLayerButton').addEventListener("click", function(){addNewLayer(map, global_data.layers)}); 
-document.getElementById('baseLayerButton').addEventListener("click", function(){errorModal()}); 
+document.getElementById('addNewLayerButtonAdd').addEventListener("click", function(){addBaseLayer(map, global_data.layers, 'Add')}); 
+// document.getElementById('baseLayerButton').addEventListener("click", function(){errorModal()}); 
 // Modal -- Filter
-document.getElementById('refreshFilterButton').addEventListener("click", function(){refreshFilterModal()}); 
+// document.getElementById('refreshFilterButton').addEventListener("click", function(){refreshFilterModal()}); 
 document.getElementById('addFilterButton').addEventListener("click", function(){addFilterToScreen()}); 
-// Modal -- Semio
-document.getElementById('featureChosenAdd').addEventListener("change", function(){showSemioParameter()}); 
-document.getElementById('refreshSemioButton').addEventListener("click", function(){refreshSemioModal()}); 
-document.getElementById('addSemioButton').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style)});
+// // Modal -- SemioaddSemioButton
+// document.getElementById('featureChosenAddLink').addEventListener("change", function(){showSemioParameter('Link')}); 
+// document.getElementById('featureChosenAddNode').addEventListener("change", function(){showSemioParameter('Node')}); 
+// document.getElementById('refreshSemioButton').addEventListener("click", function(){refreshSemioModal()}); 
+document.getElementById('addSemioButtonLink').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Link')});
+document.getElementById('addSemioButtonNode').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Node')});
+// Modal -- Import
+document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", function(){
+  var layer_name = document.getElementById("nameGeoJson").value;
+  var opacity = document.getElementById("opacityGeoJson").value;
+  var stroke_color = $("#strokeColorpickerGeoJson").spectrum('get').toHexString();
+  var fill_color = $("#fillColorpickerGeoJson").spectrum('get').toHexString();
+  global_data.layers.base[layer_name] = {}
+  global_data.layers.base[layer_name].layer = addGeoJsonLayer(map, data.geoJson, layer_name, opacity, stroke_color, fill_color)
+  global_data.layers.base[layer_name].style = { stroke: stroke_color, 
+        fill: fill_color,
+        opacity:opacity};
+  global_data.layers.base[layer_name].added = true
+  data[layer_name] = data.geoJson
+  addLayerGestionMenu(layer_name)
+});
 // Modal -- import 
-document.getElementById('importIdButton').addEventListener("click", function(){importData()}); 
+// document.getElementById('layerControlList').addEventListener("mouseleave", function(){
+//   $("#layerControlList").removeAttr("data-tooltip")
+// console.log('FFFFFFFFFFFFFFFFFFFFFFFFF')
+// }
+
+//   ); 
 // Modal -- Change
 // Button -- right
 // console.log(document.getElementById('removeFilterLayout'))
 // document.getElementById('removeFilterLayout').addEventListener("click", function(){
  
 // })
+
+document.getElementById('importIdButton').addEventListener("click", function(){importData()}); 
 
 
 (function(){
@@ -310,6 +368,25 @@ document.getElementById('importIdButton').addEventListener("click", function(){i
 
 }());
 
+(function(){
+    
+    function onChange(event) {
+        var reader = new FileReader();
+        reader.onload = onReaderLoad;
+
+        reader.readAsText(event.target.files[0]);
+        document.getElementById("label_geoJson").innerHTML = event.target.files[0].name;  
+  }
+
+    function onReaderLoad(event){
+        data.geoJson = JSON.parse(event.target.result);
+        
+    }
+    
+
+    document.getElementById('geoJson').addEventListener('change', onChange);
+
+}());
 
 (function(){
     
@@ -339,7 +416,7 @@ document.getElementById('importIdButton').addEventListener("click", function(){i
 }());
 
 
-var select = document.getElementById("layers"); 
+var select = document.getElementById("layersAdd"); 
 var list_nameLayer = Object.keys(ListUrl)
 for(var i=0; i<list_nameLayer.length; i++){
      
@@ -526,7 +603,7 @@ export function createGeoJSON(Json_data)
 }
 
 function importData(){
-
+progressBarLoading("waitLoad", 15)
   var maxX = - Infinity
   var minX = Infinity
   var maxY = - Infinity
@@ -543,7 +620,7 @@ function importData(){
     global_data.ids.lat = document.getElementById('importLonStruct').value
     data.nodes = createGeoJSON(data.nodes);
   }
-
+progressBarLoading("waitLoad", 35)
   var len = data.nodes.features.length;
   for(var p=0; p<len; p++){
 
@@ -570,7 +647,7 @@ function importData(){
 
 
 }
-
+progressBarLoading("waitLoad", 65)
 var lx = maxX - minX
 var ly = maxY - minY
 global_data.style.ratioBounds = Math.max(lx,ly)* 0.0002
@@ -580,14 +657,16 @@ map.getView().setCenter(newCenter)
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 
 data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1])
+progressBarLoading("waitLoad", 75)
 computeMinStatNode(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], global_data.ids.vol);
-
+progressBarLoading("waitLoad", 85)
 data.links = prepareLinkData(data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], data.hashedStructureData, global_data.ids.vol);
+progressBarLoading("waitLoad", 95)
 //TODO ADD GESTION OF UNDEFINED NODES REMOVE OR 0/0
 var isCSV = global_data.files.Ntype !== 'geojson'
   computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],isCSV,'kilometers');
 
-
+progressBarLoading("waitLoad", 100)
 document.getElementById("addFilterButton").disabled = false;
 
 $("#featureCard").toggle();
@@ -606,6 +685,11 @@ function errorModal(){
 
 }
 
+function progressBarLoading(id, value){
+  console.log(value)
+  $("#"+id).attr("aria-valuenow", value)
+  document.getElementById(id).style.width = value + "%";
+}
 
 export function prepareLinkData (links, id_ori, id_dest, hash_nodes, id_vol){
   var len = links.length;

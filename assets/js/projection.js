@@ -1,7 +1,7 @@
 import * as turf from "@turf/turf"
 import {transform, get as getProjection} from 'ol/proj.js';
 import {View} from 'ol';
-import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, addLinkLayer} from "./layer.js";
+import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, addLinkLayer, addGeoJsonLayer} from "./layer.js";
 
 
 global.Proj = [
@@ -42,16 +42,16 @@ function refreshBaseLayers(map,layers){
   var LEN = layerNames.length;
   for(var m=0; m<LEN;m++){
 
-    
-
-   
-    // var url = getLayerUrl(layerNames[m]);
-      console.log(layerNames[m])
-      map.removeLayer(layers.base[layerNames[m]]);
-      var oldStyle = layers.base[layerNames[m]].getStyle();
-      layers.base[layerNames[m]] = addLayerFromURLNoStyle(map,ListUrl[layerNames[m]],layerNames[m]);
-      layers.base[layerNames[m]].setStyle(oldStyle);
-    
+  map.removeLayer(layers.base[layerNames[m]].layer); 
+  var oldStyle = layers.base[layerNames[m]].layer.getStyle();  
+    if(layers.base[layerNames[m]].added){
+      var style = layers.base[layerNames[m]].style
+      layers.base[layerNames[m]].layer =  addGeoJsonLayer(map, data[layerNames[m]], layerNames[m], style.opacity, style.stroke_color, style.fill_color);
+    }
+    else{
+      layers.base[layerNames[m]].layer = addLayerFromURLNoStyle(map,ListUrl[layerNames[m]],layerNames[m]);
+    }
+  layers.base[layerNames[m]].layer.setStyle(oldStyle);
   }
 }
 
@@ -158,9 +158,9 @@ console.log(global_data.projection.name)
 console.log("===============")
 console.log(projName)
 global_data.projection = Proj[iPrj];
-
-refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
 refreshBaseLayers(map,layers);
+refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
+
 
 //applyExtent(layers,projection.extent)
 

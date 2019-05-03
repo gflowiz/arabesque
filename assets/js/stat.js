@@ -14,14 +14,14 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var len = links.length
 
   for(var p = 0; p< len; p++){
-    nodes[links[p][id_dest]].properties.indegree = Number(links[p][id_vol])   + (nodes[links[p][id_dest]].properties.indegree || 0)
-    nodes[links[p][id_ori]].properties.outdegree = Number(links[p][id_vol])   + (nodes[links[p][id_ori]].properties.outdegree || 0)
+    nodes[links[p][id_dest]].properties.indegree = Number(links[p][id_vol])   + nodes[links[p][id_dest]].properties.indegree 
+    nodes[links[p][id_ori]].properties.outdegree = Number(links[p][id_vol])   + nodes[links[p][id_ori]].properties.outdegree 
 
-    nodes[links[p][id_dest]].properties.degree = Number(links[p][id_vol])+(nodes[links[p][id_dest]].properties.degree || 0)
-    nodes[links[p][id_ori]].properties.degree = Number(links[p][id_vol])+(nodes[links[p][id_ori]].properties.degree || 0)
+    nodes[links[p][id_dest]].properties.degree = Number(links[p][id_vol]) + nodes[links[p][id_dest]].properties.degree 
+    nodes[links[p][id_ori]].properties.degree  = Number(links[p][id_vol]) + nodes[links[p][id_ori]].properties.degree 
 
-    nodes[links[p][id_dest]].properties.balance =   (nodes[links[p][id_dest]].properties.balance || 0) - Number(links[p][id_vol])
-    nodes[links[p][id_ori]].properties.balance =   (nodes[links[p][id_ori]].properties.balance || 0) + Number(links[p][id_vol]) 
+    nodes[links[p][id_dest]].properties.balance =   nodes[links[p][id_dest]].properties.balance - Number(links[p][id_vol])
+    nodes[links[p][id_ori]].properties.balance  =   nodes[links[p][id_ori]].properties.balance  + Number(links[p][id_vol]) 
   }
 
 

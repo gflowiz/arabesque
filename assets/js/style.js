@@ -33,7 +33,12 @@ export function styleLinkPoly(feature){
          
     }
     else{//impossible case//impossible case//impossible case
+        if(global_data.style.link.geometry.oriented === 'noOriented'){
+         var zindex = - feature.get(global_data.style.link.size.var)
+        }
+        else{
          var zindex = feature.get(global_data.style.link.size.var)
+        }
     }
 
     //color setup
@@ -131,7 +136,7 @@ export function styleNodeCircle(feature){
             }),
             stroke: new Stroke({
             color:  oColor.rgb().toString(),
-            width:2
+            width:0
             }),
         zIndex: zindex,
         text:new Text()

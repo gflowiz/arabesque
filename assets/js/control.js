@@ -2,7 +2,8 @@
 Last Update : 19/03/2019
 Bapaume Thomas
 */
-import {changeSemioParameter} from "./semiology.js";
+import {showChangeBaseLayerParameter,changeSemioParameter , applyNewStyle} from "./semiology.js";
+import {changeBaseLayer, addLinkLayer} from "./layer.js";
 import 'jquery-ui';
 
 require('jquery-ui-bundle');
@@ -21,7 +22,7 @@ require('jquery-ui-bundle');
                     console.log(elem.textContent)
                     if (typeof global_data.layers.base[elem.textContent] !== 'undefined')
                     {
-                      global_data.layers.base[elem.textContent].setZIndex(- $listItem.index() )
+                      global_data.layers.base[elem.textContent].layer.setZIndex(- $listItem.index() )
                     }
                     if (typeof global_data.layers.features[elem.textContent] !== 'undefined')
                     {
@@ -33,42 +34,10 @@ require('jquery-ui-bundle');
         });
     });
 
-   
-
-export function changeZIndexLayer(name) {
-    //len = layers.length;
-    global_data.layers.base[name].setZIndex(document.getElementById(name + "ZindexSelector").value)
-    // map.render()
-
-}
-
-
-export function changeZIndexFeaturesLayer(name) {
-    //len = layers.length;
-    global_data.layers.features[name].setZIndex(document.getElementById(name + "ZindexFSelector").value);
-
-
-}
-
-export function hasData() {
-    if (typeof rawLinkData === "undefined") {
-        alert("No Data Loaded")
-        return false;
-    }
-    if (typeof rawGeoData === "undefined") {
-        alert("No Data Loaded")
-        return false;
-    }
-    return true;
-}
-
-
-
-
 export function removeLayer(name) {
     //len = layers.length;
 
-    map.removeLayer(global_data.layers.base[name]);
+    map.removeLayer(global_data.layers.base[name].layer);
 
     delete global_data.layers.base[name];
     removeLayerGestionMenu(name);
@@ -82,10 +51,22 @@ export function removeFeaturesLayer(name) {
 
     map.removeLayer(global_data.layers.features[name]);
 
-
+    global_data.style[name].color = {};
+    global_data.style[name].size.var  = null;
+    global_data.style[name].text = {};
+    global_data.style[name].opa = {};
     delete global_data.layers.features[name];
 
     removeLayerGestionMenu(name);
+
+    if(name === 'node'){
+        if (typeof global_data.layers.features.link !== 'undefined'){
+            map.removeLayer(global_data.layers.features['link'])
+            global_data.layers.features['link'] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+        }
+    }
+
+    
     //$("#Flayers").append($("<option>", {value:layerName, text:layerName}));
 
 }
@@ -112,66 +93,30 @@ export function addLayerGestionMenu(name) {
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
+                .attr("id", "buttonChangeLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .attr("data-target", "#changeBaseLayerModal")
+                .attr("data-toggle", "modal")
+                .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
+        ).append($("<button>")
+                .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     )));
 
-    //sel = document.getElementById("accordionLayerControl")
-    // $("#accordionLayerControl").append($("<div>", {
-    //     class: "card p-0",
-    //     id: "card" + name
-    // }));
-    // $("#card" + name).append($("<div>", {
-    //         class: "card-header",
-    //         type: "button",
-    //         text: name,
-    //         id: "heading" + name
-    //     }).attr("data-toggle", "collapse")
-    //     .attr("data-toggle", "collapse")
-    //     .attr("aria-expanded", "true")
-    //     .attr("aria-expanded", "true")
-    //     .attr("aria-controls", "collapse" + name)
-    //     .attr("data-target", "#collapse" + name)
-    //     .append($("<button>")
-    //         .attr("type", "button")
-    //         .attr("id", "buttonRemoveLayer" + name)
-    //         .attr("class", "close center-block")
-    //         .attr("aria-label", "Close")
-    //         .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
-    //     ));
-    // $("#card" + name).append($("<div>", {
-    //         class: "collapse",
-    //         id: "collapse" + name
-    //     }).attr("data-toggle", "collapse")
-    //     .attr("aria-labelledby", "headingFour")
-    //     .attr("data-parent", "#accordionLayerControl"));
-    // $("#collapse" + name).append($("<div>").attr("class", "card-body"));
-    // $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
-    // $("#collapse" + name + ">div>div").append($("<div>")
-    //     .attr("class", "input-group-prepend")
-    //     .append($("<input>")
-    //         .attr("class", "btn btn-primary btn-block")
-    //         .attr("id", "buttonChangeZindexLayer" + name)
-    //         .attr("type", "button")
-    //         .attr("value", "Change")
 
-    //     )
-    //     .append($("<input>")
-    //         .attr("class", "form-control")
-    //         .attr("type", "number")
-    //         .attr("id", "ZindexSelector" + name)));
-
+console.log(global_data.layers.base)
+    document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.base[name].style)}); 
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideLayer(name)
     });
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
         removeLayer(name)
     });
-    // document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
-    //     changeZIndexLayer(name)
-    // });
+
 }
 
 function hideFLayer(name_layer) {
@@ -187,15 +132,15 @@ function hideFLayer(name_layer) {
 }
 
 function hideLayer(name_layer) {
-    var opa = global_data.layers.base[name_layer].getOpacity();
+    var opa = global_data.layers.base[name_layer].layer.getOpacity();
     console.log(opa)
     if(opa>0){
         opa = 0
     }
     else{
-        opa = 0.8
+        opa = global_data.layers.base[name_layer].style.opacity
     }
-    global_data.layers.base[name_layer].setOpacity(opa)
+    global_data.layers.base[name_layer].layer.setOpacity(opa)
 }
 
 export function addFLayerGestionMenu(name) {
@@ -235,37 +180,6 @@ export function addFLayerGestionMenu(name) {
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
         )
     ));
-    //sel = document.getElementById("accordionLayerControl")
-    // $("#accordionLayerControl").append($("<div>", {
-    //     class: "card p-0",
-    //     id: "card" + name
-    // }));
-    // $("#card" + name).append($("<div>", {
-    //         class: "card-header",
-    //         type: "button",
-    //         text: name,
-    //         id: "heading" + name
-    //     }).attr("data-toggle", "collapse")
-    //     .attr("data-toggle", "collapse")
-    //     .attr("aria-expanded", "true")
-    //     .attr("aria-controls", "collapse" + name)
-    //     .attr("data-target", "#collapse" + name)
-    //     .append($("<button>")
-    //         .attr("type", "button")
-    //         .attr("id", "buttonRemoveLayer" + name)
-    //         .attr("class", "close center-block")
-    //         .attr("aria-label", "Close")
-    //         .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
-    //     )
-    //     .append($("<button>")
-    //         .attr("type", "button")
-    //         .attr("id", "buttonChangeLayer" + name)
-    //         .attr("class", "close center-block")
-    //         .attr("aria-label", "Close")
-    //         .attr("data-target", "#changeSemioModal")
-    //         .attr("data-toggle", "modal")
-    //         .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
-    //     ));
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideFLayer(name)
     });
@@ -276,33 +190,6 @@ export function addFLayerGestionMenu(name) {
     document.getElementById("buttonChangeLayer" + name).addEventListener("click", function() {
         changeSemioParameter(name, global_data.style)
     });
-
-
-    // $("#card" + name).append($("<div>", {
-    //         class: "collapse",
-    //         id: "collapse" + name
-    //     }).attr("data-toggle", "collapse")
-    //     .attr("aria-labelledby", "headingFour")
-    //     .attr("data-parent", "#accordionLayerControl"));
-    // $("#collapse" + name).append($("<div>").attr("class", "card-body"));
-    // $("#collapse" + name + ">div").append($("<div>").attr("class", "card-body"))
-    // $("#collapse" + name + ">div>div").append($("<div>")
-    //     .attr("class", "input-group-prepend")
-    //     .append($("<input>")
-    //         .attr("class", "btn btn-primary btn-block")
-    //         .attr("id", "buttonChangeZindexLayer" + name)
-    //         .attr("type", "button")
-    //         .attr("value", "Change")
-
-    //     )
-    //     .append($("<input>")
-    //         .attr("class", "form-control")
-    //         .attr("type", "number")
-    //         .attr("id", "ZindexFSelector" + name)));
-
-    // document.getElementById("buttonChangeZindexLayer" + name).addEventListener("click", function() {
-    //     changeZIndexFeaturesLayer(name)
-    // });
 }
 
 

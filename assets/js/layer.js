@@ -1,7 +1,7 @@
 import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer} from "./control.js"
 import {simpleColoredStyle, styleLinkPoly, styleNodeCircle} from "./style.js"
-import {applyNodeDataFilter, applyLinkDataFilter} from "./filter.js"
-
+import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow} from "./filter.js"
+import {drawArrow} from "./geometry.js"
 
 import {Feature} from 'ol';
 
@@ -17,12 +17,15 @@ global.ListUrl = {
     "graticules_20": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_graticules_20.geojson",
     "countries": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson",
     "urban_area": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_urban_areas.geojson",
-    "bounding box": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_wgs84_bounding_box.geojson",
+    "bounding_box": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_wgs84_bounding_box.geojson",
     "river": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_rivers_lake_centerlines_scale_rank.geojson",
     "land": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_land.geojson",
     "lakes": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_lakes.geojson",
     "graticules_5": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_graticules_5.geojson",
-    "airports": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson"
+    "airports": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson",
+    // "ocean" : "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_geography_marine_polys.geojson",
+    "disputed_borders" : "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_admin_0_boundary_lines_disputed_areas.geojson",
+    "disputed_area" : "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_admin_0_disputed_areas.geojson"
 };
 
 
@@ -95,24 +98,45 @@ function removeRadius(point_ori, point_dest, radius_ori, radius_dest) {
 }
 // Add layer from the input button
 // the function take the layer from a url base object or (TODO) an upload file or other url (give the format)
-export function addNewLayer(map, layers) {
+export function addBaseLayer(map, layers, mode) {
 
-    var sel = document.getElementById("layers");
-    var iLayer = sel.options[sel.selectedIndex].value;
-    var opacity = document.getElementById("opacityLayer").value;
-    var stroke_color = $("#strokeColorpicker").spectrum('get').toHexString();
-    var fill_color = $("#fillColorpicker").spectrum('get').toHexString();
+    var layer_name = document.getElementById("layers"+mode).value;
+    var opacity = document.getElementById("opacityLayer"+mode).value;
+    var stroke_color = $("#strokeColorpicker"+mode).spectrum('get').toHexString();
+    var fill_color = $("#fillColorpicker"+mode).spectrum('get').toHexString();
 
     if (Object.keys(layers.base).includes(Object.keys(ListUrl))) {
-        map.removeLayer(layers.base[iLayer])
+        map.removeLayer(layers.base[layer_name].layer)
 
     }
     else{
-      addLayerGestionMenu(iLayer);
+      addLayerGestionMenu(layer_name);
     }
+    layers.base[layer_name] = {}
+    var layerAdded = addLayerFromURL(map, ListUrl[layer_name], layer_name, opacity, stroke_color, fill_color);
+    layers.base[layer_name].layer = layerAdded;
+    layers.base[layer_name].style = { stroke: stroke_color, 
+        fill: fill_color,
+        opacity:opacity};
+    layers.base[layer_name].added = false
 
-    var layerAdded = addLayerFromURL(map, ListUrl[iLayer], iLayer, opacity, stroke_color, fill_color);
-    layers.base[iLayer] = layerAdded;
+}
+
+export function changeBaseLayer(map, layers, mode, layer_name) {
+
+
+    var opacity = document.getElementById("opacityLayer"+mode).value;
+    var stroke_color = $("#strokeColorpicker"+mode).spectrum('get').toHexString();
+    var fill_color = $("#fillColorpicker"+mode).spectrum('get').toHexString();
+
+    layers.base[layer_name].layer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))
+    // map.removeLayer(layers.base[layer_name].layer)
+    // layers.base[layer_name] = {}
+    // var layerAdded = addLayerFromURL(map, ListUrl[layer_name], layer_name, opacity, stroke_color, fill_color);
+    // layers.base[layer_name].layer = layerAdded;
+    layers.base[layer_name].style = { stroke: stroke_color, 
+        fill: fill_color,
+        opacity:opacity}
 
 }
 
@@ -142,12 +166,15 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
     {
       addFLayerGestionMenu("link");
     }
-    var filter_nodes = applyNodeDataFilter(nodes);
+
+    var selected_nodes = applyNodeDataFilter(nodes);
+ 
+    // filter_nodes
     //console.log(nodes);
-    var filter_links = applyLinkDataFilter(links, filter_nodes);
+    var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
 
     var len = filter_links.length;
-
+var arrow;
     var featureList = [];
     for (var j = 0; j < len; j++) {
         //     //var j = st[m]
@@ -162,14 +189,14 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
             var dest = nodes[filter_links[j][id_dest]].properties.centroid;
             var rad_ori = 0;
             var rad_dest = 0;
-            if (style.node.size.var !== 'fixed' && style.node.size.var !== null) {
-                rad_ori = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
-                rad_dest = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
+            if (style.node.size.var === 'fixed'){
+                rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
+                rad_dest = Number(style.node.size.ratio) * style.ratioBounds ;
                 
             }
-            else if (style.node.size.var === 'fixed'){
-                rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
-                rad_dest = Number(styles.node.size.ratio) * style.ratioBounds ;
+            else if (style.node.size.var !== null) {
+                rad_ori = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
+                rad_dest = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
                 
             }
             if (style.link.size.var !== 'fixed') {
@@ -181,10 +208,14 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
             
 
             var rad_points = removeRadius(ori, dest, rad_ori, rad_dest);
-            var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
 
+            //TO REMOVE FROM HERE  ori, dest, base_curve, height_curve, width, heigth_arrow, widthArrow, radius_ori, radius_dest
+            var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
+            arrow = drawArrow(style, ori, dest, rad_ori, rad_dest, distance)
             // console.log([simpleArrowCoordinates(basePoint[0], basePoint[1], 0.85 ,distance)])
-            var featureTest = new Feature(new Polygon([simpleArrowCoordinates(basePoint[0], basePoint[1], distance * 3, distance)]));
+           
+            // var featureTest = new Feature(new Polygon([simpleArrowCoordinates(basePoint[0], basePoint[1], distance * 3, distance)]));
+            var featureTest = new Feature(new Polygon([arrow]));
             featureTest.setProperties(filter_links[j]);
             featureTest.setStyle(styleLinkPoly(featureTest))
             //console.log(featureTest)
@@ -196,6 +227,7 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
 
         
     }
+
     var source = new VectorSource({
         features: featureList
     });
@@ -207,7 +239,6 @@ export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
         style: styleLinkPoly,
         renderMode: 'image'
     });
-    linkLayer.setZIndex(45);
     map.addLayer(linkLayer);
 
 
@@ -236,15 +267,23 @@ export function addNodeLayer(map, links, nodes, style) {
     }
     else 
     {
-
-    addFLayerGestionMenu("node");
+        addFLayerGestionMenu("node");
     }
+
     var filter_nodes = applyNodeDataFilter(nodes)
-
-
+console.log(filter_nodes)
+    
+    if(typeof global_data.layers.features.link !== "undefined"){
+    var filter_links = applyLinkDataFilter(links, filter_nodes[0],filter_nodes[1]);
+    filter_nodes = getAllNodesToShow(filter_links,nodes ,filter_nodes[0]);
+    }
+    else{
+        filter_nodes = filter_nodes[0]
+    }
+console.log(filter_nodes)
     var nodeList = []
     for (var feature in filter_nodes) {
-      // console.log(feature)
+     
         //var j = st[m]
         var point = nodes[feature].properties.centroid;
         if (style.node.size.var !== 'fixed') {
@@ -274,8 +313,6 @@ export function addNodeLayer(map, links, nodes, style) {
         renderMode: 'image'
     })
     map.addLayer(nodeLayer);
-
-    nodeLayer.setZIndex(99)
     return nodeLayer;
 }
 
@@ -316,4 +353,23 @@ export function addLayerFromURLNoStyle(map, url, layerName) {
     });
     map.addLayer(URLLayer);
     return URLLayer;
+}
+
+export function addGeoJsonLayer(map, data, name_layer, opacity, stroke_color, fill_color){
+    console.log(data)
+    var vectorSource = new VectorSource({
+        features: new GeoJSON({
+          featureProjection: global_data.projection.name
+        }).readFeatures(data)
+      });
+
+    var geoJsonLayer = new VectorLayer({
+        name: name_layer,
+        //extent: projection.extent,
+        source: vectorSource
+        
+    });
+    // geoJsonLayer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color));
+    map.addLayer(geoJsonLayer);
+    return geoJsonLayer;
 }

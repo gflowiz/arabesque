@@ -1,10 +1,12 @@
 import {getNameVariables} from "./control.js";
-import {addNodeLayer, addLinkLayer} from "./layer.js";
+import {addNodeLayer, addLinkLayer, changeBaseLayer} from "./layer.js";
 
+import 'spectrum-colorpicker/spectrum.js'
+import 'spectrum-colorpicker/spectrum.css'
 
 //PALETTE FOR SMIOLOGY
 //USE OF INTERPOLAR FOR COMPUTE THE COLOR VALUE
-export const paletteColorCat = {
+var paletteColorCat = {
   Category10 : d3.schemeCategory10,
   Accent: d3.schemeAccent,
   Dark2: d3.schemeDark2,
@@ -68,58 +70,106 @@ export const paletteColorSequentialMultiHue2 = {
 
 
 
+export function showChangeBaseLayerParameter(map, layers, mode, layer_name, style){
 
-export function setupStyleAndAddLayer(style){
+    $("#strokeColorpickerChange").spectrum({
+        color: style.stroke
+    });
+    $("#fillColorpickerChange").spectrum({
+        color: style.fill
+    });
 
-  var widthVar = document.getElementById('semioSelectorSizeAdd').value;
+    document.getElementById("opacityLayer"+mode).value = style.opacity;
 
-  var ratio = document.getElementById('ratioMinMaxSizeAdd').value;
-  var colorVar = document.getElementById('semioSelectorColorAdd').value
-  
+    $('#addNewLayerButtonChange').replaceWith($('#addNewLayerButtonChange').clone());
+    document.getElementById('addNewLayerButtonChange').addEventListener("click", function(){changeBaseLayer(map, global_data.layers, "Change", layer_name)}); 
+  return;
+}
+
+
+
+function loadGeometryParameter(style){
+console.log('style')
+  style.link.geometry.type = document.getElementById("arrowtype").value
+  if (document.getElementById("arrowtype").value ==="CurveArrow"){
+    console.log(document.getElementById("baseCurveArrow"))
+    style.link.geometry.place.base = Number(document.getElementById("baseCurveArrow").value)
+    style.link.geometry.place.height = Number(document.getElementById("heightCurveArrow").value)
+  }
+  else if (document.getElementById("arrowtype").value ==="StraightArrow"){
+    style.link.geometry.place.base = null
+    style.link.geometry.place.height = null
+  }
+
+  if (document.getElementById("arrowData").value  === 'oriented'){
+    style.link.geometry.oriented = document.getElementById("arrowData").value
+    style.link.geometry.head.width = Number(document.getElementById("widthArrow").value)
+    style.link.geometry.head.height = Number(document.getElementById("heightArrow").value)
+  }
+    else{
+    style.link.geometry.oriented = document.getElementById("arrowData").value
+    style.link.geometry.head.width = null
+    style.link.geometry.head.height = null
+    }
+}
+
+export function setupStyleAndAddLayer(style, layer_name){
+
+  loadGeometryParameter(style)
+
+  var widthVar = document.getElementById('semioSelectorSizeAdd'+layer_name).value;
+
+  var ratio = document.getElementById('ratioMinMaxSizeAdd'+layer_name).value;
+  var colorVar = document.getElementById('semioSelectorColorAdd'+layer_name).value;
+  var layer =layer_name.toLowerCase();
    
 
-  
-  var textVar = document.getElementById('semioSelectorTextAdd').value
-  var layer = document.getElementById('featureChosenAdd').value
+  if(layer ==='node'){
+  var textVar = document.getElementById('semioSelectorTextAdd'+layer_name).value;
+  style[layer].text = textVar;
+  }
+  else{
+    loadGeometryParameter(style)
+  }
 
 
-  var   opaVar = document.getElementById('semioSelectorOpaAdd').value
+  var   opaVar = document.getElementById('semioSelectorOpaAdd'+layer_name).value;
 
 
-    style[layer].opa.var = opaVar
+    style[layer].opa.var = opaVar;
 
-var opaMinRatio, opaMaxRatio, typeopa;
+  var opaMinRatio, opaMaxRatio, typeopa;
   if(opaVar === 'fixed'){
-    style[layer].opa.vmax =  Number(document.getElementById('ratioMaxOpaAdd').value);
+    style[layer].opa.vmax =  Number(document.getElementById('ratioMaxOpaAdd'+layer_name).value);
 
   }
   else
   {
-    style[layer].opa.vmax  = setupMaxAndMin(opaVar, layer)[1]
-    style[layer].opa.min = document.getElementById('ratioMinOpaAdd').value;
-    style[layer].opa.max = document.getElementById('ratioMaxOpaAdd').value;
-    style[layer].opa.cat = document.getElementById('typeOpaAdd').value;
+    style[layer].opa.vmax  = setupMaxAndMin(opaVar, layer)[1];
+    style[layer].opa.min = document.getElementById('ratioMinOpaAdd'+layer_name).value;
+    style[layer].opa.max = document.getElementById('ratioMaxOpaAdd'+layer_name).value;
+    style[layer].opa.cat = document.getElementById('typeOpaAdd'+layer_name).value;
   }
 
   // sizeMM = setupMaxAndMin(widthVar, layer)
-  var sizeMM = [0,0]
-  var colMM = [0,0]
+  var sizeMM = [0,0];
+  var colMM = [0,0];
 
     if(widthVar !== 'fixed')
       {
         sizeMM = setupMaxAndMin(widthVar, layer)
-        var typeSize = document.getElementById('typeSizeAdd').value;
+        var typeSize = document.getElementById('typeSizeAdd'+layer_name).value;
       }
 
     
     if(colorVar === 'fixed')
     {
-      style[layer].color.palette = $("#semioColorpickerAdd").spectrum('get').toHexString();
+      style[layer].color.palette = $("#semioColorpickerAdd"+layer_name).spectrum('get').toHexString();
     }
     else{
 
-      var colorType = document.getElementById('typeColorAdd').value 
-      style[layer].color.palette = $("#colorPickerAdd>div").find(".selected").attr("value");  
+      var colorType = document.getElementById('typeColorAdd'+layer_name).value 
+      style[layer].color.palette = $("#colorPickerAdd"+layer_name).find(".selected").attr("value");  
       style[layer].color.cat = colorType
       colMM = [0,0]
       if(colorType==='number'){
@@ -141,7 +191,7 @@ var opaMinRatio, opaMaxRatio, typeopa;
       style[layer].size.max = sizeMM[1]
       style[layer].size.min = sizeMM[0]
 
-      style[layer].text = textVar
+
 
 
     applyNewStyle(layer)
@@ -151,7 +201,7 @@ export function applyNewStyle(name_layer){
 
     if(name_layer==='node'){
       
-      if (typeof global_data.layers['link'] !== "undefined"){
+      if (typeof global_data.layers.features['link'] !== "undefined"){
       map.removeLayer(global_data.layers.features['link'])
       global_data.layers.features['link'] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
 
@@ -169,12 +219,13 @@ export function applyNewStyle(name_layer){
     }  
 }
 
-function nodeOrderedCategory(var_name, style){
-style.categorialNodeOrderedColors = {};
-let counts = {}
-data.nodes.features.map(function(item){return item.properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
-var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
-var lenPalette = paletteColorCat[style.color.palette].length;
+export function nodeOrderedCategory(var_name, style){
+  console.log(style)
+  style.categorialNodeOrderedColors = {};
+  let counts = {}
+  data.nodes.features.map(function(item){return item.properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
+  var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
+  var lenPalette = paletteColorCat[style.color.palette].length;
   for(var p=0; p<sortedKeys.length; p++){
     if(p<lenPalette){
     style.categorialNodeOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
@@ -185,12 +236,12 @@ var lenPalette = paletteColorCat[style.color.palette].length;
   }
 }
 
-function linkOrderedCategory(var_name, style){
-style.categorialLinkOrderedColors = {};
-let counts = {}
-data.links.map(function(item){return item[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
-var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
-var lenPalette = paletteColorCat[style.color.palette].length;
+export function linkOrderedCategory(var_name, style){
+  style.categorialLinkOrderedColors = {};
+  let counts = {}
+  data.links.map(function(item){return item[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
+  var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
+  var lenPalette = paletteColorCat[style.color.palette].length;
   for(var p=0; p<sortedKeys.length; p++){
     if(p<lenPalette){
       style.categorialLinkOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
@@ -200,17 +251,20 @@ var lenPalette = paletteColorCat[style.color.palette].length;
     }
   }
 }
+
+
 window.linkOrderedCategory = linkOrderedCategory;
 window.nodeOrderedCategory = nodeOrderedCategory;
 
 export function setupMaxAndMin(var_name, layer_name){
 
   if(layer_name==='node'){
-    var dataArray = data.nodes.features.map(function(item){return item.properties[var_name]})
+    var dataArray = data.nodes.features.map(function(item){return Number(item.properties[var_name])})
   }
   else if (layer_name ==='link'){
-    var dataArray = data.links.map(function(item){return item[var_name]})
+    var dataArray = data.links.map(function(item){return Number(item[var_name])})
   }
+  console.log([Math.min(...dataArray),Math.max(...dataArray)])
   return [Math.min(...dataArray),Math.max(...dataArray)]
 }
 
@@ -219,7 +273,8 @@ export function setupMaxAndMin(var_name, layer_name){
 
 function addColorSemio(name,id_selector,id_parent, variables){
     $("#"+id_parent).append($('<div>')
-                      .attr("class","col-md-2")
+                      .attr("class","col-md-3")
+                      .append('<label class="text-muted h5" for="semioSelectorColor"'+id_selector+'>Variable</label>')
                       .append($('<select>')
                         .attr('class','custom-select')
                           .attr("id","semioSelectorColor"+id_selector)
@@ -241,6 +296,7 @@ document.getElementById("semioSelectorColor"+id_selector).addEventListener("chan
 function addTextSemio(name,id_selector,id_parent, variables){
     $("#"+id_parent).append($('<div>')
                       .attr("class","col-md-12")
+                      .append('<label class="text-muted h5">Variable</label>')
                       .append($('<select>')
                         .attr('class','custom-select')
                           .attr("id","semioSelectorText"+id_selector)
@@ -263,6 +319,7 @@ function addTextSemio(name,id_selector,id_parent, variables){
 function addSizeSemio(name,id_selector,id_parent, variables){
     $("#"+id_parent).append($('<div>')
                       .attr("class","col-md-2")
+                      .append('<label class="text-muted h5">Variable</label>')
                       .append($('<select>')
                         .attr('class','custom-select')
                           .attr("id","semioSelectorSize"+id_selector)
@@ -283,8 +340,10 @@ document.getElementById("semioSelectorSize"+id_selector).addEventListener("chang
 
 //TODO: REAL OPACITY
 function addOpacitySemio(name,id_selector,id_parent, variables){
+  console.log(variables)
     $("#"+id_parent).append($('<div>')
                       .attr("class","col-md-3")
+                      .append('<label class="text-muted h5">Variable</label>')
                       .append($('<select>')
                         .attr('class','custom-select')
                           .attr("id","semioSelectorOpa"+id_selector)
@@ -313,7 +372,9 @@ function addOpaSelect(id_parent, id_ele){
 if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
   $("#"+id_parent).append($('<div>')
                     .attr("id","semioOpaRatioCat"+id_ele)
-                    .attr("class","col-md-4")
+                    .attr("class","col-md-3")
+
+                    .append('<label class="text-muted h5">Scale</label>')
                     .append($('<select>')
                     .attr('class','custom-select')
                     .attr("id","typeOpa"+id_ele)
@@ -327,7 +388,8 @@ if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
 
     $("#"+id_parent).append($('<div>')
                     .attr("id","semioOpaMinRatio"+id_ele)
-                    .attr("class","col-md-2")
+                    .attr("class","col-md-3")
+                    .append('<label class="text-muted h5">Min</label>')
                     .append($('<input>')
                     .attr('class','form-control')
                     .attr("id","ratioMinOpa"+id_ele)
@@ -338,11 +400,12 @@ if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
                     .attr("value",0.25)
                     )
                   )
-  }
+  
 
   $("#"+id_parent).append($('<div>')
                     .attr("id","semioOpaMaxRatio"+id_ele)
-                    .attr("class","col-md-2")
+                    .attr("class","col-md-3")
+                    .append('<label class="text-muted h5">Max</label>')
                     .append($('<input>')
                     .attr('class','form-control')
                     .attr("id","ratioMaxOpa"+id_ele)
@@ -353,6 +416,22 @@ if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
                     .attr("value",0.85)
                     ))
   return
+  }
+  else{
+     $("#"+id_parent).append($('<div>')
+                    .attr("id","semioOpaMaxRatio"+id_ele)
+                    .attr("class","col-md-3")
+                    .append('<label class="text-muted h5">Value</label>')
+                    .append($('<input>')
+                    .attr('class','form-control')
+                    .attr("id","ratioMaxOpa"+id_ele)
+                    .attr("min",0.00)
+                    .attr("step",0.05)
+                    .attr("max",1.00)
+                    .attr("type",'number')
+                    .attr("value",0.85)
+                    ))
+  }
       
 }
 // addSemioColorType(name,id){
@@ -378,18 +457,21 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
   $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatioCat"+id_ele)
                     .attr("class","col-md-4")
+                    .append('<label class="text-muted h5">Scale</label>')
                     .append($('<select>')
                     .attr('class','custom-select')
                     .attr("id","typeSize"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
-
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))       
+                      .append($('<option>', {text:"Linear", value:'Linear'}))  
+                      .append($('<option>', {text:"Square", value:'Sqrt'}))  
+                      // .append($('<option>', {text:"Square", value:'Sqrt'}))          
                     )
                   )
-}
+
     $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatio"+id_ele)
                     .attr("class","col-md-4")
+                    .append('<label class="text-muted h5">Ratio</label>')
                     .append($('<input>')
                     .attr('class','form-control')
                     .attr("id","ratioMinMaxSize"+id_ele)
@@ -397,28 +479,43 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr("value",100)
                     )
                   )
-  return
-      
+    return
+    }
+    else{
+      $("#"+id_parent).append($('<div>')
+                    .attr("id","semioSizeRatio"+id_ele)
+                    .attr("class","col-md-4")
+                    .append('<label class="text-muted h5">Width</label>')
+                    .append($('<input>')
+                    .attr('class','form-control')
+                    .attr("id","ratioMinMaxSize"+id_ele)
+                    .attr("type",'number')
+                    .attr("value",100)
+                    )
+                  )
+    return
+    }  
 }
 
 
 
 function addColorTypeSelector ( id_parent, id_ele){
-    if(document.getElementById("semioTypeColor"+id_ele) !== null){
-      $('#semioTypeColor'+id_ele).remove();
+  console.log($("#typeColor"+id_ele))
+    if($("#typeColor"+id_ele) !== null){
+
+      $("#typeColor"+id_ele).remove();
+      $("#labelTypeColor"+id_ele).remove();
       $('#colorPicker'+id_ele).remove();
     }
 if(document.getElementById('semioSelectorColor'+id_ele).value !== 'fixed'){
-  $("#"+id_parent).append($('<div>')
-                    .attr("id","semioTypeColor"+id_ele)
-                    .attr("class","col-md-2")
+  $("#"+id_parent+'>div').append('<label class="text-muted h5 mt-2" for="typeColor'+id_ele+'" id="labelTypeColor'+id_ele+'">Type</label>')
                     .append($('<select>')
                     .attr('class','custom-select')
                     .attr("id","typeColor"+id_ele)
-                      .append($('<option>', {text:"categorical", value:'categorical'}))
-                      .append($('<option>', {text:"number", value:'number'}))
+                      .append($('<option>', {text:"qualitative", value:'categorical'}))
+                      .append($('<option>', {text:"quantitative", value:'number'}))
                     )
-                  )
+                  
   document.getElementById("typeColor"+id_ele).addEventListener("change", function(){showColors(id_ele, id_parent)});
   
 }
@@ -429,12 +526,12 @@ showColors(id_ele, id_parent)
 
 function showColors(ide, idp){
 
-  if(document.getElementById("semioSelectorColorAdd").value === 'fixed'){
+  if(document.getElementById("semioSelectorColor" + ide).value === 'fixed'){
     showfixed(ide, idp)  
     return
   }
 
-  if(document.getElementById("semioSelectorColorAdd").value !== null){
+  if(document.getElementById("semioSelectorColor"+ ide).value !== null){
       $('#colorPicker'+ide).remove();
     }
 
@@ -459,8 +556,7 @@ function showfixed(ide, idp){
     $("#"+idp).append($('<div>')
       .attr("id",underId)
       .attr("class","col-md-8")
-      .append($('<label>')
-        )
+      .append('<label class="text-muted h5" for="semioColorpicker'+ide+'">Choose color</label>')
       .append($('<input>')
         .attr("id","semioColorpicker"+ide)
         )
@@ -480,7 +576,8 @@ function showPalette(id_ele, id_parent){
   var underId = "colorPicker"+id_ele
   $("#"+id_parent).append($('<div>')
       .attr("id",underId)
-      .attr("class","col-md-8")
+      .attr("class","col-md-7 align-self-end")
+      .append('<label class="text-muted h5">Palette</label>')
       .append($('<div>')
        .attr('class',"row")
         )
@@ -510,6 +607,10 @@ function showPalette(id_ele, id_parent){
         changePalette($(this),id_ele);
         
   });
+  //   $("#"+palettes_names[p]+id_ele).append(svgExample(list_palette[palette[p]][8],n_color)).click( function(){
+  //       changePalette($(this),id_to_control);
+        
+  // });
 }
 }
 
@@ -533,7 +634,8 @@ function changeSelect(element,id){
   }
 
 function removeColorSelected(id){
- $("#colorPicker"+id+">div").find("div.selected").removeClass('selected').attr('ramps');
+  console.log($("#colorPicker"+id).find("div.selected"))
+ $("#colorPicker"+id).find("div.selected").removeClass('selected').attr('ramps');
 }
 
 function changePalette(element,id){
@@ -550,22 +652,60 @@ function showGRadient(id_ele, id_parent){
   var chosenPalette = Object.keys(paletteColorDiverging)[0]
     $("#"+id_parent).append($('<div>')
       .attr("id","colorPicker"+id_ele)
-      .attr("class","col-md-8")
-      .append($('<div>')
-       .attr('class',"row")
-       .attr('id',"diverColor"+id_ele)
+      .attr("class","col-md-9")
+      // .append('<label class="text-muted h5>Palettes</label>')
+      .append($('<table>')
+        .attr('class',"table-borderless") 
+        .append($('<tbody>')           
+          .append($('<tr>')
+            .append($('<td>')
+              .append('<label class="text-muted h5" for="diverging'+id_ele+'">Diverging</label>')
+              )
+            .append($('<td>')
+              .append('<label class="text-muted h5" for="diverging'+id_ele+'">Extra Palettes</label>')
+              )
+          )
+          .append($('<tr>')
+            .append($('<td>')
+              .attr('id',"diverging"+id_ele)
+              )
+              .append($('<td>')
+                .attr('class',"ml-1") 
+                .attr('id',"diverColor"+id_ele)
+              )
+            )
+            .append($('<tr>')
+              .append($('<td>')
+                .append('<label class="text-muted h4">Sequential</label>')
+                )
+            )
+          .append($('<tr>')
+            .append($('<td>')
+                .append('<label class="text-muted h5" for="multi'+id_ele+'">Multi Hue</label>')
+              )
+            .append($('<td>')
+              .append('<label class="text-muted h5" for="single'+id_ele+'">Single Hue</label>')
+              )
+            )
+        .append($('<tr>')
+          // .append('<label class="text-muted h5>Sequential Palettes</label>')
+          .append($('<td>')
+            .attr('id',"multi"+id_ele)
+          )
+          .append($('<td>')
+            .attr('class',"ml-1") 
+            .attr('id',"single"+id_ele)
+          )
         )
-      .append($('<div>')
-       .attr('class',"row")
-       .attr('id',"sequentialColor"+id_ele)
+      )
         )
       )
   //other = Object.keys(paletteColorSequentialMultiHue2)
-  createFrameColorsSeclector(paletteColorSequential,8,"sequentialColor"+id_ele,id_ele)
+  createFrameColorsSeclector(paletteColorSequential,8,"single"+id_ele,id_ele)
 
-  createFrameColorsSeclector(paletteColorSequentialMultiHue,8,"sequentialColor"+id_ele,id_ele)
+  createFrameColorsSeclector(paletteColorSequentialMultiHue,8,"multi"+id_ele,id_ele)
 
-  createFrameColorsSeclector(paletteColorDiverging,8,"diverColor"+id_ele,id_ele)
+  createFrameColorsSeclector(paletteColorDiverging,8,"diverging"+id_ele,id_ele)
 
   createFrameColorsSeclector(paletteColorSequentialMultiHue2,8,"diverColor"+id_ele,id_ele)
 }
@@ -605,50 +745,50 @@ function svgExample(listColor, n_color){
 }
 
 
-export function showSemioParameter(){
+export function showSemioParameter(featureName){
       
-  var featureName = document.getElementById('featureChosenAdd').value;
-   if(document.getElementById('semioSelectorLink') !== null){
-      $('#semioSelectorLink').parent().remove()
-    }
-    if(document.getElementById('semioColorAdd') !== null){
-      $('#semioColorAdd').children().remove()
-    }
-    if(document.getElementById('semioSizeAdd') !== null){
-      $('#semioSizeAdd').children().remove()
-    }
-    if(document.getElementById('semioTextAdd') !== null){
-      $('#semioTextAdd').children().remove()
-    }
-    if(document.getElementById('semioOpaAdd') !== null){
-      $('#semioOpaAdd').children().remove()
-    }
-    if(featureName ==='link'){
-    $('#semioLayerBody').append($('<div>')
-                                .attr("class","col-md-6")
-                                .append($('<select>')
-                                  .attr('class','custom-select')
-                                  .attr("id","semioSelectorLink")
-                                  )
-                                );
+  console.log(featureName)
 
-    var graph = ["oriente", "non_oriente"];
-    for(var p=0; p<graph.length; p++){
-    $('#semioSelectorLink').append($('<option>', {text:graph[p] })
-                        .attr("value",graph[p])
-                        );
+    if(document.getElementById('semioColorAdd'+featureName) !== null){
+      $('#semioColorAdd'+featureName).children().remove()
+    }
+    if(document.getElementById('semioSizeAdd'+featureName) !== null){
+      $('#semioSizeAdd'+featureName).children().remove()
+    }
+    if(document.getElementById('semioTextAdd'+featureName) !== null){
+      $('#semioTextAdd'+featureName).children().remove()
+    }
+    if(document.getElementById('semioOpaAdd'+featureName) !== null){
+      $('#semioOpaAdd'+featureName).children().remove()
+    }
+    // if(featureName ==='link'){
+    // $('#semioLayerBody').append($('<div>')
+    //                             .attr("class","col-md-6")
+    //                             .append($('<select>')
+    //                               .attr('class','custom-select')
+    //                               .attr("id","semioSelectorLink")
+    //                               )
+    //                             );
+
+    // var graph = ["oriente", "non_oriente"];
+    // for(var p=0; p<graph.length; p++){
+    // $('#semioSelectorLink').append($('<option>', {text:graph[p] })
+    //                     .attr("value",graph[p])
+    //                     );
                       
-      }                 
-    } 
+    //   }                 
+    // } 
 
-    var variables = getNameVariables(featureName)
-
-    addColorSemio(featureName,'Add','semioColorAdd', variables)
+    var variables = getNameVariables(featureName.toLowerCase())
+  console.log(featureName)
+console.log(variables)
+    addColorSemio(featureName,'Add'+featureName,'semioColorAdd'+featureName, variables)
     
-    addSizeSemio(featureName,'Add','semioSizeAdd', variables)
-    addTextSemio(featureName,'Add','semioTextAdd', variables)
-
-    addOpacitySemio(name,'Add','semioOpaAdd', variables)
+    addSizeSemio(featureName,'Add'+featureName,'semioSizeAdd'+featureName, variables)
+    if(featureName === 'Node'){
+    addTextSemio(featureName,'Add'+featureName,'semioTextAdd'+featureName, variables)
+    }
+    addOpacitySemio(name,'Add'+featureName,'semioOpaAdd'+featureName, variables)
 }
 
 
@@ -676,6 +816,7 @@ export function changeSemioParameter(name, style){
     addTextSemio(name,'Change','semioTextChange', variables)
 
     addOpacitySemio(name,'Change','semioOpaChange', variables)
+
     loadStyleToModify(name, style[name])
     //TODO SET UP OLD VALUE
     // document.getElementById('changeStyleButton').removeListeners();
@@ -698,7 +839,7 @@ function loadStyleToModify(layer_name, style){
   changeSelect($("#typeColorChange").children('[value="'+style.color.cat+'"]'),"typeColorChange")
   showColors("Change", 'semioColorChange')
   if (style.color.var !== 'fixed'){
-    changePalette($("#colorPickerChange>div").children('[value="'+style.color.palette+'"]'),"Change")
+    changePalette($("#colorPickerChange>table").children('[value="'+style.color.palette+'"]'),"Change")
   }
   else 
   {
@@ -714,10 +855,11 @@ function loadStyleToModify(layer_name, style){
   }
   else
   {
-      $("#ratioMinMaxSizeChange").attr("value",styles.size.ratio)
+      $("#ratioMinMaxSizeChange").attr("value",style.size.ratio)
   }
   
   addOpaSelect("semioOpaChange",'Change')
+
   if (style.opa.var !== 'fixed'){
     changeSelect($("#typeOpaChange").children('[value="'+style.opa.cat+'"]'),"typeOpaChange")
     $("#ratioMaxOpaChange").attr("value",style.opa.max)
@@ -725,6 +867,8 @@ function loadStyleToModify(layer_name, style){
   }
   else
   {
+
+    changeSelect($("#typeOpaChange").children('[value="'+style.opa.cat+'"]'),"typeOpaChange")
     $("#ratioMaxOpaChange").attr("value",style.opa.vmax)
   }
 }
@@ -742,8 +886,6 @@ export function applyChangeStyle(name, style, layers){
     
      style[name].opa.var = opaVar
 
-   console.log(name)
-
   if(opaVar === 'fixed'){
      style[name].opa.vmax = document.getElementById('ratioMaxOpaChange').value;
   }
@@ -759,38 +901,31 @@ export function applyChangeStyle(name, style, layers){
   // sizeMM = setupMaxAndMin(widthVar, layer)
   var sizeMM = [0,0]
   var colMM = [0,0]
-
-
-console.log(style)
-
-
     if(widthVar !== 'fixed')
       {
         sizeMM = setupMaxAndMin(widthVar, name)
       var  typeSize = document.getElementById('typeSizeChange').value;
       }
 
-
-
     if(colorVar === 'fixed')
     {
-      var chosenPalette = $("#semioColorpickerChange").spectrum('get').toHexString();
+      style[name].color.palette = $("#semioColorpickerChange").spectrum('get').toHexString();
     }
     else{
       var colorType = document.getElementById('typeColorChange').value  
       style[name].color.cat = colorType
+
+      style[name].color.palette = $("#colorPickerChange").find(".selected").attr("value");
+
       if(colorType==='number'){
         colMM = setupMaxAndMin(colorVar, name)
       }
       else if(colorType==='categorical'){
+        
         window[name+'OrderedCategory'](colorVar, style[name])
       }
-      var chosenPalette =  $("#colorPickerChange>div").find(".selected").attr("value");
       // sizeMM = setupMaxAndMin(widthVar, name)
-    }
-    
-console.log(sizeMM)
-      style[name].color.palette = chosenPalette
+    }     
      
       style[name].color.var = colorVar
       style[name].color.max = colMM[1]
@@ -798,7 +933,7 @@ console.log(sizeMM)
 
        style[name].text = textVar
       
-      layers[name].changed()
+      // layers[name].changed()
 
      
       style[name].size.var = widthVar

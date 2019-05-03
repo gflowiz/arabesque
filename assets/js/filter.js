@@ -41,16 +41,19 @@ export function addSelectFilterNode(dataset){
 
 }
 
+
+
 function addNodeNumberFilters(){
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .attr("id","selectFilter")
+                                .append('<label for="selectedFilter">Type</label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
                                   .append($("<option selected>"))
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
                                   .append($("<option>" , {text:"Categories", value:'single'}))
+                                  .append($("<option>" , {text:"Remove", value:'Remove'}))
                                   )
 
                                 );
@@ -59,13 +62,14 @@ function addNodeNumberFilters(){
 function addNodeStringFilters(){
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .attr("id","selectFilter")
+                                .append('<label for="selectedFilter">Type</label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
                                   .append($("<option selected>"))
-                                  .append($("<option>" , {text:"Categories", value:'single'}))
+                                  .append($("<option>" , {text:"Categorial", value:'single'}))
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
+                                  .append($("<option>" , {text:"Remove", value:'Remove'}))
                                   )
 
                                 );
@@ -107,7 +111,11 @@ if(name_filter === 'single'){
   refreshFilterModal();
   return;  
 }
-
+if(name_filter === 'Remove'){
+  addRemoveFilter(name_layer, name_variable);
+  refreshFilterModal();
+  return;  
+}
 }
 
 
@@ -127,6 +135,20 @@ function removeFilter(var_to_remove){
 function removeCatFilter(var_to_remove){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
   $("#filter"+id).parent().parent().parent().remove();
+  for(var p=0; p<global_data.filter.length; p++){
+    if(global_data.filter[p].variable === var_to_remove){
+      global_data.filter.splice(p, 1);
+        refreshFilterFeaturesLayers();
+        return;
+    }
+  }
+
+}
+
+
+function removeRemoveCatFilter(var_to_remove){
+  var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
+  $("#removefilter"+id).parent().parent().parent().remove();
   for(var p=0; p<global_data.filter.length; p++){
     if(global_data.filter[p].variable === var_to_remove){
       global_data.filter.splice(p, 1);
@@ -191,6 +213,63 @@ $("#filter"+id).selectpicker();
 return;
 }
 
+function addRemoveFilter(name_layer,name_variable){
+
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+$('#filterDiv').append($('<div>')
+                          .attr("class","row align-items-center m-3")
+                          .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr('for',"filter"+id)
+                                  .attr('class',"h5")
+                                  )
+                          .append($('<div>')
+                            .attr("class","col-sm-10 align-items-center p-0")
+                            .attr("id","removefilterCat")
+
+                          .append($('<select multiple>')
+                            .attr('class',"selectpicker")
+                            // .attr('data-toggle','dropdown')
+                            // .attr('searchable',"Search here..")
+                            .attr("id","removefilter"+id)
+                            // .attr("onchange","changeCatFilterArray('"+name_layer+"','"+name_variable+"','evaluateSingleCat' ,'#filter"+id+"')")
+                            // .append('<option disabled selected>Choose your variables</option>')
+                              )
+                          ).append($('<div>')
+                                  .attr("class","col-sm-1 center-block p-0")
+                                  .append($('<button>')
+                                    .attr("type","button")
+                                    .attr("id", "removeRemoveCatFilterButton"+id)
+                                    .attr("class","close center-block")
+                                    .attr("aria-label",'Close')                               
+                                    .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
+                                    
+                                  )
+                                )
+                          );
+document.getElementById("removeRemoveCatFilterButton"+id).addEventListener("click", function(){removeRemoveCatFilter(name_variable)});  
+
+document.getElementById("removefilter"+id).addEventListener("change", function(){
+  changeCatFilterArray(name_layer,name_variable,'evaluateRemoveCat' ,'#removefilter'+id);
+
+});
+  if(name_layer==='node'){
+    var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
+  }
+  else if (name_layer ==='link'){
+    var keysToShow = [... new Set(data.links.map(function(item){return item[name_variable]}))]
+  }
+  for(var p=0; p<keysToShow.length; p++){
+    $('#removefilter'+id).append($('<option>', {text:String(keysToShow[p]) })
+                        .attr("value",keysToShow[p])
+                        );
+                      
+    }
+$("#removefilter"+id).selectpicker();
+return;
+}
+
+
+
 export function loadSingleCatFilter(name_layer,name_variable,values){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
@@ -221,6 +300,7 @@ export function checkDataToFilter(){
                         .attr('class','row')
                         .append($("<div>")
                           .attr("class","col-md-4")
+                          .append('<label for="filteredLayer">Layer</label>')
                           .append($("<select>")
                             .attr("class","custom-select")
                             .attr("id","filteredLayer")
@@ -253,6 +333,7 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
     if(keysToShow)
     $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
+                                .append('<label for="valueTofilter">Variable</label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","valueTofilter")
@@ -422,12 +503,19 @@ function evaluateRange(data_value, range_filter){
 function evaluateSingleCat(data_value, cat_value){
   return cat_value.includes(data_value);
 }
+
+function evaluateRemoveCat(data_value, cat_value){
+  return !cat_value.includes(data_value);
+}
+
 window.evaluateSingleCat = evaluateSingleCat
 window.evaluateRange = evaluateRange
+window.evaluateRemoveCat = evaluateRemoveCat
+
 // toFilterLink = function(link){
 //   //var bool = true
 //   if(global_data.filter.length === 0 ) return true;
-//   for(i = 0; i < global_data.filter.length; i++){
+//   for(var i = 0; i < global_data.filter.length; i++){
 //     if(global_data.filter[i].layer === 'link'){
 //       //var varL = global_data.filter[i].variable
 //       if  (!window[global_data.filter[i].filter](link[global_data.filter[i].variable],global_data.filter[i].values)){
@@ -437,6 +525,32 @@ window.evaluateRange = evaluateRange
 //   };
 //   return true;
 // }
+
+// export function getRemoveNode(){
+
+// }
+
+// export function getRemoveLink(){
+
+//  return 
+// }
+function toRemoveFilterNode(node){
+
+  if(global_data.filter.length === 0 ) return true;
+  for(var i = 0; i < global_data.filter.length; i++){
+    if(global_data.filter[i].layer === 'node'){
+
+      //var varL = global_data.filter[i].variable
+      if (global_data.filter[i].filter === 'evaluateRemoveCat'){
+        if  (!window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values)){
+        // console.log(window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values))
+        return true;
+        }
+      }
+    } 
+  };
+  return false;
+}
 
 function toFilterNode(node){
 
@@ -468,16 +582,41 @@ function toFilterLink(link){
 }
 
 
-export function applyLinkDataFilter(links,filter_nodes,full_nodes){
 
+export function getAllNodesToShow(links,nodes, filter_nodes){
+  
   var filtered_id = Object.keys(filter_nodes);
 
-  var filteredlinkData = [];
-
+  var selected_nodes = {};
+  var testtedNodes = []
   var len = links.length;
   for(var p = 0; p<len; p++){
     
     if(filtered_id.includes(links[p][global_data.ids.linkID[0]]) || filtered_id.includes(links[p][global_data.ids.linkID[1]]) ){
+      if(!testtedNodes.includes(links[p][global_data.ids.linkID[0]])){
+        testtedNodes.push(links[p][global_data.ids.linkID[0]])
+        selected_nodes[links[p][global_data.ids.linkID[0]]] = nodes[links[p][global_data.ids.linkID[0]]];
+      }
+      if(!testtedNodes.includes(links[p][global_data.ids.linkID[1]])){
+        testtedNodes.push(links[p][global_data.ids.linkID[1]])
+        selected_nodes[links[p][global_data.ids.linkID[1]]] = nodes[links[p][global_data.ids.linkID[1]]];
+      }
+    }
+  }
+
+  return selected_nodes
+}
+
+
+export function applyLinkDataFilter(links,filter_nodes, listToRemove){
+
+  var filtered_id = Object.keys(filter_nodes);
+
+  var filteredlinkData = [];
+  var len = links.length;
+  for(var p = 0; p<len; p++){
+    
+    if((filtered_id.includes(links[p][global_data.ids.linkID[0]]) || filtered_id.includes(links[p][global_data.ids.linkID[1]])) && !(listToRemove.includes(links[p][global_data.ids.linkID[0]]) || listToRemove.includes(links[p][global_data.ids.linkID[1]])) ){
       if(toFilterLink(links[p])){
         filteredlinkData.push(links[p])
       }
@@ -488,17 +627,22 @@ export function applyLinkDataFilter(links,filter_nodes,full_nodes){
 
 export function applyNodeDataFilter(data){
   var filteredNodeData = {};
+  var filteredRemoveNodeData = [];
   var keys =Object.keys(data)
   var len = keys.length;
   for(var p = 0; p<len; p++){
     if(toFilterNode(data[keys[p]])){
-    filteredNodeData[keys[p]] = data[keys[p]];
+      filteredNodeData[keys[p]] = data[keys[p]];
+    }
+    if(toRemoveFilterNode(data[keys[p]]) && global_data.filter.length>0){
+      filteredRemoveNodeData.push(keys[p]);
     }
   }
 
   
-  return filteredNodeData;
+  return [filteredNodeData,filteredRemoveNodeData] ;
 }
+
 
 
 
@@ -586,49 +730,3 @@ function changeNumgFilterArray(name_layer, name_variable, filter, value){
 }
 
 
-
-// D3 example
-// ****************************************
-// Brush functions
-// ****************************************
-
-// function brushmove() {
-//     y.domain(x.range()).range(x.domain());
-//     b = brush.extent();
-
-//     var localBrushYearStart = (brush.empty()) ? brushYearStart : Math.ceil(y(b[0])),
-//         localBrushYearEnd = (brush.empty()) ? brushYearEnd : Math.ceil(y(b[1]));
-
-//     // Snap to rect edge
-//     d3.select("g.brush").call((brush.empty()) ? brush.clear() : brush.extent([y.invert(localBrushYearStart), y.invert(localBrushYearEnd)]));
-
-//     // Fade all years in the histogram not within the brush
-//     d3.selectAll("rect.bar").style("opacity", function(d, i) {
-//       return d.x >= localBrushYearStart && d.x < localBrushYearEnd || brush.empty() ? "1" : ".4";
-//     });
-// }
-
-// function brushend() {
-
-//   var localBrushYearStart = (brush.empty()) ? brushYearStart : Math.ceil(y(b[0])),
-//       localBrushYearEnd = (brush.empty()) ? brushYearEnd : Math.floor(y(b[1]));
-
-//     d3.selectAll("rect.bar").style("opacity", function(d, i) {
-//       return d.x >= localBrushYearStart && d.x <= localBrushYearEnd || brush.empty() ? "1" : ".4";
-//     });
-
-//   // Additional calculations happen here...
-//   // filterPoints();
-//   // colorPoints();
-//   // styleOpacity();
-
-//   // Update start and end years in upper right-hand corner of the map
-//   d3.select("#brushYears").text(localBrushYearStart == localBrushYearEnd ? localBrushYearStart : localBrushYearStart + " - " + localBrushYearEnd);
-
-// }
-
-// function resetBrush() {
-//   brush
-//     .clear()
-//     .event(d3.select(".brush"));
-// }

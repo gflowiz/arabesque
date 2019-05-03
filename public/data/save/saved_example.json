@@ -8,16 +8,33 @@
 			"Ntype":"csv"
 		},
 		"base_layer":[
-		{
-					"name":"countries",
+			{
+					"name":"bounding_box",
 					"style":{
-						"stroke":"#CD5C5C",
-						"fill":"#E9967A",
-						"opacity": 0.7
+						"stroke":"#3498DB",
+						"fill":"#3498DB",
+						"opacity": 0.5
 					},
 					"app": true
-				}
-			
+				},
+			{
+					"name":"countries",
+					"style":{
+						"stroke":"#864305",
+						"fill":"#FF7B00",
+						"opacity": 0.9
+					},
+					"app": true
+				},
+			{
+				"name":"graticules_20",
+				"style":{
+					"stroke":"#000000",
+					"fill":"#000000",
+					"opacity": 0.9
+				},
+				"app": true
+			}
 		],
 		"style":{  
 			"link":{
@@ -42,11 +59,23 @@
 		            "min":0,
 		            "ratio":100
           		},
+            "geometry":{
+                "oriented":"oriented",
+                "type": "CurveArrow",
+                "head":{
+                  "height":0.5,
+                  "width":0.5
+                  },
+                "place":{
+                  "base":0.5,
+                  "height": 0.5
+                  }
+              },
           		"text":null
         	},
   		"node":{
     		"color":{
-          		"palette":"PuOr",
+          		"palette":"Spectral",
 		        "cat":"number",
 		        "var":"balance",
 		        "max":1949,
@@ -61,14 +90,14 @@
           	},
          	"opa":{
           		"cat":"Linear",
-          		"var":"count",
-          		"vmax":180854,
+          		"var":"fixed",
+          		"vmax":0.9,
           		"max":0.9,
           		"min":0.5
           	},
         "text":"name"
         }
-    },
+    	},
 		"filter":[
 			{
 				"filter": "evaluateRange",
@@ -152,6 +181,18 @@
 		            "min":0,
 		            "ratio":100
           		},
+            "geometry":{
+                "oriented":"oriented",
+                "type": "CurveArrow",
+                "head":{
+                  "height":0.5,
+                  "width":0.5
+                  },
+                "place":{
+                  "base":0.5,
+                  "height": 0.5
+                  }
+              },
           		"text":null
         	},
   		"node":{
@@ -177,7 +218,7 @@
           	},
           	"text":null
         }
-    },
+    	},
 		"filter":[
 			{
 				"filter": "evaluateRange",
@@ -209,8 +250,8 @@
 			"last_modification":null
 		}
 	},
-	"World":{
-"files":{
+	"world":{
+		"files":{
 			"node": "public/data/countries.geojson",
 			"link": "public/data/link.json",
 			"Ltype":"json",
@@ -218,11 +259,31 @@
 		},
 		"base_layer":[
 			{
-				"countries":{
-					"style":null,
-					"Zindex":0,
+					"name":"bounding_box",
+					"style":{
+						"stroke":"#3498DB",
+						"fill":"#3498DB",
+						"opacity": 0.5
+					},
 					"app": true
-				}
+				},
+			{
+					"name":"countries",
+					"style":{
+						"stroke":"#864305",
+						"fill":"#FF7B00",
+						"opacity": 0.9
+					},
+					"app": true
+				},
+			{
+				"name":"graticules_20",
+				"style":{
+					"stroke":"#000000",
+					"fill":"#000000",
+					"opacity": 0.9
+				},
+				"app": true
 			}
 		],
 		"style":{  
@@ -230,9 +291,9 @@
         		"color":{
           			"palette":"BuGn",
 			        "cat":"number",
-			        "var":"count",
-			        "max":2426,
-			        "min":0
+			        "var":"Trade Value (US$)",
+			        "max":1032454067,
+			        "min":1
         		},          
         		"opa":{
 			        "cat":null,
@@ -243,47 +304,66 @@
           		},
 	        	"size":{
 		          	"cat":"Linear",
-		            "var":"count",
-		            "max":2426,
-		            "min":0,
+		            "var":"Trade Value (US$)",
+		            "max":1032454067,
+		            "min":1,
 		            "ratio":100
           		},
+            "geometry":{
+                "oriented":"oriented",
+                "type": "CurveArrow",
+                "head":{
+                  "height":0.5,
+                  "width":0.5
+                  },
+                "place":{
+                  "base":0.5,
+                  "height": 0.5
+                  }
+              },
           		"text":null
         	},
   		"node":{
     		"color":{
-          		"palette":"PuOr",
-		        "cat":"number",
-		        "var":"balance",
-		        "max":1949,
-		        "min":-2114
+          		"palette":"Paired",
+		        "cat":"categorical",
+		        "var":"continent",
+		        "max":0,
+		        "min":0
         	},
         	"size":{
-          		"cat":"Linear",
+          		"cat":"Sqrt",
           		"ratio":100,
-          		"var":"degree",
-          		"max":180854,
-          		"min":1520
+          		"var":"pop_est",
+          		"max":1338612970,
+          		"min":-99
           	},
          	"opa":{
           		"cat":"Linear",
-          		"var":"count",
+          		"var":"fixed",
           		"max":0.9,
-          		"min":0.5
+          		"min":0.5,
+          		"vmax": 0.85
           	},
           	"text":null
         }
-    },
+    	},
 		"filter":[
-
+			{
+				"filter": "evaluateSingleCat",
+				"layer": "node",
+				"variable": "iso_a3",
+				"values": ["FRA"]
+			}
+			
 		],
 		"ids":{
-			"nodeID":"id",
+			"nodeID":"iso_a3",
 			"linkID":["Reporter ISO","Partner ISO"],
-			"vol":"count"
+			"vol":"Trade Value (US$)"
 		},
 		"projection":{
-			"name":"EPSG:3857",
+			"name":"eck6",
 			"proj4":null,
 			"extent":null
 		},
