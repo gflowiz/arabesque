@@ -69,19 +69,27 @@ function orientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
     var endY = dest[1]
     var angle = Math.atan2(endY - startY, endX - startX)
 
-	var baseArrow = tranposeLine(ori[0], dest[1], style.ratio_bounds / 2);
+    var reducePointdest = getIntersection(dest,ori,rad_dest)
+    var reducePointOri = getIntersection(ori,dest,rad_ori)
 
-    var percentDist = percent_arrow * Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY))
+    var heigth_arrow = style.link.geometry.head.height
+	var widthArrow = style.link.geometry.head.width
+
+	var dist = heigth_arrow/2   * Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1])) 
+	var baseArrow = tranposeLine(reducePointOri, reducePointdest, style.ratioBounds / 2);
+
+    // var percentDist = heigth_arrow * Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY))
     //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
 
-    var dist = Math.min(arrow_size, percentDist)
-
+   
+    var testWidth = heigth_arrow * width * 2
     // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
-    var topArrowpoint = [-Math.cos(angle) * dist + endX, -Math.sin(angle) * dist + endY]
-    var polyPoint = tranposeLine(point_base1, topArrowpoint, width)
+    var topArrowpoint =  getIntersection(reducePointdest,reducePointOri,testWidth)
+    var polyPoint = tranposeLine(baseArrow[0], topArrowpoint, width)
 
-    topArrowpoint = transposePointVerticalyFromLine(topArrowpoint, [point_base1, point_base2], width + arrow_size * width / 4)
-    return [point_base1, point_base2, topArrowpoint, polyPoint[1], polyPoint[0], point_base1]
+    topArrowpoint = transposePointVerticalyFromLine(topArrowpoint, [baseArrow[0], baseArrow[1]], width + widthArrow * width )
+   
+    return [baseArrow[0], baseArrow[1], topArrowpoint, polyPoint[1], polyPoint[0], baseArrow[0]]
 }
 
 function removeRadius(point_ori, point_dest, radius_ori, radius_dest) {
@@ -121,7 +129,7 @@ export function orientedCurveArrow(style, ori, dest, rad_ori, rad_dest, width){
     var reducePointOri = getIntersection(ori,dest,rad_ori)
 
     var dist = base_curve * Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1]))
-	var base_curve_point = [-Math.cos(angle) * dist + reducePointdest[0], -Math.sin(angle) * dist + reducePointdest[1]]
+	var base_curve_point = [-Math.cos(angle) * dist + reducePointOri[0], -Math.sin(angle) * dist + reducePointOri[1]]
 
 	// get Origin from the radius of the current nodes
 	var center_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist)
@@ -133,7 +141,8 @@ export function orientedCurveArrow(style, ori, dest, rad_ori, rad_dest, width){
 	//Compute the base 
 	var angleFirst  =  Math.atan2(center_curve_point[1] - ori[1], center_curve_point[0] - ori[0])
 	var angleSecond =  Math.atan2(center_curve_point[1] - dest[1], center_curve_point[0] - dest[0])
-	var extremPointArrow = [transposePointVerticalyFromLine(newDest, [dest,center_curve_point], width /2 +widthArrow * width /2), transposePointVerticalyFromLine(newDest, [dest,center_curve_point], -(width /2 +widthArrow *width/2)) ]
+	var extremPointArrow = [transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], width /2 +widthArrow * (width /2)), transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], -(width /2 +(widthArrow *width/2))) ]
+	
 	newOri = [transposePointVerticalyFromLine(newOri, [ori,center_curve_point], width/2), transposePointVerticalyFromLine(newOri, [ori,center_curve_point], - width/2) ]
 	newDest = [transposePointVerticalyFromLine(newDest, [dest,center_curve_point], width/2), transposePointVerticalyFromLine(newDest, [dest,center_curve_point], - width/2) ]
 
@@ -241,7 +250,7 @@ export function addArrowSizeSelect(){
                     .append('<label class="text-muted h5">Heigth</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","widthArrow")
+                    .attr("id","heightArrow")
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -257,7 +266,7 @@ export function addArrowSizeSelect(){
                     .append('<label class="text-muted h5">Width</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","heightArrow")
+                    .attr("id","widthArrow")
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -272,7 +281,6 @@ export function drawArrow(style, ori, dest, rad_ori, rad_dest, distance){
 
 	var selectedArrowType = style.link.geometry.type
 	var isOriented = style.link.geometry.oriented
-	console.log(isOriented + selectedArrowType)
 	return window[isOriented + selectedArrowType](style, ori, dest, rad_ori, rad_dest, distance)
 }
 
@@ -289,7 +297,7 @@ export function addArrowPlaceCurveSelect(){
                     .append('<label class="text-muted h5">Heigth Curve</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","baseCurveArrow")
+                    .attr("id","heightCurveArrow")
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -305,7 +313,7 @@ export function addArrowPlaceCurveSelect(){
                     .append('<label class="text-muted h5">Center Curve</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","heightCurveArrow")
+                    .attr("id","baseCurveArrow")
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
