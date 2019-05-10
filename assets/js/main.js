@@ -184,7 +184,11 @@ for(var i=0; i<Proj.length; i++){
 register(proj4);
 
 
-global.data = {hashedStructureData:{}}
+global.data = {
+    hashedStructureData:{},
+    filter:{}
+  }
+
 global.global_data = {
   "files":{
       "node":null,
@@ -259,7 +263,8 @@ global.global_data = {
         "ratioBounds":null
         }
     },
-    "filter":[],
+    "filter":{"link":[],
+              "node": []},
     "ids":{
       "nodeID":null,
       "linkID":[null,null],
@@ -661,7 +666,7 @@ progressBarLoading("waitLoad", 75)
 computeMinStatNode(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], global_data.ids.vol);
 progressBarLoading("waitLoad", 85)
 data.links = prepareLinkData(data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], data.hashedStructureData, global_data.ids.vol);
-progressBarLoading("waitLoad", 95)
+
 //TODO ADD GESTION OF UNDEFINED NODES REMOVE OR 0/0
 var isCSV = global_data.files.Ntype !== 'geojson'
   computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],isCSV,'kilometers');
@@ -703,5 +708,6 @@ export function prepareLinkData (links, id_ori, id_dest, hash_nodes, id_vol){
     newLinkData.push(links[p])
     }
   }
+  progressBarLoading("waitLoad", 95)
   return newLinkData;
 }

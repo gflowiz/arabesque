@@ -1,7 +1,7 @@
 import {setNextProj, getCentroid} from "./projection.js"; 
 import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.js"
 import {addLayerGestionMenu} from "./control.js"
-import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, checkDataToFilter } from "./filter.js"
+import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, checkDataToFilter,binDataNumValue, binDataRemoveValue, binDataCatValue } from "./filter.js"
 import {addOSMLayer, addNewLayer, addLayerFromURL} from "./layer.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
@@ -39,19 +39,19 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
  			    computeDistance(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], save_para.files.Ntype !== 'geojson' ,'kilometers');
 
 
- loadFilter(save_para.filter)	
+				 loadFilter(save_para.filter)	 //TODO IMPORT  DATA FILTER
 
- loadLayerData(save_para.base_layer, global_var.layers.base)
+				 loadLayerData(save_para.base_layer, global_var.layers.base)
 
- 	if(save_para.style.link.color.cat==='categorical'){
-        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
-      }
-     if(save_para.style.node.color.cat==='categorical'){
-        nodeOrderedCategory(global_var.style.node.color.var, global_var.style.node)
-      }
+				 	if(save_para.style.link.color.cat==='categorical'){
+				        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
+				      }
+				     if(save_para.style.node.color.cat==='categorical'){
+				        nodeOrderedCategory(global_var.style.node.color.var, global_var.style.node)
+				      }
 
- applyNewStyle("link")
- applyNewStyle("node")
+				 applyNewStyle("link")
+				 applyNewStyle("node")
 				document.getElementById("addFilterButton").disabled = false;
 				$('.arrival').fadeOut(450, function(){ $(this).remove();});
 
@@ -68,21 +68,43 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 
 
 function loadFilter(list_filter){
-	var len_filter = list_filter.length
+	var len_filter = list_filter.link.length
 	for(var x = 0; x<len_filter; x++){
 
-		var filter = list_filter[x];
+		var filter = list_filter.link[x];
 
-		if(filter.filter === "evaluateRange"){
-			loadNumFilter(filter.layer, filter.variable, filter.values);
+		if(filter.filter === "numeral"){
+			loadNumFilter('link', filter.variable, filter.values);
+			binDataNumValue(filter.variable, data)
 			
 		}
-		else if(filter.filter === "evaluateSingleCat"){
-			loadSingleCatFilter(filter.layer, filter.variable, filter.values);
+		else if(filter.filter === "categorial"){
+			loadSingleCatFilter('link', filter.variable, filter.values);
+			binDataCatValue(filter.variable, data)
+		}		
+		else if(filter.filter === "remove"){
+			loadSingleCatFilter('link', filter.variable, filter.values);
+			binDataRemoveValue(filter.variable, data)
+		}
+	}
+	var len_filter = list_filter.node.length
+	for(var x = 0; x<len_filter; x++){
+
+		var filter = list_filter.node[x];
+
+		if(filter.filter === "numeral"){
+			loadNumFilter('node', filter.variable, filter.values);
+			
+		}
+		else if(filter.filter === "categorial"){
+			loadSingleCatFilter('node', filter.variable, filter.values);
+			
+		}		
+		else if(filter.filter === "remove"){
+			loadSingleCatFilter('node', filter.variable, filter.values);
 			
 		}
 	}
-	
 }
 
 

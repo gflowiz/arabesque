@@ -1,6 +1,6 @@
 import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer} from "./control.js"
 import {simpleColoredStyle, styleLinkPoly, styleNodeCircle} from "./style.js"
-import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow} from "./filter.js"
+import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow, testLinkDataFilter} from "./filter.js"
 import {drawArrow} from "./geometry.js"
 
 import {Feature} from 'ol';
@@ -155,77 +155,33 @@ function computeDistanceCanvas(layer_name, value, ratio_bounds, styles) {
 }
 
 
-export function addLinkLayer(map, links, nodes, style, id_ori, id_dest) {
+export function filterLinkLayer(map, links, nodes, style, id_ori, id_dest) {
 
-    // console.log('======================')
-    if (Object.keys(global_data.layers.features).includes("link")) {
-        map.removeLayer(global_data.layers.features["link"])
-        
-    }
-    else
-    {
-      addFLayerGestionMenu("link");
-    }
 
     var selected_nodes = applyNodeDataFilter(nodes);
- 
+    var removed_nodes = selected_nodes[1]
+    var list_nodes = Object.keys(selected_nodes[0])
+    var index_links = testLinkDataFilter(global_data.filter.link, data)
+    console.log(index_links)
     // filter_nodes
-    //console.log(nodes);
-    var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
+    console.log(id_ori);
+    //CHANGE IN indexList
+    // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
 
-    var len = filter_links.length;
-var arrow;
+    var len = index_links.length;
+    var arrow;
     var featureList = [];
-    for (var j = 0; j < len; j++) {
-        //     //var j = st[m]
-        //     st = [27, 257]
-        // for (t = 0; t < 2; t++) {
-        //   j = st[t]
-        //This example is usable only for the 2 given files
-        //It will be an prelayer of data selection to choos the ids int hte two minimal file
+    for (var k = 0; k < len; k++) {
+        var j = index_links[k]; // get the index of the filtered links
 
-            var ori = nodes[filter_links[j][id_ori]].properties.centroid;
+        // if(){
+        if((list_nodes.includes(links[j][id_ori]) || list_nodes.includes(links[j][id_dest]) ) && (!removed_nodes.includes(links[j][id_dest]) && !removed_nodes.includes(links[j][id_ori]))){
 
-            var dest = nodes[filter_links[j][id_dest]].properties.centroid;
-            var rad_ori = 0;
-            var rad_dest = 0;
-            if (style.node.size.var === 'fixed'){
-                rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
-                rad_dest = Number(style.node.size.ratio) * style.ratioBounds ;
-                
-            }
-            else if (style.node.size.var !== null) {
-                rad_ori = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
-                rad_dest = computeDistanceCanvas('node', Number(nodes[filter_links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
-                
-            }
-            if (style.link.size.var !== 'fixed') {
-                var distance = computeDistanceCanvas('link', Number(filter_links[j][style.link.size.var]), style.ratioBounds * 0.75, style);
-            }
-            else{
-                var distance = Number(style.link.size.ratio) * style.ratioBounds ;
-            }
-            
+            featureList.push(links[j].polygone);
 
-            var rad_points = removeRadius(ori, dest, rad_ori, rad_dest);
-
-            //TO REMOVE FROM HERE  ori, dest, base_curve, height_curve, width, heigth_arrow, widthArrow, radius_ori, radius_dest
-            var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
-            arrow = drawArrow(style, ori, dest, rad_ori, rad_dest, distance)
-            // console.log([simpleArrowCoordinates(basePoint[0], basePoint[1], 0.85 ,distance)])
-           
-            // var featureTest = new Feature(new Polygon([simpleArrowCoordinates(basePoint[0], basePoint[1], distance * 3, distance)]));
-            var featureTest = new Feature(new Polygon([arrow]));
-            featureTest.setProperties(filter_links[j]);
-            featureTest.setStyle(styleLinkPoly(featureTest))
-            //console.log(featureTest)
-            //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
-            featureList.push(featureTest);
-            // var feat = new ol.Feature(new ol.geom.LineString([ori,dest]));
-            //     feat.setProperties(links[j])
-
-
-        
+           }
+            // if(){} //FOR THE GRAPHIC CHOICE OF SHOW THE NODES LINKS TO THE SELECTED NODES
+        // }
     }
 
     var source = new VectorSource({
@@ -247,6 +203,99 @@ var arrow;
     return linkLayer;
 }
 
+
+export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest) {
+
+    // console.log('======================')
+    if (Object.keys(global_data.layers.features).includes("link")) {
+        map.removeLayer(global_data.layers.features["link"])
+        
+    }
+    else
+    {
+      addFLayerGestionMenu("link");
+    }
+
+    var selected_nodes = applyNodeDataFilter(nodes);
+    var removed_nodes = selected_nodes[1]
+    var list_nodes = Object.keys(selected_nodes[0])
+    var index_links = testLinkDataFilter(global_data.filter.link, data)
+    console.log(index_links)
+    // filter_nodes
+    console.log(id_ori);
+    //CHANGE IN indexList
+    // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
+
+    var len = links.length;
+    var arrow;
+    var featureList = [];
+    for (var j = 0; j < len; j++) {
+         // get the index of the filtered links
+
+        // if(){
+        
+            var ori = nodes[links[j][id_ori]].properties.centroid;
+            var dest = nodes[links[j][id_dest]].properties.centroid;
+            var rad_ori = 0;
+            var rad_dest = 0;
+
+            if (style.node.size.var === 'fixed'){
+                rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
+                rad_dest = Number(style.node.size.ratio) * style.ratioBounds ;
+            }
+            else if (style.node.size.var !== null) {
+                rad_ori = computeDistanceCanvas('node', Number(nodes[links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
+                rad_dest = computeDistanceCanvas('node', Number(nodes[links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
+            
+            }
+            if (style.link.size.var !== 'fixed') {
+                var distance = computeDistanceCanvas('link', Number(links[j][style.link.size.var]), style.ratioBounds * 0.75, style);
+            }
+            else{
+                var distance = Number(style.link.size.ratio) * style.ratioBounds ;
+            }
+        
+            var rad_points = removeRadius(ori, dest, rad_ori, rad_dest);
+
+            var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
+            arrow = drawArrow(style, ori, dest, rad_ori, rad_dest, distance)
+
+            var featureTest = new Feature(new Polygon([arrow]));
+            featureTest.setProperties(links[j]);
+            featureTest.setStyle(styleLinkPoly(featureTest))
+
+
+            if(index_links.includes(j)){
+                if((list_nodes.includes(links[j][id_ori]) || list_nodes.includes(links[j][id_dest]) ) && (!removed_nodes.includes(links[j][id_dest]) && !removed_nodes.includes(links[j][id_ori]))){
+                    featureList.push(featureTest);
+                }
+            }
+
+
+            links[j].polygone = featureTest;
+           
+            // if(){} //FOR THE GRAPHIC CHOICE OF SHOW THE NODES LINKS TO THE SELECTED NODES
+        // }
+    }
+
+    var source = new VectorSource({
+        features: featureList
+    });
+
+
+    var linkLayer = new VectorLayer({
+        name: "Link",
+        source: source,
+        style: styleLinkPoly,
+        renderMode: 'image'
+    });
+    map.addLayer(linkLayer);
+
+
+    
+    linkLayer.changed();
+    return linkLayer;
+}
 
 export function addOSMLayer(map, layers) {
     var layer = new Tile({
@@ -273,16 +322,16 @@ export function addNodeLayer(map, links, nodes, style) {
     var filter_nodes = applyNodeDataFilter(nodes)
 console.log(filter_nodes)
     
-    if(typeof global_data.layers.features.link !== "undefined"){
-    var filter_links = applyLinkDataFilter(links, filter_nodes[0],filter_nodes[1]);
-    filter_nodes = getAllNodesToShow(filter_links,nodes ,filter_nodes[0]);
-    }
-    else{
-        filter_nodes = filter_nodes[0]
-    }
-console.log(filter_nodes)
+    // if(typeof global_data.layers.features.link !== "undefined"){
+    // var filter_links = applyLinkDataFilter(links, filter_nodes[0],filter_nodes[1]);
+    // filter_nodes = getAllNodesToShow(filter_links,nodes ,filter_nodes[0]);
+    // }
+    // else{
+    //     filter_nodes = filter_nodes[0]
+    // }
+// console.log(filter_nodes)
     var nodeList = []
-    for (var feature in filter_nodes) {
+    for (var feature in filter_nodes[0]) {
      
         //var j = st[m]
         var point = nodes[feature].properties.centroid;

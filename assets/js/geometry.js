@@ -112,6 +112,7 @@ function removeRadius(point_ori, point_dest, radius_ori, radius_dest) {
 
 export function orientedCurveArrow(style, ori, dest, rad_ori, rad_dest, width){
 
+
 	var base_curve = style.link.geometry.place.base
 	var height_curve = style.link.geometry.place.height
 	var heigth_arrow = style.link.geometry.head.height
@@ -129,22 +130,24 @@ export function orientedCurveArrow(style, ori, dest, rad_ori, rad_dest, width){
     var reducePointOri = getIntersection(ori,dest,rad_ori)
 
     var dist = base_curve * Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1]))
-	var base_curve_point = [-Math.cos(angle) * dist + reducePointOri[0], -Math.sin(angle) * dist + reducePointOri[1]]
+	var base_curve_point = [-Math.cos(angle) * dist + reducePointdest[0], -Math.sin(angle) * dist + reducePointdest[1]]
 
 	// get Origin from the radius of the current nodes
 	var center_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist)
 	var max_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist + width/2)
 	var min_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist - width/2)
 	var newOri = getIntersection(ori,center_curve_point,rad_ori)
-	var newDest = getIntersection(dest,center_curve_point,rad_dest + heigth_arrow *width) // The height of the arrow is added tested to see the result
+	// console.log(Math.min(heigth_arrow *width, 0.5* dist))
+	var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
+	var newDest = getIntersection(dest,center_curve_point,rad_dest + heigth_arrow) // The height of the arrow is added tested to see the result
 	var pointArrow = getIntersection(dest,center_curve_point,rad_dest)
 	//Compute the base 
 	var angleFirst  =  Math.atan2(center_curve_point[1] - ori[1], center_curve_point[0] - ori[0])
 	var angleSecond =  Math.atan2(center_curve_point[1] - dest[1], center_curve_point[0] - dest[0])
 	var extremPointArrow = [transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], width /2 +widthArrow * (width /2)), transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], -(width /2 +(widthArrow *width/2))) ]
 	
-	newOri = [transposePointVerticalyFromLine(newOri, [ori,center_curve_point], width/2), transposePointVerticalyFromLine(newOri, [ori,center_curve_point], - width/2) ]
-	newDest = [transposePointVerticalyFromLine(newDest, [dest,center_curve_point], width/2), transposePointVerticalyFromLine(newDest, [dest,center_curve_point], - width/2) ]
+	newOri = [transposePointVerticalyFromLine(newOri, [newOri,center_curve_point], width/2), transposePointVerticalyFromLine(newOri, [newOri,center_curve_point], - width/2) ]
+	newDest = [transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], width/2), transposePointVerticalyFromLine(newDest, [newDest,center_curve_point], - width/2) ]
 
 	var pathLow = [newOri[1], min_curve_point, newDest[0]]
 	var pathHigh = [newDest[1], max_curve_point, newOri[0]]

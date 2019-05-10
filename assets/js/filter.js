@@ -2,7 +2,7 @@ import {getNameVariables} from "./control.js"
 import {setupMaxAndMin} from "./semiology.js"
 import {getNameLayers} from "./projection.js"
 
-import {addNodeLayer, addLinkLayer} from "./layer.js";
+import {addNodeLayer, filterLinkLayer} from "./layer.js";
 
 import 'bootstrap-select'
 
@@ -54,6 +54,7 @@ function addNodeNumberFilters(){
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
                                   .append($("<option>" , {text:"Categories", value:'single'}))
                                   .append($("<option>" , {text:"Remove", value:'Remove'}))
+                                  .append($("<option>" , {text:"Temporal", value:'temporal'}))
                                   )
 
                                 );
@@ -70,6 +71,7 @@ function addNodeStringFilters(){
                                   .append($("<option>" , {text:"Categorial", value:'single'}))
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
                                   .append($("<option>" , {text:"Remove", value:'Remove'}))
+                                  .append($("<option>" , {text:"Temporal", value:'Temporal'}))
                                   )
 
                                 );
@@ -98,7 +100,10 @@ var name_layer = document.getElementById('filteredLayer').value;
 var name_variable = document.getElementById('valueTofilter').value;
 var name_filter = document.getElementById('selectedFilter').value;
 
-
+if (name_layer ==='link'){
+  console.log('button')
+  prepareBinFilterData(name_variable, name_filter, data)
+}
 
 
 if(name_filter === 'Num'){
@@ -113,18 +118,156 @@ if(name_filter === 'single'){
 }
 if(name_filter === 'Remove'){
   addRemoveFilter(name_layer, name_variable);
+  // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
+  refreshFilterModal();
+  return;  
+}
+if(name_filter === 'Temporal'){
+  addTemporalFilter(name_layer, name_variable);
+  console.log('button')
+  // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
   refreshFilterModal();
   return;  
 }
 }
 
+export function binDataRemoveValue(name_var, data){
+  if(typeof data.filter[name_var] === 'undefined'){
+    data.filter[name_var] = {remove:{}}
+  }
+  else{
+    data.filter[name_var].remove = {}
+  }
+  var list_value = []
+  var data_to_bin = data.filter[name_var].remove;
+  var len = data.links.length;
+  for(var i = 0; i<len; i++)
+  {
+    var value = data.links[i][name_var].toString()
+    if(!list_value.includes(value)){
+      list_value.push(value)
+      data_to_bin[value] = []
+      data_to_bin[value].push(i)
+    }
+    else{
+      data_to_bin[value].push(i)
+    }
+  }
+}
 
-function removeFilter(var_to_remove){
+export function binTemporalRemoveValue(name_var, data){
+ 
+  if(typeof data.filter[name_var] === 'undefined'){
+    data.filter[name_var] = {temporal:{}}
+  }
+  else{
+    data.filter[name_var].temporal = {}
+  }
+  var list_value = []
+  data.filter[name_var].temporal.data = {};
+  var data_to_bin = data.filter[name_var].temporal.data
+  var len = data.links.length;
+  for(var i = 0; i<len; i++)
+  {
+    var value = data.links[i][name_var].toString()
+    if(!list_value.includes(value)){
+      list_value.push(value)
+      data_to_bin[value] = []
+      data_to_bin[value].push(i)
+    }
+    else{
+      data_to_bin[value].push(i)
+    }
+  }
+  data.filter[name_var].temporal.index = Object.keys(data_to_bin)
+}
+
+export function binDataCatValue(name_var, data){
+  if(typeof data.filter[name_var] === 'undefined'){
+    data.filter[name_var] = {categorial:{}}
+  }
+  else{
+    data.filter[name_var].categorial = {}
+  }
+  var list_value = []
+  var data_to_bin = data.filter[name_var].categorial;
+  var len = data.links.length;
+  for(var i = 0; i<len; i++)
+  {
+    var value = data.links[i][name_var].toString()
+    if(!list_value.includes(value)){
+      list_value.push(value)
+      data_to_bin[value] = []
+      data_to_bin[value].push(i)
+    }
+    else{
+      data_to_bin[value].push(i)
+    }
+  }
+}
+
+export function binDataNumValue(name_var, data){
+  if(typeof data.filter[name_var] === 'undefined'){
+    data.filter[name_var] = {numeral:{
+                                      index: [],
+                                      minima: []
+                                      }
+                                    }
+  }
+  else{
+    data.filter[name_var].numeral = {
+                                      index: [],
+                                      minima: []
+                                      }
+  }
+
+  for(var p = 0; p < 150; p++){
+    data.filter[name_var].numeral.index.push([])
+  }
+  var ArrayToBin = data.links.map(function(item){return Number(item[name_var])})
+  
+  var bin_scale = (Math.max(...ArrayToBin) - Math.min(...ArrayToBin)) / 150
+  var min = Math.min(...ArrayToBin)
+  
+  data.filter[name_var].numeral.minima = [min, Math.max(...ArrayToBin)]
+  var data_to_bin = data.filter[name_var].numeral;
+  var len = data.links.length
+
+  for(var i = 0; i<len; i++)
+  {
+    var value = Number(data.links[i][name_var])
+
+    for(var p = 0; p < 150; p++){
+      
+      if (value <= (min + (p+1) * bin_scale) && value >= (min + p * bin_scale)){
+        data_to_bin.index[p].push(i)
+        break
+      }
+    }
+  }
+}
+
+function prepareBinFilterData(name_variable, filter, data){
+  if(filter === 'Num'){
+    binDataNumValue(name_variable, data)
+  }
+  if(filter === 'single'){
+    binDataCatValue(name_variable, data)
+  }
+  if(filter === 'Remove'){
+    binDataRemoveValue(name_variable, data)
+  }
+   if(filter === 'Temporal'){
+    binTemporalRemoveValue(name_variable, data)
+  }
+}
+
+function removeFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
   $("#filter"+id).parent().remove();
-  for(var p=0; p<global_data.filter.length; p++){
-    if(global_data.filter[p].variable === var_to_remove){
-      global_data.filter.splice(p, 1);
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
         refreshFilterFeaturesLayers();
         return;
     }
@@ -132,12 +275,15 @@ function removeFilter(var_to_remove){
 
 }
 
-function removeCatFilter(var_to_remove){
+
+// prepareBinCatDataFilter(name_layer, name_variable, data)
+
+function removeCatFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
   $("#filter"+id).parent().parent().parent().remove();
-  for(var p=0; p<global_data.filter.length; p++){
-    if(global_data.filter[p].variable === var_to_remove){
-      global_data.filter.splice(p, 1);
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
         refreshFilterFeaturesLayers();
         return;
     }
@@ -146,22 +292,36 @@ function removeCatFilter(var_to_remove){
 }
 
 
-function removeRemoveCatFilter(var_to_remove){
+function removeRemoveCatFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
-  $("#removefilter"+id).parent().parent().parent().remove();
-  for(var p=0; p<global_data.filter.length; p++){
-    if(global_data.filter[p].variable === var_to_remove){
-      global_data.filter.splice(p, 1);
+  $("#removefilter"+id).parent().parent().remove();
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
         refreshFilterFeaturesLayers();
         return;
     }
   }
 
 }
+
+function temporalRemoveCatFilter(var_to_remove, name_layer){
+  var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
+  $("#temporalfilter"+id).parent().parent().remove();
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
+        refreshFilterFeaturesLayers();
+        return;
+    }
+  }
+
+}
+
 function addSingleCatFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
-$('#filterDiv').append($('<div>')
+  $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3")
                           .append($("<label>", {text:name_layer+": "+name_variable})
                                   .attr('for',"filter"+id)
@@ -190,33 +350,92 @@ $('#filterDiv').append($('<div>')
                                     
                                   )
                                 )
-                          );
-document.getElementById("removeCatFilterButton"+id).addEventListener("click", function(){removeCatFilter(name_variable)});  
+                            );
+  document.getElementById("removeCatFilterButton"+id).addEventListener("click", function(){removeCatFilter(name_variable, name_layer)});  
 
-document.getElementById("filter"+id).addEventListener("change", function(){
-  changeCatFilterArray(name_layer,name_variable,'evaluateSingleCat' ,'#filter'+id);
+  document.getElementById("filter"+id).addEventListener("change", function(){
+    changeCatFilterArray(name_layer,name_variable,'categorial' ,'#filter'+id);
 
-});
-  if(name_layer==='node'){
-    var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
-  }
-  else if (name_layer ==='link'){
-    var keysToShow = [... new Set(data.links.map(function(item){return item[name_variable]}))]
-  }
-  for(var p=0; p<keysToShow.length; p++){
-    $('#filter'+id).append($('<option>', {text:String(keysToShow[p]) })
-                        .attr("value",keysToShow[p])
-                        );
-                      
+  });
+    if(name_layer==='node'){
+      var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
     }
-$("#filter"+id).selectpicker();
-return;
+    else if (name_layer ==='link'){
+      var keysToShow = [... new Set(data.links.map(function(item){return item[name_variable]}))]
+    }
+    for(var p=0; p<keysToShow.length; p++){
+      $('#filter'+id).append($('<option>', {text:String(keysToShow[p]) })
+                          .attr("value",keysToShow[p])
+                          );
+                        
+      }
+  $("#filter"+id).selectpicker();
+  return;
+}
+
+function addTemporalFilter(name_layer,name_variable){
+  var len = data.filter[name_variable].temporal.index.length
+  // var len = 50;
+  console.log(len)
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+  $('#filterDiv').append($('<div>')
+                          .attr("class","row align-items-center m-3")
+                          .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr('class',"h5")
+                                  )
+                          .append($('<div>')
+                            .attr("class","col-sm-10 align-items-center p-0")
+                            .attr("id","temporalfilterCat")
+
+                          .append($('<input>')
+                            .attr('class',"selectpicker")
+                            .attr('min','0')
+                            .attr('max',len -1 )
+                            .attr('step',1)
+                            .attr("id","temporalfilter"+id)
+                            .attr("type","range")                          
+
+                            // .append('<option disabled selected>Choose your variables</option>')
+                              )
+                          .append($("<label>", {text:"PUT VALUE HERE"})
+                            .attr('class',"h6")
+                            .attr('id',"h6_remove"+id)
+                            )
+                          ).append($('<div>')
+                                  .attr("class","col-sm-1 center-block p-0")
+                                  .append($('<button>')
+                                    .attr("type","button")
+                                    .attr("id", "temporalCatFilterButton"+id)
+                                    .attr("class","close center-block")
+                                    .attr("aria-label",'Close')                               
+                                    .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
+                                    
+                                  )
+                                )
+                            );
+  document.getElementById("temporalCatFilterButton"+id).addEventListener("click", function(){temporalRemoveCatFilter(name_variable, name_layer)});  
+
+  document.getElementById("temporalfilter"+id).addEventListener("change", function(){
+    changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
+
+  });
+    document.getElementById("temporalfilter"+id).addEventListener("change", function(){
+    showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id );
+
+  });
+
+  return;
+}
+
+function showTemporalValue(name_variable, id, value_id){
+  console.log('dfsdfqs')
+  document.getElementById(id).innerHTML = data.filter[name_variable].temporal.index[Number(document.getElementById(value_id).value)]
 }
 
 function addRemoveFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
-$('#filterDiv').append($('<div>')
+  $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3")
                           .append($("<label>", {text:name_layer+": "+name_variable})
                                   .attr('for',"filter"+id)
@@ -246,12 +465,12 @@ $('#filterDiv').append($('<div>')
                                   )
                                 )
                           );
-document.getElementById("removeRemoveCatFilterButton"+id).addEventListener("click", function(){removeRemoveCatFilter(name_variable)});  
+  document.getElementById("removeRemoveCatFilterButton"+id).addEventListener("click", function(){removeRemoveCatFilter(name_variable, name_layer)});  
 
-document.getElementById("removefilter"+id).addEventListener("change", function(){
-  changeCatFilterArray(name_layer,name_variable,'evaluateRemoveCat' ,'#removefilter'+id);
+  document.getElementById("removefilter"+id).addEventListener("change", function(){
+    changeCatFilterArray(name_layer,name_variable,'remove' ,'#removefilter'+id);
 
-});
+  });
   if(name_layer==='node'){
     var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
   }
@@ -263,9 +482,9 @@ document.getElementById("removefilter"+id).addEventListener("change", function()
                         .attr("value",keysToShow[p])
                         );
                       
-    }
-$("#removefilter"+id).selectpicker();
-return;
+      }
+  $("#removefilter"+id).selectpicker();
+  return;
 }
 
 
@@ -375,7 +594,7 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
                                     )
                                   )
                                 );
-    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeFilter(name_variable)});    
+    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeFilter(name_variable, name_layer)});    
     addD3NumFilter(name_layer, name_variable,values);
 
 }
@@ -489,28 +708,28 @@ brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
   function brushed() {
   var s = d3.event.selection || x.range()
   // console.log(s.map(x.invert, x));
-  changeNumgFilterArray(name_layer, name_variable, "evaluateRange", s.map(x.invert, x))
+  changeNumgFilterArray(name_layer, name_variable, "numeral", s.map(x.invert, x))
 
 }
 }
 
 
-function evaluateRange(data_value, range_filter){
+function numeral(data_value, range_filter){
 
   return Number(data_value) >= Number(range_filter[0]) && Number(data_value) <= range_filter[1];
 }
 
-function evaluateSingleCat(data_value, cat_value){
+function categorial(data_value, cat_value){
   return cat_value.includes(data_value);
 }
 
-function evaluateRemoveCat(data_value, cat_value){
+function remove(data_value, cat_value){
   return !cat_value.includes(data_value);
 }
 
-window.evaluateSingleCat = evaluateSingleCat
-window.evaluateRange = evaluateRange
-window.evaluateRemoveCat = evaluateRemoveCat
+window.remove = remove
+window.categorial = categorial
+window.numeral = numeral
 
 // toFilterLink = function(link){
 //   //var bool = true
@@ -536,16 +755,15 @@ window.evaluateRemoveCat = evaluateRemoveCat
 // }
 function toRemoveFilterNode(node){
 
-  if(global_data.filter.length === 0 ) return true;
-  for(var i = 0; i < global_data.filter.length; i++){
-    if(global_data.filter[i].layer === 'node'){
+  if(global_data.filter.node.length === 0 ) return true;
+  for(var i = 0; i < global_data.filter.node.length; i++){
 
-      //var varL = global_data.filter[i].variable
-      if (global_data.filter[i].filter === 'evaluateRemoveCat'){
-        if  (!window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values)){
+      //var varL = global_data.filter[i].variablevale
+      if (global_data.filter.node[i].filter === 'remove'){
+        if  (!window[global_data.filter.node[i].filter](node.properties[global_data.filter.node[i].variable],global_data.filter.node[i].values)){
         // console.log(window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values))
         return true;
-        }
+        
       }
     } 
   };
@@ -554,14 +772,15 @@ function toRemoveFilterNode(node){
 
 function toFilterNode(node){
 
-  if(global_data.filter.length === 0 ) return true;
-  for(var i = 0; i < global_data.filter.length; i++){
-    if(global_data.filter[i].layer === 'node'){
+  if(global_data.filter.node.length === 0 ) return true;
+  for(var i = 0; i < global_data.filter.node.length; i++){
+
       //var varL = global_data.filter[i].variable
-      if  (!window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values)){
+      // console.log(node.properties[global_data.filter.node[i].variable])
+      if  (!window[global_data.filter.node[i].filter](node.properties[global_data.filter.node[i].variable],global_data.filter.node[i].values)){
         // console.log(window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values))
         return false;
-      }
+      
     } 
   };
   return true;
@@ -625,6 +844,105 @@ export function applyLinkDataFilter(links,filter_nodes, listToRemove){
   return filteredlinkData;
 }
 
+export function testLinkDataFilter(list_filter, data){
+ var index = Array.from(Array(data.links.length).keys())
+  if(list_filter.length === 0){
+    return Array.from(Array(data.links.length).keys())
+  }
+  index = new Set(index)
+  var len = list_filter.length;
+  for(var i = 0; i<len; i++){
+    if (list_filter[i].filter !== "remove"){
+      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data))
+      index = new Set([...index].filter(x => selected_index.has(x)));
+    }
+    else{
+      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data))
+      index = new Set([...index].filter(x => !selected_index.has(x)));
+    }
+  }
+  return [...index]
+}
+
+export function getIndexFromFilter(filter, data){
+  if(filter.filter === 'numeral'){
+    return getIndexFromNumeralFilter(filter, data)
+  }
+  else if(filter.filter === 'temporal'){
+    return getTemporalIndexFromCategorialFilter(filter, data)
+  }{
+    return getIndexFromCategorialFilter(filter, data)
+  }
+  
+}
+
+function getIndexFromNumeralFilter(filter, data){
+  var list_index = []
+
+  var len = filter.values.length;
+  var scale = (data.filter[filter.variable][filter.filter].minima[1] - data.filter[filter.variable][filter.filter].minima[0]) /150
+  var min = data.filter[filter.variable][filter.filter].minima[0]
+
+  console.log(len)
+  for(var m = 0; m<150; m++){
+    if(filter.values[0] <= min + scale*m && filter.values[1] >= min + scale*(m+1)){
+      
+        list_index =list_index.concat(data.filter[filter.variable][filter.filter].index[m])
+    }
+    else if(filter.values[0] >= min + scale*m && filter.values[0] <= min + scale*(m+1)){
+        list_index =list_index.concat(getMinValidId(data.filter[filter.variable][filter.filter].index[m],data.links,filter.values[0], filter.variable))
+    }
+    else if(filter.values[1] >= min + scale*m && filter.values[1] <= min + scale*(m+1)){
+        list_index = list_index.concat(getMaxValidId(data.filter[filter.variable][filter.filter].index[m],data.links,filter.values[1], filter.variable))
+     }
+  }
+  // console.log(list_index)
+  return [...new Set([...list_index])]
+}
+
+function getMaxValidId(list_index_toFilter, links, max_value, name_var){
+  var selected_index = []
+  for (var p = 0; p< list_index_toFilter.length; p++){
+    if(Number(links[list_index_toFilter[p]][name_var])<= max_value)
+      selected_index.push(list_index_toFilter[p])
+  }
+  return selected_index
+}
+
+function getMinValidId(list_index_toFilter, links, min_value, name_var){
+  var selected_index = []
+  for (var p = 0; p< list_index_toFilter.length; p++){
+    if(Number(links[list_index_toFilter[p]][name_var])>= min_value)
+      selected_index.push(list_index_toFilter[p])
+  }
+  return selected_index
+}
+
+function getIndexFromCategorialFilter(filter, data){
+  var list_index = data.filter[filter.variable][filter.filter][filter.values[0]]
+  for(var m = 1; m<filter.values.length; m++){
+  var list_index = [...new Set([...list_index, ...data.filter[filter.variable][filter.filter][filter.values[m]]])];
+  }
+  return list_index
+}
+
+
+function sortOnlyHoursArray(hours){ 
+
+  return hours.sort(function (a, b) {
+      return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
+    });
+}
+
+function getTemporalIndexFromCategorialFilter(filter, data){
+  // var list_index = data.filter[filter.variable][filter.filter].data[filter.values[0]]
+  // console.log(list_index)
+  // for(var m = 1; m<filter.values.length; m++){
+  // var list_index = [...new Set([...list_index, ...data.filter[filter.variable][filter.filter].data[filter.values[m]]])];
+  // }
+  return  data.filter[filter.variable][filter.filter].data[filter.values]
+}
+
 export function applyNodeDataFilter(data){
   var filteredNodeData = {};
   var filteredRemoveNodeData = [];
@@ -655,7 +973,7 @@ function refreshFilterFeaturesLayers(){
     var Zindex = global_data.layers.features[layerNames[m]].getZIndex()
     if(layerNames[m] === "link"){
       map.removeLayer(global_data.layers.features[layerNames[m]]);
-      global_data.layers.features[layerNames[m]]= addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      global_data.layers.features[layerNames[m]]= filterLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
 
       global_data.layers.features[layerNames[m]].setZIndex(Zindex)
     }else if (layerNames[m] === "node"){
@@ -670,7 +988,30 @@ function refreshFilterFeaturesLayers(){
 }
 
 
+function changeTemporalFilterArray(name_layer, name_variable, filter, id){
 
+var value = data.filter[name_variable].temporal.index[Number(document.getElementById(id).value)]
+
+  var i = -1;
+  if(global_data.filter[name_layer].length !== 0){
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if( global_data.filter[name_layer][p].variable === name_variable  && global_data.filter[name_layer][p].filter === filter){
+      i = p;
+      global_data.filter[name_layer][p].values = value;
+      break;
+    }
+  }
+}
+  if(i === -1){
+  global_data.filter[name_layer].push({
+    variable: name_variable,
+    values:value,
+    filter:filter
+    })
+  }  
+
+  refreshFilterFeaturesLayers()
+}
 
 
 function changeCatFilterArray(name_layer, name_variable, filter, id){
@@ -680,18 +1021,17 @@ function changeCatFilterArray(name_layer, name_variable, filter, id){
 });
 
   var i = -1;
-  if(global_data.filter.length !== 0){
-  for(var p=0; p<global_data.filter.length; p++){
-    if( global_data.filter[p].variable === name_variable && global_data.filter[p].layer === name_layer && global_data.filter[p].filter === filter){
+  if(global_data.filter[name_layer].length !== 0){
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if( global_data.filter[name_layer][p].variable === name_variable  && global_data.filter[name_layer][p].filter === filter){
       i = p;
-      global_data.filter[p].values = value;
+      global_data.filter[name_layer][p].values = value;
       break;
     }
   }
 }
   if(i === -1){
-  global_data.filter.push({
-    layer: name_layer, 
+  global_data.filter[name_layer].push({
     variable: name_variable,
     values:value,
     filter:filter
@@ -708,18 +1048,17 @@ function changeNumgFilterArray(name_layer, name_variable, filter, value){
 
 //console.log(value);
   var i = -1;
-  if(global_data.filter.length !== 0){
-  for(var p=0; p<global_data.filter.length; p++){
-    if( global_data.filter[p].variable === name_variable && global_data.filter[p].layer === name_layer && global_data.filter[p].filter === filter){
+  if(global_data.filter[name_layer].length !== 0){
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if( global_data.filter[name_layer][p].variable === name_variable &&  global_data.filter[name_layer][p].filter === filter){
       i = p;
-      global_data.filter[p].values = value;
+      global_data.filter[name_layer][p].values = value;
       break;
     }
   }
 }
   if(i === -1){
-  global_data.filter.push({
-    layer: name_layer, 
+  global_data.filter[name_layer].push({
     variable: name_variable,
     values:value,
     filter:filter

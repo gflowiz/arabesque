@@ -1,7 +1,7 @@
 import * as turf from "@turf/turf"
 import {transform, get as getProjection} from 'ol/proj.js';
 import {View} from 'ol';
-import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, addLinkLayer, addGeoJsonLayer} from "./layer.js";
+import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, generateLinkLayer, addGeoJsonLayer} from "./layer.js";
 
 
 global.Proj = [
@@ -68,7 +68,7 @@ function refreshFeaturesLayers(map,layers, old_projection ,new_projection){
     // console.log(data);
     if(layerNames[m] === "link"){
       map.removeLayer(layers.features[layerNames[m]]);
-      layers.features[layerNames[m]] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      layers.features[layerNames[m]] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
     }else if (layerNames[m] === "node"){
       map.removeLayer(layers.features[layerNames[m]]);
      layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style)

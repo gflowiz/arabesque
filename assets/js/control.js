@@ -3,7 +3,7 @@ Last Update : 19/03/2019
 Bapaume Thomas
 */
 import {showChangeBaseLayerParameter,changeSemioParameter , applyNewStyle} from "./semiology.js";
-import {changeBaseLayer, addLinkLayer} from "./layer.js";
+import {changeBaseLayer, filterLinkLayer} from "./layer.js";
 import 'jquery-ui';
 
 require('jquery-ui-bundle');
@@ -62,7 +62,7 @@ export function removeFeaturesLayer(name) {
     if(name === 'node'){
         if (typeof global_data.layers.features.link !== 'undefined'){
             map.removeLayer(global_data.layers.features['link'])
-            global_data.layers.features['link'] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+            global_data.layers.features['link'] = filterLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
         }
     }
 

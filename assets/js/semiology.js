@@ -1,5 +1,5 @@
 import {getNameVariables} from "./control.js";
-import {addNodeLayer, addLinkLayer, changeBaseLayer} from "./layer.js";
+import {addNodeLayer, generateLinkLayer, changeBaseLayer} from "./layer.js";
 
 import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
@@ -114,9 +114,9 @@ console.log('style')
 }
 
 export function setupStyleAndAddLayer(style, layer_name){
-
+  if(layer_name === 'link'){
   loadGeometryParameter(style)
-
+}
   var widthVar = document.getElementById('semioSelectorSizeAdd'+layer_name).value;
 
   var ratio = document.getElementById('ratioMinMaxSizeAdd'+layer_name).value;
@@ -203,7 +203,7 @@ export function applyNewStyle(name_layer){
       
       if (typeof global_data.layers.features['link'] !== "undefined"){
       map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
 
       }
 
@@ -214,7 +214,7 @@ export function applyNewStyle(name_layer){
       
 
       map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = addLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
     
     }  
 }
