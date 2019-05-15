@@ -1,12 +1,4 @@
-
 import smooth from 'chaikin-smooth'
-
-
-
-
-function curveArrow(point_ori, point_dest, width, curving_ratio, ratio_bounds) {
-
-}
 
 function tranposeLine(point_ori, point_dest, distance) {
 
@@ -75,14 +67,15 @@ function orientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
     var heigth_arrow = style.link.geometry.head.height
 	var widthArrow = style.link.geometry.head.width
 
-	var dist = heigth_arrow/2   * Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1])) 
+	var dist =  Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1])) 
 	var baseArrow = tranposeLine(reducePointOri, reducePointdest, style.ratioBounds / 2);
 
     // var percentDist = heigth_arrow * Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY))
     //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
 
+	// var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
    
-    var testWidth = heigth_arrow * width * 2
+    var testWidth =  Math.min(heigth_arrow *width + width , 0.75* dist)
     // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
     var topArrowpoint =  getIntersection(reducePointdest,reducePointOri,testWidth)
     var polyPoint = tranposeLine(baseArrow[0], topArrowpoint, width)

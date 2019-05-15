@@ -99,16 +99,6 @@
         }
     	},
 		"filter":{"link":[
-			{
-				"filter": "numeral",
-				"variable": "distance",
-				"values": [0,70]
-			},
-			{
-				"filter": "numeral",
-				"variable": "count",
-				"values": [0,2000]
-			}
 		],
 	"node":[]},
 		"ids":{
@@ -250,8 +240,8 @@
 	"world":{
 		"files":{
 			"node": "public/data/countries.geojson",
-			"link": "public/data/link.json",
-			"Ltype":"json",
+			"link": "public/data/comtrade(8).csv",
+			"Ltype":"csv",
 			"Ntype":"geojson"
 		},
 		"base_layer":[
@@ -289,8 +279,8 @@
           			"palette":"BuGn",
 			        "cat":"number",
 			        "var":"Trade Value (US$)",
-			        "max":1032454067,
-			        "min":1
+			        "max":31901758962,
+			        "min":3
         		},          
         		"opa":{
 			        "cat":null,
@@ -302,13 +292,13 @@
 	        	"size":{
 		          	"cat":"Linear",
 		            "var":"Trade Value (US$)",
-		            "max":1032454067,
-		            "min":1,
-		            "ratio":100
+		            "max":31901758962,
+		            "min":3,
+		            "ratio":20
           		},
             "geometry":{
                 "oriented":"oriented",
-                "type": "CurveArrow",
+                "type": "StraightArrow",
                 "head":{
                   "height":0.5,
                   "width":0.5

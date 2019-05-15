@@ -1,7 +1,7 @@
 //TODO remove all funciton in other files like import files 
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter } from "./filter.js"
-import {addOSMLayer, addBaseLayer, addGeoJsonLayer} from "./layer.js";
-import {loadMapFromPresetSave} from "./save.js";
+import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer} from "./layer.js";
+import {loadMapFromPresetSave, loadFilter} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {addLayerGestionMenu} from './control.js';
@@ -186,7 +186,7 @@ register(proj4);
 
 global.data = {
     hashedStructureData:{},
-    filter:{}
+    filter:{link:{}, node:{}}
   }
 
 global.global_data = {
@@ -274,7 +274,6 @@ global.global_data = {
     },
     "projection":{}
 };
-
 
 global_data.projection = Proj[0]
 // Add listener to all button of application
@@ -471,7 +470,12 @@ export function readData(data, ext){
 
 
 function importDataToMap() {
-
+  // console.log(d3.csv)
+//   d3.csv("public/data/swissFlow.csv", function(error, data) {
+//   if(error) throw error;
+//   console.log('ayyayayaya')
+// console.log(data)
+// });
   // if (!ctr.hasData()) return;
 
 
@@ -626,16 +630,19 @@ progressBarLoading("waitLoad", 15)
     data.nodes = createGeoJSON(data.nodes);
   }
 progressBarLoading("waitLoad", 35)
+  var list_id_nodes = []
+  var list_doublon_nodes = []
   var len = data.nodes.features.length;
   for(var p=0; p<len; p++){
 
+    if (!list_id_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID])){
     data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]] = data.nodes.features[p];
     
     var centroid = getCentroid(data.nodes.features[p], global_data.projection.name)
     data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties["centroid"] = centroid   
     data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties[global_data.ids.vol] = 0
 
-    
+    list_id_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
 
     if(maxX < centroid[0]){
       maxX = centroid[0]
@@ -649,9 +656,17 @@ progressBarLoading("waitLoad", 35)
     if(minY > centroid[1]){
       minY = centroid[1]  
     }
-
+  }
+  else{
+    list_doublon_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
+  }
 
 }
+
+if(list_doublon_nodes.length !== 0){
+  alert(list_doublon_nodes.length +"nodes have been removed.")
+}
+
 progressBarLoading("waitLoad", 65)
 var lx = maxX - minX
 var ly = maxY - minY
@@ -662,7 +677,9 @@ map.getView().setCenter(newCenter)
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 
 data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1])
+// data.links = checkIDNodes(data.links, Object.keys(data.hashedStructureData), global_data.ids, global_data.files.Ntype)
 progressBarLoading("waitLoad", 75)
+
 computeMinStatNode(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], global_data.ids.vol);
 progressBarLoading("waitLoad", 85)
 data.links = prepareLinkData(data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], data.hashedStructureData, global_data.ids.vol);
@@ -675,7 +692,14 @@ progressBarLoading("waitLoad", 100)
 document.getElementById("addFilterButton").disabled = false;
 
 $("#featureCard").toggle();
+
+
+
+applyPreselectMap(global_data, global_data.ids.vol, data)
+
 $('.arrival').fadeOut(450, function(){ $(this).remove();});
+
+
 }
 
 function errorModal(){
@@ -710,4 +734,106 @@ export function prepareLinkData (links, id_ori, id_dest, hash_nodes, id_vol){
   }
   progressBarLoading("waitLoad", 95)
   return newLinkData;
+}
+
+
+function applyPreselectMap(main_object, id_volume, data){
+  setupPresetMapStyleLink(main_object.style.link, id_volume, data.links)
+  setupPresetMapFilterLink(main_object.filter.link, id_volume, data.links)
+  setupPresetMapStyleNode(main_object.style.node, id_volume, data.hashedStructureData)
+
+  loadFilter(main_object.filter)
+
+  main_object.layers.features.node = addNodeLayer(map, data.links, data.hashedStructureData, main_object.style)
+  main_object.layers.features.link = generateLinkLayer(map,  data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1])
+  main_object.layers.features.node.setZIndex(1)
+
+}
+
+function  setupPresetMapStyleLink(style, id_volume, links){
+  var arrayVolume = links.map(function(link){return link[id_volume]})
+   style.color = {
+      "palette": "YlGnBu",
+      "cat": "number",
+      "var": id_volume,
+      "max": Math.max(...arrayVolume),
+      "min": Math.min(...arrayVolume)
+    }
+
+    style.opa = {
+      "cat": null,
+      "var": "fixed",
+      "max": null,
+      "min": null,
+      "vmax": "0.85"
+    }
+
+    style.size = {
+      "cat": "Linear",
+      "var": id_volume,
+      "max": Math.max(...arrayVolume),
+      "min": Math.min(...arrayVolume),
+      "ratio": "100"
+    }
+
+    style.geometry = {
+      "oriented": "oriented",
+      "type": "StraightArrow",
+      "head": {
+        "height": 0.5,
+        "width": 0.5
+      },
+      "place": {
+        "base": 0.5,
+        "height": 0.5
+      }
+    }
+}
+
+
+function  setupPresetMapStyleNode(style, id_volume, nodes){
+
+  var arrayVolume = Object.keys(nodes).map(function(node){return nodes[node].properties["balance"]})
+   style.color = {
+      "palette": "RdYlGn",
+      "cat": "number",
+      "var": "balance",
+      "max": Math.max(...arrayVolume),
+      "min": Math.min(...arrayVolume)
+    }
+
+    style.opa = {
+      "cat": null,
+      "var": "fixed",
+      "max": null,
+      "min": null,
+      "vmax": "0.85"
+    }
+  var arrayVolume = Object.keys(nodes).map(function(node){return nodes[node].properties["degree"]})
+    style.size = {
+      "cat": "Linear",
+      "ratio": "100",
+      "var": "degree",
+      "max": Math.max(...arrayVolume),
+      "min": Math.min(...arrayVolume)
+    }
+    style.text = "Choose..."
+
+}
+
+function  setupPresetMapFilterLink(filter, id_volume, links){
+  var arrayVolume = links.map(function(link){return link[id_volume]}).sort(function(a, b) {
+  return b - a;
+})
+   filter.push (  
+    {
+      "variable": id_volume,
+      "values": [
+          arrayVolume[parseInt(arrayVolume.length * 0.1)],
+         Math.max(...arrayVolume)
+      ],
+      "filter": "numeral"
+    }
+  )
+
 }

@@ -67,7 +67,7 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 }
 
 
-function loadFilter(list_filter){
+export function loadFilter(list_filter){
 	var len_filter = list_filter.link.length
 	for(var x = 0; x<len_filter; x++){
 
@@ -75,16 +75,16 @@ function loadFilter(list_filter){
 
 		if(filter.filter === "numeral"){
 			loadNumFilter('link', filter.variable, filter.values);
-			binDataNumValue(filter.variable, data)
+			binDataNumValue('link',filter.variable, data)
 			
 		}
 		else if(filter.filter === "categorial"){
 			loadSingleCatFilter('link', filter.variable, filter.values);
-			binDataCatValue(filter.variable, data)
+			binDataCatValue('link',filter.variable, data)
 		}		
 		else if(filter.filter === "remove"){
 			loadSingleCatFilter('link', filter.variable, filter.values);
-			binDataRemoveValue(filter.variable, data)
+			binDataRemoveValue('link', filter.variable, data, '')
 		}
 	}
 	var len_filter = list_filter.node.length

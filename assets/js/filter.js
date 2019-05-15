@@ -54,13 +54,20 @@ function addNodeNumberFilters(){
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
                                   .append($("<option>" , {text:"Categories", value:'single'}))
                                   .append($("<option>" , {text:"Remove", value:'Remove'}))
-                                  .append($("<option>" , {text:"Temporal", value:'temporal'}))
+                                  .append($("<option>" , {text:"One Category", value:'Temporal'}))
+                                  .append($("<option>" , {text:"Temporal", value:'timeLapse'}))
                                   )
 
                                 );
+    document.getElementById('selectedFilter').addEventListener("change", function(){addTimeSelector()
+  }); 
 }
 
 function addNodeStringFilters(){
+  if(document.getElementById('selectedTimeFilter') !== null){
+    $('#selectedTimeFilter').parent().remove();
+  }
+  
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
                                 .append('<label for="selectedFilter">Type</label>')
@@ -71,15 +78,38 @@ function addNodeStringFilters(){
                                   .append($("<option>" , {text:"Categorial", value:'single'}))
                                   .append($("<option>" , {text:"Numeral", value:'Num'}))
                                   .append($("<option>" , {text:"Remove", value:'Remove'}))
-                                  .append($("<option>" , {text:"Temporal", value:'Temporal'}))
+                                  .append($("<option>" , {text:"One Category", value:'Temporal'}))
+                                  .append($("<option>" , {text:"Temporal", value:'timeLapse'}))
                                   )
 
                                 );
+  document.getElementById('selectedFilter').addEventListener("change", function(){addTimeSelector()
+  }); 
+}
+
+function addTimeSelector(){
+
+  if (document.getElementById('selectedFilter').value === "timeLapse"){
+    $('#filterLayerBody>div').append($('<div>')
+                                .attr("class","col-md-4")
+                                .append('<label for="selectedTimeFilter">Type Time</label>')
+                                .append($('<select>')
+                                  .attr('class','custom-select')
+                                  .attr("id","selectedTimeFilter")
+                                  .append($("<option>", {text:"Date", value:'DateTime'}))
+                                  .append($("<option>" , {text:"Hours", value:'HoursTime'}))
+                                  .append($("<option>" , {text:"TimeStamp", value:'TimeStamp'}))
+                                  )
+                                );
+  }
+  else{
+    $('#selectedTimeFilter').parent().remove();
+  }
 }
 
 function addFilter(name, dataset){
-  if(document.getElementById('selectFilter') !== null){
-    $('#selectFilter').remove();
+  if(document.getElementById('selectedFilter') !== null){
+    $('#selectedFilter').parent().remove();
   }
 
   if(name==='node'){
@@ -96,50 +126,196 @@ export function refreshFilterModal(){
 
 export function addFilterToScreen(){
 
-var name_layer = document.getElementById('filteredLayer').value;
-var name_variable = document.getElementById('valueTofilter').value;
-var name_filter = document.getElementById('selectedFilter').value;
+  var name_layer = document.getElementById('filteredLayer').value;
+  var name_variable = document.getElementById('valueTofilter').value;
+  var name_filter = document.getElementById('selectedFilter').value;
 
-if (name_layer ==='link'){
-  console.log('button')
-  prepareBinFilterData(name_variable, name_filter, data)
-}
+  if (name_layer ==='link'){
+    // console.log('button')
+    prepareBinFilterData(name_layer, name_variable, name_filter, data)
+  }
 
 
-if(name_filter === 'Num'){
-  addNumFilter(name_layer, name_variable);
-  refreshFilterModal();
-  return;  
-}
-if(name_filter === 'single'){
-  addSingleCatFilter(name_layer, name_variable);
-  refreshFilterModal();
-  return;  
-}
-if(name_filter === 'Remove'){
-  addRemoveFilter(name_layer, name_variable);
-  // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
-  refreshFilterModal();
-  return;  
-}
-if(name_filter === 'Temporal'){
-  addTemporalFilter(name_layer, name_variable);
-  console.log('button')
-  // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
-  refreshFilterModal();
-  return;  
-}
+  if(name_filter === 'Num'){
+    addNumFilter(name_layer, name_variable);
+    refreshFilterModal();
+    return;  
+  }
+  if(name_filter === 'single'){
+    addSingleCatFilter(name_layer, name_variable);
+    refreshFilterModal();
+    return;  
+  }
+  if(name_filter === 'Remove'){
+    addRemoveFilter(name_layer, name_variable);
+    // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
+    refreshFilterModal();
+    return;  
+  }
+  if(name_filter === 'Temporal'){
+    addTemporalFilter(name_layer, name_variable);
+    // console.log('button')
+    // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
+    refreshFilterModal();
+    return;  
+  }
+  if(name_filter === 'timeLapse'){
+    addTimeLapseFilter(name_layer, name_variable);
+    // console.log('button')
+    // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
+    refreshFilterModal();
+    return;  
+  }
 }
 
-export function binDataRemoveValue(name_var, data){
-  if(typeof data.filter[name_var] === 'undefined'){
-    data.filter[name_var] = {remove:{}}
+function addTimeLapseFilter(name_layer, name_variable){
+  var timeFormat = document.getElementById('selectedTimeFilter').value 
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
+    
+    $('#filterDiv').append($('<div>')
+                                .attr("class","row align-items-center m-3")
+                                
+                                .append($('<div>')
+                                  .attr("class","col-sm-10 p-0")
+                                  .attr("id","filterTime"+id)
+                                  .append($("<label>", {text:name_layer+": "+name_variable})
+                                    .attr('for',"filterTime"+id)
+                                    .attr('class',"h5")
+                                  )
+                                  )
+                                .append($('<div>')
+                                  .attr("class","col-sm-1 p-0")
+                                  .append($('<button>')
+                                    .attr("type","button")
+                                    .attr("class","close center-block")
+                                    .attr("id","buttonTimeFilter"+id)
+                                    .attr("aria-label",'Close')                             
+                                    .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
+                                    )
+                                  )
+                                );
+    document.getElementById("buttonTimeFilter"+id).addEventListener("click", function(){timeRemoveCatFilter(name_variable, name_layer)});    
+    addD3TimeFilter(name_layer, name_variable,[25,50]);
+
+}
+
+function addD3TimeFilter(name_layer, name_variable,values){
+
+  var color = "steelblue";
+
+ var format = data.filter.link[name_variable].timeLapse.format
+ var index_data = data.filter.link[name_variable].timeLapse.order
+ var sum_data = index_data.map(function(item){return data.filter.link[name_variable].timeLapse.index[item].length})
+ var bins = [] 
+ for(var i = 0; i<index_data.length; i++){
+  bins.push({date:index_data[i], value:sum_data[i]})
+ }
+
+ // console.log(bins)
+ // data = {y:sum_data,
+ //        x:index_data}
+ // data = d3.range(1000).map(d3.randomBates(10));
+ var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+var formatCount = d3.format(",.0f");
+
+var svg = d3.select("#filterTime"+id).append('svg'),
+    margin = {top: 10, right: 15, bottom: 5, left: 15},
+    width = parseInt($("#filterTime"+id).width() - margin.left - margin.right),
+    height = parseInt(100 - margin.top - margin.bottom );
+    svg.attr('width',parseInt($("#filterTime"+id).width()) ).attr('height',150);
+    // svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+bins = bins.map((d) => { d.value = +d.value;
+   return d;  
+        });
+var x = d3.scaleBand().domain(bins.map(function(d) { return d.date; })).rangeRound([0, width]).padding(0.1);
+var y = d3.scaleLinear().rangeRound([height, 0]);
+// console.log(x)
+var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+  y=       y.domain([0, d3.max(bins, function(d) { return d.value; })]);
+// console.log(width)
+// console.log(d3.max(bins, function(d) { return d.value; }))
+// // console.log(x(bins[1].date))
+ g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))          
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
+
+
+        // g.append("g")
+        //     .attr("class", "axis axis--y")
+        //     .call(d3.axisLeft(y).tickSize(0))
+          
+
+        g.selectAll(".bar")
+          .data(bins)
+          .enter().append("rect")
+            .attr("fill","grey")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.date); })
+            .attr("y", function(d) { return y(d.value); })
+            .attr("width", x.bandwidth() )
+            .attr("height", function(d) { return height - y(d.value); });
+    
+var brush = d3.brushX()
+    .extent([[0, 0], [width, height]])
+    .on('end', brushed)
+
+
+var brsuh_to_setup = g.append('g')
+      .attr('class', 'brush')
+      .call(brush)
+      // .call(brush.move, x.domain())
+
+  brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
+
+
+  function brushed() {
+    if (d3.event.sourceEvent.type === 'end') return;
+    console.log(d3.event.sourceEvent)
+  var k = d3.event.selection || x.range()
+    // d3.select(".brush").call(brush.move, x.range().map(s.invert, s));
+    // var min = Infinity;
+    // var max = 0;
+    var j = bins.filter(function(d) {
+        var x0 = x(d.date), //  start of the corresponding band 
+            x1 = x0 +  x.bandwidth(); // end of the corresponding band 
+
+        // check if the start of the brush is before the band 
+        // and if the end of the brush is after the end of the band
+        // if(k[0] <= x0 && k[1] >= x1){
+        //   min = Math.min(x0, min)
+        //   max = Math.max(x1, max)
+        // }
+        return (k[0]- x.bandwidth()/2) <= x0  && (k[1]+ x.bandwidth()/2) >= x1  ;
+    });
+    // brsuh_to_setup.call(brush.move, [min, max]);
+    if(j.length !== 0){
+    d3.select("#filterTime"+id).select(".brush").call(brush.move, [x(j[0].date), x(j[j.length - 1].date) + x.bandwidth()]);
+    console.log(j);
+  }
+    changeTimeFilterArray(name_layer, name_variable, "timeLapse", j.map(function(d) {return d.date}))
+
+}
+
+}
+
+export function binDataRemoveValue(name_layer, name_var, data){
+  if(typeof data.filter[name_layer][name_var] === 'undefined'){
+    data.filter[name_layer][name_var] = {remove:{}}
   }
   else{
-    data.filter[name_var].remove = {}
+    data.filter[name_layer][name_var].remove = {}
   }
   var list_value = []
-  var data_to_bin = data.filter[name_var].remove;
+  var data_to_bin = data.filter[name_layer][name_var].remove;
   var len = data.links.length;
   for(var i = 0; i<len; i++)
   {
@@ -155,17 +331,17 @@ export function binDataRemoveValue(name_var, data){
   }
 }
 
-export function binTemporalRemoveValue(name_var, data){
+export function binTemporalRemoveValue(name_layer, name_var, data){
  
-  if(typeof data.filter[name_var] === 'undefined'){
-    data.filter[name_var] = {temporal:{}}
+  if(typeof data.filter[name_layer][name_var] === 'undefined'){
+    data.filter[name_layer][name_var] = {temporal:{}}
   }
   else{
-    data.filter[name_var].temporal = {}
+    data.filter[name_layer][name_var].temporal = {}
   }
   var list_value = []
-  data.filter[name_var].temporal.data = {};
-  var data_to_bin = data.filter[name_var].temporal.data
+  data.filter[name_layer][name_var].temporal.data = {};
+  var data_to_bin = data.filter[name_layer][name_var].temporal.data
   var len = data.links.length;
   for(var i = 0; i<len; i++)
   {
@@ -179,18 +355,77 @@ export function binTemporalRemoveValue(name_var, data){
       data_to_bin[value].push(i)
     }
   }
-  data.filter[name_var].temporal.index = Object.keys(data_to_bin)
+  data.filter[name_layer][name_var].temporal.index = Object.keys(data_to_bin)
 }
 
-export function binDataCatValue(name_var, data){
-  if(typeof data.filter[name_var] === 'undefined'){
-    data.filter[name_var] = {categorial:{}}
+export function binTimeLapseRemoveValue(name_layer, name_var, data){
+ 
+  var timeFormat = document.getElementById('selectedTimeFilter').value;
+  if(typeof data.filter[name_layer][name_var] === 'undefined'){
+    data.filter[name_layer][name_var] = {timeLapse:{}}
   }
   else{
-    data.filter[name_var].categorial = {}
+    data.filter[name_layer][name_var].timeLapse = {}
+  }
+  var arrayTime = [... new Set(data.links.map(function(item){return item[name_var]}))]
+  data.filter[name_layer][name_var].timeLapse.order = getOrderedDate(arrayTime, timeFormat)
+  // console.log(getOrderedDate(arrayTime, timeFormat))
+  data.filter[name_layer][name_var].timeLapse.index = {}
+  data.filter[name_layer][name_var].timeLapse.format = timeFormat
+  var list_value = []
+  var data_to_bin = data.filter[name_layer][name_var].timeLapse.index
+  var len = data.links.length;
+  for(var i = 0; i<len; i++)
+  {
+    var value = data.links[i][name_var].toString()
+    if(!list_value.includes(value)){
+      list_value.push(value)
+      data_to_bin[value] = []
+      data_to_bin[value].push(i)
+    }
+    else{
+      data_to_bin[value].push(i)
+    }
+  }
+  // data.filter[name_layer][name_var].timeLapse.index = Object.keys(data_to_bin)
+}
+
+function getOrderedDate(dates, format){
+
+  if(format === 'HoursTime'){
+    return dates.sort(function (a, b) {  return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)});
+  }
+  if(format === 'TimeStamp'){ 
+    return dates.sort(function(a, b){return Number(a) - Number(b)});
+  }
+  if(format === 'DateTime'){
+    return  dates.sort(function (a, b) {  return new Date(a.toString()) - new Date(b.toString())});
+  }
+}
+
+function parseTime(date, format){
+  // console.log(dates)
+  // console.log(format)
+  if(format === 'HoursTime'){
+    return  new Date('1970/01/01 ' + date);
+  }
+  if(format === 'TimeStamp'){ 
+    return new Date(Number(date));
+  }
+  if(format === 'DateTime'){
+    return new Date(date.toString());
+  }
+}
+
+export function binDataCatValue(name_layer, name_var, data){
+  if(typeof data.filter[name_layer][name_var] === 'undefined'){
+    data.filter[name_layer][name_var] = {categorial:{}}
+  }
+  else{
+    data.filter[name_layer][name_var].categorial = {}
   }
   var list_value = []
-  var data_to_bin = data.filter[name_var].categorial;
+  var data_to_bin = data.filter[name_layer][name_var].categorial;
   var len = data.links.length;
   for(var i = 0; i<len; i++)
   {
@@ -206,31 +441,31 @@ export function binDataCatValue(name_var, data){
   }
 }
 
-export function binDataNumValue(name_var, data){
-  if(typeof data.filter[name_var] === 'undefined'){
-    data.filter[name_var] = {numeral:{
+export function binDataNumValue(name_layer, name_var, data){
+  if(typeof data.filter[name_layer][name_var] === 'undefined'){
+    data.filter[name_layer][name_var] = {numeral:{
                                       index: [],
                                       minima: []
                                       }
                                     }
   }
   else{
-    data.filter[name_var].numeral = {
+    data.filter[name_layer][name_var].numeral = {
                                       index: [],
                                       minima: []
                                       }
   }
 
   for(var p = 0; p < 150; p++){
-    data.filter[name_var].numeral.index.push([])
+    data.filter[name_layer][name_var].numeral.index.push([])
   }
   var ArrayToBin = data.links.map(function(item){return Number(item[name_var])})
   
   var bin_scale = (Math.max(...ArrayToBin) - Math.min(...ArrayToBin)) / 150
   var min = Math.min(...ArrayToBin)
   
-  data.filter[name_var].numeral.minima = [min, Math.max(...ArrayToBin)]
-  var data_to_bin = data.filter[name_var].numeral;
+  data.filter[name_layer][name_var].numeral.minima = [min, Math.max(...ArrayToBin)]
+  var data_to_bin = data.filter[name_layer][name_var].numeral;
   var len = data.links.length
 
   for(var i = 0; i<len; i++)
@@ -247,24 +482,27 @@ export function binDataNumValue(name_var, data){
   }
 }
 
-function prepareBinFilterData(name_variable, filter, data){
+function prepareBinFilterData(name_layer, name_variable, filter, data){
   if(filter === 'Num'){
-    binDataNumValue(name_variable, data)
+    binDataNumValue(name_layer,name_variable, data)
   }
   if(filter === 'single'){
-    binDataCatValue(name_variable, data)
+    binDataCatValue(name_layer,name_variable, data)
   }
   if(filter === 'Remove'){
-    binDataRemoveValue(name_variable, data)
+    binDataRemoveValue(name_layer,name_variable, data)
   }
    if(filter === 'Temporal'){
-    binTemporalRemoveValue(name_variable, data)
+    binTemporalRemoveValue(name_layer,name_variable, data)
+  }
+   if(filter === 'timeLapse'){
+    binTimeLapseRemoveValue(name_layer,name_variable, data)
   }
 }
 
 function removeFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
-  $("#filter"+id).parent().remove();
+  $("#filter"+id).parent().parent().remove();
   for(var p=0; p<global_data.filter[name_layer].length; p++){
     if(global_data.filter[name_layer][p].variable === var_to_remove){
       global_data.filter[name_layer].splice(p, 1);
@@ -275,12 +513,25 @@ function removeFilter(var_to_remove, name_layer){
 
 }
 
+function removeNumFilter(var_to_remove, name_layer){
+  var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
+  $("#filterNum"+id).parent().remove();
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
+        refreshFilterFeaturesLayers();
+        return;
+    }
+  }
+
+}
 
 // prepareBinCatDataFilter(name_layer, name_variable, data)
 
 function removeCatFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
   $("#filter"+id).parent().parent().parent().remove();
+  console.log($("#filter"+id).parent())
   for(var p=0; p<global_data.filter[name_layer].length; p++){
     if(global_data.filter[name_layer][p].variable === var_to_remove){
       global_data.filter[name_layer].splice(p, 1);
@@ -304,10 +555,23 @@ function removeRemoveCatFilter(var_to_remove, name_layer){
   }
 
 }
+function timeRemoveCatFilter(var_to_remove, name_layer){
+  var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
+  $("#filterTime"+id).parent().remove();
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if(global_data.filter[name_layer][p].variable === var_to_remove){
+      global_data.filter[name_layer].splice(p, 1);
+        refreshFilterFeaturesLayers();
+        return;
+    }
+  }
+
+}
+
 
 function temporalRemoveCatFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
-  $("#temporalfilter"+id).parent().parent().remove();
+  $("#temporalfilter"+id).parent().parent().parent().remove();
   for(var p=0; p<global_data.filter[name_layer].length; p++){
     if(global_data.filter[name_layer][p].variable === var_to_remove){
       global_data.filter[name_layer].splice(p, 1);
@@ -324,12 +588,13 @@ function addSingleCatFilter(name_layer,name_variable){
   $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3")
                           .append($("<label>", {text:name_layer+": "+name_variable})
-                                  .attr('for',"filter"+id)
+                                  .attr('for',"filterCat")
                                   .attr('class',"h5")
                                   )
                           .append($('<div>')
                             .attr("class","col-sm-10 align-items-center p-0")
-                            .attr("id","filterCat")
+                            .attr("id","filterCat")                          
+
 
                           .append($('<select multiple>')
                             .attr('class',"selectpicker")
@@ -374,9 +639,14 @@ function addSingleCatFilter(name_layer,name_variable){
 }
 
 function addTemporalFilter(name_layer,name_variable){
-  var len = data.filter[name_variable].temporal.index.length
+  if(name_layer === 'link'){
+  var len = data.filter[name_layer][name_variable].temporal.index.length
+  }
+  else{
+    var len = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))].length
+  }
   // var len = 50;
-  console.log(len)
+  // console.log(len)
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3")
@@ -384,9 +654,10 @@ function addTemporalFilter(name_layer,name_variable){
                                   .attr('class',"h5")
                                   )
                           .append($('<div>')
-                            .attr("class","col-sm-10 align-items-center p-0")
+                            .attr("class","col-md-11 align-items-center p-0")
                             .attr("id","temporalfilterCat")
-
+                          .append($('<div>')
+                            .attr("class","col-md-12")
                           .append($('<input>')
                             .attr('class',"selectpicker")
                             .attr('min','0')
@@ -394,7 +665,7 @@ function addTemporalFilter(name_layer,name_variable){
                             .attr('step',1)
                             .attr("id","temporalfilter"+id)
                             .attr("type","range")                          
-
+                              )
                             // .append('<option disabled selected>Choose your variables</option>')
                               )
                           .append($("<label>", {text:"PUT VALUE HERE"})
@@ -413,6 +684,10 @@ function addTemporalFilter(name_layer,name_variable){
                                   )
                                 )
                             );
+  showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id ,name_layer)
+  changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
+
+
   document.getElementById("temporalCatFilterButton"+id).addEventListener("click", function(){temporalRemoveCatFilter(name_variable, name_layer)});  
 
   document.getElementById("temporalfilter"+id).addEventListener("change", function(){
@@ -420,16 +695,21 @@ function addTemporalFilter(name_layer,name_variable){
 
   });
     document.getElementById("temporalfilter"+id).addEventListener("change", function(){
-    showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id );
+    showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id ,name_layer);
 
   });
 
   return;
 }
 
-function showTemporalValue(name_variable, id, value_id){
-  console.log('dfsdfqs')
-  document.getElementById(id).innerHTML = data.filter[name_variable].temporal.index[Number(document.getElementById(value_id).value)]
+function showTemporalValue(name_variable, id, value_id, name_layer){
+// console.log(name_layer)
+  if(name_layer === 'link'){
+  document.getElementById(id).innerHTML = data.filter[name_layer][name_variable].temporal.index[Number(document.getElementById(value_id).value)]
+  }
+  else{
+    document.getElementById(id).innerHTML = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))][Number(document.getElementById(value_id).value)]
+  }
 }
 
 function addRemoveFilter(name_layer,name_variable){
@@ -529,12 +809,12 @@ export function checkDataToFilter(){
                             )
                           )
                         )
-document.getElementById("filteredLayer").addEventListener("change", function(){addValuesToFilter()});    
+  document.getElementById("filteredLayer").addEventListener("change", function(){addValuesToFilter()});    
 }
 
 
 
- function addValuesToFilter(){
+function addValuesToFilter(){
 
     var  sel = document.getElementById("filteredLayer");
     var iLayer = sel.options[ sel.selectedIndex ].value;
@@ -545,8 +825,8 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
     if(document.getElementById('valueTofilter') !== null){
       $('#valueTofilter').parent().remove();
     }
-    if(document.getElementById('selectFilter') !== null){
-      $('#selectFilter').remove();
+    if(document.getElementById('selectedFilter') !== null){
+      $('#selectedFilter').parent().remove();
     }
 
     if(keysToShow)
@@ -556,6 +836,7 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","valueTofilter")
+                                  .append("<option selected>Choose...</option>")
                                   )
                                 );
 
@@ -576,12 +857,12 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
     $('#filterDiv').append($('<div>')
                                 .attr("class","row align-items-center m-3")
                                 .append($("<label>", {text:name_layer+": "+name_variable})
-                                  .attr('for',"filter"+id)
+                                  .attr('for',"filterNum"+id)
                                   .attr('class',"h5")
                                   )
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
-                                  .attr("id","filter"+id)
+                                  .attr("id","filterNum"+id)
                                   )
                                 .append($('<div>')
                                   .attr("class","col-sm-1 p-0")
@@ -594,7 +875,7 @@ document.getElementById("filteredLayer").addEventListener("change", function(){a
                                     )
                                   )
                                 );
-    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeFilter(name_variable, name_layer)});    
+    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeNumFilter(name_variable, name_layer)});    
     addD3NumFilter(name_layer, name_variable,values);
 
 }
@@ -607,12 +888,12 @@ function addNumFilter(name_layer, name_variable){
     $('#filterDiv').append($('<div>')
                                 .attr("class","row align-items-center m-3")
                                 .append($("<label>", {text:name_layer+": "+name_variable})
-                                  .attr('for',"filter"+id)
+                                  .attr('for',"filterNum"+id)
                                   .attr('class',"h5")
                                   )
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
-                                  .attr("id","filter"+id)
+                                  .attr("id","filterNum"+id)
                                   )
                                 .append($('<div>')
                                   .attr("class","col-sm-1 p-0")
@@ -625,7 +906,7 @@ function addNumFilter(name_layer, name_variable){
                                     )
                                   )
                                 );
-    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeFilter(name_variable)});    
+    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeNumFilter(name_variable, name_variable)});    
     addD3NumFilter(name_layer, name_variable,setupMaxAndMin(name_variable,name_layer));
 
 }
@@ -644,11 +925,11 @@ function addD3NumFilter(name_layer, name_variable,values){
 var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
 var formatCount = d3.format(",.0f");
 
-var svg = d3.select("#filter"+id).append('svg'),
+var svg = d3.select("#filterNum"+id).append('svg'),
     margin = {top: 10, right: 15, bottom: 5, left: 15},
-    width = $("#filter"+id).width() - margin.left - margin.right,
+    width = $("#filterNum"+id).width() - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom - 5;
-    svg.attr('width',$("#filter"+id).width() ).attr('height',130).attr('onchange',"alert()");
+    svg.attr('width',$("#filterNum"+id).width() ).attr('height',130).attr('onchange',"alert()");
 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.scaleLinear().domain([Math.min(...data_histo),Math.max(...data_histo) + 0.0001])
@@ -671,7 +952,9 @@ var bar = g.selectAll(".bar")
   .data(bins)
   .enter().append("g")
     .attr("class", "bar")
-    .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + Math.round(y(d.length)) + ")"; });
+    .attr("transform", function(d) { 
+      // console.log(d)
+      return "translate(" + x(d.x0) + "," + Math.round(y(d.length)) + ")"; });
 
 bar.append("rect")
     .attr("x", 1)
@@ -714,6 +997,8 @@ brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
 }
 
 
+
+
 function numeral(data_value, range_filter){
 
   return Number(data_value) >= Number(range_filter[0]) && Number(data_value) <= range_filter[1];
@@ -727,6 +1012,12 @@ function remove(data_value, cat_value){
   return !cat_value.includes(data_value);
 }
 
+function temporal(data_value, cat_value){
+  return cat_value.includes(data_value);
+}
+
+
+window.temporal = temporal
 window.remove = remove
 window.categorial = categorial
 window.numeral = numeral
@@ -853,47 +1144,51 @@ export function testLinkDataFilter(list_filter, data){
   var len = list_filter.length;
   for(var i = 0; i<len; i++){
     if (list_filter[i].filter !== "remove"){
-      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data))
+      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data, 'link'))
       index = new Set([...index].filter(x => selected_index.has(x)));
     }
     else{
-      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data))
+      var  selected_index = new Set(getIndexFromFilter(list_filter[i], data, 'link'))
       index = new Set([...index].filter(x => !selected_index.has(x)));
     }
   }
   return [...index]
 }
 
-export function getIndexFromFilter(filter, data){
+export function getIndexFromFilter(filter, data, layer){
   if(filter.filter === 'numeral'){
-    return getIndexFromNumeralFilter(filter, data)
+    return getIndexFromNumeralFilter(filter, data, layer)
   }
   else if(filter.filter === 'temporal'){
-    return getTemporalIndexFromCategorialFilter(filter, data)
-  }{
-    return getIndexFromCategorialFilter(filter, data)
+    return getTemporalIndexFromCategorialFilter(filter, data, layer)
+  }
+  else if(filter.filter === 'timeLapse'){
+    return getTimeIndexFromCategorialFilter(filter, data, layer)
+  }
+  else{
+    return getIndexFromCategorialFilter(filter, data, layer)
   }
   
 }
 
-function getIndexFromNumeralFilter(filter, data){
+function getIndexFromNumeralFilter(filter, data, layer){
   var list_index = []
 
   var len = filter.values.length;
-  var scale = (data.filter[filter.variable][filter.filter].minima[1] - data.filter[filter.variable][filter.filter].minima[0]) /150
-  var min = data.filter[filter.variable][filter.filter].minima[0]
+  var scale = (data.filter[layer][filter.variable][filter.filter].minima[1] - data.filter[layer][filter.variable][filter.filter].minima[0]) /150
+  var min = data.filter[layer][filter.variable][filter.filter].minima[0]
 
-  console.log(len)
+  // console.log(len)
   for(var m = 0; m<150; m++){
     if(filter.values[0] <= min + scale*m && filter.values[1] >= min + scale*(m+1)){
       
-        list_index =list_index.concat(data.filter[filter.variable][filter.filter].index[m])
+        list_index =list_index.concat(data.filter[layer][filter.variable][filter.filter].index[m])
     }
     else if(filter.values[0] >= min + scale*m && filter.values[0] <= min + scale*(m+1)){
-        list_index =list_index.concat(getMinValidId(data.filter[filter.variable][filter.filter].index[m],data.links,filter.values[0], filter.variable))
+        list_index =list_index.concat(getMinValidId(data.filter[layer][filter.variable][filter.filter].index[m],data.links,filter.values[0], filter.variable))
     }
     else if(filter.values[1] >= min + scale*m && filter.values[1] <= min + scale*(m+1)){
-        list_index = list_index.concat(getMaxValidId(data.filter[filter.variable][filter.filter].index[m],data.links,filter.values[1], filter.variable))
+        list_index = list_index.concat(getMaxValidId(data.filter[layer][filter.variable][filter.filter].index[m],data.links,filter.values[1], filter.variable))
      }
   }
   // console.log(list_index)
@@ -918,13 +1213,23 @@ function getMinValidId(list_index_toFilter, links, min_value, name_var){
   return selected_index
 }
 
-function getIndexFromCategorialFilter(filter, data){
-  var list_index = data.filter[filter.variable][filter.filter][filter.values[0]]
+function getIndexFromCategorialFilter(filter, data, layer){
+  var list_index = data.filter[layer][filter.variable][filter.filter][filter.values[0]]
   for(var m = 1; m<filter.values.length; m++){
-  var list_index = [...new Set([...list_index, ...data.filter[filter.variable][filter.filter][filter.values[m]]])];
+  var list_index = [...new Set([...list_index, ...data.filter[layer][filter.variable][filter.filter][filter.values[m]]])];
   }
   return list_index
 }
+
+function getTimeIndexFromCategorialFilter(filter, data, layer){
+  var list_index = data.filter[layer][filter.variable][filter.filter].index[filter.values[0]]
+  // console.log(list_index)
+  for(var m = 1; m<filter.values.length; m++){
+    list_index = [...new Set([...list_index, ...data.filter[layer][filter.variable][filter.filter].index[filter.values[m]]])];
+  }
+  return list_index
+}
+
 
 
 function sortOnlyHoursArray(hours){ 
@@ -934,13 +1239,13 @@ function sortOnlyHoursArray(hours){
     });
 }
 
-function getTemporalIndexFromCategorialFilter(filter, data){
+function getTemporalIndexFromCategorialFilter(filter, data, layer){
   // var list_index = data.filter[filter.variable][filter.filter].data[filter.values[0]]
   // console.log(list_index)
   // for(var m = 1; m<filter.values.length; m++){
   // var list_index = [...new Set([...list_index, ...data.filter[filter.variable][filter.filter].data[filter.values[m]]])];
   // }
-  return  data.filter[filter.variable][filter.filter].data[filter.values]
+  return  data.filter[layer][filter.variable][filter.filter].data[filter.values]
 }
 
 export function applyNodeDataFilter(data){
@@ -990,7 +1295,13 @@ function refreshFilterFeaturesLayers(){
 
 function changeTemporalFilterArray(name_layer, name_variable, filter, id){
 
-var value = data.filter[name_variable].temporal.index[Number(document.getElementById(id).value)]
+if(name_layer === 'link'){
+  var value = data.filter[name_layer][name_variable].temporal.index[Number(document.getElementById(id).value)]
+  }
+else{
+    var value = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))][Number(document.getElementById(id).value)]
+}
+
 
   var i = -1;
   if(global_data.filter[name_layer].length !== 0){
@@ -1046,6 +1357,31 @@ function changeNumgFilterArray(name_layer, name_variable, filter, value){
 
 
 
+//console.log(value);
+  var i = -1;
+  if(global_data.filter[name_layer].length !== 0){
+  for(var p=0; p<global_data.filter[name_layer].length; p++){
+    if( global_data.filter[name_layer][p].variable === name_variable &&  global_data.filter[name_layer][p].filter === filter){
+      i = p;
+      global_data.filter[name_layer][p].values = value;
+      break;
+    }
+  }
+}
+  if(i === -1){
+  global_data.filter[name_layer].push({
+    variable: name_variable,
+    values:value,
+    filter:filter
+    })
+  }  
+
+  refreshFilterFeaturesLayers()
+}
+
+
+function changeTimeFilterArray(name_layer, name_variable, filter, value){
+  
 //console.log(value);
   var i = -1;
   if(global_data.filter[name_layer].length !== 0){

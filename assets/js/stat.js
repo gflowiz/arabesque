@@ -27,6 +27,30 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
+// export function checkIDLinks(nodes_list, ids, file_type){
+//   // var list_id_ori
+//   // var list_id_dest
+//   var has_link_removed = false;
+//   var filtered_links = [];
+//   var n = 0;
+//   for(var p=0; p<links.length;p++){
+//     if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest])){
+//       filtered_links.push(links[p])
+//     }
+//     else{
+//       n++;
+//       has_link_removed = true;
+//     }
+//   }
+//   console.log('-----------------------------------')
+
+//   console.log(n)
+//   if(has_link_removed){
+//     alert(n+" Links have been removed. No equivalent nodes have been found.")
+//   }
+// return filtered_links
+// }
+
 export function checkIDLinks(links, nodes_list, id_ori, id_dest){
   // var list_id_ori
   // var list_id_dest

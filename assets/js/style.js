@@ -76,12 +76,12 @@ export function styleLinkPoly(feature){
             // lineCap:'butt',
             //lineJoin:'miter'rgb(255,250,250)
         }),
-        stroke: new Stroke({
-            color: "rgb(255,250,250,0.4)",
-            width: 2
-            // lineCap:'butt',
-            //lineJoin:'miter'rgb(255,250,250)
-        }),
+        // stroke: new Stroke({
+        //     color: "rgb(255,250,250,0.4)",
+        //     width: 2
+        //     // lineCap:'butt',
+        //     //lineJoin:'miter'rgb(255,250,250)
+        // }),
         zIndex: zindex,
         // text:new Text()
 

@@ -347,8 +347,7 @@ function addOpacitySemio(name,id_selector,id_parent, variables){
                       .append($('<select>')
                         .attr('class','custom-select')
                           .attr("id","semioSelectorOpa"+id_selector)
-                          .append('<option selected disable>Choose...</option>')
-                          .append('<option value="fixed">fixed</option>')
+                          .append('<option selected value="fixed">fixed</option>')
                        )
                      );
 
@@ -361,6 +360,7 @@ function addOpacitySemio(name,id_selector,id_parent, variables){
     }   
 
 document.getElementById("semioSelectorOpa"+id_selector).addEventListener("change", function(){addOpaSelect(id_parent, id_selector)});
+addOpaSelect(id_parent, id_selector)
 }
 
 function addOpaSelect(id_parent, id_ele){
@@ -839,7 +839,7 @@ function loadStyleToModify(layer_name, style){
   changeSelect($("#typeColorChange").children('[value="'+style.color.cat+'"]'),"typeColorChange")
   showColors("Change", 'semioColorChange')
   if (style.color.var !== 'fixed'){
-    changePalette($("#colorPickerChange>table").children('[value="'+style.color.palette+'"]'),"Change")
+    changePalette($("#colorPickerChange").find('[value="'+style.color.palette+'"]'),"Change")
   }
   else 
   {

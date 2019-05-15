@@ -162,10 +162,10 @@ export function filterLinkLayer(map, links, nodes, style, id_ori, id_dest) {
     var removed_nodes = selected_nodes[1]
     var list_nodes = Object.keys(selected_nodes[0])
     var index_links = testLinkDataFilter(global_data.filter.link, data)
-    console.log(index_links)
-    // filter_nodes
-    console.log(id_ori);
-    //CHANGE IN indexList
+    // console.log(index_links)
+    // // filter_nodes
+    // console.log(id_ori);
+    // //CHANGE IN indexList
     // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
 
     var len = index_links.length;
@@ -220,9 +220,9 @@ export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest) {
     var removed_nodes = selected_nodes[1]
     var list_nodes = Object.keys(selected_nodes[0])
     var index_links = testLinkDataFilter(global_data.filter.link, data)
-    console.log(index_links)
-    // filter_nodes
-    console.log(id_ori);
+    // console.log(index_links)
+    // // filter_nodes
+    // console.log(id_ori);
     //CHANGE IN indexList
     // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
 
@@ -320,7 +320,7 @@ export function addNodeLayer(map, links, nodes, style) {
     }
 
     var filter_nodes = applyNodeDataFilter(nodes)
-console.log(filter_nodes)
+// console.log(filter_nodes)
     
     // if(typeof global_data.layers.features.link !== "undefined"){
     // var filter_links = applyLinkDataFilter(links, filter_nodes[0],filter_nodes[1]);
@@ -405,7 +405,7 @@ export function addLayerFromURLNoStyle(map, url, layerName) {
 }
 
 export function addGeoJsonLayer(map, data, name_layer, opacity, stroke_color, fill_color){
-    console.log(data)
+    // console.log(data)
     var vectorSource = new VectorSource({
         features: new GeoJSON({
           featureProjection: global_data.projection.name
