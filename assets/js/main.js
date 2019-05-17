@@ -27,9 +27,9 @@ import '../css/control.css'
 import  proj4 from 'proj4';
 
 
-$("#layerControlList").tooltip({placement:"right",
-title:"Drag and drop layers to change Z-index"
-})
+// $("#layerControlList").tooltip({placement:"right",
+// title:"Drag and drop layers to change Z-index"
+// })
     $("#strokeColorpickerAdd").spectrum({
         color: "#1E90FF"
     });

@@ -1,7 +1,7 @@
 import {setNextProj, getCentroid} from "./projection.js"; 
 import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.js"
 import {addLayerGestionMenu} from "./control.js"
-import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, checkDataToFilter,binDataNumValue, binDataRemoveValue, binDataCatValue } from "./filter.js"
+import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, loadRemoveFilter, checkDataToFilter,loadBinFilterData, loadTemporalFilter, loadTimeLapseFilter} from "./filter.js"
 import {addOSMLayer, addNewLayer, addLayerFromURL} from "./layer.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
@@ -72,19 +72,29 @@ export function loadFilter(list_filter){
 	for(var x = 0; x<len_filter; x++){
 
 		var filter = list_filter.link[x];
-
+console.log(filter.filter)
 		if(filter.filter === "numeral"){
+			loadBinFilterData('link',filter.variable,filter, data);
 			loadNumFilter('link', filter.variable, filter.values);
-			binDataNumValue('link',filter.variable, data)
 			
 		}
 		else if(filter.filter === "categorial"){
+
+			loadBinFilterData('link',filter.variable, filter, data);
 			loadSingleCatFilter('link', filter.variable, filter.values);
-			binDataCatValue('link',filter.variable, data)
 		}		
 		else if(filter.filter === "remove"){
-			loadSingleCatFilter('link', filter.variable, filter.values);
-			binDataRemoveValue('link', filter.variable, data, '')
+
+			loadBinFilterData('link', filter.variable, filter, data);
+			loadRemoveFilter('link', filter.variable, filter.values);
+		}		
+		else if(filter.filter === "temporal"){
+			loadBinFilterData('link', filter.variable, filter, data);
+			loadTemporalFilter('link', filter.variable, filter.values);
+		}		
+		else if(filter.filter === "timeLapse"){
+			loadBinFilterData('link', filter.variable, filter, data);
+			loadTimeLapseFilter('link', filter.variable, filter.values);
 		}
 	}
 	var len_filter = list_filter.node.length
@@ -101,8 +111,12 @@ export function loadFilter(list_filter){
 			
 		}		
 		else if(filter.filter === "remove"){
-			loadSingleCatFilter('node', filter.variable, filter.values);
+			loadRemoveFilter('node', filter.variable, filter.values);
 			
+		}		
+		else if(filter.filter === "temporal"){
+			loadRemoveFilter('link', filter.variable, filter.values);
+			// binDataRemoveValue('link', filter.variable, data, '')
 		}
 	}
 }

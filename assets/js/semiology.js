@@ -1,4 +1,4 @@
-import {getNameVariables} from "./control.js";
+import {getNameVariables, refreshZindex} from "./control.js";
 import {addNodeLayer, generateLinkLayer, changeBaseLayer} from "./layer.js";
 
 import 'spectrum-colorpicker/spectrum.js'
@@ -91,7 +91,7 @@ export function showChangeBaseLayerParameter(map, layers, mode, layer_name, styl
 function loadGeometryParameter(style){
 console.log('style')
   style.link.geometry.type = document.getElementById("arrowtype").value
-  if (document.getElementById("arrowtype").value ==="CurveArrow"){
+  if (document.getElementById("arrowtype").value ==="CurveArrow" || document.getElementById("arrowtype").value ==="CurveOneArrow"){
     console.log(document.getElementById("baseCurveArrow"))
     style.link.geometry.place.base = Number(document.getElementById("baseCurveArrow").value)
     style.link.geometry.place.height = Number(document.getElementById("heightCurveArrow").value)
@@ -101,7 +101,7 @@ console.log('style')
     style.link.geometry.place.height = null
   }
 
-  if (document.getElementById("arrowData").value  === 'oriented'){
+  if (document.getElementById("arrowData").value  === 'oriented' && document.getElementById("arrowtype").value !=="CurveOneArrow"){
     style.link.geometry.oriented = document.getElementById("arrowData").value
     style.link.geometry.head.width = Number(document.getElementById("widthArrow").value)
     style.link.geometry.head.height = Number(document.getElementById("heightArrow").value)
@@ -198,25 +198,53 @@ export function setupStyleAndAddLayer(style, layer_name){
 }
 
 export function applyNewStyle(name_layer){
+var lindex = 0;
+var nindex = 0;
+
+    if (typeof global_data.layers.features['node'] !== "undefined"){
+      nindex = global_data.layers.features['node'].getZIndex()
+    }
+    if (typeof global_data.layers.features['link'] !== "undefined"){
+      lindex = global_data.layers.features['link'].getZIndex()
+    }
 
     if(name_layer==='node'){
       
       if (typeof global_data.layers.features['link'] !== "undefined"){
-      map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
-
+        
+        map.removeLayer(global_data.layers.features['link'])
+        global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+        global_data.layers.features['link'].setZIndex(lindex)
       }
-
+      
       map.removeLayer(global_data.layers.features['node'])
       global_data.layers.features['node'] = addNodeLayer(map, data.links, data.hashedStructureData, global_data.style)
+      global_data.layers.features['node'].setZIndex(nindex)
     }
     else if (name_layer ==='link'){
       
-
+      // index = global_data.layers.features['link'].getZIndex()
       map.removeLayer(global_data.layers.features['link'])
       global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
-    
+      global_data.layers.features['link'].setZIndex(lindex)
+      // global_data.layers.features['node'].setZIndex(nindex)
     }  
+    // refreshZindex()
+
+    var i = 0
+    $('#accordionLayerControl').find('li').each(function(){
+      var elem  = $(this).attr('value')
+       if (typeof global_data.layers.base[elem] !== 'undefined')
+            {
+                global_data.layers.base[elem].layer.setZIndex(- i)
+            }
+            if (typeof global_data.layers.features[elem] !== 'undefined')
+            {
+                global_data.layers.features[elem].setZIndex(-  i)
+            }
+            i = i+1
+          }
+   )
 }
 
 export function nodeOrderedCategory(var_name, style){
@@ -264,7 +292,7 @@ export function setupMaxAndMin(var_name, layer_name){
   else if (layer_name ==='link'){
     var dataArray = data.links.map(function(item){return Number(item[var_name])})
   }
-  console.log([Math.min(...dataArray),Math.max(...dataArray)])
+  // console.log([Math.min(...dataArray),Math.max(...dataArray)])
   return [Math.min(...dataArray),Math.max(...dataArray)]
 }
 
@@ -467,11 +495,11 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                       // .append($('<option>', {text:"Square", value:'Sqrt'}))          
                     )
                   )
-
+    var text = '"It is the percentage of the arrow width."'
     $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatio"+id_ele)
                     .attr("class","col-md-4")
-                    .append('<label class="text-muted h5">Ratio</label>')
+                    .append('<label class="text-muted h5">Ratio  <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' ><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
                     .append($('<input>')
                     .attr('class','form-control')
                     .attr("id","ratioMinMaxSize"+id_ele)
@@ -479,6 +507,7 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr("value",100)
                     )
                   )
+  $('[data-toggle="popover"]').popover()
     return
     }
     else{
@@ -490,7 +519,7 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr('class','form-control')
                     .attr("id","ratioMinMaxSize"+id_ele)
                     .attr("type",'number')
-                    .attr("value",100)
+                    .attr("value",10)
                     )
                   )
     return
@@ -500,7 +529,7 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
 
 
 function addColorTypeSelector ( id_parent, id_ele){
-  console.log($("#typeColor"+id_ele))
+  // console.log($("#typeColor"+id_ele))
     if($("#typeColor"+id_ele) !== null){
 
       $("#typeColor"+id_ele).remove();
@@ -634,7 +663,7 @@ function changeSelect(element,id){
   }
 
 function removeColorSelected(id){
-  console.log($("#colorPicker"+id).find("div.selected"))
+  // console.log($("#colorPicker"+id).find("div.selected"))
  $("#colorPicker"+id).find("div.selected").removeClass('selected').attr('ramps');
 }
 
@@ -966,7 +995,7 @@ export function applyChangeStyle(name, style, layers){
       //   }
       // }
 applyNewStyle(name)
-
+// refreshZindex()
   return;
 }
 

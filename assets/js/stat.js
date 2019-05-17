@@ -5,10 +5,11 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
   console.log(nodes)
   for(var p = 0; p< keys.length; p++){
-    nodes[keys[p]].properties.outdegree = 0;
-    nodes[keys[p]].properties.indegree = 0;
-    nodes[keys[p]].properties.degree = 0;
-    nodes[keys[p]].properties.balance = 0;
+    nodes[keys[p]].properties = Object.assign({outdegree: 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({indegree: 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({degree: 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({balance: 0}, nodes[keys[p]].properties)
+
   }
 
   var len = links.length

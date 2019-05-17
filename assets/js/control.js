@@ -7,6 +7,8 @@ import {changeBaseLayer, filterLinkLayer} from "./layer.js";
 import 'jquery-ui';
 
 require('jquery-ui-bundle');
+
+
  $(function($) {
         var panelList = $('#accordionLayerControl');
 
@@ -33,6 +35,29 @@ require('jquery-ui-bundle');
             }
         });
     });
+
+export function refreshZindex(){
+    var panelList = $('#accordionLayerControl');
+    console.log($('#accordionLayerControl'))
+    if (panelList.childNodes.length > 1){
+        
+        console.log("fqfdqsdfqsdfqfdqsdf")
+        for(var k = 0; k<panelList.childNodes.length; k++){
+            elem = panelList.childNodes[k]
+            console.log(elem.textContent)
+            if (typeof global_data.layers.base[elem.textContent] !== 'undefined')
+            {
+                global_data.layers.base[elem.textContent].layer.setZIndex(- elem.textContent)
+            }
+            if (typeof global_data.layers.features[elem.textContent] !== 'undefined')
+            {
+                global_data.layers.features[elem.textContent].setZIndex(- elem.textContent )
+            }
+        }
+console.log("AYAYAYA")
+    }
+    return;
+}
 
 export function removeLayer(name) {
     //len = layers.length;
@@ -68,6 +93,45 @@ export function removeFeaturesLayer(name) {
 
     
     //$("#Flayers").append($("<option>", {value:layerName, text:layerName}));
+
+}
+
+export function addLayerGestionOSMMenu(name){
+
+        $("#accordionLayerControl").prepend($("<li>", {
+        class: "card mt-2 border-dark",
+        id : "card"+name,
+        value : name
+    })
+    .append($("<div>", {
+        class: "card-header  text-dark panel-heading",
+        text : name,
+        id: "panel" + name
+        }
+    )
+        .append($("<button>")
+            .attr("type", "button")
+            .attr("id", "buttonRemoveLayer" + name)
+            .attr("class", "close center-block  ml-1")
+            .attr("aria-label", "Close")
+            .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+        ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonHideLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
+    )));
+
+
+console.log(global_data.layers.base)
+    // document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.base[name].style)}); 
+    document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
+       hideOSMLayer(name)
+    });
+    document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
+        removeLayer(name)
+    });
 
 }
 
@@ -139,6 +203,20 @@ function hideLayer(name_layer) {
     }
     else{
         opa = global_data.layers.base[name_layer].style.opacity
+    }
+    global_data.layers.base[name_layer].layer.setOpacity(opa)
+}
+
+
+
+function hideOSMLayer(name_layer) {
+    var opa = global_data.layers.base[name_layer].layer.getOpacity();
+    console.log(opa)
+    if(opa>0){
+        opa = 0
+    }
+    else{
+        opa = 1
     }
     global_data.layers.base[name_layer].layer.setOpacity(opa)
 }

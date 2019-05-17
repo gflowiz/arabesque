@@ -1,4 +1,4 @@
-import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer} from "./control.js"
+import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer, addLayerGestionOSMMenu} from "./control.js"
 import {simpleColoredStyle, styleLinkPoly, styleNodeCircle} from "./style.js"
 import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow, testLinkDataFilter} from "./filter.js"
 import {drawArrow} from "./geometry.js"
@@ -302,10 +302,12 @@ export function addOSMLayer(map, layers) {
         name: "OSM",
         source: new OSM()
     })
-    layers["OSM"] = layer;
+    
+    layers["OSM"] = {layer:layer};
 
     map.addLayer(layer);
-    addLayerGestionMenu("OSM");
+    addLayerGestionOSMMenu("OSM");
+    return layer;
 }
 
 

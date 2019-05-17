@@ -118,6 +118,14 @@ border: none;
 background: none;
 }
 
+.small-icon{
+width:10px;
+height:10px;
+border: none;
+background: none;
+color:white;
+}
+
 #arrowSelector{
   border-right: 3px solid #F2F7F9
 }

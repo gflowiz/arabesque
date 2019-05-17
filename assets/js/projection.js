@@ -14,8 +14,6 @@ global.Proj = [
     9009954.605703328* 2, 9009954.605703328], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
       { name: "UTM", proj4: "+proj=cass +lat_0=10.44166666666667 +lon_0=-61.33333333333334 +x_0=86501.46392052001 +y_0=65379.0134283 +a=6378293.645208759 +b=6356617.987679838 +towgs84=-61.702,284.488,472.052,0,0,0,0 +to_meter=0.3047972654 +no_defs ",extent:[-2*9009954.605703328, -9009954.605703328,
     9009954.605703328* 2, 9009954.605703328], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-          { name: "t3", proj4: "+proj=cass +lat_0=22.31213333333334 +lon_0=114.1785555555556 +x_0=40243.57775604237 +y_0=19069.93351512578 +a=6378293.645208759 +b=6356617.987679838 +units=m +no_defs",extent:[-2*9009954.605703328, -9009954.605703328,
-    9009954.605703328* 2, 9009954.605703328], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
       { name: "t4", proj4: "+proj=sterea +lat_0=46.5 +lon_0=-66.5 +k=0.999912 +x_0=2500000 +y_0=7500000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",extent:[-2*9009954.605703328, -9009954.605703328,
     9009954.605703328* 2, 9009954.605703328], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
 
@@ -53,6 +51,7 @@ function refreshBaseLayers(map,layers){
     }
   layers.base[layerNames[m]].layer.setStyle(oldStyle);
   }
+  applyBaseExtent(layers.base,global_data.projection.extent)
 }
 
 
@@ -144,7 +143,7 @@ for (var p = 0; p< Proj[iPrj].worldExtent.length; p++){
   newProj.setExtent(newExtent);
   var newView = new View({
     projection: newProj,
-    center:transform(center,global_data.projection.name, projName),
+    center:transform(map.getView().getCenter(),global_data.projection.name,projName),
     //extent:newExtent,
     zoom:map.getView().getZoom(),
     maxZoom:25,
@@ -162,7 +161,7 @@ refreshBaseLayers(map,layers);
 refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
 
 
-//applyExtent(layers,projection.extent)
+// applyExtent(layers,projection.extent)
 
 
         //map.render();
@@ -173,6 +172,12 @@ function applyExtent(layers, extent){
   var keys = Object.keys(layers);
   for(var p=0; p<keys.length; p++){
     layers[keys[p]].setExtent(extent);
+  };
+}
+function applyBaseExtent(layers, extent){
+  var keys = Object.keys(layers);
+  for(var p=0; p<keys.length; p++){
+    layers[keys[p]].layer.setExtent(extent);
   };
 }
 

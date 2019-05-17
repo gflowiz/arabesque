@@ -1,4 +1,4 @@
-import {getNameVariables} from "./control.js"
+import {getNameVariables, refreshZindex} from "./control.js"
 import {setupMaxAndMin} from "./semiology.js"
 import {getNameLayers} from "./projection.js"
 
@@ -6,85 +6,95 @@ import {addNodeLayer, filterLinkLayer} from "./layer.js";
 
 import 'bootstrap-select'
 
-export function addSelectFilterLink(dataset){
+// export function addSelectFilterLink(dataset){
 
 
-  var nameData = document.getElementById('valueTofilter').value;
-  var type = typeof dataset[0][nameData];
+//   var nameData = document.getElementById('valueTofilter').value;
+//   var type = typeof dataset[0][nameData];
 
-  if(type === "string"){
-    addNodeStringFilters()
-  }
-  else if(type === "number"){
-    addNodeNumberFilters()
-  }
-  else {
-    refreshFilterModal();
-  }
-}
+//   if(type === "categorial"){
+//     addNodeStringFilters()
+//   }
+//   else if(type === "numeral"){
+//     addNodeNumberFilters()
+//   }
+//   else {
+//     refreshFilterModal();
+//   }
+// }
 
-export function addSelectFilterNode(dataset){
+// export function addSelectFilterNode(dataset){
 
 
-  var nameData = document.getElementById('valueTofilter').value;
-  var type = typeof dataset.features[0].properties[nameData];
+//   var nameData = document.getElementById('valueTofilter').value;
+//   var type = typeof dataset.features[0].properties[nameData];
   
-  if(type === "string"){
-    addNodeStringFilters()
+//   if(type === "categorial"){
+//     addNodeStringFilters()
+//   }
+//   else if(type === "numeral"){
+//     addNodeNumberFilters()
+//   }
+//   else {
+//     refreshFilterModal();
+//   }
+
+// }
+
+
+
+function addNodeStringFilters(){
+    if(document.getElementById('selectedTimeFilter') !== null){
+    $('#selectedTimeFilter').parent().remove();
   }
-  else if(type === "number"){
-    addNodeNumberFilters()
-  }
-  else {
-    refreshFilterModal();
-  }
-
-}
-
-
-
-function addNodeNumberFilters(){
+  var text = '"- Categorial => qualitative selector <br /> -Remove => qualitative removal <br /> - One Category => quick selector of one category <br />  - Numeral => quantitative selector <br /> Temporal => Select time area (must precise a time format)"'
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="selectedFilter">Type</label>')
+                                .append('<label for="selectedFilter">Type <a role="button" class="badge badge-pill badge-secondary"  tabindex="0" data-trigger="focus" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></append></label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
                                   .append($("<option selected>"))
-                                  .append($("<option>" , {text:"Numeral", value:'Num'}))
-                                  .append($("<option>" , {text:"Categories", value:'single'}))
-                                  .append($("<option>" , {text:"Remove", value:'Remove'}))
-                                  .append($("<option>" , {text:"One Category", value:'Temporal'}))
-                                  .append($("<option>" , {text:"Temporal", value:'timeLapse'}))
+                                  .append($("<option>" , {text:"Numeral", value:'numeral'}))
+                                  .append($("<option>" , {text:"Categories", value:'categorial'}))
+                                  .append($("<option>" , {text:"Remove", value:'remove'}))
+                                  .append($("<option>" , {text:"One Category", value:'temporal'}))
+                                  // .append($("<option>" , {text:"Temporal", value:'timeLapse'}))
                                   )
 
                                 );
     document.getElementById('selectedFilter').addEventListener("change", function(){addTimeSelector()
   }); 
+      $('[data-toggle="popover"]').popover({
+  trigger: 'focus'
+})
+  
 }
 
-function addNodeStringFilters(){
+function addLinkFilters(){
   if(document.getElementById('selectedTimeFilter') !== null){
     $('#selectedTimeFilter').parent().remove();
   }
-  
+  var text = '"- Categorial => qualitative selector  <br />- Remove => qualitative removal <br /> - One Category => quick selector of one category <br />  - Numeral => quantitative selector <br /> Temporal => Select time area (must precise a time format)"'
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="selectedFilter">Type</label>')
+                                .append('<label for="selectedFilter">Type <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
                                   .append($("<option selected>"))
-                                  .append($("<option>" , {text:"Categorial", value:'single'}))
-                                  .append($("<option>" , {text:"Numeral", value:'Num'}))
-                                  .append($("<option>" , {text:"Remove", value:'Remove'}))
-                                  .append($("<option>" , {text:"One Category", value:'Temporal'}))
+                                  .append($("<option>" , {text:"Categorial", value:'categorial'}))
+                                  .append($("<option>" , {text:"Numeral", value:'numeral'}))
+                                  .append($("<option>" , {text:"Remove", value:'remove'}))
+                                  .append($("<option>" , {text:"One Category", value:'temporal'}))
                                   .append($("<option>" , {text:"Temporal", value:'timeLapse'}))
                                   )
 
                                 );
   document.getElementById('selectedFilter').addEventListener("change", function(){addTimeSelector()
   }); 
+    $('[data-toggle="popover"]').popover()
+  
 }
 
 function addTimeSelector(){
@@ -113,10 +123,10 @@ function addFilter(name, dataset){
   }
 
   if(name==='node'){
-    addSelectFilterNode(dataset.nodes);
+    addNodeStringFilters();
   }
   else if (name ==='link'){
-    addSelectFilterLink(dataset.links);
+    addLinkFilters();
   }
 }
 
@@ -133,15 +143,17 @@ export function addFilterToScreen(){
   if (name_layer ==='link'){
     // console.log('button')
     prepareBinFilterData(name_layer, name_variable, name_filter, data)
+    console.log(name_filter)
   }
 
 
-  if(name_filter === 'Num'){
+  if(name_filter === 'numeral'){
     addNumFilter(name_layer, name_variable);
+    console.log("fffffffffffffff")
     refreshFilterModal();
     return;  
   }
-  if(name_filter === 'single'){
+  if(name_filter === 'categorial'){
     addSingleCatFilter(name_layer, name_variable);
     refreshFilterModal();
     return;  
@@ -152,8 +164,10 @@ export function addFilterToScreen(){
     refreshFilterModal();
     return;  
   }
-  if(name_filter === 'Temporal'){
+  if(name_filter === 'temporal'){
     addTemporalFilter(name_layer, name_variable);
+    var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+    changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
     // console.log('button')
     // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
     refreshFilterModal();
@@ -203,7 +217,7 @@ function addD3TimeFilter(name_layer, name_variable,values){
 
   var color = "steelblue";
 
- var format = data.filter.link[name_variable].timeLapse.format
+ // var format = data.filter.link[name_variable].timeLapse.format
  var index_data = data.filter.link[name_variable].timeLapse.order
  var sum_data = index_data.map(function(item){return data.filter.link[name_variable].timeLapse.index[item].length})
  var bins = [] 
@@ -216,7 +230,7 @@ function addD3TimeFilter(name_layer, name_variable,values){
  //        x:index_data}
  // data = d3.range(1000).map(d3.randomBates(10));
  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
-var formatCount = d3.format(",.0f");
+// var formatCount = d3.format(",.0f");
 
 var svg = d3.select("#filterTime"+id).append('svg'),
     margin = {top: 10, right: 15, bottom: 5, left: 15},
@@ -274,11 +288,19 @@ var brsuh_to_setup = g.append('g')
       .call(brush)
       // .call(brush.move, x.domain())
 
-  brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
+  
+console.log(values)
+try {
 
-
+  d3.select("#filterTime"+id).select(".brush").call(brush.move, [x(values[0]), x(values[1]) + x.bandwidth()]);
+}
+catch(error) {
+  console.error(error);
+  // expected output: ReferenceError: nonExistentFunction is not defined
+  // Note - error messages will vary depending on browser
+}
   function brushed() {
-    if (d3.event.sourceEvent.type === 'end') return;
+    if (d3.event.sourceEvent.type === 'end' || typeof d3.event.sourceEvent === null) return;
     console.log(d3.event.sourceEvent)
   var k = d3.event.selection || x.range()
     // d3.select(".brush").call(brush.move, x.range().map(s.invert, s));
@@ -358,9 +380,9 @@ export function binTemporalRemoveValue(name_layer, name_var, data){
   data.filter[name_layer][name_var].temporal.index = Object.keys(data_to_bin)
 }
 
-export function binTimeLapseRemoveValue(name_layer, name_var, data){
+export function binTimeLapseRemoveValue(name_layer, name_var, data, format){
  
-  var timeFormat = document.getElementById('selectedTimeFilter').value;
+  var timeFormat = format;
   if(typeof data.filter[name_layer][name_var] === 'undefined'){
     data.filter[name_layer][name_var] = {timeLapse:{}}
   }
@@ -482,21 +504,40 @@ export function binDataNumValue(name_layer, name_var, data){
   }
 }
 
-function prepareBinFilterData(name_layer, name_variable, filter, data){
-  if(filter === 'Num'){
+
+export function loadBinFilterData(name_layer, name_variable, filter, data){
+  if(filter.filter === 'numeral'){
     binDataNumValue(name_layer,name_variable, data)
   }
-  if(filter === 'single'){
+  if(filter.filter === 'categorial'){
     binDataCatValue(name_layer,name_variable, data)
   }
-  if(filter === 'Remove'){
+  if(filter.filter === 'remove'){
     binDataRemoveValue(name_layer,name_variable, data)
   }
-   if(filter === 'Temporal'){
+   if(filter.filter === 'temporal'){
+    binTemporalRemoveValue(name_layer,name_variable, data)
+  }
+   if(filter.filter === 'timeLapse'){
+    binTimeLapseRemoveValue(name_layer,name_variable, data, filter.format)
+  }
+}
+
+export function prepareBinFilterData(name_layer, name_variable, filter, data){
+  if(filter === 'numeral'){
+    binDataNumValue(name_layer,name_variable, data)
+  }
+  if(filter === 'categorial'){
+    binDataCatValue(name_layer,name_variable, data)
+  }
+  if(filter === 'remove'){
+    binDataRemoveValue(name_layer,name_variable, data)
+  }
+   if(filter === 'temporal'){
     binTemporalRemoveValue(name_layer,name_variable, data)
   }
    if(filter === 'timeLapse'){
-    binTimeLapseRemoveValue(name_layer,name_variable, data)
+    binTimeLapseRemoveValue(name_layer,name_variable, data, document.getElementById('selectedTimeFilter').value)
   }
 }
 
@@ -545,7 +586,7 @@ function removeCatFilter(var_to_remove, name_layer){
 
 function removeRemoveCatFilter(var_to_remove, name_layer){
   var id = var_to_remove.split(' ').join('').replace(/[^\w\s]/gi, ''); 
-  $("#removefilter"+id).parent().parent().remove();
+  $("#removefilter"+id).parent().parent().parent().remove();
   for(var p=0; p<global_data.filter[name_layer].length; p++){
     if(global_data.filter[name_layer][p].variable === var_to_remove){
       global_data.filter[name_layer].splice(p, 1);
@@ -685,7 +726,6 @@ function addTemporalFilter(name_layer,name_variable){
                                 )
                             );
   showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id ,name_layer)
-  changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
 
 
   document.getElementById("temporalCatFilterButton"+id).addEventListener("click", function(){temporalRemoveCatFilter(name_variable, name_layer)});  
@@ -779,6 +819,63 @@ export function loadSingleCatFilter(name_layer,name_variable,values){
 return;
 }
 
+export function loadRemoveFilter(name_layer,name_variable,values){
+
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+
+
+  addRemoveFilter(name_layer,name_variable)
+  $("#removefilter"+id).selectpicker("val", values);
+return;
+}
+
+export function loadTemporalFilter(name_layer,name_variable,values){
+
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+
+  addTemporalFilter(name_layer,name_variable)
+  console.log(data.filter[name_layer][name_variable].temporal.index.indexOf(values))
+  $("#temporalfilter"+id).prop('value', data.filter[name_layer][name_variable].temporal.index.indexOf(values));
+  showTemporalValue(name_variable,"h6_remove"+id,"temporalfilter"+id ,name_layer);
+  changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
+return;
+}
+export function loadTimeLapseFilter(name_layer,name_variable,values){
+
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
+
+
+  
+  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
+    
+    $('#filterDiv').append($('<div>')
+                                .attr("class","row align-items-center m-3")
+                                
+                                .append($('<div>')
+                                  .attr("class","col-sm-10 p-0")
+                                  .attr("id","filterTime"+id)
+                                  .append($("<label>", {text:name_layer+": "+name_variable})
+                                    .attr('for',"filterTime"+id)
+                                    .attr('class',"h5")
+                                  )
+                                  )
+                                .append($('<div>')
+                                  .attr("class","col-sm-1 p-0")
+                                  .append($('<button>')
+                                    .attr("type","button")
+                                    .attr("class","close center-block")
+                                    .attr("id","buttonTimeFilter"+id)
+                                    .attr("aria-label",'Close')                             
+                                    .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
+                                    )
+                                  )
+                                );
+    document.getElementById("buttonTimeFilter"+id).addEventListener("click", function(){timeRemoveCatFilter(name_variable, name_layer)});    
+    addD3TimeFilter(name_layer, name_variable,[values[0],values[values.length - 1]]);
+
+return;
+}
+
 
 function getRange(name_layer, name_variable){
 
@@ -794,12 +891,12 @@ function getRange(name_layer, name_variable){
 
 
 export function checkDataToFilter(){
- 
+  var text  = '"Choose the layer to filter"'
   $('#filterLayerBody').append($('<div>')
                         .attr('class','row')
                         .append($("<div>")
                           .attr("class","col-md-4")
-                          .append('<label for="filteredLayer">Layer</label>')
+                          .append('<label for="filteredLayer">Layer <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+'><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
                           .append($("<select>")
                             .attr("class","custom-select")
                             .attr("id","filteredLayer")
@@ -809,6 +906,7 @@ export function checkDataToFilter(){
                             )
                           )
                         )
+  $('[data-toggle="popover"]').popover()
   document.getElementById("filteredLayer").addEventListener("change", function(){addValuesToFilter()});    
 }
 
@@ -818,7 +916,7 @@ function addValuesToFilter(){
 
     var  sel = document.getElementById("filteredLayer");
     var iLayer = sel.options[ sel.selectedIndex ].value;
- 
+    var text = '"Choose the variable to filter"'
 
     var keysToShow = getNameVariables(iLayer);
 
@@ -832,7 +930,7 @@ function addValuesToFilter(){
     if(keysToShow)
     $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="valueTofilter">Variable</label>')
+                                .append('<label for="valueTofilter">Variable <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+'><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","valueTofilter")
@@ -840,6 +938,7 @@ function addValuesToFilter(){
                                   )
                                 );
 
+    $('[data-toggle="popover"]').popover()
     for(var p=0; p<keysToShow.length; p++){
     $('#valueTofilter').append($('<option>', {text:keysToShow[p] })
                         .attr("value",keysToShow[p])
@@ -906,7 +1005,7 @@ function addNumFilter(name_layer, name_variable){
                                     )
                                   )
                                 );
-    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeNumFilter(name_variable, name_variable)});    
+    document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeNumFilter(name_variable, name_layer)});    
     addD3NumFilter(name_layer, name_variable,setupMaxAndMin(name_variable,name_layer));
 
 }
@@ -1289,7 +1388,7 @@ function refreshFilterFeaturesLayers(){
     }
   }
 
-      
+  // refreshZindex()
 }
 
 
@@ -1383,21 +1482,22 @@ function changeNumgFilterArray(name_layer, name_variable, filter, value){
 function changeTimeFilterArray(name_layer, name_variable, filter, value){
   
 //console.log(value);
-  var i = -1;
+  var i = true;
   if(global_data.filter[name_layer].length !== 0){
   for(var p=0; p<global_data.filter[name_layer].length; p++){
     if( global_data.filter[name_layer][p].variable === name_variable &&  global_data.filter[name_layer][p].filter === filter){
-      i = p;
+      i = false;
       global_data.filter[name_layer][p].values = value;
       break;
     }
   }
 }
-  if(i === -1){
+  if(i){
   global_data.filter[name_layer].push({
     variable: name_variable,
     values:value,
-    filter:filter
+    filter:filter,
+    format: data.filter[name_layer][name_variable].timeLapse.format
     })
   }  
 

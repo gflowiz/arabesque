@@ -82,7 +82,7 @@
 		        "min":-2114
         	},
         	"size":{
-          		"cat":"Linear",
+          		"cat":"Sqrt",
           		"ratio":100,
           		"var":"degree",
           		"max":180854,
@@ -98,9 +98,35 @@
         "text":"name"
         }
     	},
-		"filter":{"link":[
-		],
-	"node":[]},
+		"filter":{
+  "link": [
+    {
+      "variable": "count",
+      "values": [
+        242.9111248747675,
+        6143.0001
+      ],
+      "filter": "numeral"
+    },
+    {
+      "variable": "distance",
+      "values": [
+        6.491051123632014,
+        101.19281816498118
+      ],
+      "filter": "numeral"
+    }
+  ],
+  "node": [
+    {
+      "variable": "name",
+      "values": [
+        "Uri"
+      ],
+      "filter": "remove"
+    }
+  ]
+},
 		"ids":{
 			"nodeID":"id",
 			"linkID":["origin","dest"],
@@ -150,7 +176,7 @@
 		"style":{  
 			"link":{
         		"color":{
-          			"palette":"Viridis",
+          			"palette":"YlOrRd",
 			        "cat":"number",
 			        "var":"count",
 			        "max":2426,
@@ -208,18 +234,36 @@
           	"text":null
         }
     	},
-		"filter":{"link":[
-			{
-				"filter": "numeral",
-				"variable": "distance",
-				"values": [0,1.5]
-			},
-			{
-				"filter": "numeral",
-				"variable": "count",
-				"values": [0,200]
-			}],
-		"node":[]},
+		"filter":{
+  "link": [
+    {
+      "filter": "numeral",
+      "variable": "distance",
+      "values": [
+        0.013742317255718076,
+        2.0355786317310294
+      ]
+    },
+    {
+      "filter": "numeral",
+      "variable": "count",
+      "values": [
+        164.02115832445773,
+        2426.0001
+      ]
+    }
+  ],
+  "node": [
+    {
+      "variable": "balance",
+      "values": [
+        29.992549391774446,
+        3789.000100000001
+      ],
+      "filter": "numeral"
+    }
+  ]
+},
 		"ids":{
 			"nodeID":"id",
 			"linkID":["origin","dest"],
@@ -275,77 +319,94 @@
 		],
 		"style":{  
 			"link":{
-        		"color":{
-          			"palette":"BuGn",
-			        "cat":"number",
-			        "var":"Trade Value (US$)",
-			        "max":31901758962,
-			        "min":3
-        		},          
-        		"opa":{
-			        "cat":null,
-			        "var":"fixed",
-			        "max":null,
-			        "min":null,
-			        "vmax":0.85
-          		},
-	        	"size":{
-		          	"cat":"Linear",
-		            "var":"Trade Value (US$)",
-		            "max":31901758962,
-		            "min":3,
-		            "ratio":20
-          		},
-            "geometry":{
-                "oriented":"oriented",
-                "type": "StraightArrow",
-                "head":{
-                  "height":0.5,
-                  "width":0.5
-                  },
-                "place":{
-                  "base":0.5,
-                  "height": 0.5
-                  }
-              },
-          		"text":null
-        	},
+  "color": {
+    "palette": "BuGn",
+    "cat": "number",
+    "var": "Trade Value (US$)",
+    "max": 31901758962,
+    "min": 3
+  },
+  "opa": {
+    "cat": null,
+    "var": "fixed",
+    "max": null,
+    "min": null,
+    "vmax": 0.85
+  },
+  "size": {
+    "cat": "Linear",
+    "var": "Trade Value (US$)",
+    "max": 31901758962,
+    "min": 3,
+    "ratio": 20
+  },
+  "geometry": {
+    "oriented": "oriented",
+    "type": "StraightArrow",
+    "head": {
+      "height": 0.5,
+      "width": 0.5
+    },
+    "place": {
+      "base": 0.5,
+      "height": 0.5
+    }
+  },
+  "text": null
+},
   		"node":{
-    		"color":{
-          		"palette":"Paired",
-		        "cat":"categorical",
-		        "var":"continent",
-		        "max":0,
-		        "min":0
-        	},
-        	"size":{
-          		"cat":"Sqrt",
-          		"ratio":100,
-          		"var":"pop_est",
-          		"max":1338612970,
-          		"min":-99
-          	},
-         	"opa":{
-          		"cat":"Linear",
-          		"var":"fixed",
-          		"max":0.9,
-          		"min":0.5,
-          		"vmax": 0.85
-          	},
-          	"text":null
-        }
+  "color": {
+    "palette": "Paired",
+    "cat": "categorical",
+    "var": "continent",
+    "max": 0,
+    "min": 0
+  },
+  "size": {
+    "cat": "Sqrt",
+    "ratio": "20",
+    "var": "degree",
+    "max": 4171220577292,
+    "min": 0
+  },
+  "opa": {
+    "cat": "Linear",
+    "var": "fixed",
+    "max": 0.9,
+    "min": 0.5,
+    "vmax": "0.85"
+  },
+  "text": "Choose..."
+}
     	},
-		"filter":{"node":[
-			{
-				"filter": "categorial",
-				"layer": "node",
-				"variable": "iso_a3",
-				"values": ["FRA"]
-			}
-			
-		],
-		"link":[]
-	},
+		"filter":{
+  "node": [],
+  "link": [
+    {
+      "variable": "Commodity",
+      "values": "Vehicles other than railway or tramway rolling stock",
+      "filter": "temporal"
+    },
+    {
+      "variable": "Year",
+      "values": [
+        "2003",
+        "2004",
+        "2005",
+        "2006"
+      ],
+      "filter": "timeLapse",
+      "format": "DateTime"
+    },
+    {
+      "variable": "Trade Flow",
+      "values": [
+        "Import"
+      ],
+      "filter": "categorial"
+    }
+  ]
+},
 		"ids":{
 			"nodeID":"iso_a3",
 			"linkID":["Reporter ISO","Partner ISO"],
