@@ -188,9 +188,13 @@ function hideFLayer(name_layer) {
     console.log(opa)
     if(opa>0){
         opa = 0
+        $("#buttonHideLayer" + name_layer).children().remove()
+        $("#buttonHideLayer" + name_layer).append("<img class='icon' src='assets/svg/si-glyph-noview.svg'/>")
     }
     else{
         opa = 0.8
+        $("#buttonHideLayer" + name_layer).children().remove()
+        $("#buttonHideLayer" + name_layer).append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     }
     global_data.layers.features[name_layer].setOpacity(opa)
 }
@@ -200,9 +204,13 @@ function hideLayer(name_layer) {
     console.log(opa)
     if(opa>0){
         opa = 0
+        $("#buttonHideLayer" + name_layer).children().remove()
+        $("#buttonHideLayer" + name_layer).append("<img class='icon' src='assets/svg/si-glyph-noview.svg'/>")
     }
     else{
         opa = global_data.layers.base[name_layer].style.opacity
+        $("#buttonHideLayer" + name_layer).children().remove()
+        $("#buttonHideLayer" + name_layer).append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     }
     global_data.layers.base[name_layer].layer.setOpacity(opa)
 }

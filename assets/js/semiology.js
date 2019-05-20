@@ -363,7 +363,8 @@ function addSizeSemio(name,id_selector,id_parent, variables){
                         );             
                             
     }   
-document.getElementById("semioSelectorSize"+id_selector).addEventListener("change", function(){addSizeRatio(id_parent, id_selector)});
+    console.log(name)
+document.getElementById("semioSelectorSize"+id_selector).addEventListener("change", function(){addSizeRatio(id_parent, id_selector, name)});
 }
 
 //TODO: REAL OPACITY
@@ -476,12 +477,14 @@ if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
   
 // }
 
-function addSizeRatio(id_parent, id_ele){
+function addSizeRatio(id_parent, id_ele, layer){
     if(document.getElementById("semioSelectorSize"+id_ele) !== null){
       $('#semioSizeRatio'+id_ele).remove();
        $('#semioSizeRatioCat'+id_ele).remove();
     }
+    console.log(layer)
 if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
+  if(layer === "Link"){
   $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatioCat"+id_ele)
                     .attr("class","col-md-4")
@@ -491,10 +494,26 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr("id","typeSize"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
                       .append($('<option>', {text:"Linear", value:'Linear'}))  
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))  
+                      .append($('<option>', {text:"Square", value:'Sqrt'}))        
+                    )
+                  )
+}
+else{
+    $("#"+id_parent).append($('<div>')
+                    .attr("id","semioSizeRatioCat"+id_ele)
+                    .attr("class","col-md-4")
+                    .append('<label class="text-muted h5">Scale</label>')
+                    .append($('<select>')
+                    .attr('class','custom-select')
+                    .attr("id","typeSize"+id_ele)
+                    // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
+                      // .append($('<option>', {text:"Linear", value:'Linear'}))  
+                      .append($('<option>', {text:"Square", value:'Sqrt'}))                        
+                      .append($('<option>', {text:"Logarithmic", value:'Log'}))    
                       // .append($('<option>', {text:"Square", value:'Sqrt'}))          
                     )
                   )
+}
     var text = '"It is the percentage of the arrow width."'
     $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatio"+id_ele)
@@ -877,7 +896,7 @@ function loadStyleToModify(layer_name, style){
     });
   }
 
-  addSizeRatio("semioSizeChange",'Change')
+  addSizeRatio("semioSizeChange",'Change', layer_name.charAt(0).toUpperCase() +layer_name.slice(1))
   if (style.size.var !== 'fixed'){
     changeSelect($("#typeSizeChange").children('[value="'+style.size.cat+'"]'),"typeSizeChange")
     $("#ratioMinMaxSizeChange").attr("value",style.size.ratio)
