@@ -2,7 +2,8 @@ import {getNameVariables, refreshZindex} from "./control.js"
 import {setupMaxAndMin} from "./semiology.js"
 import {getNameLayers} from "./projection.js"
 
-import {addNodeLayer, filterLinkLayer} from "./layer.js";
+import {computeReduceMinStatNode} from "./stat.js";
+import {addNodeLayer, generateLinkLayer} from "./layer.js";
 
 import 'bootstrap-select'
 
@@ -158,7 +159,7 @@ export function addFilterToScreen(){
     refreshFilterModal();
     return;  
   }
-  if(name_filter === 'Remove'){
+  if(name_filter === 'remove'){
     addRemoveFilter(name_layer, name_variable);
     // prepareBinCatDataFilter(name_layer, name_variable, data.filter[name_layer], data)
     refreshFilterModal();
@@ -353,18 +354,21 @@ export function binDataRemoveValue(name_layer, name_var, data){
   }
 }
 
-export function binTemporalRemoveValue(name_layer, name_var, data){
- 
+export function binTemporalRemoveValue(name_layer, name_var, data){  
+
   if(typeof data.filter[name_layer][name_var] === 'undefined'){
     data.filter[name_layer][name_var] = {temporal:{}}
   }
   else{
     data.filter[name_layer][name_var].temporal = {}
   }
+
+  var len = data.links.length;
+
   var list_value = []
   data.filter[name_layer][name_var].temporal.data = {};
   var data_to_bin = data.filter[name_layer][name_var].temporal.data
-  var len = data.links.length;
+
   for(var i = 0; i<len; i++)
   {
     var value = data.links[i][name_var].toString()
@@ -664,7 +668,8 @@ function addSingleCatFilter(name_layer,name_variable){
 
   });
     if(name_layer==='node'){
-      var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
+
+      var keysToShow = [... new Set(Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]}))]
     }
     else if (name_layer ==='link'){
       var keysToShow = [... new Set(data.links.map(function(item){return item[name_variable]}))]
@@ -684,7 +689,7 @@ function addTemporalFilter(name_layer,name_variable){
   var len = data.filter[name_layer][name_variable].temporal.index.length
   }
   else{
-    var len = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))].length
+    var len = [... new Set(Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]}))].length
   }
   // var len = 50;
   // console.log(len)
@@ -748,7 +753,7 @@ function showTemporalValue(name_variable, id, value_id, name_layer){
   document.getElementById(id).innerHTML = data.filter[name_layer][name_variable].temporal.index[Number(document.getElementById(value_id).value)]
   }
   else{
-    document.getElementById(id).innerHTML = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))][Number(document.getElementById(value_id).value)]
+    document.getElementById(id).innerHTML = [... new Set(Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]}))][Number(document.getElementById(value_id).value)]
   }
 }
 
@@ -792,7 +797,7 @@ function addRemoveFilter(name_layer,name_variable){
 
   });
   if(name_layer==='node'){
-    var keysToShow = [... new Set(data.nodes.features.map(function(item){return item.properties[name_variable]}))]
+    var keysToShow = [... new Set(Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]}))]
   }
   else if (name_layer ==='link'){
     var keysToShow = [... new Set(data.links.map(function(item){return item[name_variable]}))]
@@ -880,7 +885,7 @@ return;
 function getRange(name_layer, name_variable){
 
   if(name_layer === 'node'){
-    var mappedVariable = data.nodes.features.map(function(item){return item.properties[name_variable]})
+    var mappedVariable = Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]})
   }
   else if(name_layer === "link"){
     var mappedVariable = data.links.map(function(item){return item[name_variable]})
@@ -1015,7 +1020,7 @@ function addD3NumFilter(name_layer, name_variable,values){
   var color = "steelblue";
     // get range and How slae min/2 
   if(name_layer === 'node'){
-   var data_histo = data.nodes.features.map(function(item){return item.properties[name_variable]});
+   var data_histo = Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]})
   }
   else if(name_layer === "link"){
    var  data_histo = data.links.map(function(item){return item[name_variable]});
@@ -1151,7 +1156,7 @@ function toRemoveFilterNode(node){
       //var varL = global_data.filter[i].variablevale
       if (global_data.filter.node[i].filter === 'remove'){
         if  (!window[global_data.filter.node[i].filter](node.properties[global_data.filter.node[i].variable],global_data.filter.node[i].values)){
-        // console.log(window[global_data.filter[i].filter](node.properties[global_data.filter[i].variable],global_data.filter[i].values))
+        console.log("AAYAYAYUAUYAUAU")
         return true;
         
       }
@@ -1251,6 +1256,7 @@ export function testLinkDataFilter(list_filter, data){
       index = new Set([...index].filter(x => !selected_index.has(x)));
     }
   }
+  computeReduceMinStatNode(data.hashedStructureData, [...index], global_data.ids.linkID[0], global_data.ids.linkID[1], global_data.ids.vol)
   return [...index]
 }
 
@@ -1272,7 +1278,7 @@ export function getIndexFromFilter(filter, data, layer){
 
 function getIndexFromNumeralFilter(filter, data, layer){
   var list_index = []
-
+console.log(data.filter[layer])
   var len = filter.values.length;
   var scale = (data.filter[layer][filter.variable][filter.filter].minima[1] - data.filter[layer][filter.variable][filter.filter].minima[0]) /150
   var min = data.filter[layer][filter.variable][filter.filter].minima[0]
@@ -1356,7 +1362,8 @@ export function applyNodeDataFilter(data){
     if(toFilterNode(data[keys[p]])){
       filteredNodeData[keys[p]] = data[keys[p]];
     }
-    if(toRemoveFilterNode(data[keys[p]]) && global_data.filter.length>0){
+    if(toRemoveFilterNode(data[keys[p]]) && global_data.filter.node.length>0){
+      console.log('AUYAYAYAYAY')
       filteredRemoveNodeData.push(keys[p]);
     }
   }
@@ -1372,17 +1379,23 @@ function refreshFilterFeaturesLayers(){
 
   var layerNames = getNameLayers(global_data.layers.features);
   var LEN = layerNames.length;
+  console.log(layerNames)
+  if(LEN !== 0){
+  var id_links = testLinkDataFilter(global_data.filter.link, data)
+  var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
+}
   for(var m=0; m<LEN;m++){
     
     var Zindex = global_data.layers.features[layerNames[m]].getZIndex()
     if(layerNames[m] === "link"){
+      console.log('bonjour')
       map.removeLayer(global_data.layers.features[layerNames[m]]);
-      global_data.layers.features[layerNames[m]]= filterLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      global_data.layers.features[layerNames[m]]= generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
 
       global_data.layers.features[layerNames[m]].setZIndex(Zindex)
     }else if (layerNames[m] === "node"){
       map.removeLayer(global_data.layers.features[layerNames[m]]);
-     global_data.layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style)
+     global_data.layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style , id_links, selected_nodes)
 
       global_data.layers.features[layerNames[m]].setZIndex(Zindex)
     }
@@ -1398,7 +1411,7 @@ if(name_layer === 'link'){
   var value = data.filter[name_layer][name_variable].temporal.index[Number(document.getElementById(id).value)]
   }
 else{
-    var value = [...new Set(data.nodes.features.map( function(item){return item.properties[name_variable]}))][Number(document.getElementById(id).value)]
+    var value = [... new Set(Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[name_variable]}))][Number(document.getElementById(id).value)]
 }
 
 
@@ -1474,7 +1487,7 @@ function changeNumgFilterArray(name_layer, name_variable, filter, value){
     filter:filter
     })
   }  
-
+ 
   refreshFilterFeaturesLayers()
 }
 

@@ -69,10 +69,11 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 
 export function loadFilter(list_filter){
 	var len_filter = list_filter.link.length
-	for(var x = 0; x<len_filter; x++){
 
-		var filter = list_filter.link[x];
-console.log(filter.filter)
+	for(var c = 0;  c<len_filter;  c++){
+console.log(c)
+		var filter = list_filter.link[c];
+console.log(filter)
 		if(filter.filter === "numeral"){
 			loadBinFilterData('link',filter.variable,filter, data);
 			loadNumFilter('link', filter.variable, filter.values);
@@ -197,17 +198,28 @@ function setupMapandHashData(map, data, global_var){
 
   var maxY = - Infinity;
   var minY = Infinity;
-
-
+	var len = data.links.length;
+  var used_nodes = []
+  for(var i = 0; i<len; i++)
+  {
+    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[0]])){
+      used_nodes.push(data.links[i][global_data.ids.linkID[0]])
+    }
+    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[1]])){
+      used_nodes.push(data.links[i][global_data.ids.linkID[1]])
+    }
+  }
+var list_id_nodes =[]
   var len = data.nodes.features.length;
   for(var p=0; p<len; p++){
-
+ 	if (!list_id_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID]) && used_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID])){
     data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]] = data.nodes.features[p];
     var centroid = getCentroid(data.nodes.features[p], global_var.projection.name)
     data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]].properties["centroid"] = centroid   
     data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]].properties[global_var.ids.vol] = 0
 
-    
+      list_id_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
+
 
     if(maxX < centroid[0]){
       maxX = centroid[0]
@@ -221,7 +233,7 @@ function setupMapandHashData(map, data, global_var){
     if(minY > centroid[1]){
       minY = centroid[1]  
     }
-
+	}
 
 }
 
@@ -233,8 +245,8 @@ data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), glo
 map.getView().setCenter(global_var.center)
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 
-
-
+console.log(data.hashedStructureData)
+return data.hashedStructureData
 }
 
 function loadLayerData(base_layers, layers){

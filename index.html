@@ -25,12 +25,8 @@
               <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
               <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
             </div>
-            <div class="custom-file">
-              <input type="file"  id="Node" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label"  id="label_node" for="inputGroupFile01">Node Data</label>
-            </div>
             <!--         <input type='button' class="btn btn-primary btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
-            <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importModal">
+            <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importFlowModal">
               Add
             </button>
           </div>
@@ -356,7 +352,7 @@
               </div>
              <hr>
               <div class="row" id="ArrowHeadSize">
-<!--               <hr>
+              <!--               <hr>
               <label for="select" class="h4 strong">Arrow</label> -->
               </div>
               <div class="row" id="ArrowPlaceSize">
@@ -364,15 +360,15 @@
               <!-- <label for="select" class="h4 strong">Arrow</label> -->
               </div>
             </div>
-             <div class="col-md-8">
+            <div class="col-md-8">
                 <label class="h3 strong">Semiology</label>
                 <hr>
                 <label for="select" class="h4 strong mb-3">Color</label>
-                    <div class="row justify-content-between" id="semioColorAddLink">
-                    </div>
+                <div class="row justify-content-between" id="semioColorAddLink">
+                </div>
                     <hr>
                     <label for="select" class="h4 strong">Size</label>
-                    <div class="row"  id="semioSizeAddLink">
+                <div class="row"  id="semioSizeAddLink">
                 </div>
                 <div class='row'>
     <!--               <div class="col-md-2">
@@ -391,7 +387,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
           </div>
         </div>
       <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
@@ -400,11 +396,11 @@
 </div>
 
 
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+<div class="modal fade" id="importFlowModal" tabindex="-1" role="dialog" aria-labelledby="importFlowModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="importModalLabel">Data Import</h5>
+        <h5 class="modal-title" id="importFlowModalLabel">Flow Import</h5>
       </div>
       <div class="modal-body" id="importLayerBody">
         <div class="row">
@@ -428,25 +424,82 @@
           </div>
         </div>
         <hr>
-         <div class="row">
-          <div class="col-md-4">
-            <p>
-              <label class="text-muted h5"  for="select">ID Node</label>
-              <select class="custom-select" id="importIDStruct"></select>
-            </p>
+      <div class = "row">
+            <div class = "col-md-6">
+              <button class="btn btn-primary  btn-block justify-content-center mt-2"   type="button" id="importUserLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#importLocationModal">Import Location</button>
+            </div>
+            <div class = "col-md-6">
+              <button class="btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importPresetLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#usePresetLocationModal">Preset Location</button>
+            </div>
           </div>
-
-        </div>
       </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" id='waitLoad'role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 10%"></div>
-      </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="importIdButton" data-dismiss="modal">Gflowiz</button>
- 
     </div>
   </div>
 </div>
 
+
+
+
+<div class="modal fade" id="importLocationModal" tabindex="-1" role="dialog" aria-labelledby="importLocationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importLocationModalLabel">Data Import</h5>
+      </div>
+      <div class="modal-body" id="importLocationLayerBody">
+        <div class="row">
+          <div class="col-md-6">
+
+            <label>Import File</label>
+            <div class="custom-file">
+              <label class="custom-file-label" id="label_node" for="inputGroupFile01">Node Data</label>
+              <input type="file"  id="Node" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+            </div>
+          </div>
+           <div class="col-md-6">
+            <div class="custom-file" id="importIDNodeStruct">
+
+            </div>
+          </div>
+        </div>
+         
+          
+        <hr> 
+         <div class="row" id="importIDImportStructComplement">
+
+
+        </div>
+      </div>
+       <div class ="modal-footer">
+          <button class="btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="usePresetLocationModal" tabindex="-1" role="dialog" aria-labelledby="usePresetLocationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="usePresetLocationModalLabel">Data Import</h5>
+      </div>
+      <div class="modal-body" id="usePresetLocationLayerBody">
+        <div class="row">
+          <div class="col-md-4">
+            <p>
+              <label class="text-muted h5" id = "label_nodes" for="select">ID Origin</label>
+              <select  class="custom-select" id="importIDStruct"></select>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class ="modal-footer" >
+        <button class=" btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="changeSemioModal" tabindex="-1" role="dialog" aria-labelledby="changeSemioModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">

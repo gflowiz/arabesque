@@ -1,0 +1,48 @@
+ {
+ 	"world":{
+		"All":{
+ 			"centroid ISO3": {
+ 				"file": "./public/data/ISO_FILES/world_all.geojson",
+ 				"id" :"iso_a3",
+ 				"code":"ISO Alpha-3"
+ 			},
+ 			"capital ISO3": {
+ 				"file": "./public/data/ISO_FILES/capitals.geojson",
+ 				"id" :"iso3",
+ 				"code":"ISO Alpha-3"
+ 			},
+ 			"centroid ISO2": {
+ 				"file": "./public/data/ISO_FILES/world_all.geojson",
+ 				"id" :"iso_a2",
+ 				"code":"ISO Alpha-2"
+ 			},
+ 			"capital ISO2": {
+ 				"file": "./public/data/ISO_FILES/capitals.geojson",
+ 				"id" :"iso2",
+ 				"code":"ISO Alpha-2"
+ 			}
+ 		},
+ 		"Europe":{
+ 			"communes": {"file": "url"},
+ 			"departement": {"file": "url"}
+ 		}
+ 	},
+ 	"countries":{
+ 		"France":{
+ 			"communes": {
+ 				"file": "./public/data/ISO_FILES/communes.geojson",
+ 				"id" :"iso_a3",
+ 				"code":"Code Insee"
+ 			},
+ 			"departement": {
+ 				"file": "./public/data/ISO_FILES/departement.geojson",
+ 				"id" :"iso_a3",
+ 				"code":"Code Postal"
+ 			}
+ 		},
+ 		"Germany":{
+ 			"communes": {"file": "url"},
+ 			"departement": {"file": "url"}
+ 		}
+ 	}
+ }

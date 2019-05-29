@@ -1,6 +1,6 @@
 import {getNameVariables, refreshZindex} from "./control.js";
-import {addNodeLayer, generateLinkLayer, changeBaseLayer} from "./layer.js";
-
+import {addNodeLayer, generateLinkLayer, changeBaseLayer, groupLinksByOD} from "./layer.js";
+import { testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
 import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
 
@@ -173,7 +173,7 @@ export function setupStyleAndAddLayer(style, layer_name){
       style[layer].color.cat = colorType
       colMM = [0,0]
       if(colorType==='number'){
-        colMM = setupMaxAndMin(colorVar, layer)
+        colMM = getMinMaxColor(colorVar, layer)
       }
       if(colorType==='categorical'){
         window[layer+'OrderedCategory'](colorVar, style[layer])
@@ -197,9 +197,38 @@ export function setupStyleAndAddLayer(style, layer_name){
     applyNewStyle(layer)
 }
 
+function getMinMaxColor(colorVar, layer){
+  
+console.log("AYAYAY")
+  if(layer==='node'){
+    var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[colorVar])})
+  }
+  else if (layer ==='link'){
+
+    var OD  = groupLinksByOD(data.links, [...Array(data.links.length).keys()], global_data.ids.linkID[0],global_data.ids.linkID[1])
+    var idOD = Object.keys(OD)
+
+    var test = idOD.map(function(item){
+      return Object.keys(OD[item]).map(function(item2){
+          return OD[item][item2].reduce(function (accumulateur, valeurCourante) {
+              return accumulateur + Number(data.links[valeurCourante][colorVar]);
+          }, 0);
+        })
+      })
+    // console.log(test)
+    var dataArray = test.flat()
+  }
+  // console
+  return [Math.min(...dataArray),Math.max(...dataArray)]
+}
+
 export function applyNewStyle(name_layer){
 var lindex = 0;
 var nindex = 0;
+
+  var id_links = testLinkDataFilter(global_data.filter.link, data)
+  var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
+var t0 = performance.now();
 
     if (typeof global_data.layers.features['node'] !== "undefined"){
       nindex = global_data.layers.features['node'].getZIndex()
@@ -209,28 +238,29 @@ var nindex = 0;
     }
 
     if(name_layer==='node'){
+         if (typeof global_data.layers.features['link'] !== "undefined"){
       
-      if (typeof global_data.layers.features['link'] !== "undefined"){
-        
-        map.removeLayer(global_data.layers.features['link'])
-        global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
-        global_data.layers.features['link'].setZIndex(lindex)
-      }
-      
+      // index = global_data.layers.features['link'].getZIndex()
+      map.removeLayer(global_data.layers.features['link'])
+      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
+      global_data.layers.features['link'].setZIndex(lindex)
+      // global_data.layers.features['node'].setZIndex(nindex)
+    }  
       map.removeLayer(global_data.layers.features['node'])
-      global_data.layers.features['node'] = addNodeLayer(map, data.links, data.hashedStructureData, global_data.style)
+      global_data.layers.features['node'] = addNodeLayer(map, data.links, data.hashedStructureData, global_data.style, id_links, selected_nodes)
       global_data.layers.features['node'].setZIndex(nindex)
     }
     else if (name_layer ==='link'){
       
       // index = global_data.layers.features['link'].getZIndex()
       map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
       global_data.layers.features['link'].setZIndex(lindex)
       // global_data.layers.features['node'].setZIndex(nindex)
     }  
     // refreshZindex()
-
+var t1 = performance.now();
+console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     var i = 0
     $('#accordionLayerControl').find('li').each(function(){
       var elem  = $(this).attr('value')
@@ -251,7 +281,8 @@ export function nodeOrderedCategory(var_name, style){
   console.log(style)
   style.categorialNodeOrderedColors = {};
   let counts = {}
-  data.nodes.features.map(function(item){return item.properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
+  // console.log(Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[var_name])}))
+  Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
   var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
   var lenPalette = paletteColorCat[style.color.palette].length;
   for(var p=0; p<sortedKeys.length; p++){
@@ -287,7 +318,7 @@ window.nodeOrderedCategory = nodeOrderedCategory;
 export function setupMaxAndMin(var_name, layer_name){
 
   if(layer_name==='node'){
-    var dataArray = data.nodes.features.map(function(item){return Number(item.properties[var_name])})
+    var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[var_name])})
   }
   else if (layer_name ==='link'){
     var dataArray = data.links.map(function(item){return Number(item[var_name])})
@@ -369,7 +400,7 @@ document.getElementById("semioSelectorSize"+id_selector).addEventListener("chang
 
 //TODO: REAL OPACITY
 function addOpacitySemio(name,id_selector,id_parent, variables){
-  console.log(variables)
+  // console.log(variables)
     $("#"+id_parent).append($('<div>')
                       .attr("class","col-md-3")
                       .append('<label class="text-muted h5">Variable</label>')
@@ -966,7 +997,7 @@ export function applyChangeStyle(name, style, layers){
       style[name].color.palette = $("#colorPickerChange").find(".selected").attr("value");
 
       if(colorType==='number'){
-        colMM = setupMaxAndMin(colorVar, name)
+        colMM = getMinMaxColor(colorVar, name)
       }
       else if(colorType==='categorical'){
         

@@ -24,7 +24,7 @@ export function simpleColoredStyle(opacity, stroke, fill){
 
 
 
-export function styleLinkPoly(feature){
+export function styleLinkPoly(feature, width_size, size_color){
     //width stupe
     if(global_data.style.link.size.var === 'fixed'){
     //color setup
@@ -34,10 +34,10 @@ export function styleLinkPoly(feature){
     }
     else{//impossible case//impossible case//impossible case
         if(global_data.style.link.geometry.oriented === 'noOriented'){
-         var zindex = - feature.get(global_data.style.link.size.var)
+         var zindex = - width_size
         }
         else{
-         var zindex = feature.get(global_data.style.link.size.var)
+         var zindex = width_size
         }
     }
 
@@ -51,7 +51,7 @@ export function styleLinkPoly(feature){
         var oColor = d3.color(global_data.style.link.categorialLinkOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
     }    
     else if(global_data.style.link.color.cat === 'number'){
-        var NormalizeColor = (feature.get(global_data.style.link.color.var)-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
+        var NormalizeColor = (size_color-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
         // console.log(NormalizeColor)
         var oColor = d3.color(d3["interpolate"+global_data.style.link.color.palette](NormalizeColor))
        // oColor.opacity = opacityFunciton
@@ -66,9 +66,9 @@ export function styleLinkPoly(feature){
     }
     else
     {
-     var opascale = d3["scale"+global_data.style.link.opa.cat]().domain([0,Number(global_data.style.link.opa.vmax)]).range([Number(global_data.style.link.opa.min),Number(global_data.style.link.opa.max)])
-     oColor.opacity= opascale(Number(feature.get(global_data.style.link.opa.var)))
-  }
+        var opascale = d3["scale"+global_data.style.link.opa.cat]().domain([0,Number(global_data.style.link.opa.vmax)]).range([Number(global_data.style.link.opa.min),Number(global_data.style.link.opa.max)])
+        oColor.opacity= opascale(Number(feature.get(global_data.style.link.opa.var)))
+    }
     var style = new Style({
          fill: new Fill({
             color: oColor.rgb().toString()
@@ -148,93 +148,32 @@ export function styleNodeCircle(feature){
 }
 
 
+export function styleUnselectedNodeCircle(feature){
 
+    if(global_data.style.node.size.cat === 'fixed'){
+    //color setup
+        var zindex = 1 //impossible case//impossible case Actually
+         
+    }
+    else{
+        
+         var zindex = global_data.style.node.size.max - feature.get(global_data.style.node.size.var)
+    }
 
-// function createCircle(radius) {
-//   if (radius < 10){
-//     return new Style({ image :new Circle({
-//         radius: radius,
-//         fill: new Fill({
-//         color: 'rgba(0, 255, 0, 0.6)'
-//     })
-//         })
-//     })
-//     }
-//     else{
-//        return new Style({ image :new Circle({
-//         radius: radius,
-//         visible: false,
-//         fill: new Fill({
-//         color: 'rgba(0, 255, 0, 0.0)'
+        var oColor = d3.color("#666666")
+        oColor.opacity = 0.4// get the corlor from a js object wer the name of the variable is link to 
 
-//     })
-//         })
-//     })
-//     }
+    var style = new Style({
+            fill: new Fill({
+            color:  oColor.rgb().toString()
+            }),
 
-// };
+        zIndex: zindex,
+        // text:new Text()
 
+        });
 
-// const stroke = new Stroke({color: 'black', width: 2});
-//       const fill = new Fill({color: 'red'});
+     // style.getText().setText(feature.get(global_data.style.node.text));
+    return style
+}
 
-
-
-
-//       const style = new Style({
-//         fill: new Fill({
-//           color: 'rgba(255, 255, 255, 0.6)'
-//         }),
-//         stroke: new Stroke({
-//           color: '#319FD3',
-//           width: 1
-//         }),
-//         text: new Text()
-//       });
-
-//       var style2 = new Style({
-//         fill: new Fill({
-//           color: 'rgba(255, 128, 128, 0.6)'
-//         }),
-//         stroke: new Stroke({
-//           color: '#319FD3',
-//           width: 1
-//         }),
-//         text: new Text()
-//       });
-
-           
-// const styles = {
-
-//         'LineString': new Style({
-//           stroke: new Stroke({
-//             color: 'rgba(255, 0, 128, 0.5)',
-//             width: 15
-//           })
-//         }),
-//         'MultiLineString': new Style({
-//           stroke: new Stroke({
-//             color: 'green',
-//             width: 1
-//           })
-//         }),
-
-//         'MultiPolygon': new Style({
-//           stroke: new Stroke({
-//             color: 'yellow',
-//             width: 1
-//           }),
-//           fill: new Fill({
-//             color: 'rgba(255, 255, 0, 0.1)'
-//           })
-//         }),
-//         'Polygon': new Style({
-//           stroke: new Stroke({
-//             color: 'blue',
-//             width: 1
-//           }),
-//           fill: new Fill({
-//             color: 'rgba(0, 0, 255, 0.4)'
-//           })
-//         })
-//       };

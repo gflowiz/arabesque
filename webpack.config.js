@@ -9,13 +9,6 @@ var config = {
     path:   path.resolve('./dist'), // `/dist` is the destination
     filename: 'bundle.js', // bundle created by webpack it will contain all our app logic. we will link to this .js file from our html page.
   },
-  devtool: 'eval-source-map',
-  devServer: {
-        historyApiFallback: true,
-        inline: true,
-        open: true,
-        hot: true
-      },
   module: {
     rules: [
         {
@@ -49,7 +42,13 @@ var config = {
       }
     ]
   },
-  plugins: [
+  plugins: [  
+  new webpack.DefinePlugin({
+    'process.env': {
+      // This has effect on the react lib size
+      'NODE_ENV': JSON.stringify('production'),
+    }
+  }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",

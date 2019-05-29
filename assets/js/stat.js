@@ -28,6 +28,40 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
+
+
+// export isStatMinMustBeCompute(nodes, links, id_ori, id_dest, id_vol, size_var){
+//   if (['degree','balance', 'indegree', 'outdegree'].includes(size_var)){
+//     computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol)
+//   }
+// }
+
+export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
+  var keys = Object.keys(nodes)
+  // console.log(nodes)
+  for(var p = 0; p< keys.length; p++){
+    nodes[keys[p]].properties.indegree = 0
+    nodes[keys[p]].properties.outdegree = 0
+    nodes[keys[p]].properties.balance = 0
+    nodes[keys[p]].properties.degree = 0
+
+  }
+
+  var len = links.length
+
+  for(var p = 0; p< len; p++){
+    nodes[data.links[links[p]][id_dest]].properties.indegree = Number(data.links[links[p]][id_vol])   + nodes[data.links[links[p]][id_dest]].properties.indegree 
+    nodes[data.links[links[p]][id_ori]].properties.outdegree = Number(data.links[links[p]][id_vol])   + nodes[data.links[links[p]][id_ori]].properties.outdegree 
+
+    nodes[data.links[links[p]][id_dest]].properties.degree = Number(data.links[links[p]][id_vol]) + nodes[data.links[links[p]][id_dest]].properties.degree 
+    nodes[data.links[links[p]][id_ori]].properties.degree  = Number(data.links[links[p]][id_vol]) + nodes[data.links[links[p]][id_ori]].properties.degree 
+
+    nodes[data.links[links[p]][id_dest]].properties.balance =   nodes[data.links[links[p]][id_dest]].properties.balance - Number(data.links[links[p]][id_vol])
+    nodes[data.links[links[p]][id_ori]].properties.balance  =   nodes[data.links[links[p]][id_ori]].properties.balance  + Number(data.links[links[p]][id_vol]) 
+  }
+
+
+}
 // export function checkIDLinks(nodes_list, ids, file_type){
 //   // var list_id_ori
 //   // var list_id_dest
@@ -76,7 +110,8 @@ export function checkIDLinks(links, nodes_list, id_ori, id_dest){
 return filtered_links
 }
 
-export function computeDistance(nodes, links, id_ori, id_dest,isCSV,  unit){
+export function computeDistance
+(nodes, links, id_ori, id_dest,isCSV,  unit){
   var len = links.length
   for(var p = 0; p< len; p++){
     if(isCSV){
@@ -105,7 +140,10 @@ if (feature.geometry.type == "MultiPolygon") {
         }
     }
    return turf.centroid(turf.polygon(feature.geometry.coordinates[maxArea]))
- }
+ } 
+ else if (feature.geometry.type == "Point"){
+      return feature.geometry.coordinates
+    }
  else {
      return turf.centroid(feature) 
     } 

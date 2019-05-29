@@ -2,7 +2,7 @@ import * as turf from "@turf/turf"
 import {transform, get as getProjection} from 'ol/proj.js';
 import {View} from 'ol';
 import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, generateLinkLayer, addGeoJsonLayer} from "./layer.js";
-
+import {testLinkDataFilter, applyNodeDataFilter} from "./filter.js";
 
 global.Proj = [
   { name: "EPSG:3857", proj4: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",extent:[-4*20026376.39, -2*20048966.10, 2*20026376.39,20048966.10]  , worldExtent:[-180.0,-85.06,180.0,85.06] ,center:[0.00,-0.00]},
@@ -60,17 +60,18 @@ function refreshFeaturesLayers(map,layers, old_projection ,new_projection){
 
   var LEN = layerNames.length;
   reprojectData(data.hashedStructureData, old_projection ,new_projection);
-
+  var id_links = testLinkDataFilter(global_data.filter.link, data)
+  var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
 
   for(var m=0; m<LEN;m++){
     
     // console.log(data);
     if(layerNames[m] === "link"){
       map.removeLayer(layers.features[layerNames[m]]);
-      layers.features[layerNames[m]] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1])
+      layers.features[layerNames[m]] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
     }else if (layerNames[m] === "node"){
       map.removeLayer(layers.features[layerNames[m]]);
-     layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style)
+     layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style , id_links, selected_nodes)
     }
   }
   applyExtent(layers.features,global_data.projection.extent)
@@ -109,7 +110,11 @@ export function getCentroid(feature,projection_name){
     var singlePoly = turf.polygon(feature.geometry.coordinates[maxArea])
     var centroid = turf.centroid(singlePoly);
     var projectedCentroid = transform(centroid.geometry.coordinates, 'EPSG:4326', projection_name)
-    } else {
+    } else if (feature.geometry.type == "Point"){
+      return transform(feature.geometry.coordinates, 'EPSG:4326', projection_name)
+    }
+    else
+     {
       var centroid = turf.centroid(feature);
       var projectedCentroid = transform(centroid.geometry.coordinates, 'EPSG:4326', projection_name)
        

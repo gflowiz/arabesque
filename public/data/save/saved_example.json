@@ -320,25 +320,25 @@
 		"style":{  
 			"link":{
   "color": {
-    "palette": "BuGn",
+    "palette": "YlGnBu",
     "cat": "number",
     "var": "Trade Value (US$)",
-    "max": 31901758962,
-    "min": 3
+    "max": 733715974248,
+    "min": 29072461099
   },
   "opa": {
     "cat": null,
     "var": "fixed",
     "max": null,
     "min": null,
-    "vmax": 0.85
+    "vmax": "0.85"
   },
   "size": {
     "cat": "Linear",
     "var": "Trade Value (US$)",
     "max": 31901758962,
     "min": 3,
-    "ratio": 20
+    "ratio": "50"
   },
   "geometry": {
     "oriented": "oriented",
@@ -352,7 +352,7 @@
       "height": 0.5
     }
   },
-  "text": null
+  "text": "Choose..."
 },
   		"node":{
   "color": {

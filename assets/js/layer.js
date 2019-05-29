@@ -1,8 +1,10 @@
 import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer, addLayerGestionOSMMenu} from "./control.js"
-import {simpleColoredStyle, styleLinkPoly, styleNodeCircle} from "./style.js"
+import {simpleColoredStyle, styleLinkPoly, styleNodeCircle, styleUnselectedNodeCircle} from "./style.js"
 import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow, testLinkDataFilter} from "./filter.js"
 import {drawArrow} from "./geometry.js"
 
+import Legend from 'ol-ext/control/Legend'
+import 'ol-ext/control/Legend.css'
 import {Feature} from 'ol';
 
 import {Polygon, Circle} from 'ol/geom.js';
@@ -203,8 +205,8 @@ export function filterLinkLayer(map, links, nodes, style, id_ori, id_dest) {
     return linkLayer;
 }
 
+export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest, id_selected_links, selected_nodes) {
 
-export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest) {
 
     // console.log('======================')
     if (Object.keys(global_data.layers.features).includes("link")) {
@@ -216,72 +218,109 @@ export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest) {
       addFLayerGestionMenu("link");
     }
 
-    var selected_nodes = applyNodeDataFilter(nodes);
+
+var t0 = performance.now();
+
     var removed_nodes = selected_nodes[1]
     var list_nodes = Object.keys(selected_nodes[0])
-    var index_links = testLinkDataFilter(global_data.filter.link, data)
-    // console.log(index_links)
-    // // filter_nodes
-    // console.log(id_ori);
-    //CHANGE IN indexList
-    // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
 
-    var len = links.length;
+    var ODlinks = groupLinksByOD(links, id_selected_links, id_ori, id_dest)
+
+var t1 = performance.now();
+console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+    var oriIDS = Object.keys(ODlinks);
     var arrow;
     var featureList = [];
-    for (var j = 0; j < len; j++) {
-         // get the index of the filtered links
 
-        // if(){
-        
-            var ori = nodes[links[j][id_ori]].properties.centroid;
-            var dest = nodes[links[j][id_dest]].properties.centroid;
+    var list_width = []
+    for (var j = 0; j < oriIDS.length; j++) {
+         // get the index of the filtered links
+        var Dlinks =  Object.keys(ODlinks[oriIDS[j]])
+
+        for (var i = 0; i < Dlinks.length ; i++) {
+
+            var list_index = ODlinks[oriIDS[j]][Dlinks[i]]
+
+            var ori = nodes[oriIDS[j]].properties.centroid;
+            var dest = nodes[Dlinks[i]].properties.centroid;
+
             var rad_ori = 0;
             var rad_dest = 0;
-
             if (style.node.size.var === 'fixed'){
                 rad_ori =  Number(style.node.size.ratio) * style.ratioBounds ;
                 rad_dest = Number(style.node.size.ratio) * style.ratioBounds ;
             }
             else if (style.node.size.var !== null) {
-                rad_ori = computeDistanceCanvas('node', Number(nodes[links[j][id_ori]].properties[style.node.size.var]), style.ratioBounds, style);
-                rad_dest = computeDistanceCanvas('node', Number(nodes[links[j][id_dest]].properties[style.node.size.var]), style.ratioBounds, style);
+                if (list_nodes.includes(oriIDS[j])){
+                    rad_ori = computeDistanceCanvas('node', Number(nodes[oriIDS[j]].properties[style.node.size.var]), style.ratioBounds, style);
+                }
+                else
+                {
+                    rad_ori = 5 * style.ratioBounds
+                }
+
+                if(list_nodes.includes(Dlinks[i])){
+                    rad_dest = computeDistanceCanvas('node', Number(nodes[Dlinks[i]].properties[style.node.size.var]), style.ratioBounds, style);
+                }
+                else{
+                    rad_dest = 5 * style.ratioBounds
+                
+                }
             
             }
+
             if (style.link.size.var !== 'fixed') {
-                var distance = computeDistanceCanvas('link', Number(links[j][style.link.size.var]), style.ratioBounds * 0.75, style);
+                var width = list_index.reduce(function (accumulateur, valeurCourante) {
+                                        return accumulateur + Number(links[valeurCourante][style.link.size.var]);
+                                        }, 0);
+                var distance = computeDistanceCanvas('link', width, style.ratioBounds * 0.75, style);
             }
             else{
                 var distance = Number(style.link.size.ratio) * style.ratioBounds ;
+                var width = Number(style.link.size.ratio) * style.ratioBounds ;
             }
-        
-            var rad_points = removeRadius(ori, dest, rad_ori, rad_dest);
+            if (style.link.color.var !== 'fixed') {
 
-            var basePoint = tranposeLine(rad_points[0], rad_points[1], style.ratioBounds / 2);
+                var width_color = list_index.reduce(function (accumulateur, valeurCourante) {
+                                        return accumulateur + Number(links[valeurCourante][style.link.color.var]);
+                                        }, 0);
+                
+            }
+            else{
+                var width_color = Number(style.link.size.ratio) * style.ratioBounds ;
+            }
+            // list_width.push(distance)
+               
+// console.log(width)
             arrow = drawArrow(style, ori, dest, rad_ori, rad_dest, distance)
 
             var featureTest = new Feature(new Polygon([arrow]));
             featureTest.setProperties(links[j]);
-            featureTest.setStyle(styleLinkPoly(featureTest))
+            featureTest.setStyle(styleLinkPoly(featureTest, width, width_color))
+            
 
-
-            if(index_links.includes(j)){
-                if((list_nodes.includes(links[j][id_ori]) || list_nodes.includes(links[j][id_dest]) ) && (!removed_nodes.includes(links[j][id_dest]) && !removed_nodes.includes(links[j][id_ori]))){
+                if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
                     featureList.push(featureTest);
-                }
+                
             }
 
-
-            links[j].polygone = featureTest;
-           
+            // featureList.push(featureTest);
+            // links[j].polygone = featureTest;
+           }
             // if(){} //FOR THE GRAPHIC CHOICE OF SHOW THE NODES LINKS TO THE SELECTED NODES
         // }
     }
+
+
+var t1 = performance.now();
+console.log("end generateLinkLayer" + (t1 - t0) + " milliseconds.")
 
     var source = new VectorSource({
         features: featureList
     });
 
+var t1 = performance.now();
+console.log("create source" + (t1 - t0) + " milliseconds.")
 
     var linkLayer = new VectorLayer({
         name: "Link",
@@ -289,12 +328,54 @@ export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest) {
         style: styleLinkPoly,
         renderMode: 'image'
     });
+
+var t1 = performance.now();
+console.log("addMap " + (t1 - t0) + " milliseconds.")
     map.addLayer(linkLayer);
 
 
+  // var legend = new Legend({ 
+  //   title: 'Legend',
+  //   style: getFeatureStyle,
+  //   collapsible: false,
+  //   margin: 0,
+  //   size: [40, 10]
+  // });
+  // map.addControl(legend);
+
+var t1 = performance.now();
+console.log("end" + (t1 - t0) + " milliseconds.")
     
     linkLayer.changed();
     return linkLayer;
+}
+
+export function groupLinksByOD(links, mask_links, id_ori, id_dest){
+    var group = {}
+
+    mask_links.map(function(item){})
+
+    for(var i = 0; i< mask_links.length; i++){
+        var link = links[mask_links[i]]
+        if(typeof group[link[id_ori]]  === 'undefined'){
+            group[link[id_ori]]  = {}
+            if(typeof group[link[id_ori]][link[id_dest]]  === 'undefined'){
+                group[link[id_ori]][link[id_dest]]   = [mask_links[i]]
+            }
+            else{
+                group[link[id_ori]][link[id_dest]].push(mask_links[i])
+            }
+        }
+        else{
+            if(typeof group[link[id_ori]][link[id_dest]]  === 'undefined'){
+                group[link[id_ori]][link[id_dest]]   = [mask_links[i]]
+            }
+            else{
+                group[link[id_ori]][link[id_dest]].push(mask_links[i])
+            }
+        }
+    }
+    return group
 }
 
 export function addOSMLayer(map, layers) {
@@ -311,8 +392,18 @@ export function addOSMLayer(map, layers) {
 }
 
 
-export function addNodeLayer(map, links, nodes, style) {
-// console.log(Object.keys(global_data.layers.features).includes("node"))
+function getAllNodesFromFilteredLinks(links, id_links, ori_id, dest_id, selected_nodes){
+    
+    
+    var ids = id_links.map(function(id){
+        if(selected_nodes.includes(links[id][ori_id]) || selected_nodes.includes(links[id][dest_id]) ){        
+        return [links[id][ori_id],links[id][dest_id]]}
+    })
+    return [...new Set(ids.flat().filter(function(el) { return el; }))]
+}
+
+export function addNodeLayer(map, links, nodes, style, id_selected_links, selected_nodes) {
+// console.log(Object.keys(global_layers.features).includes("node"))
     if (Object.keys(global_data.layers.features).includes("node")) {
         map.removeLayer(global_data.layers.features["node"])
     }
@@ -322,37 +413,101 @@ export function addNodeLayer(map, links, nodes, style) {
     }
 
     var filter_nodes = applyNodeDataFilter(nodes)
-// console.log(filter_nodes)
-    
-    // if(typeof global_data.layers.features.link !== "undefined"){
-    // var filter_links = applyLinkDataFilter(links, filter_nodes[0],filter_nodes[1]);
-    // filter_nodes = getAllNodesToShow(filter_links,nodes ,filter_nodes[0]);
-    // }
-    // else{
-    //     filter_nodes = filter_nodes[0]
-    // }
-// console.log(filter_nodes)
+
     var nodeList = []
-    for (var feature in filter_nodes[0]) {
-     
-        //var j = st[m]
-        var point = nodes[feature].properties.centroid;
-        if (style.node.size.var !== 'fixed') {
-            var radius = computeDistanceCanvas('node', Number(nodes[feature].properties[style.node.size.var]), style.ratioBounds, style);
-        }
-        else
-        {
-            var radius = Number(style.node.size.ratio) * style.ratioBounds ;
-        }
+    var sel_node = Object.keys(selected_nodes[0])
+    var listallnodes = getAllNodesFromFilteredLinks(links, id_selected_links,global_data.ids.linkID[0], global_data.ids.linkID[1] , sel_node)
+    var all_nodes = Object.keys(nodes)
+
+    for( var p = 0; p< listallnodes.length; p++){
+        if(sel_node.includes(listallnodes[p])){
+            var point = nodes[listallnodes[p]].properties.centroid;
+            if (style.node.size.var !== 'fixed') {
+                var radius = computeDistanceCanvas('node', Number(nodes[listallnodes[p]].properties[style.node.size.var]), style.ratioBounds, style);
+            }
+            else
+            {
+                var radius = Number(style.node.size.ratio) * style.ratioBounds ;
+            }
+            
+            var feat = new Feature(new Circle(point, radius))
+            //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
+            feat.setProperties(nodes[listallnodes[p]].properties)
+            feat.setStyle(styleNodeCircle(feat))
         
-        var feat = new Feature(new Circle(point, radius))
-        //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
-        feat.setProperties(nodes[feature].properties)
+            //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
+            nodeList.push(feat);
+        }
+        else{
+            var point = nodes[listallnodes[p]].properties.centroid;
 
-        //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
-        nodeList.push(feat);
-
+            var radius = 5 * style.ratioBounds ;
+            
+            var feat = new Feature(new Circle(point, radius))
+            //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
+            feat.setProperties(nodes[listallnodes[p]].properties)
+            feat.setStyle(styleUnselectedNodeCircle(feat))
+            //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
+            nodeList.push(feat);
+        }
     }
+ 
+// let a = new Set(all_nodes);
+// let b = new Set(sel_node);
+// let c = new Set(listallnodes);
+// let difference = new Set(
+//     [...a].filter(x => b.has(x)));
+// let difference2 = [...new Set(
+//     [...difference].filter(x => !c.has(x)))];
+// console.log(difference2)
+
+    // for( var p = 0; p< difference2.length; p++){
+    //     console.log(sel_node.includes(difference2[p]))
+    //         var point = nodes[difference2[p]].properties.centroid;
+    //         if (style.node.size.var !== 'fixed') {
+    //             var radius = computeDistanceCanvas('node', Number(nodes[difference2[p]].properties[style.node.size.var]), style.ratioBounds, style);
+    //         }
+    //         else
+    //         {
+    //             var radius = Number(style.node.size.ratio) * style.ratioBounds ;
+    //         }
+            
+    //         var feat = new Feature(new Circle(point, radius))
+    //         //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
+    //         feat.setProperties(nodes[difference2[p]].properties)
+    //         feat.setStyle(styleNodeCircle(feat))
+        
+    //         //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
+    //         nodeList.push(feat);
+    //     }
+
+//     
+//     for (var feature in selected_nodes[0]) {
+     
+//         //var j = st[m]
+
+
+//     }
+//         var nodes_already_print = Object.keys(selected_nodes[0])
+// console.log(nodes_already_print)
+// console.log(listallnodes)
+//      for (var n in listallnodes) {
+//         var feature = listallnodes[n]
+//         //var j = st[m]
+//         if(!nodes_already_print.includes(feature) && !(selected_nodes[1].includes(feature) || selected_nodes[1].includes(feature))){
+//         var point = nodes[feature].properties.centroid;
+
+//         var radius = 10 * style.ratioBounds ;
+        
+//         var feat = new Feature(new Circle(point, radius))
+//         //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
+//         feat.setProperties(nodes[feature].properties)
+//         feat.setStyle(styleUnselectedNodeCircle(feat))
+//         //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
+//         nodeList.push(feat);
+//     }
+//     }
+
 
     var source = new VectorSource({
         features: nodeList
@@ -360,9 +515,18 @@ export function addNodeLayer(map, links, nodes, style) {
     var nodeLayer = new VectorLayer({
         name: "Node",
         source: source,
-        style: styleNodeCircle,
         renderMode: 'image'
     })
+
+  //     var legend = new Legend({ 
+  //   title: 'Legend',
+  //   style: styleNodeCircle,
+  //   collapsible: true,
+  //   margin: 15,
+  //   size: [40, 10]
+  // });
+  // map.addControl(legend);
+
     map.addLayer(nodeLayer);
     return nodeLayer;
 }

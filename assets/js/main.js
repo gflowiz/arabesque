@@ -1,5 +1,5 @@
 //TODO remove all funciton in other files like import files 
-import {refreshFilterModal, addFilterToScreen, checkDataToFilter } from "./filter.js"
+import {refreshFilterModal, addFilterToScreen, checkDataToFilter, testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
 import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer} from "./layer.js";
 import {loadMapFromPresetSave, loadFilter} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
@@ -10,9 +10,14 @@ import {setupStyleAndAddLayer , showSemioParameter, generatePaletteMultiHue2, ch
 
 import * as turf from "@turf/turf"
 
+import CanvasScaleLine from 'ol-ext/control/CanvasScaleLine'
+
 import {register} from 'ol/proj/proj4.js';
 import {Map, View } from 'ol';
 import {ScaleLine} from 'ol/control.js';
+
+import WebGLMap from 'ol/WebGLMap.js';
+import * as wbg from 'ol/webgl.js';
 
 import {parse as papaparse} from "papaparse"
 
@@ -27,9 +32,7 @@ import '../css/control.css'
 import  proj4 from 'proj4';
 
 
-// $("#layerControlList").tooltip({placement:"right",
-// title:"Drag and drop layers to change Z-index"
-// })
+
     $("#strokeColorpickerAdd").spectrum({
         color: "#1E90FF"
     });
@@ -280,7 +283,7 @@ global_data.projection = Proj[0]
 // onclick properties did'nt work with webpack so button must be update manually by adding an event listener
 
 // Home Page
-document.getElementById('importDataButton').addEventListener("click", function(){importDataToMap()}); 
+document.getElementById('importDataButton').addEventListener("click", function(){importFlowToMap()}); 
 document.getElementById('localMap').addEventListener("click", function(){loadMapFromPresetSave('local', map, global_data, data)}); 
 document.getElementById('countryMap').addEventListener("click", function(){loadMapFromPresetSave('country', map, global_data, data)}); 
 document.getElementById('worldMap').addEventListener("click", function(){loadMapFromPresetSave('world', map, global_data, data)}); 
@@ -311,7 +314,7 @@ document.getElementById('addFilterButton').addEventListener("click", function(){
 // document.getElementById('featureChosenAddNode').addEventListener("change", function(){showSemioParameter('Node')}); 
 // document.getElementById('refreshSemioButton').addEventListener("click", function(){refreshSemioModal()}); 
 document.getElementById('addSemioButtonLink').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Link')});
-document.getElementById('addSemioButtonNode').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Node')});
+document.getElementById('addSemioButtonNode').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Node')});importPresetMapButton
 // Modal -- Import
 document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", function(){
   var layer_name = document.getElementById("nameGeoJson").value;
@@ -325,9 +328,25 @@ document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", fu
         opacity:opacity};
   global_data.layers.base[layer_name].added = true
   data[layer_name] = data.geoJson
+  reduceDataset(data.geoJson)
   addLayerGestionMenu(layer_name)
 });
+
 // Modal -- import 
+
+// document.getElementById('importFileLocationButton').addEventListener("click", function(){importFlowToMap()}); 
+document.getElementById('importPresetLocationButton').addEventListener("click", function(){
+  importIDSFlow()
+  useExistingNodes()
+});
+document.getElementById('importUserLocationButton').addEventListener("click", function(){
+  importIDSFlow()
+});  
+document.getElementById('importPresetMapButton').addEventListener("click", function(){importFlowAndPresetNodes()}); 
+document.getElementById('importedFileLocationButton').addEventListener("click", function(){
+  importFlowAndUserNodes()
+});  
+
 // document.getElementById('layerControlList').addEventListener("mouseleave", function(){
 //   $("#layerControlList").removeAttr("data-tooltip")
 // console.log('FFFFFFFFFFFFFFFFFFFFFFFFF')
@@ -340,8 +359,12 @@ document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", fu
 // document.getElementById('removeFilterLayout').addEventListener("click", function(){
  
 // })
+document.getElementById("importDataButton").disabled = true;
 
-document.getElementById('importIdButton').addEventListener("click", function(){importData()}); 
+// document.getElementById('importIdButton').addEventListener("click", function(){
+
+//   importData()
+// }); 
 
 
 (function(){
@@ -355,22 +378,92 @@ document.getElementById('importIdButton').addEventListener("click", function(){i
         global_data.files.Ntype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
         document.getElementById("Node").disabled = true;
         document.getElementById("label_node").innerHTML = event.target.files[0].name;  
+        console.log(global_data.files.Ntype)
+        // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
+        // showParameterIDSNodes()
 
-
-            if (document.getElementById("Node").disabled && document.getElementById("Link").disabled){
-    document.getElementById("importDataButton").disabled = false;
+    // document.getElementById("importDataButton").disabled = false;
     
-  }}
+  }
 
     function onReaderLoad(event){
         data.rawStructureData = event.target.result;
-        
+    
+        data.nodes = readData(data.rawStructureData,global_data.files.Ntype);
+        showParameterIDSNodes()
     }
     
 
     document.getElementById('Node').addEventListener('change', onChange);
 
 }());
+
+
+
+ // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
+
+
+ //  if (global_data.files.Ntype === 'csv') {
+
+
+ //    $('#importIDStruct').parent().parent().parent()
+ //      .append($('<div>')
+ //        .attr('class', 'col-md-4')
+ //        .append($('<p>')
+ //          .append($('<label>', {
+ //              text: 'Lat'
+ //            })
+ //            .attr('for', 'select')
+ //          )
+ //          .append($('<select>')
+ //            .attr('class', 'custom-select')
+ //            .attr('id', 'importLatStruct')
+ //          )
+ //        )
+ //      )
+
+
+ //      .append($('<div>')
+ //        .attr('class', 'col-md-4')
+ //        .append($('<p>')
+ //          .append($('<label>', {
+ //              text: 'Long'
+ //            })
+ //            .attr('for', 'select')
+ //          )
+ //          .append($('<select>')
+ //            .attr('class', 'custom-select')
+ //            .attr('id', 'importLonStruct')
+ //          )
+ //        )
+ //      )
+
+ //    }
+
+ //     if (global_data.files.Ntype === 'csv') {
+ //    var keys = Object.keys(data.nodes[0]);
+ //  } else {
+ //    var keys = Object.keys(data.nodes.features[0].properties);
+ //  }
+
+ //  for (var p = 0; p < keys.length; p++) {
+ //    $('#importIDStruct').append($('<option>', {
+ //        text: keys[p]
+ //      })
+ //      .attr("value", keys[p]))
+ //    if (global_data.files.Ntype === 'csv') {
+ //      $('#importLatStruct').append($('<option>', {
+ //          text: keys[p]
+ //        })
+ //        .attr("value", keys[p]))
+ //      $('#importLonStruct').append($('<option>', {
+ //          text: keys[p]
+ //        })
+ //        .attr("value", keys[p]))
+ //    }
+ //  }
+ //  }
+
 
 (function(){
     
@@ -403,14 +496,12 @@ document.getElementById('importIdButton').addEventListener("click", function(){i
         document.getElementById("Link").disabled = true; 
         document.getElementById("label_link").innerHTML = event.target.files[0].name;
 
-        if (document.getElementById("Node").disabled && document.getElementById("Link").disabled){
-            document.getElementById("importDataButton").disabled = false;
-        }
+       document.getElementById("importDataButton").disabled = false;
     }
 
     function onReaderLoad(event){
         data.rawLinkData = event.target.result;
-        //console.log(event.target)
+        // console.log(event.target)
         
     }
     
@@ -432,11 +523,13 @@ for(var i=0; i<list_nameLayer.length; i++){
 }
 
 
-global.map = new Map({
-          renderer:'webgl',
+global.map = new WebGLMap({
+          // renderer:'webgl',
          
           //renderer:'webgl',
           target: 'map',
+          loadTilesWhileAnimating: true,
+          loadTilesWhileInteracting: true,
           view: new View({
             center: [0.00, -0.00],
             //projection:projection.name,
@@ -446,7 +539,12 @@ global.map = new Map({
           })
         });
 map.addControl(new ScaleLine());
-
+// var printControl = new Print()
+// map.addControl(printControl);
+// printControl.on('print', function(e) {
+//       $('body').css('opacity', .1);
+//       console.log('printing')
+//     });
 
 
 
@@ -466,42 +564,158 @@ export function readData(data, ext){
 
 }
 
+function useExistingNodes(){
+  console.log("bonjour")
+  document.getElementById('label_nodes').innerHTML = "Regions"
+  $.getJSON("public/data/save/saved_nodes.json",function(json){  
+    console.log(json)
+   data.saved_nodes = json
+  var keys = Object.keys(json)
+console.log(keys)
+    for (var p = 0; p < keys.length; p++) {
+      $('#importIDStruct').append($('<option>', {
+          text: keys[p]
+        })
+        .attr("value", keys[p]))
+    }
+    console.log(data.saved_nodes)
+    document.getElementById('importIDStruct').addEventListener("change", function(){setupRegions()});     
+    setupRegions()
+    // setupNodes()
+  }) 
+    console.log(data.saved_nodes)
+}
+
+function setupRegions(){
+    if (document.getElementById('importSubRegionsStruct') !== null) {
+    $('#importSubRegionsStruct').parent().parent().remove()
+    $('#importNodesStruct').parent().parent().remove()
+  }
+
+  $('#importIDStruct').parent().parent().parent()
+      .append($('<div>')
+        .attr('class', 'col-md-4')
+        .append($('<p>')
+          .append($('<label>', {
+              text: 'SubRegions'
+            })
+            .attr('for', 'select')
+          )
+          .append($('<select>')
+            .attr('class', 'custom-select')
+            .attr('id', 'importSubRegionsStruct')
+          )
+        )
+      )
+      var submap = document.getElementById('importIDStruct').value
+    var keys = Object.keys(data.saved_nodes[submap])
+console.log(keys)
+    for (var p = 0; p < keys.length; p++) {
+      $('#importSubRegionsStruct').append($('<option>', {
+          text: keys[p]
+        })
+        .attr("value", keys[p]))
+    }
+    document.getElementById('importSubRegionsStruct').addEventListener("change", function(){setupNodes()});
+    setupNodes()
+}
+
+function setupNodes(){
+  if (document.getElementById('importNodesStruct') !== null) {
+    // $('#importSubRegionsStruct').parent().parent().remove()
+    $('#importNodesStruct').parent().parent().remove()
+  }
+  var submap = document.getElementById('importIDStruct').value
+  var region = document.getElementById('importSubRegionsStruct').value
+  var keys = Object.keys(data.saved_nodes[submap][region])
+  var text = '"- Categorial => qualitative selector'+data.saved_nodes[submap][region]+'  "'
+console.log(keys)
+  $('#importIDStruct').parent().parent().parent()
+      .append($('<div>')
+        .attr('class', 'col-md-4')
+        .append($('<p>')
+        .append('<label for="valueTofilter">Type <button  class="badge badge-pill badge-secondary"  id="buttonTypeMapToLoad" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content="nothing"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+          .append($('<select>')
+            .attr('class', 'custom-select')
+            .attr('id', 'importNodesStruct')
+          )
+        )
+      )
+  // var keys = Object.keys(json)
+    for (var p = 0; p < keys.length; p++) {
+      $('#importNodesStruct').append($('<option>', {
+          text: keys[p]
+        })
+        .attr("value", keys[p]))
+    }
+
+    var mapnodes = document.getElementById('importNodesStruct').value
+    $("#buttonTypeMapToLoad").attr("data-content","Used ID : "+data.saved_nodes[submap][region][mapnodes].code)
+    $('[data-toggle="popover"]').popover()
+
+    document.getElementById('importNodesStruct').addEventListener("change", function(){
+      var submap = document.getElementById('importIDStruct').value
+      var region = document.getElementById('importSubRegionsStruct').value
+      var mapnodes = document.getElementById('importNodesStruct').value
+      $("#buttonTypeMapToLoad").attr("data-content","Used ID : "+data.saved_nodes[submap][region][mapnodes].code)
+      $('[data-toggle="popover"]').popover()
+    });
+}
 
 
-
-function importDataToMap() {
-  // console.log(d3.csv)
-//   d3.csv("public/data/swissFlow.csv", function(error, data) {
-//   if(error) throw error;
-//   console.log('ayyayayaya')
-// console.log(data)
-// });
-  // if (!ctr.hasData()) return;
-
-
-  //CSV TO JSON
+function importFlowToMap(){
   data.links = readData(data.rawLinkData, global_data.files.Ltype);
-  data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
+console.log(data.links)
+  var keys = Object.keys(data.links[0]);
+  for (var p = 0; p < keys.length; p++) {
+    $('#importIDOri').append($('<option>', {
+        text: keys[p]
+      })
+      .attr("value", keys[p]))
+    $('#importIDDest').append($('<option>', {
+        text: keys[p]
+      })
+      .attr("value", keys[p]))
+    $('#importIDVol').append($('<option>', {
+        text: keys[p]
+      })
+      .attr("value", keys[p]))
+  }
+}
 
-  if (document.getElementById('importLatStruct') !== null) {
+
+function showParameterIDSNodes() {
+  
+
+
+  if (document.getElementById('importLatStruct') !== null || global_data.files.Ntype === "geojson") {
     $('#importLatStruct').parent().parent().remove()
     $('#importLonStruct').parent().parent().remove()
   }
 
-  if (document.getElementById('importIDStruct') !== null) {
-    $('#importIDStruct').children().remove()
-    $('#importIDDest').children().remove()
-    $('#importIDOri').children().remove()
-    $('#importIDVol').children().remove()
+  if (document.getElementById('importIDNodeStruct') !== null) {
+    $('#importIDNodeStruct').children().remove()
   }
 
-
+  $('#importIDNodeStruct')
+        .append($('<p>')
+          .append($('<label>', {
+              text: 'ID'
+            })
+            .attr('for', 'select')
+          )
+          .append($('<select>')
+            .attr('class', 'custom-select')
+            .attr('id', 'importNodeID')
+          )
+        )
+      
   if (global_data.files.Ntype === 'csv') {
 
 
-    $('#importIDStruct').parent().parent().parent()
+    $('#importIDImportStructComplement')
       .append($('<div>')
-        .attr('class', 'col-md-4')
+        .attr('class', 'col-md-6')
         .append($('<p>')
           .append($('<label>', {
               text: 'Lat'
@@ -517,7 +731,7 @@ function importDataToMap() {
 
 
       .append($('<div>')
-        .attr('class', 'col-md-4')
+        .attr('class', 'col-md-6')
         .append($('<p>')
           .append($('<label>', {
               text: 'Long'
@@ -531,15 +745,16 @@ function importDataToMap() {
         )
       )
 
-  }
-  if (global_data.files.Ntype === 'csv') {
+    }
+
+     if (global_data.files.Ntype === 'csv') {
     var keys = Object.keys(data.nodes[0]);
   } else {
     var keys = Object.keys(data.nodes.features[0].properties);
   }
 
   for (var p = 0; p < keys.length; p++) {
-    $('#importIDStruct').append($('<option>', {
+    $('#importNodeID').append($('<option>', {
         text: keys[p]
       })
       .attr("value", keys[p]))
@@ -554,24 +769,7 @@ function importDataToMap() {
         .attr("value", keys[p]))
     }
   }
-
-  keys = Object.keys(data.links[0]);
-  for (var p = 0; p < keys.length; p++) {
-    $('#importIDOri').append($('<option>', {
-        text: keys[p]
-      })
-      .attr("value", keys[p]))
-    $('#importIDDest').append($('<option>', {
-        text: keys[p]
-      })
-      .attr("value", keys[p]))
-    $('#importIDVol').append($('<option>', {
-        text: keys[p]
-      })
-      .attr("value", keys[p]))
-  }
-  data.rawLinkData = null;
-  data.rawStructureData = null;
+  
 
 }
 
@@ -611,89 +809,127 @@ export function createGeoJSON(Json_data)
   return turf.featureCollection(points)
 }
 
+function importIDSFlow(){
+
+  global_data.ids.linkID[0] = document.getElementById('importIDOri').value
+  global_data.ids.linkID[1] = document.getElementById('importIDDest').value
+  global_data.ids.vol = document.getElementById('importIDVol').value
+
+}
+
+function importFlowAndUserNodes(){
+  
+    global_data.ids.nodeID = document.getElementById('importNodeID').value
+    if(global_data.files.Ntype === 'csv'){
+
+      global_data.ids.long = document.getElementById('importLatStruct').value
+      global_data.ids.lat = document.getElementById('importLonStruct').value
+      data.nodes = createGeoJSON(data.nodes);
+
+    }
+    importData()
+  }
+
+function importFlowAndPresetNodes(){
+
+    global_data.files.Ntype  = "geojson"
+    var region = document.getElementById('importIDStruct').value
+    var subregion = document.getElementById('importSubRegionsStruct').value
+    var map_nodes = document.getElementById('importNodesStruct').value
+    var path = data.saved_nodes[region][subregion][map_nodes].file
+    global_data.ids.nodeID = data.saved_nodes[region][subregion][map_nodes].id
+    $.getJSON(path,function(json){  
+      data.nodes = json;
+      console.log(json);
+      importData();
+      console.log('AYAYAYAY');
+    }) 
+}
+
 function importData(){
-progressBarLoading("waitLoad", 15)
+
+  data.rawLinkData = null;
+  data.rawStructureData = null;
+
   var maxX = - Infinity
   var minX = Infinity
   var maxY = - Infinity
   var minY = Infinity
 
-  global_data.ids.nodeID = document.getElementById('importIDStruct').value
-  global_data.ids.linkID[0] = document.getElementById('importIDOri').value
-  global_data.ids.linkID[1] = document.getElementById('importIDDest').value
-  global_data.ids.vol = document.getElementById('importIDVol').value
+var len = data.links.length;
+var used_nodes = []
 
-  if(global_data.files.Ntype === 'csv'){
-
-    global_data.ids.long = document.getElementById('importLatStruct').value
-    global_data.ids.lat = document.getElementById('importLonStruct').value
-    data.nodes = createGeoJSON(data.nodes);
+for(var i = 0; i<len; i++)
+  {
+    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[0]])){
+      used_nodes.push(data.links[i][global_data.ids.linkID[0]])
+    }
+    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[1]])){
+      used_nodes.push(data.links[i][global_data.ids.linkID[1]])
+    }
   }
-progressBarLoading("waitLoad", 35)
-  var list_id_nodes = []
-  var list_doublon_nodes = []
-  var len = data.nodes.features.length;
+
+var list_id_nodes = []
+var list_doublon_nodes = []
+var len = data.nodes.features.length;
   for(var p=0; p<len; p++){
 
-    if (!list_id_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID])){
-    data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]] = data.nodes.features[p];
-    
-    var centroid = getCentroid(data.nodes.features[p], global_data.projection.name)
-    data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties["centroid"] = centroid   
-    data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties[global_data.ids.vol] = 0
+    if (!list_id_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID]) && used_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID])){
+      data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]] = data.nodes.features[p];
+      
+      var centroid = getCentroid(data.nodes.features[p], global_data.projection.name)
+      console.log(centroid)
+      data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties["centroid"] = centroid   
+      data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties[global_data.ids.vol] = 0
 
-    list_id_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
+      list_id_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
 
-    if(maxX < centroid[0]){
-      maxX = centroid[0]
+      if(maxX < centroid[0]){
+        maxX = centroid[0]
+      }
+      if(minX > centroid[0]){
+        minX = centroid[0]  
+      }
+      if(maxY < centroid[1]){
+        maxY = centroid[1] 
+      }
+      if(minY > centroid[1]){
+        minY = centroid[1]  
+      }
     }
-    if(minX > centroid[0]){
-      minX = centroid[0]  
+    else{
+      list_doublon_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
     }
-    if(maxY < centroid[1]){
-      maxY = centroid[1] 
-    }
-    if(minY > centroid[1]){
-      minY = centroid[1]  
-    }
+
   }
-  else{
-    list_doublon_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
+
+  if(list_doublon_nodes.length !== 0){
+    alert(list_doublon_nodes.length +"nodes have been removed.")
   }
 
-}
+  var lx = maxX - minX
+  var ly = maxY - minY
+  global_data.style.ratioBounds = Math.max(lx,ly)* 0.0002
+  var newCenter = [minX+lx/2,minY+ly/2]
+  global_data.center = newCenter
 
-if(list_doublon_nodes.length !== 0){
-  alert(list_doublon_nodes.length +"nodes have been removed.")
-}
-
-progressBarLoading("waitLoad", 65)
-var lx = maxX - minX
-var ly = maxY - minY
-global_data.style.ratioBounds = Math.max(lx,ly)* 0.0002
-var newCenter = [minX+lx/2,minY+ly/2]
-global_data.center = newCenter
-map.getView().setCenter(newCenter)
-map.getView().setZoom(getZoomFromVerticalBounds(ly));
+  map.getView().setCenter(newCenter)
+  map.getView().setZoom(getZoomFromVerticalBounds(ly));
 
 data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1])
-// data.links = checkIDNodes(data.links, Object.keys(data.hashedStructureData), global_data.ids, global_data.files.Ntype)
-progressBarLoading("waitLoad", 75)
 
 computeMinStatNode(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], global_data.ids.vol);
-progressBarLoading("waitLoad", 85)
+
 data.links = prepareLinkData(data.links, global_data.ids.linkID[0],global_data.ids.linkID[1], data.hashedStructureData, global_data.ids.vol);
 
 //TODO ADD GESTION OF UNDEFINED NODES REMOVE OR 0/0
 var isCSV = global_data.files.Ntype !== 'geojson'
-  computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],isCSV,'kilometers');
+computeDistance(data.hashedStructureData , data.links, global_data.ids.linkID[0],global_data.ids.linkID[1],isCSV,'kilometers');
 
-progressBarLoading("waitLoad", 100)
+      console.log('AYAYAYAY')
 document.getElementById("addFilterButton").disabled = false;
 
 $("#featureCard").toggle();
-
-
 
 applyPreselectMap(global_data, global_data.ids.vol, data)
 
@@ -732,7 +968,6 @@ export function prepareLinkData (links, id_ori, id_dest, hash_nodes, id_vol){
     newLinkData.push(links[p])
     }
   }
-  progressBarLoading("waitLoad", 95)
   return newLinkData;
 }
 
@@ -744,8 +979,11 @@ function applyPreselectMap(main_object, id_volume, data){
 
   loadFilter(main_object.filter)
 
-  main_object.layers.features.node = addNodeLayer(map, data.links, data.hashedStructureData, main_object.style)
-  main_object.layers.features.link = generateLinkLayer(map,  data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1])
+  var id_links = testLinkDataFilter(global_data.filter.link, data)
+  var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
+
+  main_object.layers.features.node = addNodeLayer(map, data.links, data.hashedStructureData, main_object.style, id_links, selected_nodes)
+  main_object.layers.features.link = generateLinkLayer(map,  data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1], id_links, selected_nodes)
   main_object.layers.features.node.setZIndex(1)
 
 }
@@ -836,4 +1074,19 @@ function  setupPresetMapFilterLink(filter, id_volume, links){
     }
   )
 
+}
+
+  function reduceDataset(geojson){
+    
+  var geo = geojson.features
+  console.log(geo)
+  var len = geo.length
+  var gg = []
+  for(var i = 0; i<len; i++){
+    if(geo[i].geometry !== null){
+    geo[i] = turf.point(getCentroid(geo[i],"EPSG:4326"), geo[i].properties)
+  }
+  }
+  console.log(geojson)
+  return geojson
 }
