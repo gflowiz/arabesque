@@ -1,5 +1,10 @@
-import {Fill, Stroke, Text, Style, Circle} from 'ol/style.js';
+import {Fill, Stroke, Text, Style, Circle,RegularShape} from 'ol/style.js';
+
+import {Point} from 'ol/geom.js';
+import {getCenter} from 'ol/extent.js';
 import {asArray} from 'ol/color.js'
+
+import  {computeNodeDistanceCanvas} from "./layer.js"
 // import * as d3scale from 'd3-scale'
 
 
@@ -23,8 +28,94 @@ export function simpleColoredStyle(opacity, stroke, fill){
 
 
 
+export function getFeatureStyle (feature) {
+    // console.log(getCenter(feature.getGeometry().getExtent() ))
+    // console.log((feature.get('pop') * Math.PI) * global_data.style.ratioBounds/ map.getView().getResolution())
+    return [
+      new Style ({
+        image: new Circle({
+          radius: computeNodeDistanceCanvas('node', feature.get('pop'), global_data.style.ratioBounds, global_data.style)/ map.getView().getResolution(), 
+          fill: new Fill ({
+            color: "orange",
+          }),
+          stroke: new Stroke ({
+            width: 1,
+            color: "orange",
+          })
+        }),
+        geometry: new Point(getCenter(feature.getGeometry().getExtent() ))
+      })
+      ,
+      //       new Style ({
+      //   image: new Circle({
+      //     radius: computeNodeDistanceCanvas('node', feature.get('pop'), global_data.style.ratioBounds, global_data.style)/ (2 * map.getView().getResolution()), 
+      //     fill: new Fill ({
+      //       color: [0,0,255,.3],
+      //     }),
+      //     stroke: new Stroke ({
+      //       width: 1,
+      //       color: [0,0,255],
+      //     })
+      //   }),
+      //   geometry: new Point(getCenter(feature.getGeometry().getExtent() ))
+      // }),      
+      //       new Style ({
+      //   image: new Circle({
+      //     radius: computeNodeDistanceCanvas('node', feature.get('pop'), global_data.style.ratioBounds, global_data.style)/ (4 * map.getView().getResolution()), 
+      //     fill: new Fill ({
+      //       color: [255,0,0,.3],
+      //     }),
+      //     stroke: new Stroke ({
+      //       width: 1,
+      //       color: [0,0,255],
+      //     })
+      //   }),
+      //   geometry: new Point(getCenter(feature.getGeometry().getExtent() ))
+      // }),
+      // new Style ({
+      //   radius: 150,
+      //   stroke: new Stroke ({
+      //     width: 2,
+      //     color: [0,0,255]
+      //   }),
+      //   fill: new Fill ({
+      //     color: [0, 255, 255, 0.2]
+      //   })
+      // })
+    ];
+  }
 
-export function styleLinkPoly(feature, width_size, size_color){
+  export function getLinkFeatureStyle (feature) {
+    
+
+      var stroke = new Stroke({color: 'black', width: 2});
+      var fill = new Fill({color: 'red'});
+
+      var square = new Style({
+          image: new RegularShape({
+            fill: fill,
+            stroke: stroke,
+            points: 4,
+            radius: feature.get('pop') * global_data.style.ratioBounds/ map.getView().getResolution(),
+            angle: Math.PI / 4
+          })
+        })
+    
+    return [
+      square,
+      new Style ({
+        stroke: new Stroke ({
+          width: 1,
+          color: [255,128,0]
+        }),
+        fill: new Fill ({
+          color: "cyan"
+        })
+      })
+    ];
+  }
+
+export function styleLinkPoly(feature, width_size, size_color, size_opa){
     //width stupe
     if(global_data.style.link.size.var === 'fixed'){
     //color setup
@@ -48,7 +139,7 @@ export function styleLinkPoly(feature, width_size, size_color){
         // get the corlor from a js object wer the name of the variable is link to 
     }
     else if (global_data.style.link.color.cat === 'categorical'){
-        var oColor = d3.color(global_data.style.link.categorialLinkOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
+        var oColor = d3.color(global_data.style.link.categorialOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
     }    
     else if(global_data.style.link.color.cat === 'number'){
         var NormalizeColor = (size_color-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
@@ -67,7 +158,7 @@ export function styleLinkPoly(feature, width_size, size_color){
     else
     {
         var opascale = d3["scale"+global_data.style.link.opa.cat]().domain([0,Number(global_data.style.link.opa.vmax)]).range([Number(global_data.style.link.opa.min),Number(global_data.style.link.opa.max)])
-        oColor.opacity= opascale(Number(feature.get(global_data.style.link.opa.var)))
+        oColor.opacity= opascale(size_opa)
     }
     var style = new Style({
          fill: new Fill({
@@ -91,7 +182,7 @@ export function styleLinkPoly(feature, width_size, size_color){
     return style
 }
 
-export function styleNodeCircle(feature){
+export function styleNodeCircle(feature,scalers){
 
     if(global_data.style.node.size.cat === 'fixed'){
     //color setup
@@ -110,13 +201,13 @@ export function styleNodeCircle(feature){
     }
 
     else if (global_data.style.node.color.cat === 'categorical'){
-        var oColor = d3.color(global_data.style.node.categorialNodeOrderedColors[feature.get(global_data.style.node.color.var).toString()])
+        var oColor = d3.color(global_data.style.node.categorialOrderedColors[feature.get(global_data.style.node.color.var).toString()])
         // get the corlor from a js object wer the name of the variable is link to 
     }
     else if(global_data.style.node.color.cat === 'number'){
         
-        var NormalizeColor = (Number(feature.get(global_data.style.node.color.var))-global_data.style.node.color.min)/(global_data.style.node.color.max-global_data.style.node.color.min) 
-        var oColor = d3.color(d3["interpolate"+global_data.style.node.color.palette](NormalizeColor))
+        // var NormalizeColor = (Number(feature.get(global_data.style.node.color.var))-global_data.style.node.color.min)/(global_data.style.node.color.max-global_data.style.node.color.min) 
+        var oColor = d3.color(scalers.color(feature.get(global_data.style.node.color.var)))
        // oColor.opacity = opacityFunciton
     
     }
@@ -126,9 +217,9 @@ export function styleNodeCircle(feature){
     }
     else
     {
-     var opascale = d3["scale"+global_data.style.node.opa.cat]().domain([0,Number(global_data.style.node.opa.vmax)]).range([Number(global_data.style.node.opa.min),Number(global_data.style.node.opa.max)])
+     // var opascale = d3["scale"+global_data.style.node.opa.cat]().domain([0,Number(global_data.style.node.opa.vmax)]).range([Number(global_data.style.node.opa.min),Number(global_data.style.node.opa.max)])
 
-     oColor.opacity= opascale(Number(feature.get(global_data.style.node.opa.var)))
+     oColor.opacity= scalers.opa(Number(feature.get(global_data.style.node.opa.var)))
   }
     var style = new Style({
             fill: new Fill({

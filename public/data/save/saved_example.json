@@ -5,7 +5,8 @@
 			"node": "public/data/swissLoc.csv",
 			"link": "public/data/swissFlow.csv",
 			"Ltype":"csv",
-			"Ntype":"csv"
+			"Ntype":"csv",
+			"aggr":"sum"
 		},
 		"base_layer":[
 			{
@@ -49,7 +50,7 @@
 			        "cat": "Linear",
 			        "var":"count",
 			        "max":0.8,
-			        "min":0.6,
+			        "min":0.2,
 			        "vmax":6143
           		},
 	        	"size":{
@@ -85,8 +86,8 @@
           		"cat":"Sqrt",
           		"ratio":100,
           		"var":"degree",
-          		"max":180854,
-          		"min":1520
+          		"max":47144,
+          		"min":850
           	},
          	"opa":{
           		"cat":"Linear",
@@ -151,7 +152,8 @@
 			"node": "public/data/londonLoc.csv",
 			"link": "public/data/londonFlow.csv",
 			"Ltype":"csv",
-			"Ntype":"csv"
+			"Ntype":"csv",
+			"aggr":"sum"
 		},
 		"base_layer":[
 		{
@@ -222,14 +224,15 @@
           		"cat":"Sqrt",
           		"ratio":150,
           		"var":"degree",
-          		"max":180854,
-          		"min":1520
+          		"max":70657,
+          		"min":0
           	},
          	"opa":{
           		"cat":"Linear",
-          		"var":"count",
+          		"var":"fixed",
           		"max":0.75,
-          		"min":0.3
+          		"min":0.3,
+			    "vmax":0.65
           	},
           	"text":null
         }
@@ -286,7 +289,8 @@
 			"node": "public/data/countries.geojson",
 			"link": "public/data/comtrade(8).csv",
 			"Ltype":"csv",
-			"Ntype":"geojson"
+			"Ntype":"geojson",
+			"aggr":"sum"
 		},
 		"base_layer":[
 			{

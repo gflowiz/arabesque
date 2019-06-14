@@ -15,7 +15,7 @@
 <body>
 
 <!-- Data Input -->
-<div class="arrival" style="background-color:deepskyblue;">
+<div class="arrival" style="background-color:silver; background-image:url(./public/index.png)">
   <div class="row align-items-center  justify-content-around h-100">
     <div class="col-md-3 align-items-center  justify-content-around h-50">
       <div class="card" >
@@ -25,7 +25,7 @@
               <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
               <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
             </div>
-            <!--         <input type='button' class="btn btn-primary btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
+            <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
             <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importFlowModal">
               Add
             </button>
@@ -37,9 +37,9 @@
           <div class="card-body" style="background-color:azure; z-index:50;">
             <h5 class="card-title">Example</h5>
 
-                <button type="button" id ="localMap" class="btn btn-info btn-block" >City Map</button>
-                <button type="button" id ="countryMap" class="btn btn-info btn-block" >Country Map</button>
-                <button type="button" id ="worldMap" class="btn btn-info btn-block" >World Map</button>
+                <button type="button" id ="localMap" class="btn btn-dark btn-block" >City Map</button>
+                <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Country Map</button>
+                <button type="button" id ="worldMap" class="btn btn-dark btn-block" >World Map</button>
 
           </div>
       </div>
@@ -57,7 +57,7 @@
 <!-- Eploration MAP -->
 <div class="container-fluid h-100">
   <div class="row h-100" >
-    <div class="col-md-2 p-0" style="background-color:deepskyblue;" id="layerLayout">
+    <div class="col-md-2" style="background-color:darkgrey;" id="layerLayout">
       <div class="row p-0" >
         <div class="accordion w-100" id="accordionExample">
           <div class="card" >
@@ -103,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="row p-0 mt-3 ml-2 mr-2" id="layerControlList" >
+      <div class="row p-0 mt-3" id="layerControlList" >
           <ul id="accordionLayerControl" class="list-unstyled col-md-12 align-items-center">
 
           </ul>
@@ -116,20 +116,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 h-100 p-0" id="filterDiv" style="background-color:deepskyblue;">
+    <div class="col-md-4 h-100" id="filterDiv" style="background-color:darkgrey;">
       <div class="row justify-content-md-center mt-3 ">
         <div class="col-md-8">
           <input id="selectFilterButton" class="btn btn-dark btn-block" type="button" value="Add Filter" data-toggle="modal" data-target="#FilterModal">
-          
-        </div>
-        <div class="row" id="numeralFiltersRow">
-        </div>
-        <div class="row" id="catFiltersRow">
-        </div>
-        <div class="row" id="removeFiltersRow">
         </div>
       </div>
-      <hr>
     </div>
   </div>
 </div>
@@ -177,7 +169,7 @@
           </div>
         </div>
       </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addNewLayerButtonAdd" data-dismiss="modal">ADD LAYER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonAdd" data-dismiss="modal">ADD LAYER</button>
     </div>
   </div>
 </div>
@@ -231,7 +223,7 @@
           </div>
         </div>
       </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
     </div>
   </div>
 </div>
@@ -265,7 +257,7 @@
           </div>
         </div>
       </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">ADD</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">ADD</button>
     </div>
   </div>
 </div>
@@ -281,7 +273,7 @@
         
 
       </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addFilterButton" data-dismiss="modal">ADD FILTER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addFilterButton" data-dismiss="modal">ADD FILTER</button>
     </div>
   </div>
 </div>
@@ -318,7 +310,7 @@
                   </div>
           </div>
         </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addSemioButtonNode" data-dismiss="modal">ADD LAYER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonNode" data-dismiss="modal">ADD LAYER</button>
     </div>
   </div>
 </div>
@@ -345,6 +337,7 @@
                     <label for="select"class="text-muted h5">Type</label>
                     <select class="custom-select" id="arrowtype">
                       <option selected value="StraightArrow">Straight</option>
+                      <option value="TriangleArrow">Triangle</option>
                       <option value="CurveArrow">Curve</option>
                       <option value="CurveOneArrow">Triangle Curve</option>
                     </select>
@@ -390,7 +383,7 @@
             </div>
           </div>
         </div>
-      <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
     </div>
   </div>
 </div>
@@ -404,32 +397,46 @@
       </div>
       <div class="modal-body" id="importLayerBody">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <p>
               <label class="text-muted h5" for="select">ID Origin</label>
               <select  class="custom-select" id="importIDOri"></select>
             </p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <p>
               <label class="text-muted h5" for="select">ID Dest</label>
               <select class="custom-select" id="importIDDest"></select>
             </p>
           </div>
-          <div class="col-md-4">
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <p>
               <label class="text-muted h5" for="select">Volume</label>
               <select  class="custom-select" id="importIDVol"></select>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p>
+              <label class="text-muted h5" for="select">Aggregation Function</label>
+              <select  class="custom-select" id="importAggrFun">
+                <option value="sum">Sum</option>
+                <option value="mean">Mean</option>
+                <option value="median">Median</option>
+                <option value="max">Max</option>
+                <option value="min">Min</option>
+              </select>
             </p>
           </div>
         </div>
         <hr>
       <div class = "row">
             <div class = "col-md-6">
-              <button class="btn btn-primary  btn-block justify-content-center mt-2"   type="button" id="importUserLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#importLocationModal">Import Location</button>
+              <button class="btn btn-dark  btn-block justify-content-center mt-2"   type="button" id="importUserLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#importLocationModal">Import Location</button>
             </div>
             <div class = "col-md-6">
-              <button class="btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importPresetLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#usePresetLocationModal">Preset Location</button>
+              <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#usePresetLocationModal">Preset Location</button>
             </div>
           </div>
       </div>
@@ -471,7 +478,7 @@
         </div>
       </div>
        <div class ="modal-footer">
-          <button class="btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
+          <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
         </div>
     </div>
   </div>
@@ -495,7 +502,7 @@
         </div>
       </div>
       <div class ="modal-footer" >
-        <button class=" btn btn-primary btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
+        <button class=" btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
       </div>
     </div>
   </div>
@@ -532,7 +539,7 @@
       </div>
     </div>
     </div>
-    <button class="modal-footer btn btn-primary justify-content-center mt-2"   type="button" id="changeStyleButton" data-dismiss="modal">Change</button>
+    <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="changeStyleButton" data-dismiss="modal">Change</button>
 
     </div>
   </div>
@@ -541,6 +548,6 @@
 
 
 
-	<script src="dist/bundle.js"></script>
+	<script src="bundle.js"></script>
 </body>
 </html>

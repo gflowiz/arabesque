@@ -75,7 +75,7 @@ function orientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
 
 	// var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
    
-    var testWidth =  Math.min(heigth_arrow *width + width , 0.75* dist)
+    var testWidth =  Math.min(heigth_arrow *width + width , dist)
     // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
     var topArrowpoint =  getIntersection(reducePointdest,reducePointOri,testWidth)
     var polyPoint = tranposeLine(baseArrow[0], topArrowpoint, width)
@@ -83,6 +83,37 @@ function orientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
     topArrowpoint = transposePointVerticalyFromLine(topArrowpoint, [baseArrow[0], baseArrow[1]], width + widthArrow * width )
    
     return [baseArrow[0], baseArrow[1], topArrowpoint, polyPoint[1], polyPoint[0], baseArrow[0]]
+}
+
+function orientedTriangleArrow(style, ori, dest, rad_ori, rad_dest , width) {
+    var startX = ori[0]
+    var startY = ori[1]
+    var endX = dest[0]
+    var endY = dest[1]
+    var angle = Math.atan2(endY - startY, endX - startX)
+
+    var reducePointdest = getIntersection(dest,ori,rad_dest)
+    var reducePointOri = getIntersection(ori,dest,rad_ori)
+
+    var heigth_arrow = style.link.geometry.head.height
+    var widthArrow = style.link.geometry.head.width
+
+    var dist =  Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1])) 
+    var baseArrow = tranposeLine(reducePointOri, reducePointdest, style.ratioBounds / 2);
+
+    // var percentDist = heigth_arrow * Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY))
+    //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
+
+    // var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
+   
+    var testWidth =  Math.min(heigth_arrow *width + width , dist)
+    // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
+    var topArrowpoint =  getIntersection(reducePointdest,reducePointOri,testWidth)
+    var polyPoint = tranposeLine(baseArrow[0], topArrowpoint, width)
+
+    // topArrowpoint = transposePointVerticalyFromLine(topArrowpoint, [baseArrow[0], baseArrow[1]], width + widthArrow * width )
+   
+    return [baseArrow[0], baseArrow[1], polyPoint[0], baseArrow[0]]
 }
 
 function removeRadius(point_ori, point_dest, radius_ori, radius_dest) {
@@ -264,6 +295,8 @@ window.orientedStraightArrow = orientedStraightArrow
 window.orientedCurveArrow = orientedCurveArrow
 window.orientedCurveOneArrow = orientedCurveOneArrow
 window.noOrientedCurveOneArrow = orientedCurveOneArrow
+window.orientedTriangleArrow = orientedTriangleArrow
+window.noOrientedTriangleArrow = orientedTriangleArrow
 // export function drawNoOrientedCurveLine(ori, dest, base_curve, height_curve, width)
 
 function drawLine(path, iteration){

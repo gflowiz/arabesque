@@ -1,5 +1,5 @@
 import {getNameVariables, refreshZindex} from "./control.js";
-import {addNodeLayer, generateLinkLayer, changeBaseLayer, groupLinksByOD} from "./layer.js";
+import {addNodeLayer, generateLinkLayer, changeBaseLayer, groupLinksByOD, addLegendToMap,getD3ScalersForStyle} from "./layer.js";
 import { testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
 import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
@@ -55,6 +55,7 @@ export const paletteColorSequentialMultiHue = {
   YlOrRd : d3.schemeYlOrRd
 }
 
+
  
 export const paletteColorSequentialMultiHue2 = {  
     Viridis : [[],[],[],[],[],[],[],[],[],[],[],[],[]],
@@ -86,7 +87,61 @@ export function showChangeBaseLayerParameter(map, layers, mode, layer_name, styl
   return;
 }
 
+export function getNodeColorScaleValue(layer, scalers){
+  
+  var colors = []
+  var min = global_data.style[layer].color.min;
+  var max = global_data.style[layer].color.max;
+  for(var i = 0; i<7; i++){
+        var NormalizeColor = (min+ (max-min)/7 * (7-i)-min)/(max-min) 
+        colors.push([Number(max/(i+1)).toString(), d3.color(d3["interpolate"+global_data.style[layer].color.palette](NormalizeColor)).rgb().toString()])
+  }
+  // console.log(colors)
+  return colors
+}
 
+export function getNodeOpaScaleValue(layer){
+  var colors = []
+  var min = global_data.style[layer].opa.min;
+  var valueMax = global_data.style[layer].opa.vmax;
+  var max = global_data.style[layer].opa.max;
+  var color = d3.color('grey');
+  for(var i = 0; i<7; i++){
+        // var NormalizeColor = (min * (9-i)-min)/(max-min) 
+        color.opacity = max - (i  * (max-min)/7)
+        // console.log( max - (i  * (max-min)/7))
+        colors.push([Number(valueMax /(i+1)), color.rgb().toString()])
+  }
+  return colors
+}
+
+export function getNodeColorCatValue(layer){
+  var colors = {}
+  var list_colors = global_data.style[layer].categorialOrderedColors;
+  var hasOtherCat = false;
+  var index = Object.keys(global_data.style[layer].categorialOrderedColors)
+  // console.log(index)
+  // console.log(list_colors)
+  for(var i = 0; i<index.length; i++){
+    // console.log()
+        if( typeof d3.color('grey').rgb() !==  typeof list_colors[index[i]]){
+            // console.log(d3.color('grey').rgb())
+            // console.log(list_colors[index[i]])
+          colors[index[i]] = list_colors[index[i]]
+        }
+        else{
+          hasOtherCat = true;
+        }
+  }
+
+  if(hasOtherCat){
+    colors['Others'] = d3.color('grey').rgb().toString()
+  }
+
+  // console.log(colors)
+
+  return colors
+}
 
 function loadGeometryParameter(style){
 console.log('style')
@@ -145,7 +200,7 @@ export function setupStyleAndAddLayer(style, layer_name){
   }
   else
   {
-    style[layer].opa.vmax  = setupMaxAndMin(opaVar, layer)[1];
+    style[layer].opa.vmax  = getMinMaxColor(opaVar, layer)[1];
     style[layer].opa.min = document.getElementById('ratioMinOpaAdd'+layer_name).value;
     style[layer].opa.max = document.getElementById('ratioMaxOpaAdd'+layer_name).value;
     style[layer].opa.cat = document.getElementById('typeOpaAdd'+layer_name).value;
@@ -157,7 +212,7 @@ export function setupStyleAndAddLayer(style, layer_name){
 
     if(widthVar !== 'fixed')
       {
-        sizeMM = setupMaxAndMin(widthVar, layer)
+        sizeMM = getMinMaxSize(widthVar, layer)
         var typeSize = document.getElementById('typeSizeAdd'+layer_name).value;
       }
 
@@ -198,10 +253,44 @@ export function setupStyleAndAddLayer(style, layer_name){
 }
 
 function getMinMaxColor(colorVar, layer){
-  
+  console.log(colorVar)
 console.log("AYAYAY")
   if(layer==='node'){
     var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[colorVar])})
+  }
+  else if (layer ==='link'){
+console.log("AYAYAY")
+    var OD  = groupLinksByOD(data.links, [...Array(data.links.length).keys()], global_data.ids.linkID[0],global_data.ids.linkID[1])
+    var idOD = Object.keys(OD)
+
+    var test = idOD.map(function(item){
+      return Object.keys(OD[item]).map(function(item2){
+        if(global_data.files.aggr === "sum"){
+          return OD[item][item2].reduce(function (accumulateur, valeurCourante) {
+              return accumulateur + Number(data.links[valeurCourante][colorVar]);
+          }, 0);
+      }
+        else{
+          Math.max(...OD[item][item2].map(function (value) {
+              return Number(data.links[value][colorVar]);
+          }))
+
+        }
+
+        })
+      })
+    console.log(test)
+    var dataArray = test.flat()
+  }
+  // console
+  return [Math.min(...dataArray),Math.max(...dataArray)]
+}
+
+function getMinMaxSize(sizeVar, layer){
+  
+console.log("AYAYAY")
+  if(layer==='node'){
+    var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[sizeVar])})
   }
   else if (layer ==='link'){
 
@@ -209,10 +298,18 @@ console.log("AYAYAY")
     var idOD = Object.keys(OD)
 
     var test = idOD.map(function(item){
-      return Object.keys(OD[item]).map(function(item2){
+       return Object.keys(OD[item]).map(function(item2){
+        if(global_data.files.aggr === "sum"){
           return OD[item][item2].reduce(function (accumulateur, valeurCourante) {
-              return accumulateur + Number(data.links[valeurCourante][colorVar]);
+              return accumulateur + Number(data.links[valeurCourante][sizeVar]);
           }, 0);
+        }
+        else{
+          Math.max(...OD[item][item2].map(function (value) {
+              return Number(data.links[value][sizeVar]);
+          }))
+
+        }
         })
       })
     // console.log(test)
@@ -257,6 +354,7 @@ var t0 = performance.now();
       global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
       global_data.layers.features['link'].setZIndex(lindex)
       // global_data.layers.features['node'].setZIndex(nindex)
+      
     }  
     // refreshZindex()
 var t1 = performance.now();
@@ -275,11 +373,13 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
             i = i+1
           }
    )
+
+    addLegendToMap()
 }
 
 export function nodeOrderedCategory(var_name, style){
   console.log(style)
-  style.categorialNodeOrderedColors = {};
+  style.categorialOrderedColors = {};
   let counts = {}
   // console.log(Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[var_name])}))
   Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
@@ -287,26 +387,26 @@ export function nodeOrderedCategory(var_name, style){
   var lenPalette = paletteColorCat[style.color.palette].length;
   for(var p=0; p<sortedKeys.length; p++){
     if(p<lenPalette){
-    style.categorialNodeOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
+    style.categorialOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
     }
     else{
-      style.categorialNodeOrderedColors[sortedKeys[p]] = d3.color('grey').rgb()
+      style.categorialOrderedColors[sortedKeys[p]] = d3.color('grey').rgb()
     }
   }
 }
 
 export function linkOrderedCategory(var_name, style){
-  style.categorialLinkOrderedColors = {};
+  style.categorialOrderedColors = {};
   let counts = {}
   data.links.map(function(item){return item[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
   var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
   var lenPalette = paletteColorCat[style.color.palette].length;
   for(var p=0; p<sortedKeys.length; p++){
     if(p<lenPalette){
-      style.categorialLinkOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
+      style.categorialOrderedColors[sortedKeys[p]] = paletteColorCat[style.color.palette][p]
     }
     else{
-      style.categorialLinkOrderedColors[sortedKeys[p]] = d3.color('grey').rgb()
+      style.categorialOrderedColors[sortedKeys[p]] = d3.color('grey').rgb()
     }
   }
 }
@@ -440,7 +540,8 @@ if(document.getElementById('semioSelectorOpa'+id_ele).value !== 'fixed'){
                     .attr("id","typeOpa"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
                       .append($('<option>', {text:"Linear", value:'Linear'}))
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))                      
+                      .append($('<option>', {text:"Square", value:'Pow'}))
+                      .append($('<option>', {text:"SquareRoot", value:'Sqrt'}))                         
                       .append($('<option>', {text:"Logarithmic", value:'Log'}))
                     )
                   )
@@ -525,7 +626,9 @@ if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
                     .attr("id","typeSize"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
                       .append($('<option>', {text:"Linear", value:'Linear'}))  
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))        
+                      .append($('<option>', {text:"Square", value:'Pow'})) 
+                      .append($('<option>', {text:"SquareRoot", value:'Sqrt'}))                         
+                      .append($('<option>', {text:"Logarithmic", value:'Log'}))         
                     )
                   )
 }
@@ -539,7 +642,8 @@ else{
                     .attr("id","typeSize"+id_ele)
                     // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
                       // .append($('<option>', {text:"Linear", value:'Linear'}))  
-                      .append($('<option>', {text:"Square", value:'Sqrt'}))                        
+                      .append($('<option>', {text:"Square", value:'Pow'}))  
+                      .append($('<option>', {text:"SquareRoot", value:'Sqrt'}))                       
                       .append($('<option>', {text:"Logarithmic", value:'Log'}))    
                       // .append($('<option>', {text:"Square", value:'Sqrt'}))          
                     )
@@ -606,6 +710,7 @@ showColors(id_ele, id_parent)
 function showColors(ide, idp){
 
   if(document.getElementById("semioSelectorColor" + ide).value === 'fixed'){
+    $('#colorPicker'+ide).remove();
     showfixed(ide, idp)  
     return
   }
@@ -971,7 +1076,7 @@ export function applyChangeStyle(name, style, layers){
   else
   {
 
-    style[name].opa.vmax = setupMaxAndMin(opaVar, name)[1]
+    style[name].opa.vmax = getMinMaxColor(opaVar, name)[1]
     style[name].opa.min = document.getElementById('ratioMinOpaChange').value;
     style[name].opa.max = document.getElementById('ratioMaxOpaChange').value;
     style[name].opa.cat =  document.getElementById('typeOpaChange').value;
@@ -982,7 +1087,7 @@ export function applyChangeStyle(name, style, layers){
   var colMM = [0,0]
     if(widthVar !== 'fixed')
       {
-        sizeMM = setupMaxAndMin(widthVar, name)
+        sizeMM = getMinMaxSize(widthVar, name)
       var  typeSize = document.getElementById('typeSizeChange').value;
       }
 

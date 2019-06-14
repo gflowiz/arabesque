@@ -32,11 +32,14 @@
         border: none;
         height: 50px;
         width: 50px;
-        background-color:  dodgerblue;
+        background-color:  slategray;
         cursor :pointer;
 
       }
-
+.ol-popup.tooltips {
+    background-color: lightgrey !important;
+    border-radius: 5px !important;
+}
 
       .right_icon{
         width:40px;
@@ -56,7 +59,7 @@
         border: none;
         height: 50px;
         width: 50px;
-        background-color:  dodgerblue;
+        background-color:  slategray;
         cursor :pointer;
 
       }
@@ -100,6 +103,32 @@
         text-align: center;
       }
 
+.ol-control.ol-legend .ol-legend {
+    /*display: inline-block;*/
+    padding-right: 3px !important;
+}
+.ol-control.ol-legend button {
+  padding: 2px !important;
+}
+
+.ol-control {
+    /*position: absolute;*/
+    background-color: rgba(236, 240, 241,.8) !important;
+}
+
+.ol-control.ol-legend button.ol-closebox {
+
+    top: 0;
+    right: -2px;
+
+}
+
+.ol-scale-line {
+
+    right: 8px !important;
+    left: auto !important;
+}
+
       html {
     height: 100%;
 }
@@ -111,9 +140,21 @@ height:16px;
 fill: red;
 }
 
+.filter-bar{
+  padding-top: 3px
+}
+
 .icon{
 width:20px;
 height:20px;
+border: none;
+background: none;
+}
+
+.icon-filter{
+width:30px;
+height:30px;
+padding-bottom: 5px;
 border: none;
 background: none;
 }
@@ -131,7 +172,7 @@ color:white;
 }
 
 .card-body{
-  background-color:   dodgerblue;
+  background-color:   slategray;
 }
 
 #accordionLayerControl .card{
@@ -151,6 +192,7 @@ color:white;
   height: 100%;
   width: 100%;
   z-index:100;
+  /*background-image:url("../../public/index.png");*/
 }
 
 .ramps {

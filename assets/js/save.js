@@ -27,18 +27,20 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 
 
  global_var.projection = loadPojection(save_para.projection);
-
  				setupGlobalVariablesFromSave(save_para, global_var);
+ 			
  				loadDataForExample(save_para.files,links,nodes, datasets);
+ 			
  				setupMapandHashData(map, datasets, global_var)
+ 			
  				console.log(datasets.hashedStructureData)
- 				computeMinStatNode(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], global_var.ids.vol);
  				datasets.links =prepareLinkData(datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], datasets.hashedStructureData, global_var.ids.vol);
+ 				computeMinStatNode(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], global_var.ids.vol);
+ 				
 
+ 			
  				
  			    computeDistance(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], save_para.files.Ntype !== 'geojson' ,'kilometers');
-
-
 				 loadFilter(save_para.filter)	 //TODO IMPORT  DATA FILTER
 
 				 loadLayerData(save_para.base_layer, global_var.layers.base)
@@ -46,8 +48,10 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 				 	if(save_para.style.link.color.cat==='categorical'){
 				        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
 				      }
+				      console.log(save_para.style.node.color.cat)
 				     if(save_para.style.node.color.cat==='categorical'){
 				        nodeOrderedCategory(global_var.style.node.color.var, global_var.style.node)
+				        console.log(global_var.style.node)
 				      }
 
 				 applyNewStyle("link")

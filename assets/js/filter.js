@@ -3,45 +3,9 @@ import {setupMaxAndMin} from "./semiology.js"
 import {getNameLayers} from "./projection.js"
 
 import {computeReduceMinStatNode} from "./stat.js";
-import {addNodeLayer, generateLinkLayer} from "./layer.js";
+import {addNodeLayer, generateLinkLayer,addLegendToMap} from "./layer.js";
 
 import 'bootstrap-select'
-
-// export function addSelectFilterLink(dataset){
-
-
-//   var nameData = document.getElementById('valueTofilter').value;
-//   var type = typeof dataset[0][nameData];
-
-//   if(type === "categorial"){
-//     addNodeStringFilters()
-//   }
-//   else if(type === "numeral"){
-//     addNodeNumberFilters()
-//   }
-//   else {
-//     refreshFilterModal();
-//   }
-// }
-
-// export function addSelectFilterNode(dataset){
-
-
-//   var nameData = document.getElementById('valueTofilter').value;
-//   var type = typeof dataset.features[0].properties[nameData];
-  
-//   if(type === "categorial"){
-//     addNodeStringFilters()
-//   }
-//   else if(type === "numeral"){
-//     addNodeNumberFilters()
-//   }
-//   else {
-//     refreshFilterModal();
-//   }
-
-// }
-
 
 
 function addNodeStringFilters(){
@@ -188,12 +152,13 @@ function addTimeLapseFilter(name_layer, name_variable){
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
     
     $('#filterDiv').append($('<div>')
-                                .attr("class","row align-items-center m-3")
+                                .attr("class","row align-items-center border-top border-secondary filter-bar")
                                 
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
                                   .attr("id","filterTime"+id)
-                                  .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                                  .append($("<label>", {text:" - "+name_variable})
                                     .attr('for',"filterTime"+id)
                                     .attr('class',"h5")
                                   )
@@ -631,8 +596,9 @@ function addSingleCatFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
-                          .attr("class","row align-items-center m-3")
-                          .append($("<label>", {text:name_layer+": "+name_variable})
+                          .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")
+                          .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                          .append($("<label>", {text:" - "+name_variable})
                                   .attr('for',"filterCat")
                                   .attr('class',"h5")
                                   )
@@ -695,8 +661,9 @@ function addTemporalFilter(name_layer,name_variable){
   // console.log(len)
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
-                          .attr("class","row align-items-center m-3")
-                          .append($("<label>", {text:name_layer+": "+name_variable})
+                          .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")                          
+                          .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                          .append($("<label>", {text:" - "+name_variable})
                                   .attr('class',"h5")
                                   )
                           .append($('<div>')
@@ -761,8 +728,9 @@ function addRemoveFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
-                          .attr("class","row align-items-center m-3")
-                          .append($("<label>", {text:name_layer+": "+name_variable})
+                          .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")                   
+                          .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                          .append($("<label>", {text:" - "+name_variable})
                                   .attr('for',"filter"+id)
                                   .attr('class',"h5")
                                   )
@@ -858,8 +826,9 @@ export function loadTimeLapseFilter(name_layer,name_variable,values){
                                 
                                 .append($('<div>')
                                   .attr("class","col-sm-10 p-0")
-                                  .attr("id","filterTime"+id)
-                                  .append($("<label>", {text:name_layer+": "+name_variable})
+                                  .attr("id","filterTime"+id)                   
+                                  .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                                  .append($("<label>", {text:" - "+name_variable})
                                     .attr('for',"filterTime"+id)
                                     .attr('class',"h5")
                                   )
@@ -959,8 +928,9 @@ function addValuesToFilter(){
     var  id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
 
     $('#filterDiv').append($('<div>')
-                                .attr("class","row align-items-center m-3")
-                                .append($("<label>", {text:name_layer+": "+name_variable})
+                                .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")                   
+                                  .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                                  .append($("<label>", {text:" - "+name_variable})
                                   .attr('for',"filterNum"+id)
                                   .attr('class',"h5")
                                   )
@@ -978,6 +948,22 @@ function addValuesToFilter(){
                                     .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
                                     )
                                   )
+                                  .append($('<div>')
+                                    .attr("class","col-sm-6")
+                                  .append($('<div>')
+                                    .attr("class","row")
+                                    .append('<div class="col-md-3">Min:</div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMinFilter'+id+'" step=0.01 type="number" value="15"></div>')
+                                    )
+                                  )
+                                  .append($('<div>')
+                                    .attr("class","col-sm-6")
+                                  .append($('<div>')
+                                    .attr("class","row")
+                                    .append('<div class="col-md-3">Max:</div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMaxFilter'+id+'" step=0.01 type="number" value="15"></div>')
+                                    )
+                                  )
                                 );
     document.getElementById("buttonFilter"+id).addEventListener("click", function(){removeNumFilter(name_variable, name_layer)});    
     addD3NumFilter(name_layer, name_variable,values);
@@ -990,8 +976,9 @@ function addNumFilter(name_layer, name_variable){
     var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
     
     $('#filterDiv').append($('<div>')
-                                .attr("class","row align-items-center m-3")
-                                .append($("<label>", {text:name_layer+": "+name_variable})
+                                .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")                   
+                          .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
+                          .append($("<label>", {text:" - "+name_variable})
                                   .attr('for',"filterNum"+id)
                                   .attr('class',"h5")
                                   )
@@ -1007,6 +994,22 @@ function addNumFilter(name_layer, name_variable){
                                     .attr("id","buttonFilter"+id)
                                     .attr("aria-label",'Close')                             
                                     .append('<img class="icon" src="assets/svg/si-glyph-trash.svg"/>')
+                                    )
+                                  )
+                                  .append($('<div>')
+                                    .attr("class","col-sm-6")
+                                  .append($('<div>')
+                                    .attr("class","row")
+                                    .append('<div class="col-md-3">Min:</div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMinFilter'+id+'"  step=0.01 type="number" value="15"></div>')
+                                    )
+                                  )
+                                  .append($('<div>')
+                                    .attr("class","col-sm-6")
+                                  .append($('<div>')
+                                    .attr("class","row")
+                                    .append('<div class="col-md-3">Max:</div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMaxFilter'+id+'" step=0.01 type="number" value="15"></div>')
                                     )
                                   )
                                 );
@@ -1038,6 +1041,10 @@ var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + mar
 
 var x = d3.scaleLinear().domain([Math.min(...data_histo),Math.max(...data_histo) + 0.0001])
     .rangeRound([0, width]);
+
+console.log(values)
+    document.getElementById('numMaxFilter'+id).value = Number(values[1]).toFixed(2)
+    document.getElementById('numMinFilter'+id).value = Number(values[0]).toFixed(2)
 
 var bins = d3.histogram()
     .domain(x.domain())
@@ -1093,11 +1100,24 @@ brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
 
 
   function brushed() {
-  var s = d3.event.selection || x.range()
-  // console.log(s.map(x.invert, x));
-  changeNumgFilterArray(name_layer, name_variable, "numeral", s.map(x.invert, x))
+  if(d3.event.sourceEvent !== null){
+    var s = d3.event.selection || x.range()
+    var val = s.map(x.invert, x)
+    document.getElementById('numMaxFilter'+id).value = Math.round(val[1])
+    document.getElementById('numMinFilter'+id).value = Math.round(val[0])
+    changeNumgFilterArray(name_layer, name_variable, "numeral", s.map(x.invert, x))
+  }
 
 }
+
+document.getElementById('numMaxFilter'+id).addEventListener("change", function(){
+  brsuh_to_setup.call(brush.move, [x(document.getElementById('numMinFilter'+id).value), x(document.getElementById('numMaxFilter'+id).value)]);
+  changeNumgFilterArray(name_layer, name_variable, "numeral", [document.getElementById('numMinFilter'+id).value, document.getElementById('numMaxFilter'+id).value])
+}); 
+document.getElementById('numMinFilter'+id).addEventListener("change", function(){
+    brsuh_to_setup.call(brush.move, [x(document.getElementById('numMinFilter'+id).value), x(document.getElementById('numMaxFilter'+id).value)]);
+    changeNumgFilterArray(name_layer, name_variable, "numeral", [document.getElementById('numMinFilter'+id).value, document.getElementById('numMaxFilter'+id).value])
+});  
 }
 
 
@@ -1126,28 +1146,6 @@ window.remove = remove
 window.categorial = categorial
 window.numeral = numeral
 
-// toFilterLink = function(link){
-//   //var bool = true
-//   if(global_data.filter.length === 0 ) return true;
-//   for(var i = 0; i < global_data.filter.length; i++){
-//     if(global_data.filter[i].layer === 'link'){
-//       //var varL = global_data.filter[i].variable
-//       if  (!window[global_data.filter[i].filter](link[global_data.filter[i].variable],global_data.filter[i].values)){
-//         return false;
-//       }
-//     } 
-//   };
-//   return true;
-// }
-
-// export function getRemoveNode(){
-
-// }
-
-// export function getRemoveLink(){
-
-//  return 
-// }
 function toRemoveFilterNode(node){
 
   if(global_data.filter.node.length === 0 ) return true;
@@ -1256,7 +1254,8 @@ export function testLinkDataFilter(list_filter, data){
       index = new Set([...index].filter(x => !selected_index.has(x)));
     }
   }
-  computeReduceMinStatNode(data.hashedStructureData, [...index], global_data.ids.linkID[0], global_data.ids.linkID[1], global_data.ids.vol)
+  // TODO incoporate scalable indicateur
+  // computeReduceMinStatNode(data.hashedStructureData, [...index], global_data.ids.linkID[0], global_data.ids.linkID[1], global_data.ids.vol)
   return [...index]
 }
 
@@ -1400,7 +1399,9 @@ function refreshFilterFeaturesLayers(){
       global_data.layers.features[layerNames[m]].setZIndex(Zindex)
     }
   }
-
+  if(global_data.legend.node.legend !== null){
+addLegendToMap()
+}
   // refreshZindex()
 }
 
@@ -1462,6 +1463,7 @@ function changeCatFilterArray(name_layer, name_variable, filter, id){
   }  
 
   refreshFilterFeaturesLayers()
+
 }
 
 function changeNumgFilterArray(name_layer, name_variable, filter, value){

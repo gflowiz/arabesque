@@ -21,8 +21,8 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
     nodes[links[p][id_dest]].properties.degree = Number(links[p][id_vol]) + nodes[links[p][id_dest]].properties.degree 
     nodes[links[p][id_ori]].properties.degree  = Number(links[p][id_vol]) + nodes[links[p][id_ori]].properties.degree 
 
-    nodes[links[p][id_dest]].properties.balance =   nodes[links[p][id_dest]].properties.balance - Number(links[p][id_vol])
-    nodes[links[p][id_ori]].properties.balance  =   nodes[links[p][id_ori]].properties.balance  + Number(links[p][id_vol]) 
+    nodes[links[p][id_dest]].properties.balance =   nodes[links[p][id_dest]].properties.balance + Number(links[p][id_vol])
+    nodes[links[p][id_ori]].properties.balance  =   nodes[links[p][id_ori]].properties.balance  - Number(links[p][id_vol]) 
   }
 
 
@@ -56,8 +56,8 @@ export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
     nodes[data.links[links[p]][id_dest]].properties.degree = Number(data.links[links[p]][id_vol]) + nodes[data.links[links[p]][id_dest]].properties.degree 
     nodes[data.links[links[p]][id_ori]].properties.degree  = Number(data.links[links[p]][id_vol]) + nodes[data.links[links[p]][id_ori]].properties.degree 
 
-    nodes[data.links[links[p]][id_dest]].properties.balance =   nodes[data.links[links[p]][id_dest]].properties.balance - Number(data.links[links[p]][id_vol])
-    nodes[data.links[links[p]][id_ori]].properties.balance  =   nodes[data.links[links[p]][id_ori]].properties.balance  + Number(data.links[links[p]][id_vol]) 
+    nodes[data.links[links[p]][id_dest]].properties.balance =   nodes[data.links[links[p]][id_dest]].properties.balance + Number(data.links[links[p]][id_vol])
+    nodes[data.links[links[p]][id_ori]].properties.balance  =   nodes[data.links[links[p]][id_ori]].properties.balance  - Number(data.links[links[p]][id_vol]) 
   }
 
 
@@ -149,3 +149,46 @@ if (feature.geometry.type == "MultiPolygon") {
     } 
  
 }
+
+function median(values) {
+
+    values.sort( function(a,b) {return a - b;} );
+
+    var half = Math.floor(values.length/2);
+
+    if(values.length % 2)
+        return values[half];
+    else
+        return (values[half-1] + values[half]) / 2.0;
+}
+
+export function getAggregateValue(list_value_link){
+  var aggrFunction = global_data.files.aggr;
+  // console.log(aggrFunction)
+  return window[aggrFunction](list_value_link)
+}
+
+function mean(values){
+  const add = (a, b) =>  a + b
+  return values.reduce(add)/ values.length
+}
+
+function sum(values){
+  const add = (a, b) =>  a + b
+  return values.reduce(add)
+}
+
+
+function max(values){
+  return Math.max(...values)
+}
+
+function min(values){
+  return Math.min(...values)
+}
+
+window.min = min
+window.max = max
+window.sum = sum
+window.median = median
+window.mean = mean

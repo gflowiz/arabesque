@@ -9,6 +9,7 @@ var config = {
     path:   path.resolve('./dist'), // `/dist` is the destination
     filename: 'bundle.js', // bundle created by webpack it will contain all our app logic. we will link to this .js file from our html page.
   },
+ 
   module: {
     rules: [
         {

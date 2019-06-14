@@ -1,6 +1,6 @@
 //TODO remove all funciton in other files like import files 
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter, testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
-import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer} from "./layer.js";
+import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap} from "./layer.js";
 import {loadMapFromPresetSave, loadFilter} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
@@ -11,6 +11,8 @@ import {setupStyleAndAddLayer , showSemioParameter, generatePaletteMultiHue2, ch
 import * as turf from "@turf/turf"
 
 import CanvasScaleLine from 'ol-ext/control/CanvasScaleLine'
+import Print from 'ol-ext/control/Print'
+import 'ol-ext/control/Print.css'
 
 import {register} from 'ol/proj/proj4.js';
 import {Map, View } from 'ol';
@@ -18,6 +20,10 @@ import {ScaleLine} from 'ol/control.js';
 
 import WebGLMap from 'ol/WebGLMap.js';
 import * as wbg from 'ol/webgl.js';
+
+import Hover from 'ol-ext/interaction/Hover'
+import Popup from "ol-ext/overlay/Popup"
+import "ol-ext/overlay/Popup.css"
 
 import {parse as papaparse} from "papaparse"
 
@@ -197,7 +203,8 @@ global.global_data = {
       "node":null,
       "link": null,
       "Ltype":null,
-      "Ntype":null
+      "Ntype":null,
+      "aggr":"sum"
     },
   "layers":{
     features:{},
@@ -275,7 +282,18 @@ global.global_data = {
       "long":"lat",
       "lat":"lon"
     },
-    "projection":{}
+    "projection":{},
+    "legend":{
+        "link":{
+          "legend":null,
+          "color": null,
+          "opa": null
+          },
+        "node":{
+          "legend":null,
+          "color": null,
+          "opa": null
+          }}
 };
 
 global_data.projection = Proj[0]
@@ -398,73 +416,6 @@ document.getElementById("importDataButton").disabled = true;
 
 }());
 
-
-
- // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
-
-
- //  if (global_data.files.Ntype === 'csv') {
-
-
- //    $('#importIDStruct').parent().parent().parent()
- //      .append($('<div>')
- //        .attr('class', 'col-md-4')
- //        .append($('<p>')
- //          .append($('<label>', {
- //              text: 'Lat'
- //            })
- //            .attr('for', 'select')
- //          )
- //          .append($('<select>')
- //            .attr('class', 'custom-select')
- //            .attr('id', 'importLatStruct')
- //          )
- //        )
- //      )
-
-
- //      .append($('<div>')
- //        .attr('class', 'col-md-4')
- //        .append($('<p>')
- //          .append($('<label>', {
- //              text: 'Long'
- //            })
- //            .attr('for', 'select')
- //          )
- //          .append($('<select>')
- //            .attr('class', 'custom-select')
- //            .attr('id', 'importLonStruct')
- //          )
- //        )
- //      )
-
- //    }
-
- //     if (global_data.files.Ntype === 'csv') {
- //    var keys = Object.keys(data.nodes[0]);
- //  } else {
- //    var keys = Object.keys(data.nodes.features[0].properties);
- //  }
-
- //  for (var p = 0; p < keys.length; p++) {
- //    $('#importIDStruct').append($('<option>', {
- //        text: keys[p]
- //      })
- //      .attr("value", keys[p]))
- //    if (global_data.files.Ntype === 'csv') {
- //      $('#importLatStruct').append($('<option>', {
- //          text: keys[p]
- //        })
- //        .attr("value", keys[p]))
- //      $('#importLonStruct').append($('<option>', {
- //          text: keys[p]
- //        })
- //        .attr("value", keys[p]))
- //    }
- //  }
- //  }
-
-
 (function(){
     
     function onChange(event) {
@@ -523,8 +474,8 @@ for(var i=0; i<list_nameLayer.length; i++){
 }
 
 
-global.map = new WebGLMap({
-          // renderer:'webgl',
+global.map = new Map({
+          renderer:'webgl',
          
           //renderer:'webgl',
           target: 'map',
@@ -538,16 +489,98 @@ global.map = new WebGLMap({
       maxZoom: 30
           })
         });
-map.addControl(new ScaleLine());
-// var printControl = new Print()
-// map.addControl(printControl);
+map.addControl(new CanvasScaleLine());
+// $('.ol-scale-line').css('left', '');
+// document.getElementsByClassName("ol-scale-line")[0].style.left = ""
+// document.getElementsByClassName("ol-scale-line")[0].style.right = "8px"
+
+var printControl = new Print()
+map.addControl(printControl);
+
+
+// Display the style on select
+  var popup = new Popup({ popupClass: 'tooltips', offsetBox:15 });
+  map.addOverlay(popup);
+  var hover = new Hover();
+  map.addInteraction(hover);
+  hover.on('leave', function(e) {
+    popup.hide();
+  });
+  hover.on('hover', function(e) {
+  var nodes_used = ["fixed"]
+  var link_used = ["fixed"]
+    if('Link' === e.layer.get('name')){
+      // console.log(e)
+      var str_to_show = '<b>'+e.feature.get('ori')+' => '+ e.feature.get('dest')+'</b><br/>'
+      if (!link_used.includes(e.feature.get('size').name)){
+        str_to_show = str_to_show + e.feature.get('size').name+" : "+e.feature.get('size').value
+      +"<br/>";
+        link_used.push(e.feature.get('size').name)
+      }      
+      if (!link_used.includes(e.feature.get('color').name)){
+        str_to_show = str_to_show + e.feature.get('color').name+" : "+e.feature.get('color').value
+      +"<br/>";
+        link_used.push(e.feature.get('color').name)
+      }      
+      if (!link_used.includes(e.feature.get('opa').name)){
+        str_to_show = str_to_show + e.feature.get('opa').name+" : "+e.feature.get('opa').value
+      +"<br/>";
+        link_used.push(e.feature.get('opa').name)
+      }
+          popup.show(e.coordinate, str_to_show)
+    }
+    else if('Node' === e.layer.get('name')){
+      var str_to_show =  '<b>'+e.feature.get(global_data.ids.nodeID) +'</b>'
+      +"<br/>"
+      if (!nodes_used.includes(global_data.style.node.size.var)){
+      str_to_show = str_to_show +global_data.style.node.size.var+" : "+e.feature.get(global_data.style.node.size.var)
+      +"<br/>"
+        nodes_used.push(global_data.style.node.size.var)
+      }  
+      if (!nodes_used.includes(global_data.style.node.color.var)){
+      str_to_show = str_to_show +global_data.style.node.color.var+" : "+e.feature.get(global_data.style.node.color.var)
+      +"<br/>"
+        nodes_used.push(global_data.style.node.color.var)
+      } 
+      if (!nodes_used.includes(global_data.style.node.opa.var)){
+      str_to_show = str_to_show +global_data.style.node.opa.var+" : "+e.feature.get(global_data.style.node.opa.var)
+      +"<br/>"
+        nodes_used.push(global_data.style.node.opa.var)
+      }     
+          popup.show(e.coordinate, str_to_show)
+    }
+    else  {
+      popup.hide();
+    }
+
+      // +'<br/>'
+      // +e.feature.get('pop').toLocaleString()+' hab.')
+  });
 // printControl.on('print', function(e) {
-//       $('body').css('opacity', .1);
+//       $('#map').css('opacity', .1);
 //       console.log('printing')
 //     });
 
+// function scaleLegend(){
+//   var pixel = map.getView().getResolution()    
+//   var rb = global_data.style.ratioBounds   
+//   if(global_data.legend.link.legend !== null){
+//     console.log('AYAYAY')
+//   }
+//   if(global_data.legend.node.legend !== null){
+//       console.log('AYAYAY545')
+//   }
+// }
 
 
+map.on('moveend', function(e) {
+// console.log("sdfsdfqsdf")computeDistanceCanvas('link', global_data.style.link.size.max/c[i], style.ratioBounds, style)/ map.getView().getResolution() 
+// console.log(map.getView().getResolution() )
+  if(global_data.legend.node.legend !== null){
+    global_data.legend.node.legend.refresh({force:true})
+    global_data.legend.link.legend.refresh({force:true})
+  }
+});
 
 export function readData(data, ext){
 
@@ -566,7 +599,7 @@ export function readData(data, ext){
 
 function useExistingNodes(){
   console.log("bonjour")
-  document.getElementById('label_nodes').innerHTML = "Regions"
+  document.getElementById('label_nodes').innerHTML = "Levels"
   $.getJSON("public/data/save/saved_nodes.json",function(json){  
     console.log(json)
    data.saved_nodes = json
@@ -597,7 +630,7 @@ function setupRegions(){
         .attr('class', 'col-md-4')
         .append($('<p>')
           .append($('<label>', {
-              text: 'SubRegions'
+              text: 'Region'
             })
             .attr('for', 'select')
           )
@@ -634,7 +667,7 @@ console.log(keys)
       .append($('<div>')
         .attr('class', 'col-md-4')
         .append($('<p>')
-        .append('<label for="valueTofilter">Type <button  class="badge badge-pill badge-secondary"  id="buttonTypeMapToLoad" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content="nothing"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+        .append('<label for="valueTofilter">Code <button  class="badge badge-pill badge-secondary"  id="buttonTypeMapToLoad" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content="nothing"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
           .append($('<select>')
             .attr('class', 'custom-select')
             .attr('id', 'importNodesStruct')
@@ -814,7 +847,7 @@ function importIDSFlow(){
   global_data.ids.linkID[0] = document.getElementById('importIDOri').value
   global_data.ids.linkID[1] = document.getElementById('importIDDest').value
   global_data.ids.vol = document.getElementById('importIDVol').value
-
+  global_data.files.aggr = document.getElementById('importAggrFun').value
 }
 
 function importFlowAndUserNodes(){
@@ -840,9 +873,7 @@ function importFlowAndPresetNodes(){
     global_data.ids.nodeID = data.saved_nodes[region][subregion][map_nodes].id
     $.getJSON(path,function(json){  
       data.nodes = json;
-      console.log(json);
       importData();
-      console.log('AYAYAYAY');
     }) 
 }
 
@@ -878,7 +909,7 @@ var len = data.nodes.features.length;
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]] = data.nodes.features[p];
       
       var centroid = getCentroid(data.nodes.features[p], global_data.projection.name)
-      console.log(centroid)
+      // console.log(centroid)
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties["centroid"] = centroid   
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties[global_data.ids.vol] = 0
 
@@ -981,11 +1012,11 @@ function applyPreselectMap(main_object, id_volume, data){
 
   var id_links = testLinkDataFilter(global_data.filter.link, data)
   var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
-
+  
   main_object.layers.features.node = addNodeLayer(map, data.links, data.hashedStructureData, main_object.style, id_links, selected_nodes)
   main_object.layers.features.link = generateLinkLayer(map,  data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1], id_links, selected_nodes)
   main_object.layers.features.node.setZIndex(1)
-
+  addLegendToMap()
 }
 
 function  setupPresetMapStyleLink(style, id_volume, links){
