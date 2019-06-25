@@ -11299,6 +11299,19 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+       .rotate-north {
+        top: 75px;
+        left: .5em;
+      }
+
+      .rotate-print {
+        top: 115px;
+        left: .5em;
+      }
+      .ol-touch .rotate-north {
+        top: 80px;
+      }
+
       .fullscreen:-moz-full-screen {
         height: 100%;
         background-color:white;
@@ -11444,28 +11457,35 @@ fill: red;
 .filter-bar{
   padding-top: 3px
 }
+.icon-button-ol{
+  width:16px;
+  height:16px;
+  /*color:white;*/
+  border: none;
+  background: none;
+}
 
 .icon{
-width:20px;
-height:20px;
-border: none;
-background: none;
+  width:20px;
+  height:20px;
+  border: none;
+  background: none;
 }
 
 .icon-filter{
-width:30px;
-height:30px;
-padding-bottom: 5px;
-border: none;
-background: none;
+  width:30px;
+  height:30px;
+  padding-bottom: 5px;
+  border: none;
+  background: none;
 }
 
 .small-icon{
-width:10px;
-height:10px;
-border: none;
-background: none;
-color:white;
+  width:10px;
+  height:10px;
+  border: none;
+  background: none;
+  color:white;
 }
 
 #arrowSelector{
