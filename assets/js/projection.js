@@ -1,7 +1,7 @@
 import * as turf from "@turf/turf"
 import {transform, get as getProjection} from 'ol/proj.js';
 import {View} from 'ol';
-import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, generateLinkLayer, addGeoJsonLayer} from "./layer.js";
+import {addOSMLayer, addNewLayer, addLayerFromURLNoStyle, addNodeLayer, generateLinkLayer, addGeoJsonLayer, getLayerFromName, addLayerFromURL} from "./layer.js";
 import {testLinkDataFilter, applyNodeDataFilter} from "./filter.js";
 
 global.Proj = [
@@ -34,47 +34,49 @@ return;
 
 
 function refreshBaseLayers(map,layers){
-  var layerNames = getNameLayers(layers.base);
 
-  console.log(layerNames);
-  var LEN = layerNames.length;
-  for(var m=0; m<LEN;m++){
+  for(var m in layers){
+  console.log('AAAAAAAAAAAAAA')
 
-  map.removeLayer(layers.base[layerNames[m]].layer); 
-  var oldStyle = layers.base[layerNames[m]].layer.getStyle();  
-    if(layers.base[layerNames[m]].added){
-      var style = layers.base[layerNames[m]].style
-      layers.base[layerNames[m]].layer =  addGeoJsonLayer(map, data[layerNames[m]], layerNames[m], style.opacity, style.stroke_color, style.fill_color);
-    }
-    else{
-      layers.base[layerNames[m]].layer = addLayerFromURLNoStyle(map,ListUrl[layerNames[m]],layerNames[m]);
-    }
-  layers.base[layerNames[m]].layer.setStyle(oldStyle);
+  console.log(m)
+
+  console.log(ListUrl[m])
+  map.removeLayer(getLayerFromName(map,m)); 
+  // var oldStyle = getLayerFromName(map,m).getStyle();  
+    // if(layers[m].added){
+    //   var style = layers[m].style
+    //   addGeoJsonLayer(map, data[m], m, style.opacity, style.stroke_color, style.fill_color);
+    // }
+    // else{
+       addLayerFromURL(map, ListUrl[m],m, layers[m].style.opacity, layers[m].style.stroke, layers[m].style.fill)
+    // }
+  // getLayerFromName(map,m).setStyle(oldStyle);
   }
-  applyBaseExtent(layers.base,global_data.projection.extent)
+  // applyBaseExtent(layers.base,global_data.projection.extent)
 }
 
 
 function refreshFeaturesLayers(map,layers, old_projection ,new_projection){
-  var layerNames = getNameLayers(layers.features);
+  // var layerNames = getNameLayers(layers.features);
 
-  var LEN = layerNames.length;
+  // var LEN = layerNames.length;
   reprojectData(data.hashedStructureData, old_projection ,new_projection);
   var id_links = testLinkDataFilter(global_data.filter.link, data)
   var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
 
-  for(var m=0; m<LEN;m++){
+  // for(var m=0; m<LEN;m++){
     
     // console.log(data);
-    if(layerNames[m] === "link"){
-      map.removeLayer(layers.features[layerNames[m]]);
-      layers.features[layerNames[m]] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
-    }else if (layerNames[m] === "node"){
-      map.removeLayer(layers.features[layerNames[m]]);
-     layers.features[layerNames[m]]= addNodeLayer(map, data.links, data.hashedStructureData, global_data.style , id_links, selected_nodes)
+    if(getLayerFromName(map,'link') !== null){
+      // map.removeLayer(getLayerFromName(map,'link'));
+      generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
     }
-  }
-  applyExtent(layers.features,global_data.projection.extent)
+    if (getLayerFromName(map,'node') !== null){
+      // map.removeLayer(getLayerFromName(map,'node'));
+      addNodeLayer(map, data.links, data.hashedStructureData, global_data.style , id_links, selected_nodes)
+    }
+  
+  // applyExtent(layers.features,global_data.projection.extent)
 }
 
 
@@ -162,7 +164,7 @@ console.log(global_data.projection.name)
 console.log("===============")
 console.log(projName)
 global_data.projection = Proj[iPrj];
-refreshBaseLayers(map,layers);
+refreshBaseLayers(map,layers.base);
 refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
 
 
@@ -171,6 +173,28 @@ refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
 
         //map.render();
   //return;
+}
+
+
+export function changeZipProjection(layers, center, zoom){
+
+  var newExtent =[]
+  var newProj = getProjection(global_data.projection.name);
+//   for (var p = 0; p< Proj[index_proj].worldExtent.length; p++){
+//   newExtent.push(transform([Proj[index_proj].worldExtent[p],0],"EPSG:4326", new_projName)[0])
+// }
+//  Proj[index_proj].extent = newExtent
+  newProj.setExtent(global_data.projection.extent);
+  var newView = new View({
+    projection: newProj,
+    center:center,
+    //extent:newExtent,
+    zoom:zoom,
+    maxZoom:25,
+    minZoom:-2
+  });
+    map.setView(newView);
+    newView.fit(global_data.projection.extent);
 }
 
 function applyExtent(layers, extent){
@@ -184,6 +208,20 @@ function applyBaseExtent(layers, extent){
   for(var p=0; p<keys.length; p++){
     layers[keys[p]].layer.setExtent(extent);
   };
+}
+
+export function loadZipProjection(map, center, zoom){
+  changeZipProjection(global_data.layers, center, zoom)
+  // console.log(proj)
+  //   var newView = new View({
+  //   // projection: proj.name,
+  //   center:center,
+  //   //extent:newExtent,
+  //   zoom:zoom,
+  //   maxZoom:25,
+  //   minZoom:-2
+  // });
+  //   map.setView(newView);
 }
 
 

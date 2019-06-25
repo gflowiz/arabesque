@@ -200,14 +200,14 @@
           		},
             "geometry":{
                 "oriented":"oriented",
-                "type": "CurveArrow",
+                "type": "StraightArrow",
                 "head":{
-                  "height":0.5,
+                  "height":1,
                   "width":0.5
                   },
                 "place":{
-                  "base":0.5,
-                  "height": 0.5
+                  "base":null,
+                  "height": null
                   }
               },
           		"text":null

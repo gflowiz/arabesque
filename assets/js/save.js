@@ -1,8 +1,8 @@
-import {setNextProj, getCentroid} from "./projection.js"; 
+import {setNextProj, getCentroid, loadZipProjection} from "./projection.js"; 
 import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.js"
 import {addLayerGestionMenu} from "./control.js"
 import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, loadRemoveFilter, checkDataToFilter,loadBinFilterData, loadTemporalFilter, loadTimeLapseFilter} from "./filter.js"
-import {addOSMLayer, addNewLayer, addLayerFromURL} from "./layer.js";
+import {addOSMLayer, addNewLayer, addLayerFromURL, addTileLayer} from "./layer.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
 
@@ -74,31 +74,38 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 export function loadFilter(list_filter){
 	var len_filter = list_filter.link.length
 
+
 	for(var c = 0;  c<len_filter;  c++){
-console.log(c)
 		var filter = list_filter.link[c];
-console.log(filter)
+
+	    loadBinFilterData('link', filter.variable, filter, data);
+	}
+
+
+	for(var c = 0;  c<len_filter;  c++){
+		var filter = list_filter.link[c];
 		if(filter.filter === "numeral"){
-			loadBinFilterData('link',filter.variable,filter, data);
+			// loadBinFilterData('link',filter.variable,filter, data);
 			loadNumFilter('link', filter.variable, filter.values);
 			
 		}
 		else if(filter.filter === "categorial"){
 
-			loadBinFilterData('link',filter.variable, filter, data);
+			// loadBinFilterData('link',filter.variable, filter, data);
 			loadSingleCatFilter('link', filter.variable, filter.values);
 		}		
 		else if(filter.filter === "remove"){
 
-			loadBinFilterData('link', filter.variable, filter, data);
+			// loadBinFilterData('link', filter.variable, filter, data);
 			loadRemoveFilter('link', filter.variable, filter.values);
 		}		
 		else if(filter.filter === "temporal"){
-			loadBinFilterData('link', filter.variable, filter, data);
+
+			// loadBinFilterData('link', filter.variable, filter, data);
 			loadTemporalFilter('link', filter.variable, filter.values);
 		}		
 		else if(filter.filter === "timeLapse"){
-			loadBinFilterData('link', filter.variable, filter, data);
+			// loadBinFilterData('link', filter.variable, filter, data);
 			loadTimeLapseFilter('link', filter.variable, filter.values);
 		}
 	}
@@ -125,7 +132,6 @@ console.log(filter)
 		}
 	}
 }
-
 
 
 function setupGlobalVariablesFromSave(saved_Json, global_var){
@@ -194,6 +200,24 @@ return byDefaultProjection;
 
 }
 
+export function loadZippedMap(){
+
+// loadZipProjection
+	
+	loadZipProjection(map, global_data.projection, global_data.center, global_data.zoom)
+	loadFilter(global_data.filter)
+	loadBaseZipLayerData(global_data.layers.base)
+	loadZipOSMLayerData(global_data.layers.osm)
+
+		applyNewStyle("link")
+		applyNewStyle("node")
+		map.getView().setCenter(global_data.center)
+		map.getView().setZoom(global_data.zoom)
+		// loadZipProjection(map, global_data.projection, global_data.center, global_data.zoom)
+  $("#featureCard").toggle();
+  $('.arrival').fadeOut(450, function(){ $(this).remove();});
+}
+
 function setupMapandHashData(map, data, global_var){
 
   
@@ -259,11 +283,29 @@ function loadLayerData(base_layers, layers){
 		var layer = base_layers[g]
 		layers[layer.name] = {}
 			console.log(layer.style)
-		layers[layer.name].layer = addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
+		addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
 		layers[layer.name].style = layer.style
 		addLayerGestionMenu(layer.name);
 	}
 }
+
+function loadBaseZipLayerData(layers){
+
+	for(var g in layers){
+		addLayerFromURL(map, ListUrl[g],g, layers[g].style.opacity, layers[g].style.stroke, layers[g].style.fill)
+		addLayerGestionMenu(g);
+	}
+}
+
+function loadZipOSMLayerData(layers){
+console.log(layers)
+	for(var g in layers){
+		addTileLayer(map, layers, layers[g], g)
+		// layers[layer.name].style = layer.style
+		// addLayerGestionMenu(g);
+	}
+}
+
 
 // SAVE PART//
 function saveMap(name_map){

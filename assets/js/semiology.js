@@ -1,5 +1,5 @@
 import {getNameVariables, refreshZindex} from "./control.js";
-import {addNodeLayer, generateLinkLayer, changeBaseLayer, groupLinksByOD, addLegendToMap,getD3ScalersForStyle} from "./layer.js";
+import {addNodeLayer, generateLinkLayer, getLayerFromName, changeBaseLayer, groupLinksByOD, addLegendToMap,getD3ScalersForStyle} from "./layer.js";
 import { testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
 import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
@@ -96,7 +96,7 @@ export function getNodeColorScaleValue(layer, scalers){
         var NormalizeColor = (min+ (max-min)/7 * (7-i)-min)/(max-min) 
         colors.push([Number(max/(i+1)).toString(), d3.color(d3["interpolate"+global_data.style[layer].color.palette](NormalizeColor)).rgb().toString()])
   }
-  // console.log(colors)
+  // 
   return colors
 }
 
@@ -109,7 +109,7 @@ export function getNodeOpaScaleValue(layer){
   for(var i = 0; i<7; i++){
         // var NormalizeColor = (min * (9-i)-min)/(max-min) 
         color.opacity = max - (i  * (max-min)/7)
-        // console.log( max - (i  * (max-min)/7))
+        // 
         colors.push([Number(valueMax /(i+1)), color.rgb().toString()])
   }
   return colors
@@ -120,13 +120,13 @@ export function getNodeColorCatValue(layer){
   var list_colors = global_data.style[layer].categorialOrderedColors;
   var hasOtherCat = false;
   var index = Object.keys(global_data.style[layer].categorialOrderedColors)
-  // console.log(index)
-  // console.log(list_colors)
+  // 
+  // 
   for(var i = 0; i<index.length; i++){
-    // console.log()
+    // 
         if( typeof d3.color('grey').rgb() !==  typeof list_colors[index[i]]){
-            // console.log(d3.color('grey').rgb())
-            // console.log(list_colors[index[i]])
+            // 
+            // 
           colors[index[i]] = list_colors[index[i]]
         }
         else{
@@ -138,16 +138,16 @@ export function getNodeColorCatValue(layer){
     colors['Others'] = d3.color('grey').rgb().toString()
   }
 
-  // console.log(colors)
+  // 
 
   return colors
 }
 
 function loadGeometryParameter(style){
-console.log('style')
+
   style.link.geometry.type = document.getElementById("arrowtype").value
   if (document.getElementById("arrowtype").value ==="CurveArrow" || document.getElementById("arrowtype").value ==="CurveOneArrow"){
-    console.log(document.getElementById("baseCurveArrow"))
+    
     style.link.geometry.place.base = Number(document.getElementById("baseCurveArrow").value)
     style.link.geometry.place.height = Number(document.getElementById("heightCurveArrow").value)
   }
@@ -156,7 +156,7 @@ console.log('style')
     style.link.geometry.place.height = null
   }
 
-  if (document.getElementById("arrowData").value  === 'oriented' && document.getElementById("arrowtype").value !=="CurveOneArrow"){
+  if (document.getElementById("arrowData").value  === 'oriented'  && document.getElementById("arrowtype").value !=="TriangleArrow" && document.getElementById("arrowtype").value !=="CurveOneArrow"){
     style.link.geometry.oriented = document.getElementById("arrowData").value
     style.link.geometry.head.width = Number(document.getElementById("widthArrow").value)
     style.link.geometry.head.height = Number(document.getElementById("heightArrow").value)
@@ -253,13 +253,13 @@ export function setupStyleAndAddLayer(style, layer_name){
 }
 
 function getMinMaxColor(colorVar, layer){
-  console.log(colorVar)
-console.log("AYAYAY")
+  
+
   if(layer==='node'){
     var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[colorVar])})
   }
   else if (layer ==='link'){
-console.log("AYAYAY")
+
     var OD  = groupLinksByOD(data.links, [...Array(data.links.length).keys()], global_data.ids.linkID[0],global_data.ids.linkID[1])
     var idOD = Object.keys(OD)
 
@@ -279,7 +279,7 @@ console.log("AYAYAY")
 
         })
       })
-    console.log(test)
+    
     var dataArray = test.flat()
   }
   // console
@@ -288,7 +288,7 @@ console.log("AYAYAY")
 
 function getMinMaxSize(sizeVar, layer){
   
-console.log("AYAYAY")
+
   if(layer==='node'){
     var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[sizeVar])})
   }
@@ -312,7 +312,7 @@ console.log("AYAYAY")
         }
         })
       })
-    // console.log(test)
+    // 
     var dataArray = test.flat()
   }
   // console
@@ -322,53 +322,55 @@ console.log("AYAYAY")
 export function applyNewStyle(name_layer){
 var lindex = 0;
 var nindex = 0;
-
   var id_links = testLinkDataFilter(global_data.filter.link, data)
+
   var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
 var t0 = performance.now();
 
-    if (typeof global_data.layers.features['node'] !== "undefined"){
-      nindex = global_data.layers.features['node'].getZIndex()
-    }
-    if (typeof global_data.layers.features['link'] !== "undefined"){
-      lindex = global_data.layers.features['link'].getZIndex()
+
+    if (getLayerFromName(map, 'node') !== null){
+      nindex = getLayerFromName(map, 'node').getZIndex()
     }
 
+
+    if (getLayerFromName(map, 'link') !== null){
+      lindex = getLayerFromName(map, 'link').getZIndex()
+    }
+
+
+
     if(name_layer==='node'){
-         if (typeof global_data.layers.features['link'] !== "undefined"){
-      
-      // index = global_data.layers.features['link'].getZIndex()
-      map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
-      global_data.layers.features['link'].setZIndex(lindex)
-      // global_data.layers.features['node'].setZIndex(nindex)
-    }  
-      map.removeLayer(global_data.layers.features['node'])
-      global_data.layers.features['node'] = addNodeLayer(map, data.links, data.hashedStructureData, global_data.style, id_links, selected_nodes)
-      global_data.layers.features['node'].setZIndex(nindex)
+         if (getLayerFromName(map, 'link') !== null){
+          
+          // map.removeLayer(getLayerFromName(map, 'link'))
+          
+          generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
+          getLayerFromName(map, 'link').setZIndex(lindex)
+          // global_data.layers.features['node'].setZIndex(nindex)
+        }  
+      // map.removeLayer(getLayerFromName(map, 'node'))
+      addNodeLayer(map, data.links, data.hashedStructureData, global_data.style, id_links, selected_nodes)
+      getLayerFromName(map, 'node').setZIndex(nindex)
     }
     else if (name_layer ==='link'){
       
       // index = global_data.layers.features['link'].getZIndex()
-      map.removeLayer(global_data.layers.features['link'])
-      global_data.layers.features['link'] = generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
-      global_data.layers.features['link'].setZIndex(lindex)
+      // map.removeLayer(getLayerFromName(map, 'link'))
+      generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
+      getLayerFromName(map, 'link').setZIndex(lindex)
       // global_data.layers.features['node'].setZIndex(nindex)
       
     }  
     // refreshZindex()
 var t1 = performance.now();
-console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
     var i = 0
     $('#accordionLayerControl').find('li').each(function(){
       var elem  = $(this).attr('value')
-       if (typeof global_data.layers.base[elem] !== 'undefined')
+      
+       if (getLayerFromName(map, elem) !== null)
             {
-                global_data.layers.base[elem].layer.setZIndex(- i)
-            }
-            if (typeof global_data.layers.features[elem] !== 'undefined')
-            {
-                global_data.layers.features[elem].setZIndex(-  i)
+                getLayerFromName(map, elem).setZIndex(- i)
             }
             i = i+1
           }
@@ -378,10 +380,10 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 }
 
 export function nodeOrderedCategory(var_name, style){
-  console.log(style)
+  
   style.categorialOrderedColors = {};
   let counts = {}
-  // console.log(Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[var_name])}))
+  // 
   Object.keys(data.hashedStructureData).map(function(item){return data.hashedStructureData[item].properties[var_name]}).forEach(el => counts[el] = 1  + (counts[el] || 0))
   var sortedKeys = Object.keys(counts).sort(function(a,b){return counts[a]-counts[b]})
   var lenPalette = paletteColorCat[style.color.palette].length;
@@ -423,7 +425,7 @@ export function setupMaxAndMin(var_name, layer_name){
   else if (layer_name ==='link'){
     var dataArray = data.links.map(function(item){return Number(item[var_name])})
   }
-  // console.log([Math.min(...dataArray),Math.max(...dataArray)])
+  // 
   return [Math.min(...dataArray),Math.max(...dataArray)]
 }
 
@@ -494,13 +496,13 @@ function addSizeSemio(name,id_selector,id_parent, variables){
                         );             
                             
     }   
-    console.log(name)
+    
 document.getElementById("semioSelectorSize"+id_selector).addEventListener("change", function(){addSizeRatio(id_parent, id_selector, name)});
 }
 
 //TODO: REAL OPACITY
 function addOpacitySemio(name,id_selector,id_parent, variables){
-  // console.log(variables)
+  // 
     $("#"+id_parent).append($('<div>')
                       .attr("class","col-md-3")
                       .append('<label class="text-muted h5">Variable</label>')
@@ -614,9 +616,9 @@ function addSizeRatio(id_parent, id_ele, layer){
       $('#semioSizeRatio'+id_ele).remove();
        $('#semioSizeRatioCat'+id_ele).remove();
     }
-    console.log(layer)
+    
 if(document.getElementById('semioSelectorSize'+id_ele).value !== 'fixed'){
-  if(layer === "Link"){
+  if(layer === 'link'){
   $("#"+id_parent).append($('<div>')
                     .attr("id","semioSizeRatioCat"+id_ele)
                     .attr("class","col-md-4")
@@ -683,7 +685,7 @@ else{
 
 
 function addColorTypeSelector ( id_parent, id_ele){
-  // console.log($("#typeColor"+id_ele))
+  // 
     if($("#typeColor"+id_ele) !== null){
 
       $("#typeColor"+id_ele).remove();
@@ -818,7 +820,7 @@ function changeSelect(element,id){
   }
 
 function removeColorSelected(id){
-  // console.log($("#colorPicker"+id).find("div.selected"))
+  // 
  $("#colorPicker"+id).find("div.selected").removeClass('selected').attr('ramps');
 }
 
@@ -931,7 +933,7 @@ function svgExample(listColor, n_color){
 
 export function showSemioParameter(featureName){
       
-  console.log(featureName)
+  
 
     if(document.getElementById('semioColorAdd'+featureName) !== null){
       $('#semioColorAdd'+featureName).children().remove()
@@ -964,8 +966,8 @@ export function showSemioParameter(featureName){
     // } 
 
     var variables = getNameVariables(featureName.toLowerCase())
-  console.log(featureName)
-console.log(variables)
+  
+
     addColorSemio(featureName,'Add'+featureName,'semioColorAdd'+featureName, variables)
     
     addSizeSemio(featureName,'Add'+featureName,'semioSizeAdd'+featureName, variables)
@@ -1062,7 +1064,7 @@ export function applyChangeStyle(name, style, layers){
   var colorVar = document.getElementById('semioSelectorColorChange').value
 
   var ratio = document.getElementById('ratioMinMaxSizeChange').value;
-  var typeSize = document.getElementById('typeSizeChange').value;
+  // var typeSize = document.getElementById('typeSizeChange').value;
   var textVar = document.getElementById('semioSelectorTextChange').value
 
 
@@ -1131,7 +1133,7 @@ export function applyChangeStyle(name, style, layers){
       //   if(name === 'link'){
       //   map.removeLayer(featuresLayers[name])
       //   featuresLayers[name] = new ol.layer.Vector({
-      //     name:"Link",
+      //     name:'link',
       //     source:featuresLayers[name].getSource(),
       //     style:styleLinkPoly,
       //     renderMode:'image'

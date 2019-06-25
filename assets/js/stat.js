@@ -3,7 +3,7 @@ import {transform, get as getProjection} from 'ol/proj.js';
 
 export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
-  console.log(nodes)
+  // console.log(nodes)
   for(var p = 0; p< keys.length; p++){
     nodes[keys[p]].properties = Object.assign({outdegree: 0}, nodes[keys[p]].properties)
     nodes[keys[p]].properties = Object.assign({indegree: 0}, nodes[keys[p]].properties)

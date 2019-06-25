@@ -1,7 +1,7 @@
 //TODO remove all funciton in other files like import files 
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter, testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
-import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap} from "./layer.js";
-import {loadMapFromPresetSave, loadFilter} from "./save.js";
+import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap, showTileLayersName, addTileLayer, getTileUrl} from "./layer.js";
+import {loadMapFromPresetSave, loadFilter, loadZippedMap} from "./save.js";
 import {getCentroid, changeProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {addLayerGestionMenu} from './control.js';
@@ -16,16 +16,26 @@ import 'ol-ext/control/Print.css'
 
 import {register} from 'ol/proj/proj4.js';
 import {Map, View } from 'ol';
-import {ScaleLine} from 'ol/control.js';
+      // import {} from 'ol/control.js';
+      // import {defaults as defaultControls, FullScreen} from 'ol/control.js';
+import {ScaleLine, defaults as defaultControls, Control, FullScreen} from 'ol/control.js';
+import {click, pointerMove} from 'ol/events/condition.js';
+import Select from 'ol/interaction/Select.js';
 
 import WebGLMap from 'ol/WebGLMap.js';
 import * as wbg from 'ol/webgl.js';
 
 import Hover from 'ol-ext/interaction/Hover'
 import Popup from "ol-ext/overlay/Popup"
+import CanvasTitle from "ol-ext/control/CanvasTitle"
+// import OLButton from "ol-ext/control/Button"ew ol.control.CanvasTitle();
 import "ol-ext/overlay/Popup.css"
 
 import {parse as papaparse} from "papaparse"
+import JSZip from 'jszip'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jsPDF';
+import { saveAs } from 'file-saver';
 
 import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -33,10 +43,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'spectrum-colorpicker/spectrum.js'
 import 'spectrum-colorpicker/spectrum.css'
 
-import '../css/control.css'
+import "../css/control.css"
 
 import  proj4 from 'proj4';
 
+      import WKT from 'ol/format/WKT.js';
 
 
     $("#strokeColorpickerAdd").spectrum({
@@ -58,6 +69,8 @@ import  proj4 from 'proj4';
 
 document.getElementById('removeFilterLayout').addEventListener("click", function(){
   var el = document.getElementById('removeFilterLayout')
+
+// document.getElementById("LoadZipMapButton").disabled = false;
 
   var widthlayout = $("#filterDiv").outerWidth() 
   if(el.style.right === "0px"){
@@ -208,7 +221,8 @@ global.global_data = {
     },
   "layers":{
     features:{},
-    base:{}
+    base:{},
+    osm:{}
   },
   "style":{
       "link":{
@@ -300,13 +314,14 @@ global_data.projection = Proj[0]
 // Add listener to all button of application
 // onclick properties did'nt work with webpack so button must be update manually by adding an event listener
 
-// Home Page
+// Home Page loadZippedMap
 document.getElementById('importDataButton').addEventListener("click", function(){importFlowToMap()}); 
 document.getElementById('localMap').addEventListener("click", function(){loadMapFromPresetSave('local', map, global_data, data)}); 
 document.getElementById('countryMap').addEventListener("click", function(){loadMapFromPresetSave('country', map, global_data, data)}); 
 document.getElementById('worldMap').addEventListener("click", function(){loadMapFromPresetSave('world', map, global_data, data)}); 
+document.getElementById('LoadZipMapButton').addEventListener("click", function(){loadZippedMap()}); 
 // Main Page -- Layer
-document.getElementById('OSMbutton').addEventListener("click", function(){addOSMLayer(map, global_data.layers.base)}); 
+// document.getElementById('OSMbutton').addEventListener("click", function(){}); 
 document.getElementById('buttonProjection').addEventListener("click", function(){changeProjection(global_data.layers, global_data.center)}); 
 document.getElementById('addNewNodeFeaturesButton').addEventListener("click", function(){showSemioParameter('Node')}); 
 document.getElementById('addNewLinkFeaturesButton').addEventListener("click", function(){
@@ -321,9 +336,17 @@ document.getElementById('selectFilterButton').addEventListener("click", function
   refreshFilterModal();
   checkDataToFilter()
 }); 
-// Modal -- Add
+// Modal -- AddaddNewTileLayerButtonAdd
 document.getElementById('addNewLayerButtonAdd').addEventListener("click", function(){addBaseLayer(map, global_data.layers, 'Add')}); 
-// document.getElementById('baseLayerButton').addEventListener("click", function(){errorModal()}); 
+document.getElementById('tileLayersAdd').addEventListener("change", function(){showTileLayersName(document.getElementById('tileLayersAdd').value)}); 
+document.getElementById('OSMbutton').addEventListener("click", function(){
+  // 
+  showTileLayersName(document.getElementById('tileLayersAdd').value)
+}); 
+document.getElementById('addNewTileLayerButtonAdd').addEventListener("click", function(){
+  var url  = getTileUrl()
+  addTileLayer(map, global_data.layers.osm, url, document.getElementById('tileLayersNameSelectorOptions').value)
+}); 
 // Modal -- Filter
 // document.getElementById('refreshFilterButton').addEventListener("click", function(){refreshFilterModal()}); 
 document.getElementById('addFilterButton').addEventListener("click", function(){addFilterToScreen()}); 
@@ -332,7 +355,7 @@ document.getElementById('addFilterButton').addEventListener("click", function(){
 // document.getElementById('featureChosenAddNode').addEventListener("change", function(){showSemioParameter('Node')}); 
 // document.getElementById('refreshSemioButton').addEventListener("click", function(){refreshSemioModal()}); 
 document.getElementById('addSemioButtonLink').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Link')});
-document.getElementById('addSemioButtonNode').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Node')});importPresetMapButton
+document.getElementById('addSemioButtonNode').addEventListener("click", function(){setupStyleAndAddLayer(global_data.style, 'Node')});
 // Modal -- Import
 document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", function(){
   var layer_name = document.getElementById("nameGeoJson").value;
@@ -378,6 +401,7 @@ document.getElementById('importedFileLocationButton').addEventListener("click", 
  
 // })
 document.getElementById("importDataButton").disabled = true;
+document.getElementById("LoadZipMapButton").disabled = true;
 
 // document.getElementById('importIdButton').addEventListener("click", function(){
 
@@ -462,6 +486,63 @@ document.getElementById("importDataButton").disabled = true;
 }());
 
 
+(function(){
+    
+    function onChange(event) {
+      // console.log(save.loadMapFromPresetSave)
+        var reader = new FileReader();
+        reader.onload = onReaderLoad;
+        // console.log(event.target.files[0].name;)
+        reader.readAsArrayBuffer(event.target.files[0]);
+        // global_data.files.Ntype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
+        
+        document.getElementById("label_loadSavedZipMap").innerHTML = event.target.files[0].name;  
+        // console.log(global_data.files.Ntype)
+        // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
+        // showParameterIDSNodes()
+
+    // document.getElementById("importDataButton").disabled = false;
+    
+  }
+
+    function onReaderLoad(event){
+      var new_zip = new JSZip();
+      JSZip.loadAsync(event.target.result).then(function (zip) {
+        // new_zip.file("conf.json").async("string");
+         // console.log(zip.files["dd.json"]);
+          zip.files["conf.json"].async('string').then(function (fileData) {
+            global_data = JSON.parse(fileData)
+              global_data.legend =   {
+                "link":{
+                  "legend":null,
+                  "color": null,
+                  "opa": null
+                  },
+                "node":{
+                  "legend":null,
+                  "color": null,
+                  "opa": null
+                }
+              }
+            // console.log(JSON.parse(fileData)) // These are your file contents      
+          })
+          zip.files["data.json"].async('string').then(function (fileData) {
+            data = JSON.parse(fileData) // These are your file contents      
+          })
+      })
+      document.getElementById("LoadZipMapButton").disabled = false;
+        // console.log(event.target.result);
+    
+        // data.nodes = readData(data.rawStructureData,global_data.files.Ntype);
+        // showParameterIDSNodes()
+    }
+    
+
+    document.getElementById('loadSavedZipMap').addEventListener('change', onChange);
+
+}());
+
+
 var select = document.getElementById("layersAdd"); 
 var list_nameLayer = Object.keys(ListUrl)
 for(var i=0; i<list_nameLayer.length; i++){
@@ -475,8 +556,11 @@ for(var i=0; i<list_nameLayer.length; i++){
 
 
 global.map = new Map({
+   controls: defaultControls().extend([
+          new FullScreen()
+        ]),
           renderer:'webgl',
-         
+          // pixelRatio:5,
           //renderer:'webgl',
           target: 'map',
           loadTilesWhileAnimating: true,
@@ -494,8 +578,15 @@ map.addControl(new CanvasScaleLine());
 // document.getElementsByClassName("ol-scale-line")[0].style.left = ""
 // document.getElementsByClassName("ol-scale-line")[0].style.right = "8px"
 
-var printControl = new Print()
-map.addControl(printControl);
+// var printControl = new Print()
+// map.addControl(printControl);
+    // CanvasTitle control
+    var titleControl = new CanvasTitle();
+    map.addControl(titleControl);
+    document.getElementById('titleMap').addEventListener("change", function () { 
+      // console.log(this.value)
+      global_data.title = this.value
+      titleControl.setTitle(this.value); });
 
 
 // Display the style on select
@@ -507,16 +598,22 @@ map.addControl(printControl);
     popup.hide();
   });
   hover.on('hover', function(e) {
+
   var nodes_used = ["fixed"]
   var link_used = ["fixed"]
-    if('Link' === e.layer.get('name')){
-      // console.log(e)
+    if('link' === e.layer.get('name')){
+      // console.log(e)    
       var str_to_show = '<b>'+e.feature.get('ori')+' => '+ e.feature.get('dest')+'</b><br/>'
+      if (!link_used.includes(global_data.ids.vol)){
+        str_to_show = str_to_show + global_data.ids.vol+" : "+e.feature.get(global_data.ids.vol)
+      +"<br/>";
+        link_used.push(global_data.ids.vol)
+      }      
       if (!link_used.includes(e.feature.get('size').name)){
         str_to_show = str_to_show + e.feature.get('size').name+" : "+e.feature.get('size').value
       +"<br/>";
         link_used.push(e.feature.get('size').name)
-      }      
+      }    
       if (!link_used.includes(e.feature.get('color').name)){
         str_to_show = str_to_show + e.feature.get('color').name+" : "+e.feature.get('color').value
       +"<br/>";
@@ -529,7 +626,7 @@ map.addControl(printControl);
       }
           popup.show(e.coordinate, str_to_show)
     }
-    else if('Node' === e.layer.get('name')){
+    else if('node' === e.layer.get('name')){
       var str_to_show =  '<b>'+e.feature.get(global_data.ids.nodeID) +'</b>'
       +"<br/>"
       if (!nodes_used.includes(global_data.style.node.size.var)){
@@ -556,31 +653,156 @@ map.addControl(printControl);
       // +'<br/>'
       // +e.feature.get('pop').toLocaleString()+' hab.')
   });
-// printControl.on('print', function(e) {
-//       $('#map').css('opacity', .1);
-//       console.log('printing')
-//     });
 
-// function scaleLegend(){
-//   var pixel = map.getView().getResolution()    
-//   var rb = global_data.style.ratioBounds   
-//   if(global_data.legend.link.legend !== null){
-//     console.log('AYAYAY')
-//   }
-//   if(global_data.legend.node.legend !== null){
-//       console.log('AYAYAY545')
-//   }
-// }
+    // map.on('click', function(event) {
+    //     var features = map.getFeaturesAtPixel(event.pixel);
+    //     console.log(features)
+    //   });
+
+      var exportZipMap = (function (Control) {
+        function exportZipMap(opt_options) {
+          var options = opt_options || {};
+
+          var button = document.createElement('button');
+          button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-floppy-disk.svg'/>";
+
+          var element = document.createElement('div');
+          element.className = 'rotate-north ol-unselectable ol-control';
+          element.appendChild(button);
+
+          Control.call(this, {
+            element: element,
+            target: options.target
+          });
+
+          button.addEventListener('click', this.handleExport.bind(this), false);
+        }
+
+        if ( Control ) exportZipMap.__proto__ = Control;
+        exportZipMap.prototype = Object.create( Control && Control.prototype );
+        exportZipMap.prototype.constructor = exportZipMap;
+
+        exportZipMap.prototype.handleExport = function handleExport () {
+          exportDataAndConf()
+        };
+
+        return exportZipMap;
+      }(Control));
+      map.addControl(
+          new exportZipMap()
+        )
+
+function exportDataAndConf(){
+  var zip = new JSZip();
+  global_data.center = map.getView().getCenter()
+  global_data.zoom = map.getView().getZoom()
+  delete global_data.legend
+
+  zip.file("data.json", JSON.stringify(data));
+  zip.file("conf.json", JSON.stringify(global_data));
+  // console.log(isCyclic(global_data))
+
+  zip.generateAsync({type:"blob"})
+    .then(function(content) {
+        // see FileSaver.js
+        saveAs(content, "Save_GFlowiz_Map.zip");
+    });
+
+  global_data.legend =   {
+        "link":{
+          "legend":null,
+          "color": null,
+          "opa": null
+          },
+        "node":{
+          "legend":null,
+          "color": null,
+          "opa": null
+          }}
+    addLegendToMap()
+}
+
+
+
+      var printPNGMap = (function (Control) {
+        function printPNGMap(opt_options) {
+          var options = opt_options || {};
+
+          var button = document.createElement('button');
+          button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-print.svg'/>";
+
+          var element = document.createElement('div');
+          element.className = 'rotate-print ol-unselectable ol-control';
+          element.appendChild(button);
+
+          Control.call(this, {
+            element: element,
+            target: options.target
+          });
+
+          button.addEventListener('click', this.handlePrint.bind(this), false);
+        }
+
+        if ( Control ) printPNGMap.__proto__ = Control;
+        printPNGMap.prototype = Object.create( Control && Control.prototype );
+        printPNGMap.prototype.constructor = printPNGMap;
+
+        printPNGMap.prototype.handlePrint = function handlePrint () {
+          printMyMaps()
+        };
+
+        return printPNGMap;
+      }(Control));
+      map.addControl(
+          new printPNGMap()
+        )
+
+function printMyMaps(){
+
+
+    if(document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed') === true)
+    {
+      document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed')
+    }   
+
+
+    html2canvas(document.getElementsByClassName('ol-legend')[0]).then(canvas => {
+      // document.body.appendChild(canvas)
+      var mapCanvas = $('canvas')[0]
+      var newCanvas = document.createElement('canvas')
+      newCanvas.width = Math.max(mapCanvas.width, canvas.width)
+      newCanvas.height = mapCanvas.height + canvas.height
+      var ctx = newCanvas.getContext('2d')
+      
+      var gg = ctx.createImageData(mapCanvas.width, mapCanvas.height)
+      var test = mapCanvas.getContext('2d').getImageData(0,0,mapCanvas.width, mapCanvas.height)
+
+
+      ctx.drawImage(mapCanvas, 0 , 0)
+      ctx.drawImage(canvas, 0 , mapCanvas.height)
+
+      newCanvas.toBlob(function(blob) {
+        saveAs(blob, 'map.png');
+      }, 'image/webp',1);
+
+    });
+    map.renderSync();
+}
+
+
 
 
 map.on('moveend', function(e) {
-// console.log("sdfsdfqsdf")computeDistanceCanvas('link', global_data.style.link.size.max/c[i], style.ratioBounds, style)/ map.getView().getResolution() 
+// 
 // console.log(map.getView().getResolution() )
   if(global_data.legend.node.legend !== null){
     global_data.legend.node.legend.refresh({force:true})
     global_data.legend.link.legend.refresh({force:true})
   }
 });
+
+
+
 
 export function readData(data, ext){
 
@@ -598,7 +820,7 @@ export function readData(data, ext){
 }
 
 function useExistingNodes(){
-  console.log("bonjour")
+  
   document.getElementById('label_nodes').innerHTML = "Levels"
   $.getJSON("public/data/save/saved_nodes.json",function(json){  
     console.log(json)

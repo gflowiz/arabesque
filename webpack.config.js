@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var config = {
   context: __dirname, // `__dirname` is root of project and `/src` is source
@@ -22,10 +24,24 @@ var config = {
       {
         test: /\.css$/,
         use: [
-          'style-loader', // the order is important. it executes in reverse order !
-          'css-loader' // this will load first !
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+            // "style-loader",
+           // the order is important. it executes in reverse order !
+          'css-loader', // this will load first !
+          // 'sass-loader'
         ]
       },
+      {
+      test: /\.(html)$/,
+      use: {
+        loader: 'html-loader',
+        options: {
+          attrs: ['img:src', 'link:href']
+        }
+      }
+    },
       {
         test: /\.txt$/i,
         use: 'raw-loader',
@@ -44,6 +60,11 @@ var config = {
     ]
   },
   plugins: [  
+  // new HtmlWebpackPlugin({
+  //     title: 'My App',
+  //     filename:  path.resolve('index.html')
+  //   }),
+  new MiniCssExtractPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
       // This has effect on the react lib size
@@ -60,7 +81,7 @@ var config = {
          options: {
            types: ["jquery","spectrum-colorpicker"]
          }
-       })
+       }),
   ]
 };
 

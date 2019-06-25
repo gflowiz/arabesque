@@ -14,11 +14,69 @@ import {Fill, Stroke, Text, Style, CircleStyle,RegularShape} from 'ol/style.js';
 
 import {Polygon, Circle} from 'ol/geom.js';
 import {Tile,Vector as VectorLayer} from 'ol/layer.js';
-import {OSM,Vector as VectorSource} from 'ol/source.js';
+import {OSM,Vector as VectorSource, XYZ} from 'ol/source.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 
 // var ol = require('ol');
 import 'spectrum-colorpicker/spectrum.js'
+
+global.ListBaseTileUrl = {
+    "OSM_A": "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "OSM_B": "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "OSM_C": "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "Wikimedia": "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png",
+    "Humanitarian OSM": "http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+    "OSM_no_labels": "https://tiles.wmflabs.org/osm-no-labels/{z}/{x}/{y}.png",
+    "Stamen Toner": "http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
+    "wmflabs_OSM_BW": "https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png",
+    "Öpnvkarte_Transport_Map": "http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",
+    "OpenTopoMap": "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
+};
+
+global.ListStamenTileUrl = {
+    "Toner": "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png",
+    "Toner_lite": "http://a.tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+    "Toner_Lines": "http://a.tile.stamen.com/toner-lines/{z}/{x}/{y}.png",
+    // "Stamen Toner": "http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
+    "Terrain": "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png",
+    "Terrain_lines": "http://a.tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
+    "Terrain_background": "http://a.tile.stamen.com/terrain-background/{z}/{x}/{y}.png",
+    // "Terrain_": "http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
+    "WaterColor": "http://a.tile.stamen.com/watercolor/{z}/{x}/{y}.png",
+};
+
+global.ListCartoTileUrl = {
+    // "Carto Light": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    "Carto_Ligth_noLabels": "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+    // "Carto Light": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    "Carto_Light": "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    // "Carto Light": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    "Carto_Dark_noLabels": "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
+    "Carto_Dark": "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+    "voyager": "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+    "voyager_nolabels": "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
+};
+
+global.ListOverlayTileUrl = {
+    "waymarkedtrails Cycling": "https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
+    "waymarkedtrails Hiking": "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png",
+    "OpenSeaMap": "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+    "Wikimedia": "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png",
+    "SkyMap": "http://tiles.skimap.org/openskimap/{z}/{x}/{y}.png",
+    "OpenRailwayMap_signalling": "http://a.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png",
+    "OpenRailwayMap_maxspeeds": "http://a.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png",
+    "OpenRailwayMap_infrastructure": "http://a.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png ",
+    "OpenPtMap": "http://www.openptmap.org/tiles/{z}/{x}/{y}.png",
+    // "OSM A": "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+};
+global.ListTextTileUrl = {
+    // "waymarkedtrails Cycling": "https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
+    "Stamen_Toner_labels": "http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
+    "Stamen_TerrainnoLabels": "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
+    "Carto_Dark_labels": "https://a.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png",
+    "Carto_Light_labels": "https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png",
+    "voyager_nolabels": "https://a.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
+};
 
 global.ListUrl = {
     "graticules_20": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_graticules_20.geojson",
@@ -35,61 +93,84 @@ global.ListUrl = {
     "disputed_area" : "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_admin_0_disputed_areas.geojson"
 };
 
-
-
-
-function curveArrow(point_ori, point_dest, width, curving_ratio, ratio_bounds) {
-
+export function getLayerFromName(map, layer_name){
+  // var layer  = null;
+  var layers = map.getLayers()["array_"]
+  for(var i in layers){
+    // 
+    if(layers[i].get('name') === layer_name)
+    {
+      return layers[i]
+    }
+  }
+  return null
 }
 
-function tranposeLine(point_ori, point_dest, distance) {
+export function getTileUrl(){
+    var tileType = document.getElementById('tileLayersAdd').value
 
-    var startX = point_ori[0]
-    var startY = point_ori[1]
-    var endX = point_dest[0]
-    var endY = point_dest[1]
-    var angle = Math.atan2(endY - startY, endX - startX)
-
-    var NewOri = [Math.sin(angle) * distance + startX, -Math.cos(angle) * distance + startY]
-    var Newdest = [Math.sin(angle) * distance + endX, -Math.cos(angle) * distance + endY]
-
-    return [NewOri, Newdest]
+  if(tileType === 'overlay')
+    {
+        var url = ListOverlayTileUrl[document.getElementById('tileLayersNameSelectorOptions').value]
+    }
+  else if (tileType === 'base')
+    {
+        var url = ListBaseTileUrl[document.getElementById('tileLayersNameSelectorOptions').value]
+    }  
+    else if (tileType === 'stamen')
+    {
+        var url = ListStamenTileUrl[document.getElementById('tileLayersNameSelectorOptions').value]
+    }
+    else if (tileType === 'text')
+    {
+        var url = ListTextTileUrl[document.getElementById('tileLayersNameSelectorOptions').value]
+    }  
+    else if (tileType === 'carto')
+    {
+        var url = ListCartoTileUrl[document.getElementById('tileLayersNameSelectorOptions').value]
+    }  
+    return url
 }
+  
+export function showTileLayersName(tileType){
+    if(document.getElementById('tileLayersNameSelector') !== null){
+        $('#tileLayersNameSelector').children().remove();
+    }
 
-
-function transposePointVerticalyFromLine(point_ori, linePoints, distance) {
-
-    var startX = linePoints[0][0]
-    var startY = linePoints[0][1]
-    var endX = linePoints[1][0]
-    var endY = linePoints[1][1]
-    var angle = Math.atan2(endY - startY, endX - startX);
-    return [Math.sin(angle) * distance + point_ori[0], -Math.cos(angle) * distance + point_ori[1]];
-
+    $('#tileLayersNameSelector').append('<label for="tileLayersNameSelectorOptions">Tiles</label>')
+                                .append($('<select>')
+                                  .attr('class','custom-select')
+                                  .attr("id","tileLayersNameSelectorOptions")
+                                  );
+    if(tileType === 'overlay')
+    {
+        var keys = Object.keys(ListOverlayTileUrl)
+    }
+    else if (tileType === 'base')
+    {
+        var keys = Object.keys(ListBaseTileUrl)
+    } 
+    else if (tileType === 'stamen')
+    {
+        var keys = Object.keys(ListStamenTileUrl)
+    }
+    else if (tileType === 'text')
+    {
+        var keys = Object.keys(ListTextTileUrl)
+    }  
+    else if (tileType === 'carto')
+    {
+        var keys = Object.keys(ListCartoTileUrl)
+    }  
+    // 
+    // 
+    for (var p = 0; p < keys.length; p++) {
+        // 
+        $('#tileLayersNameSelectorOptions').append($('<option>', {text:String(keys[p]) })
+                        .attr("value",keys[p])
+            );
+    }
 }
-
-
-// create a simple arrow with en triangle head at a given ratio of the distance
-function simpleArrowCoordinates(point_base1, point_base2, arrow_size, width) {
-    var startX = point_base1[0]
-    var startY = point_base1[1]
-    var endX = point_base2[0]
-    var endY = point_base2[1]
-    var angle = Math.atan2(endY - startY, endX - startX)
-
-    var percentDist = 0.65 * Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY))
-    //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
-
-    var dist = Math.min(arrow_size, percentDist)
-
-    // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
-    var topArrowpoint = [-Math.cos(angle) * dist + endX, -Math.sin(angle) * dist + endY]
-    var polyPoint = tranposeLine(point_base1, topArrowpoint, width)
-
-    topArrowpoint = transposePointVerticalyFromLine(topArrowpoint, [point_base1, point_base2], width + dist / 4)
-    return [point_base1, point_base2, topArrowpoint, polyPoint[1], polyPoint[0], point_base1]
-}
-
 function removeRadius(point_ori, point_dest, radius_ori, radius_dest) {
 
     var startX = point_ori[0]
@@ -113,7 +194,7 @@ export function addBaseLayer(map, layers, mode) {
     var fill_color = $("#fillColorpicker"+mode).spectrum('get').toHexString();
 
     if (Object.keys(layers.base).includes(Object.keys(ListUrl))) {
-        map.removeLayer(layers.base[layer_name].layer)
+        map.removeLayer(getLayerFromName(map,layer_name))
 
     }
     else{
@@ -121,7 +202,7 @@ export function addBaseLayer(map, layers, mode) {
     }
     layers.base[layer_name] = {}
     var layerAdded = addLayerFromURL(map, ListUrl[layer_name], layer_name, opacity, stroke_color, fill_color);
-    layers.base[layer_name].layer = layerAdded;
+    // layers.base[layer_name].layer = layerAdded;
     layers.base[layer_name].style = { stroke: stroke_color, 
         fill: fill_color,
         opacity:opacity};
@@ -136,7 +217,7 @@ export function changeBaseLayer(map, layers, mode, layer_name) {
     var stroke_color = $("#strokeColorpicker"+mode).spectrum('get').toHexString();
     var fill_color = $("#fillColorpicker"+mode).spectrum('get').toHexString();
 
-    layers.base[layer_name].layer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))
+    getLayerFromName(map,layer_name).setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))
     // map.removeLayer(layers.base[layer_name].layer)
     // layers.base[layer_name] = {}
     // var layerAdded = addLayerFromURL(map, ListUrl[layer_name], layer_name, opacity, stroke_color, fill_color);
@@ -181,54 +262,6 @@ function computeDistanceCanvas(layer_name, value, ratio_bounds, styles) {
     }
 }
 
-
-export function filterLinkLayer(map, links, nodes, style, id_ori, id_dest) {
-
-
-    var selected_nodes = applyNodeDataFilter(nodes);
-    var removed_nodes = selected_nodes[1]
-    var list_nodes = Object.keys(selected_nodes[0])
-    var index_links = testLinkDataFilter(global_data.filter.link, data)
-    // console.log(index_links)
-    // // filter_nodes
-    // console.log(id_ori);
-    // //CHANGE IN indexList
-    // var filter_links = applyLinkDataFilter(links, selected_nodes[0], selected_nodes[1]);
-
-    var len = index_links.length;
-    var arrow;
-    var featureList = [];
-    for (var k = 0; k < len; k++) {
-        var j = index_links[k]; // get the index of the filtered links
-
-        // if(){
-        if((list_nodes.includes(links[j][id_ori]) || list_nodes.includes(links[j][id_dest]) ) && (!removed_nodes.includes(links[j][id_dest]) && !removed_nodes.includes(links[j][id_ori]))){
-
-            featureList.push(links[j].polygone);
-
-           }
-            // if(){} //FOR THE GRAPHIC CHOICE OF SHOW THE NODES LINKS TO THE SELECTED NODES
-        // }
-    }
-
-    var source = new VectorSource({
-        features: featureList
-    });
-
-
-    var linkLayer = new VectorLayer({
-        name: "Link",
-        source: source,
-        style: styleLinkPoly,
-        renderMode: 'image'
-    });
-    map.addLayer(linkLayer);
-
-
-    
-    linkLayer.changed();
-    return linkLayer;
-}
 function setTargetLegend(legend, element){
 
     if(element === null){
@@ -369,7 +402,7 @@ function reducedNumber(number){
 }
 
 function selectColorLegendForm(legend, colorType, layer, style, scaler){
-    console.log(scaler)
+    
     if(colorType === "number"){
         var colors = getNodeColorScaleValue(layer)
         var step = (style[layer].color.max - style[layer].color.min)/7 // legend.addRow({ title:reducedNumber(style[layer].color.max)});
@@ -417,7 +450,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
             }); 
             }
             // x = x+1;
-            // console.log(x)
+            // 
         }
        
     }
@@ -444,7 +477,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
 function selectOpaLegendForm(legend, colorType, layer, style){
    
         var colors = getNodeOpaScaleValue(layer)
-        //console.log(getNodeOpaScaleValue(layer))
+        //
         // legend.addRow({ title:style[layer].opa.vmax});
         var x = 0; 
         for(var i in colors){
@@ -481,7 +514,7 @@ function selectOpaLegendForm(legend, colorType, layer, style){
             }); 
             }
             x = x+1;
-            // console.log(x)
+            // 
         }
         // legend.addRow({ title:"0"});
 }
@@ -504,12 +537,12 @@ function getLinkLegendStyle(feature){
 }
 
 export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest, id_selected_links, selected_nodes) {
+// 
 
-
-    // console.log('======================')
-    if (Object.keys(global_data.layers.features).includes("link")) {
-        map.removeLayer(global_data.layers.features["link"])
         
+    // 
+    if (getLayerFromName(map, 'link') !== null) {
+        map.removeLayer(getLayerFromName(map, 'link'))   
     }
     else
     {
@@ -525,7 +558,7 @@ var t0 = performance.now();
     var ODlinks = groupLinksByOD(links, id_selected_links, id_ori, id_dest)
 
 var t1 = performance.now();
-console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
     var oriIDS = Object.keys(ODlinks);
     var arrow;
     var featureList = [];
@@ -539,6 +572,7 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
                 var properties = {}
     properties.ori = null
     properties.dest = null
+    properties.layer = 'link'
     properties.opa =    {
                             name: style.link.opa.var,
                             value: null
@@ -602,22 +636,23 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
             }
             var width_opa = - 1;
             if (style.link.opa.var !== 'fixed') {
-                // console.log(list_index.map(function(item){return Number(links[item][style.link.opa.var]) }))
+                // 
                 var width_opa = getAggregateValue(list_index.map(function(item){return Number(links[item][style.link.opa.var]) }))                
             }
-
+            properties[global_data.ids.vol] =  getAggregateValue(list_index.map(function(item){return Number(links[item][global_data.ids.vol])}))  
             arrow = drawArrow(style, ori, dest, rad_ori, rad_dest, distance)
 
             var featureTest = new Feature(new Polygon([arrow]));
-            featureTest.setProperties(properties);
-            featureTest.setStyle(styleLinkPoly(featureTest, width, width_color, width_opa))
             properties.size.value = width
             properties.opa.value = width_opa
             properties.color.value = width_color
+            featureTest.setProperties(properties);
+            // featureTest.setStyle(styleLinkPoly(featureTest))
+
 
                 if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
                     featureList.push(featureTest);
-                
+                // 
             }
 
             // featureList.push(featureTest);
@@ -629,24 +664,24 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
 
 var t1 = performance.now();
-console.log("end generateLinkLayer" + (t1 - t0) + " milliseconds.")
+
 
     var source = new VectorSource({
         features: featureList
     });
 
 var t1 = performance.now();
-console.log("create source" + (t1 - t0) + " milliseconds.")
+
 
     var linkLayer = new VectorLayer({
-        name: "Link",
+        name: "link",
         source: source,
         style: styleLinkPoly,
         renderMode: 'image'
     });
 
 var t1 = performance.now();
-console.log("addMap " + (t1 - t0) + " milliseconds.")
+
     map.addLayer(linkLayer);
  
     
@@ -661,7 +696,7 @@ console.log("addMap " + (t1 - t0) + " milliseconds.")
   // map.addControl(legend);
 
 var t1 = performance.now();
-console.log("end" + (t1 - t0) + " milliseconds.")
+
     
     linkLayer.changed();
     return linkLayer;
@@ -703,10 +738,30 @@ export function addOSMLayer(map, layers) {
         source: new OSM()
     })
     
-    layers["OSM"] = {layer:layer};
+    // layers["OSM"] = {layer:layer};
 
     map.addLayer(layer);
     addLayerGestionOSMMenu("OSM");
+    return layer;
+}
+
+// TODO ADD CONTRIBUTIONs
+export function addTileLayer(map, layers, url, name) {
+    
+    var source = new XYZ({
+        url: url,
+        crossOrigin: 'anonymous'
+    });
+    
+    var layer = new Tile({
+        name: name,
+        source: source,
+        // crossOrigin: 'anonymous'
+    })
+    layers[name] = url;
+
+    map.addLayer(layer);
+    addLayerGestionOSMMenu(name);
     return layer;
 }
 
@@ -722,10 +777,10 @@ function getAllNodesFromFilteredLinks(links, id_links, ori_id, dest_id, selected
 }
 
 export function addNodeLayer(map, links, nodes, style, id_selected_links, selected_nodes) {
-// console.log(Object.keys(global_layers.features).includes("node"))
+// 
 var scalers = getD3ScalersForStyle('node')
-    if (Object.keys(global_data.layers.features).includes("node")) {
-        map.removeLayer(global_data.layers.features["node"])
+    if (getLayerFromName(map,'node') !== null) {
+        map.removeLayer(getLayerFromName(map,'node'))
     }
     else 
     {
@@ -766,17 +821,18 @@ var scalers = getD3ScalersForStyle('node')
             var feat = new Feature(new Circle(point, radius))
             //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
             feat.setProperties(nodes[listallnodes[p]].properties)
+            feat.setProperties({layer:'node'})
             feat.setStyle(styleUnselectedNodeCircle(feat))
             //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
             nodeList.push(feat);
         }
     }
- console.log(radius)
+ 
     var source = new VectorSource({
         features: nodeList
     });
     var nodeLayer = new VectorLayer({
-        name: "Node",
+        name: "node",
         source: source,
         renderMode: 'image'
     })
@@ -809,7 +865,7 @@ export function getD3ScalersForStyle(layer){
     {
         scalers.opa = d3["scale"+global_data.style[layer].opa.cat]().domain([0,Number(global_data.style[layer].opa.vmax)]).range([Number(global_data.style[layer].opa.min),Number(global_data.style[layer].opa.max)])
     }
-console.log(scalers)
+
     return scalers
 }
 
@@ -854,7 +910,7 @@ export function addLayerFromURLNoStyle(map, url, layerName) {
 }
 
 export function addGeoJsonLayer(map, data, name_layer, opacity, stroke_color, fill_color){
-    // console.log(data)
+    // 
     var vectorSource = new VectorSource({
         features: new GeoJSON({
           featureProjection: global_data.projection.name

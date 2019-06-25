@@ -115,7 +115,7 @@ export function getFeatureStyle (feature) {
     ];
   }
 
-export function styleLinkPoly(feature, width_size, size_color, size_opa){
+export function styleLinkPoly(feature){
     //width stupe
     if(global_data.style.link.size.var === 'fixed'){
     //color setup
@@ -125,10 +125,10 @@ export function styleLinkPoly(feature, width_size, size_color, size_opa){
     }
     else{//impossible case//impossible case//impossible case
         if(global_data.style.link.geometry.oriented === 'noOriented'){
-         var zindex = - width_size
+         var zindex = - feature.get('size').value
         }
         else{
-         var zindex = width_size
+         var zindex = feature.get('size').value
         }
     }
 
@@ -142,7 +142,7 @@ export function styleLinkPoly(feature, width_size, size_color, size_opa){
         var oColor = d3.color(global_data.style.link.categorialOrderedColors[feature.get(global_data.style.link.color.var).toString()]) // get the corlor from a js object wer the name of the variable is link to 
     }    
     else if(global_data.style.link.color.cat === 'number'){
-        var NormalizeColor = (size_color-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
+        var NormalizeColor = (feature.get('color').value-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
         // console.log(NormalizeColor)
         var oColor = d3.color(d3["interpolate"+global_data.style.link.color.palette](NormalizeColor))
        // oColor.opacity = opacityFunciton
@@ -158,7 +158,7 @@ export function styleLinkPoly(feature, width_size, size_color, size_opa){
     else
     {
         var opascale = d3["scale"+global_data.style.link.opa.cat]().domain([0,Number(global_data.style.link.opa.vmax)]).range([Number(global_data.style.link.opa.min),Number(global_data.style.link.opa.max)])
-        oColor.opacity= opascale(size_opa)
+        oColor.opacity= opascale(feature.get('opa').value)
     }
     var style = new Style({
          fill: new Fill({
