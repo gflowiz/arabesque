@@ -24,8 +24,8 @@ global.Proj = {
   "EPSG:3413":{ name: 'EPSG:3413', proj4: '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-4194304, -4194304, 4194304, 4194304], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]}, 
   "EPSG:54009":{ name: "'ESRI:54009", proj4: '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-18e6, -9e6, 18e6, 9e6], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
  "test":{ name: "test", proj4: '+proj=qsc +units=m +ellps=WGS84  +lat_0=0 +lon_0=0',extent:null, worldExtent:null,center:[0,-0]},
- "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
- "bert1":{ name: "bert1", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ // "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ // "bert1":{ name: "bert1", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
 
 };
 
