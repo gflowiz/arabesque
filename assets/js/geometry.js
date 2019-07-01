@@ -361,7 +361,7 @@ export function addArrowSizeSelect(){
 
     var text = '" - Heigth: Choose the distance between the base and the arrow tip, the value is a percentage of the width of the link</br /> - Width: choose the base width of the arrow, the value represent a percentage of the arrow width"'
     // $("#ArrowHeadSize").append('<hr>')
-    $("#ArrowHeadSize").append('<label class="p-2 h5">Arrow Head  <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+    $("#ArrowHeadSize").append('<label class="p-2 h5">Arrow Head <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
 	$("#ArrowHeadSize").append($('<div>').attr('class', "row p-2"))
   	$("#ArrowHeadSize>div").append($('<div>')
                     .attr("class","col-md-6")
@@ -410,7 +410,7 @@ export function addArrowPlaceCurveSelect(){
 
     var text = '"The curve is created by the chaikin algorithm </br /></br /> - Heigth: The value is the percentage of the distance between the origin and the destination used to define the maximum height of the link </br /> - Base: The value ([0,1]) is the center of the curve, the point is select by select a percentage of the distance from the origin node of the link "'
     // $("#ArrowPlaceSize").append('<hr>')
-    $("#ArrowPlaceSize").append('<label class="h5 p-2">Curve Arrow   <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+    $("#ArrowPlaceSize").append('<label class="h5 p-2">Curve Arrow  <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
 	$("#ArrowPlaceSize").append($('<div>').attr('class', "row p-2"))
   	$("#ArrowPlaceSize>div").append($('<div>')
                     .attr("class","col-md-6")

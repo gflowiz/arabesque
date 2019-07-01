@@ -2,9 +2,9 @@
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter, testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
 import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap, showTileLayersName, addTileLayer, getTileUrl} from "./layer.js";
 import {loadMapFromPresetSave, loadFilter, loadZippedMap} from "./save.js";
-import {getCentroid, changeProjection} from "./projection.js";
+import {getCentroid, changeProjection, loadAllExtentProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
-import {addLayerGestionMenu} from './control.js';
+import {addLayerGestionMenu,addLayerImportGestionMenu} from './control.js';
 import {showGeometryParameter,setupArrowParameter, setupHead} from './geometry.js';
 import {setupStyleAndAddLayer , showSemioParameter, generatePaletteMultiHue2, changeSemioParameter } from './semiology.js'
 
@@ -25,6 +25,8 @@ import Select from 'ol/interaction/Select.js';
 import WebGLMap from 'ol/WebGLMap.js';
 import * as wbg from 'ol/webgl.js';
 
+// import * as d3proj from 'd3-geo-projection'
+
 import Hover from 'ol-ext/interaction/Hover'
 import Popup from "ol-ext/overlay/Popup"
 import CanvasTitle from "ol-ext/control/CanvasTitle"
@@ -34,7 +36,7 @@ import "ol-ext/overlay/Popup.css"
 import {parse as papaparse} from "papaparse"
 import JSZip from 'jszip'
 import html2canvas from 'html2canvas'
-import jsPDF from 'jsPDF';
+// import jsPDF from 'jsPDF';
 import { saveAs } from 'file-saver';
 
 import 'bootstrap/dist/js/bootstrap.js';
@@ -192,10 +194,11 @@ document.getElementById("removeFilterLayout").style.right = widthlayout + 'px' ;
 generatePaletteMultiHue2()
 
 
-
-var select = document.getElementById("projection"); 
-for(var i=0; i<Proj.length; i++){
- proj4.defs(Proj[i].name, Proj[i].proj4);
+  var select = document.getElementById("projection"); 
+for(var i in Proj){
+  if(Proj[i].proj4 !== null){
+     proj4.defs(i, Proj[i].proj4);
+   }
 
 
     var el = document.createElement("option");
@@ -203,9 +206,19 @@ for(var i=0; i<Proj.length; i++){
     el.value = i;
     select.appendChild(el);
 }
+
+try {
 register(proj4);
-
-
+loadAllExtentProjection()
+console.log(proj4)
+}
+catch(error) {
+  console.error(error);
+  // expected output: ReferenceError: nonExistentFunction is not defined
+  // Note - error messages will vary depending on browser
+}
+// loadAllExtentProjection()
+console.log(proj4)
 global.data = {
     hashedStructureData:{},
     filter:{link:{}, node:{}}
@@ -222,7 +235,8 @@ global.global_data = {
   "layers":{
     features:{},
     base:{},
-    osm:{}
+    osm:{},
+    import:{}
   },
   "style":{
       "link":{
@@ -310,7 +324,7 @@ global.global_data = {
           }}
 };
 
-global_data.projection = Proj[0]
+global_data.projection = Proj["EPSG:3857"]
 // Add listener to all button of application
 // onclick properties did'nt work with webpack so button must be update manually by adding an event listener
 
@@ -362,15 +376,18 @@ document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", fu
   var opacity = document.getElementById("opacityGeoJson").value;
   var stroke_color = $("#strokeColorpickerGeoJson").spectrum('get').toHexString();
   var fill_color = $("#fillColorpickerGeoJson").spectrum('get').toHexString();
-  global_data.layers.base[layer_name] = {}
-  global_data.layers.base[layer_name].layer = addGeoJsonLayer(map, data.geoJson, layer_name, opacity, stroke_color, fill_color)
-  global_data.layers.base[layer_name].style = { stroke: stroke_color, 
+  addGeoJsonLayer(map, data.geoJson, layer_name, opacity, stroke_color, fill_color)
+  global_data.layers.import[layer_name] = {}
+  global_data.layers.import[layer_name].style = { stroke: stroke_color, 
         fill: fill_color,
         opacity:opacity};
-  global_data.layers.base[layer_name].added = true
+  // global_data.layers.import[layer_name].added = true
   data[layer_name] = data.geoJson
-  reduceDataset(data.geoJson)
-  addLayerGestionMenu(layer_name)
+
+  // reduce is here to create dataset to import into the application
+  // reduceDataset(data.geoJson)
+
+  addLayerImportGestionMenu(layer_name)
 });
 
 // Modal -- import 
@@ -570,7 +587,7 @@ global.map = new Map({
             //projection:projection.name,
                       zoom: 0,
       minZoom: -2,
-      maxZoom: 30
+      maxZoom: 25
           })
         });
 map.addControl(new CanvasScaleLine());
@@ -603,7 +620,7 @@ map.addControl(new CanvasScaleLine());
   var link_used = ["fixed"]
     if('link' === e.layer.get('name')){
       // console.log(e)    
-      var str_to_show = '<b>'+e.feature.get('ori')+' => '+ e.feature.get('dest')+'</b><br/>'
+      var str_to_show = '<b>'+e.feature.get('ori')+' <img class="popup-icon" src="assets/svg/si-glyph-triangle-right.svg"/> '+ e.feature.get('dest')+'</b><br/>'
       if (!link_used.includes(global_data.ids.vol)){
         str_to_show = str_to_show + global_data.ids.vol+" : "+e.feature.get(global_data.ids.vol)
       +"<br/>";

@@ -6,9 +6,11 @@ import {getNodeColorScaleValue, getNodeColorCatValue, getNodeOpaScaleValue} from
 import {getAggregateValue} from "./stat.js"
 
 
-
+import {bbox} from 'ol/loadingstrategy';
+import Bbox from 'ol/format/filter/Bbox';
 import Legend from 'ol-ext/control/Legend'
 import 'ol-ext/control/Legend.css'
+import Crop from "ol-ext/filter/Crop"
 import {Feature} from 'ol';
 import {Fill, Stroke, Text, Style, CircleStyle,RegularShape} from 'ol/style.js';
 
@@ -16,6 +18,7 @@ import {Polygon, Circle} from 'ol/geom.js';
 import {Tile,Vector as VectorLayer} from 'ol/layer.js';
 import {OSM,Vector as VectorSource, XYZ} from 'ol/source.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
+import {containsExtent} from 'ol/extent.js'
 
 // var ol = require('ol');
 import 'spectrum-colorpicker/spectrum.js'
@@ -207,7 +210,6 @@ export function addBaseLayer(map, layers, mode) {
         fill: fill_color,
         opacity:opacity};
     layers.base[layer_name].added = false
-
 }
 
 export function changeBaseLayer(map, layers, mode, layer_name) {
@@ -872,39 +874,89 @@ export function getD3ScalersForStyle(layer){
 
 export function addLayerFromURL(map, url, layerName, opacity, stroke_color, fill_color) {
 
-    // very approximate calculation of projection extent
-    var URLLayer = new VectorLayer({
+   if(global_data.projection.extent !==  null)
+    {
+        var URLLayer = new VectorLayer({
         name: layerName,
-        //extent: projection.extent,
-        source: new VectorSource({
+        // overlaps:false,
+        // extent: global_data.projection.extent,
+        source:new VectorSource({
+            // projection:global_data.projection.name,
             url: url,
+            // strategy: new Bbox( "default", global_data.projection.extent),
+            // overlaps:false,
+            useSpatialIndex:false,
             format: new GeoJSON({
                 //defaultDataProjection: 'EPSG:4326'
-            })
-        })
+                })
+            }),
+
+            overlaps:true,
+            // wrapX:false,
     });
-    
+    }
+    else{
+        var URLLayer = new VectorLayer({
+        name: layerName,
+        // overlaps:false,
+
+            overlaps:true,
+            wrapX:false,
+        //extent: projection.extent,
+        source: new VectorSource({
+            // projection:global_data.projection.name,
+            url: url,
+
+            useSpatialIndex:false,
+            format: new GeoJSON({
+                //defaultDataProjection: 'EPSG:4326'
+                })
+            })
+        });
+    }
+
+    console.log("etLayerFromName(map,layer_name)")
 
     URLLayer.setOpacity(opacity)
     URLLayer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))
     map.addLayer(URLLayer);
+
+    
     return URLLayer;
 }
 
 export function addLayerFromURLNoStyle(map, url, layerName) {
 
     // very approximate calculation of projection extent
-
-    var URLLayer = new VectorLayer({
+   if(global_data.projection.extent !==  null)
+    {
+        var URLLayer = new VectorLayer({
         name: layerName,
-        //extent: projection.extent,
+        // extent: global_data.projection.extent,
         source: new VectorSource({
+            projection:global_data.projection.name,
+            // extent: global_data.projection.extent,
             url: url,
             format: new GeoJSON({
                 //defaultDataProjection: 'EPSG:4326'
             })
         })
     });
+    }
+    else{
+        var URLLayer = new VectorLayer({
+        name: layerName,
+        //extent: projection.extent,
+        source: new VectorSource({
+            projection:global_data.projection.name,
+            url: url,
+            format: new GeoJSON({
+                //defaultDataProjection: 'EPSG:4326'
+                })
+            })
+        });
+    }
+    
     map.addLayer(URLLayer);
     return URLLayer;
 }
@@ -912,8 +964,9 @@ export function addLayerFromURLNoStyle(map, url, layerName) {
 export function addGeoJsonLayer(map, data, name_layer, opacity, stroke_color, fill_color){
     // 
     var vectorSource = new VectorSource({
+        projection:global_data.projection.name,
         features: new GeoJSON({
-          featureProjection: global_data.projection.name
+          // featureProjection: global_data.projection.name
         }).readFeatures(data)
       });
 

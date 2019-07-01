@@ -1,8 +1,8 @@
 import {setNextProj, getCentroid, loadZipProjection} from "./projection.js"; 
 import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.js"
-import {addLayerGestionMenu} from "./control.js"
+import {addLayerGestionMenu, addLayerImportGestionMenu} from "./control.js"
 import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, loadRemoveFilter, checkDataToFilter,loadBinFilterData, loadTemporalFilter, loadTimeLapseFilter} from "./filter.js"
-import {addOSMLayer, addNewLayer, addLayerFromURL, addTileLayer} from "./layer.js";
+import {addOSMLayer, addNewLayer, addLayerFromURL, addTileLayer, addGeoJsonLayer,getLayerFromName} from "./layer.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
 
@@ -176,28 +176,9 @@ function loadDataForExample(file_json, data_link,data_geo, data){
 }
 
 function loadPojection(savedProj){
-	var byDefaultProjection = Proj[0]
-	if(savedProj.proj4 === null)
-		{
-			//TODO ADD CHANGE PROJ
-			for(var m = 0; m<Proj.length; m++){
-				if (Proj[m].name === savedProj.name){
-					console.log(Proj[m])
-					setNextProj( map, m, savedProj.name)
-					console.log(m)
-					return Proj[m];
-				}
-			}
-			
-
-			
-		}
-	else{
-		//TODO LOAD PROJ4 TO THE CURRENT PROJ AND SET THE EXTENT 
-		return
-	}
-return byDefaultProjection;
-
+	console.log(savedProj.name)
+	setNextProj( map, savedProj.name);
+return savedProj
 }
 
 export function loadZippedMap(){
@@ -207,6 +188,7 @@ export function loadZippedMap(){
 	loadZipProjection(map, global_data.projection, global_data.center, global_data.zoom)
 	loadFilter(global_data.filter)
 	loadBaseZipLayerData(global_data.layers.base)
+	loadImportZipLayerData(global_data.layers.import)
 	loadZipOSMLayerData(global_data.layers.osm)
 
 		applyNewStyle("link")
@@ -285,6 +267,7 @@ function loadLayerData(base_layers, layers){
 			console.log(layer.style)
 		addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
 		layers[layer.name].style = layer.style
+		// console.log(getLayerFromName(map, layer.name).getSource().getFeatures())
 		addLayerGestionMenu(layer.name);
 	}
 }
@@ -294,6 +277,14 @@ function loadBaseZipLayerData(layers){
 	for(var g in layers){
 		addLayerFromURL(map, ListUrl[g],g, layers[g].style.opacity, layers[g].style.stroke, layers[g].style.fill)
 		addLayerGestionMenu(g);
+	}
+}
+
+function loadImportZipLayerData(layers){
+
+	for(var g in layers){
+		addGeoJsonLayer(map, data[g],g, layers[g].style.opacity, layers[g].style.stroke, layers[g].style.fill)
+		addLayerImportGestionMenu(g);
 	}
 }
 

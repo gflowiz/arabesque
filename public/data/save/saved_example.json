@@ -136,7 +136,7 @@
 			"lat":"lon"
 		},
 		"projection":{
-			"name":"ESRI:53009",
+			"name":"EPSG:3413",
 			"proj4":null,
 			"extent":null
 		},
@@ -275,7 +275,7 @@
 			"lat":"lon"
 		},
 		"projection":{
-			"name":null ,
+			"name":"EPSG:3857" ,
 			"proj4":null,
 			"extent":null
 		},

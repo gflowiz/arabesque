@@ -185,6 +185,54 @@ console.log(global_data.layers.base)
 
 }
 
+export function addLayerImportGestionMenu(name) {
+
+
+        $("#accordionLayerControl").prepend($("<li>", {
+        class: "card mt-2 border-dark",
+        id : "card"+name,
+        value : name
+    })
+    .append($("<div>", {
+        class: "card-header  text-dark panel-heading",
+        text : name,
+        id: "panel" + name
+        }
+    )
+        .append($("<button>")
+            .attr("type", "button")
+            .attr("id", "buttonRemoveLayer" + name)
+            .attr("class", "close center-block  ml-1")
+            .attr("aria-label", "Close")
+            .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
+        ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonChangeLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .attr("data-target", "#changeBaseLayerModal")
+                .attr("data-toggle", "modal")
+                .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
+        ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonHideLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
+    )));
+
+
+// console.log(global_data.layers.base)
+    document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.import[name].style)}); 
+    document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
+       hideLayer(name)
+    });
+    document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
+        removeLayer(name)
+    });
+
+}
+
 function hideFLayer(name_layer) {
     var opa = getLayerFromName(map,name_layer).getOpacity();
     console.log(opa)

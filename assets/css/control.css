@@ -101,6 +101,15 @@
         overflow-y:auto !important; 
       }
 
+
+      #layerLayout{
+        overflow-y:auto !important; 
+      }
+
+      #accordionLayerControl{
+        overflow-y:visible !important; 
+      }
+
       .sidepanel {
         background: #1F6B75;
         width: 10%;
@@ -171,6 +180,13 @@ fill: red;
   background: none;
 }
 
+.popup-icon{
+  width:10px;
+  height:10px;
+  border: none;
+  background: none;
+}
+
 .icon-filter{
   width:30px;
   height:30px;
@@ -180,11 +196,12 @@ fill: red;
 }
 
 .small-icon{
-  width:10px;
-  height:10px;
+  width:20px;
+  height:20px;
   border: none;
   background: none;
-  color:white;
+  cursor:pointer;
+  /*color:white;*/
 }
 
 #arrowSelector{

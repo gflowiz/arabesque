@@ -15,7 +15,7 @@ function addNodeStringFilters(){
   var text = '"- Categorial => qualitative selector <br /> -Remove => qualitative removal <br /> - One Category => quick selector of one category <br />  - Numeral => quantitative selector <br /> Temporal => Select time area (must precise a time format)"'
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="selectedFilter">Type <a role="button" class="badge badge-pill badge-secondary"  tabindex="0" data-trigger="focus" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></append></label>')
+                                .append('<label for="selectedFilter">Type <img class="small-icon" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:" src="assets/svg/si-glyph-circle-info.svg"/></label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
@@ -43,7 +43,7 @@ function addLinkFilters(){
   var text = '"- Categorial => qualitative selector  <br />- Remove => qualitative removal <br /> - One Category => quick selector of one category <br />  - Numeral => quantitative selector <br /> Temporal => Select time area (must precise a time format)"'
   $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="selectedFilter">Type <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:"><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+                                .append('<label for="selectedFilter">Type <img class="small-icon" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Select the type of filter:" src="assets/svg/si-glyph-circle-info.svg"/></label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","selectedFilter")
@@ -592,6 +592,19 @@ function temporalRemoveCatFilter(var_to_remove, name_layer){
 
 }
 
+function reducedFilterNumber(number){
+    if(number <= 10 && number >= -10)
+    {
+        return  Number(number).toFixed(2)
+    }
+    if(number >= 10000)
+    {
+        return Number(number).toExponential(2)
+    }
+    return Math.round(number).toString()
+}
+
+
 function addSingleCatFilter(name_layer,name_variable){
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
@@ -870,7 +883,7 @@ export function checkDataToFilter(){
                         .attr('class','row')
                         .append($("<div>")
                           .attr("class","col-md-4")
-                          .append('<label for="filteredLayer">Layer <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+'><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+                          .append('<label for="filteredLayer">Layer </label>')
                           .append($("<select>")
                             .attr("class","custom-select")
                             .attr("id","filteredLayer")
@@ -904,7 +917,7 @@ function addValuesToFilter(){
     if(keysToShow)
     $('#filterLayerBody>div').append($('<div>')
                                 .attr("class","col-md-4")
-                                .append('<label for="valueTofilter">Variable <button  class="badge badge-pill badge-secondary"  data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+'><img class="small-icon" src="assets/svg/si-glyph-info.svg"/></button></label>')
+                                .append('<label for="valueTofilter">Variable </label>')
                                 .append($('<select>')
                                   .attr('class','custom-select')
                                   .attr("id","valueTofilter")
