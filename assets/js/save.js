@@ -265,7 +265,7 @@ function loadLayerData(base_layers, layers){
 		var layer = base_layers[g]
 		layers[layer.name] = {}
 			console.log(layer.style)
-		addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.style.opacity, layer.style.stroke, layer.style.fill)
+		addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.attributions, layer.style.opacity, layer.style.stroke, layer.style.fill)
 		layers[layer.name].style = layer.style
 		// console.log(getLayerFromName(map, layer.name).getSource().getFeatures())
 		addLayerGestionMenu(layer.name);
@@ -275,7 +275,7 @@ function loadLayerData(base_layers, layers){
 function loadBaseZipLayerData(layers){
 
 	for(var g in layers){
-		addLayerFromURL(map, ListUrl[g],g, layers[g].style.opacity, layers[g].style.stroke, layers[g].style.fill)
+		addLayerFromURL(map, ListUrl[g],g,layers[g].attributions, layers[g].style.opacity, layers[g].style.stroke, layers[g].style.fill)
 		addLayerGestionMenu(g);
 	}
 }
@@ -291,7 +291,7 @@ function loadImportZipLayerData(layers){
 function loadZipOSMLayerData(layers){
 console.log(layers)
 	for(var g in layers){
-		addTileLayer(map, layers, layers[g], g)
+		addTileLayer(map, layers, layers[g].url, g, layers[g].attributions)
 		// layers[layer.name].style = layer.style
 		// addLayerGestionMenu(g);
 	}

@@ -16,6 +16,7 @@
 						"fill":"#3498DB",
 						"opacity": 0.5
 					},
+          "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
 					"app": true
 				},
 			{
@@ -25,6 +26,7 @@
 						"fill":"#666666",
 						"opacity": 0.9
 					},
+          "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
 					"app": true
 				},
 			{
@@ -34,6 +36,7 @@
 					"fill":"#000000",
 					"opacity": 0.9
 				},
+        "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
 				"app": true
 			}
 		],
@@ -286,7 +289,7 @@
 	},
 	"world":{
 		"files":{
-			"node": "public/data/countries.geojson",
+			"node": "public/data/capitals.geojson",
 			"link": "public/data/comtrade(8).csv",
 			"Ltype":"csv",
 			"Ntype":"geojson",
@@ -360,12 +363,12 @@
 },
   		"node":{
   "color": {
-    "palette": "Paired",
-    "cat": "categorical",
-    "var": "continent",
-    "max": 0,
-    "min": 0
-  },
+  "palette": "RdYlGn",
+  "cat": "number",
+  "var": "balance",
+  "max": 161534540928,
+  "min": -190901612603
+},
   "size": {
     "cat": "Sqrt",
     "ratio": "20",
@@ -412,7 +415,7 @@
   ]
 },
 		"ids":{
-			"nodeID":"iso_a3",
+			"nodeID":"iso3",
 			"linkID":["Reporter ISO","Partner ISO"],
 			"vol":"Trade Value (US$)"
 		},

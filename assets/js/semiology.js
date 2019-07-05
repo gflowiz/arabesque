@@ -73,13 +73,8 @@ export const paletteColorSequentialMultiHue2 = {
 
 export function showChangeBaseLayerParameter(map, layers, mode, layer_name, style){
 
-    $("#strokeColorpickerChange").spectrum({
-        color: style.stroke
-    });
-    $("#fillColorpickerChange").spectrum({
-        color: style.fill
-    });
-
+    document.getElementById("strokeColorpickerChange").value = style.stroke
+    document.getElementById("fillColorpickerChange").value = style.fill
     document.getElementById("opacityLayer"+mode).value = style.opacity;
 
     $('#addNewLayerButtonChange').replaceWith($('#addNewLayerButtonChange').clone());
@@ -219,7 +214,7 @@ export function setupStyleAndAddLayer(style, layer_name){
     
     if(colorVar === 'fixed')
     {
-      style[layer].color.palette = $("#semioColorpickerAdd"+layer_name).spectrum('get').toHexString();
+      style[layer].color.palette = document.getElementById("semioColorpickerAdd"+layer_name).value;
     }
     else{
 
@@ -741,16 +736,12 @@ function showfixed(ide, idp){
   var underId = "colorPicker"+ide
     $("#"+idp).append($('<div>')
       .attr("id",underId)
-      .attr("class","col-md-8")
+      .attr("class","col-md-3")
       .append('<label class="text-muted h5" for="semioColorpicker'+ide+'">Choose color</label>')
-      .append($('<input>')
-        .attr("id","semioColorpicker"+ide)
-        )
+      .append('<input type="color" id="semioColorpicker'+ide+'" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">')
       )
 
-    $("#semioColorpicker"+ide).spectrum({
-    color: "aliceblue"
-});
+
 }
 
 
@@ -1029,9 +1020,8 @@ function loadStyleToModify(layer_name, style){
   }
   else 
   {
-    $("#semioColorpickerChange").spectrum({
-    color: style.color.palette
-    });
+    document.getElementById("semioColorpickerChange").value = style.color.palette
+
   }
 
   addSizeRatio("semioSizeChange",'Change', layer_name.charAt(0).toUpperCase() +layer_name.slice(1))
@@ -1095,7 +1085,7 @@ export function applyChangeStyle(name, style, layers){
 
     if(colorVar === 'fixed')
     {
-      style[name].color.palette = $("#semioColorpickerChange").spectrum('get').toHexString();
+      style[name].color.palette = document.getElementById("semioColorpickerChange").value;
     }
     else{
       var colorType = document.getElementById('typeColorChange').value  

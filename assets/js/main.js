@@ -1,6 +1,6 @@
 //TODO remove all funciton in other files like import files 
 import {refreshFilterModal, addFilterToScreen, checkDataToFilter, testLinkDataFilter, applyNodeDataFilter } from "./filter.js"
-import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap, showTileLayersName, addTileLayer, getTileUrl} from "./layer.js";
+import {addOSMLayer, addBaseLayer, addGeoJsonLayer, addNodeLayer, generateLinkLayer, addLegendToMap, showTileLayersName, addTileLayer, getTileData, addBaseUrlLayer} from "./layer.js";
 import {loadMapFromPresetSave, loadFilter, loadZippedMap} from "./save.js";
 import {getCentroid, changeProjection, loadAllExtentProjection} from "./projection.js";
 import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
@@ -18,7 +18,7 @@ import {register} from 'ol/proj/proj4.js';
 import {Map, View } from 'ol';
       // import {} from 'ol/control.js';
       // import {defaults as defaultControls, FullScreen} from 'ol/control.js';
-import {ScaleLine, defaults as defaultControls, Control, FullScreen} from 'ol/control.js';
+import {ScaleLine, defaults as defaultControls, Control, FullScreen, Attribution} from 'ol/control.js';
 import {click, pointerMove} from 'ol/events/condition.js';
 import Select from 'ol/interaction/Select.js';
 
@@ -52,19 +52,6 @@ import  proj4 from 'proj4';
       import WKT from 'ol/format/WKT.js';
 
 
-    $("#strokeColorpickerAdd").spectrum({
-        color: "#1E90FF"
-    });
-    $("#fillColorpickerAdd").spectrum({
-        color: "aliceblue"
-    });
-
-    $("#strokeColorpickerGeoJson").spectrum({
-        color: "#1E90FF"
-    });
-    $("#fillColorpickerGeoJson").spectrum({
-        color: "aliceblue"
-    });
 
   var heighttokeep = $(".container-fluid").height()
   document.getElementById('map').style.height=heighttokeep +"px"
@@ -336,7 +323,16 @@ document.getElementById('worldMap').addEventListener("click", function(){loadMap
 document.getElementById('LoadZipMapButton').addEventListener("click", function(){loadZippedMap()}); 
 // Main Page -- Layer
 // document.getElementById('OSMbutton').addEventListener("click", function(){}); 
-document.getElementById('buttonProjection').addEventListener("click", function(){changeProjection(global_data.layers, global_data.center)}); 
+document.getElementById('buttonProjection').addEventListener("click", function(){
+  changeProjection(global_data.layers, global_data.center)
+  if(global_data.projection.name ==="EPSG:3857")
+  {
+    document.getElementById("OSMbutton").disabled = false; 
+  }
+  else{
+    document.getElementById("OSMbutton").disabled = true;
+  }
+}); 
 document.getElementById('addNewNodeFeaturesButton').addEventListener("click", function(){showSemioParameter('Node')}); 
 document.getElementById('addNewLinkFeaturesButton').addEventListener("click", function(){
   showSemioParameter('Link')
@@ -351,15 +347,19 @@ document.getElementById('selectFilterButton').addEventListener("click", function
   checkDataToFilter()
 }); 
 // Modal -- AddaddNewTileLayerButtonAdd
-document.getElementById('addNewLayerButtonAdd').addEventListener("click", function(){addBaseLayer(map, global_data.layers, 'Add')}); 
+document.getElementById('addNewLayerButtonAdd').addEventListener("click", function(){addBaseLayer(map, global_data.layers, 'Add', 'Made with <a href="https://www.naturalearthdata.com">Natural Earth.</a>')}); 
+document.getElementById('addNewURLLayerButtonGeoJson').addEventListener("click", function(){addBaseUrlLayer(map, global_data.layers)}); 
 document.getElementById('tileLayersAdd').addEventListener("change", function(){showTileLayersName(document.getElementById('tileLayersAdd').value)}); 
 document.getElementById('OSMbutton').addEventListener("click", function(){
   // 
   showTileLayersName(document.getElementById('tileLayersAdd').value)
 }); 
 document.getElementById('addNewTileLayerButtonAdd').addEventListener("click", function(){
-  var url  = getTileUrl()
-  addTileLayer(map, global_data.layers.osm, url, document.getElementById('tileLayersNameSelectorOptions').value)
+  var dataTile  = getTileData()
+  addTileLayer(map, global_data.layers.osm, dataTile.url, document.getElementById('tileLayersNameSelectorOptions').value, dataTile.attributions)
+}); 
+document.getElementById('addNewTileLayerURL').addEventListener("click", function(){
+  addTileLayer(map, global_data.layers.osm, document.getElementById('URLTileLayer').value, document.getElementById('NameTileLayer').value, document.getElementById('ContributorsTileLayer').value)
 }); 
 // Modal -- Filter
 // document.getElementById('refreshFilterButton').addEventListener("click", function(){refreshFilterModal()}); 
@@ -374,9 +374,13 @@ document.getElementById('addSemioButtonNode').addEventListener("click", function
 document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", function(){
   var layer_name = document.getElementById("nameGeoJson").value;
   var opacity = document.getElementById("opacityGeoJson").value;
-  var stroke_color = $("#strokeColorpickerGeoJson").spectrum('get').toHexString();
-  var fill_color = $("#fillColorpickerGeoJson").spectrum('get').toHexString();
+  var stroke_color = document.getElementById("strokeColorpickerGeoJson").value;
+  var fill_color = document.getElementById("fillColorpickerGeoJson").value;
+
+  console.log(opacity,stroke_color, fill_color)
   addGeoJsonLayer(map, data.geoJson, layer_name, opacity, stroke_color, fill_color)
+
+
   global_data.layers.import[layer_name] = {}
   global_data.layers.import[layer_name].style = { stroke: stroke_color, 
         fill: fill_color,
@@ -469,7 +473,25 @@ document.getElementById("LoadZipMapButton").disabled = true;
 
     function onReaderLoad(event){
         data.geoJson = JSON.parse(event.target.result);
-        
+        $("#geoJsonModalBody").append('<hr>'+
+          '<div class="row">'+
+            '<div class="col-md-12">'+
+              '<label class="text-muted h5" for="customRange3">Opacity</label>'+
+              '<input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityGeoJson">'+
+            '</div>'+
+          '</div>'+
+          '<hr>'+
+          ' <div class="row">'+
+            '<div class="col-md-6">' +
+              '<label class="text-muted h5" for="customRange3">Fill</label>' +
+              '<input type="color" id="fillColorpickerGeoJson" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">'+
+            '</div>'+
+            '<div class="col-md-6">'+
+              '<label  class="text-muted h5" for="customRange3">Stroke</label>'+
+              '<input type="color" id="strokeColorpickerGeoJson" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">'+
+            '</div>'+
+          '</div>')
+
     }
     
 
@@ -485,7 +507,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
         reader.readAsText(event.target.files[0]);
         //console.log(event.target.files[0])
         global_data.files.Ltype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
-        document.getElementById("Link").disabled = true; 
+        // document.getElementById("Link").disabled = true; 
         document.getElementById("label_link").innerHTML = event.target.files[0].name;
 
        document.getElementById("importDataButton").disabled = false;
@@ -572,10 +594,13 @@ for(var i=0; i<list_nameLayer.length; i++){
 }
 
 
+var attribution = new Attribution({
+        collapsible: false
+      });
 global.map = new Map({
-   controls: defaultControls().extend([
-          new FullScreen()
-        ]),
+   controls: defaultControls({attribution: false}).extend([attribution]),
+   //        new FullScreen()
+   //      ]),
           renderer:'webgl',
           // pixelRatio:5,
           //renderer:'webgl',
@@ -591,6 +616,8 @@ global.map = new Map({
           })
         });
 map.addControl(new CanvasScaleLine());
+
+// map.addControl(attribution);
 // $('.ol-scale-line').css('left', '');
 // document.getElementsByClassName("ol-scale-line")[0].style.left = ""
 // document.getElementsByClassName("ol-scale-line")[0].style.right = "8px"
@@ -713,6 +740,7 @@ function exportDataAndConf(){
   var zip = new JSZip();
   global_data.center = map.getView().getCenter()
   global_data.zoom = map.getView().getZoom()
+  let saveLegend = global_data.legend
   delete global_data.legend
 
   zip.file("data.json", JSON.stringify(data));
@@ -725,18 +753,8 @@ function exportDataAndConf(){
         saveAs(content, "Save_GFlowiz_Map.zip");
     });
 
-  global_data.legend =   {
-        "link":{
-          "legend":null,
-          "color": null,
-          "opa": null
-          },
-        "node":{
-          "legend":null,
-          "color": null,
-          "opa": null
-          }}
-    addLegendToMap()
+  global_data.legend =   saveLegend
+    // addLegendToMap()
 }
 
 
@@ -1301,11 +1319,11 @@ function  setupPresetMapStyleLink(style, id_volume, links){
 
 function  setupPresetMapStyleNode(style, id_volume, nodes){
 
-  var arrayVolume = Object.keys(nodes).map(function(node){return nodes[node].properties["balance"]})
+  var arrayVolume = Object.keys(nodes).map(function(node){return nodes[node].properties["degree"]})
    style.color = {
-      "palette": "RdYlGn",
+      "palette": "OrRd",
       "cat": "number",
-      "var": "balance",
+      "var": "degree",
       "max": Math.max(...arrayVolume),
       "min": Math.min(...arrayVolume)
     }

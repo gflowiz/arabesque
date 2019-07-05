@@ -5,9 +5,13 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
   // console.log(nodes)
   for(var p = 0; p< keys.length; p++){
-    nodes[keys[p]].properties = Object.assign({outdegree: 0}, nodes[keys[p]].properties)
-    nodes[keys[p]].properties = Object.assign({indegree: 0}, nodes[keys[p]].properties)
-    nodes[keys[p]].properties = Object.assign({degree: 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"weigthed indegree": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"weigthed outdegree": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"weigthed degree": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"weigthed balance": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"indegree": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"outdegree": 0}, nodes[keys[p]].properties)
+    nodes[keys[p]].properties = Object.assign({"degree": 0}, nodes[keys[p]].properties)
     nodes[keys[p]].properties = Object.assign({balance: 0}, nodes[keys[p]].properties)
 
   }
@@ -15,14 +19,24 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var len = links.length
 
   for(var p = 0; p< len; p++){
-    nodes[links[p][id_dest]].properties.indegree = Number(links[p][id_vol])   + nodes[links[p][id_dest]].properties.indegree 
-    nodes[links[p][id_ori]].properties.outdegree = Number(links[p][id_vol])   + nodes[links[p][id_ori]].properties.outdegree 
+    nodes[links[p][id_dest]].properties.indegree = 1   + nodes[links[p][id_dest]].properties.indegree 
+    nodes[links[p][id_ori]].properties.outdegree = 1   + nodes[links[p][id_ori]].properties.outdegree 
 
-    nodes[links[p][id_dest]].properties.degree = Number(links[p][id_vol]) + nodes[links[p][id_dest]].properties.degree 
-    nodes[links[p][id_ori]].properties.degree  = Number(links[p][id_vol]) + nodes[links[p][id_ori]].properties.degree 
+    nodes[links[p][id_dest]].properties.degree = 1 + nodes[links[p][id_dest]].properties.degree 
+    nodes[links[p][id_ori]].properties.degree  = 1 + nodes[links[p][id_ori]].properties.degree 
 
-    nodes[links[p][id_dest]].properties.balance =   nodes[links[p][id_dest]].properties.balance + Number(links[p][id_vol])
-    nodes[links[p][id_ori]].properties.balance  =   nodes[links[p][id_ori]].properties.balance  - Number(links[p][id_vol]) 
+    nodes[links[p][id_dest]].properties["weigthed balance"] =   nodes[links[p][id_dest]].properties["weigthed balance"] + Number(links[p][id_vol])
+    nodes[links[p][id_ori]].properties["weigthed balance"]  =   nodes[links[p][id_ori]].properties["weigthed balance"]  - Number(links[p][id_vol]) 
+
+
+    nodes[links[p][id_dest]].properties.balance =   nodes[links[p][id_dest]].properties.balance + 1
+    nodes[links[p][id_ori]].properties.balance  =   nodes[links[p][id_ori]].properties.balance  - 1
+
+    nodes[links[p][id_dest]].properties["weigthed indegree"] = Number(links[p][id_vol])   + nodes[links[p][id_dest]].properties["weigthed indegree"] 
+    nodes[links[p][id_ori]].properties["weigthed outdegree"] = Number(links[p][id_vol])   + nodes[links[p][id_ori]].properties["weigthed outdegree"] 
+
+    nodes[links[p][id_dest]].properties["weigthed degree"] = Number(links[p][id_vol]) + nodes[links[p][id_dest]].properties["weigthed degree"] 
+    nodes[links[p][id_ori]].properties["weigthed degree"]  = Number(links[p][id_vol]) + nodes[links[p][id_ori]].properties["weigthed degree"] 
   }
 
 
@@ -40,10 +54,10 @@ export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
   // console.log(nodes)
   for(var p = 0; p< keys.length; p++){
-    nodes[keys[p]].properties.indegree = 0
-    nodes[keys[p]].properties.outdegree = 0
+    nodes[keys[p]].properties["weigthed indegree"] = 0
+    nodes[keys[p]].properties["weigthed outdegree"] = 0
     nodes[keys[p]].properties.balance = 0
-    nodes[keys[p]].properties.degree = 0
+    nodes[keys[p]].properties["weigthed degree"] = 0
 
   }
 
@@ -62,29 +76,6 @@ export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 
 }
-// export function checkIDLinks(nodes_list, ids, file_type){
-//   // var list_id_ori
-//   // var list_id_dest
-//   var has_link_removed = false;
-//   var filtered_links = [];
-//   var n = 0;
-//   for(var p=0; p<links.length;p++){
-//     if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest])){
-//       filtered_links.push(links[p])
-//     }
-//     else{
-//       n++;
-//       has_link_removed = true;
-//     }
-//   }
-//   console.log('-----------------------------------')
-
-//   console.log(n)
-//   if(has_link_removed){
-//     alert(n+" Links have been removed. No equivalent nodes have been found.")
-//   }
-// return filtered_links
-// }
 
 export function checkIDLinks(links, nodes_list, id_ori, id_dest){
   // var list_id_ori

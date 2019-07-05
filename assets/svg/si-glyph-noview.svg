@@ -39,7 +39,7 @@
      showgrid="false"
      inkscape:snap-grids="false"
      inkscape:zoom="41.75"
-     inkscape:cx="8.4994599"
+     inkscape:cx="8.5473641"
      inkscape:cy="8.9564317"
      inkscape:window-x="0"
      inkscape:window-y="25"
@@ -54,26 +54,30 @@
      stroke-width="1"
      stroke="none"
      fill-rule="evenodd"
-     fill="none">
+     fill="none"
+     style="fill:#6f4e37;fill-opacity:1">
     <g
        transform="translate(1.000000, 4.000000)"
        id="g3791"
-       fill="#434343">
+       fill="#434343"
+       style="fill:#6f4e37;fill-opacity:1">
       <path
          d="M8,0 C3.598,0 0.031,2.66 0.031,3.969 C0.031,5.278 3.597,7.938 8,7.938 C12.4,7.938 15.969,5.32 15.969,3.969 C15.969,2.618 12.4,0 8,0 L8,0 Z M7.99,7.062 C4.342,7.062 2.869,5.011 2.869,4 C2.869,2.989 4.342,0.938 7.99,0.938 C11.636,0.938 13.109,2.958 13.109,4 C13.109,5.042 11.637,7.062 7.99,7.062 L7.99,7.062 Z"
          class="si-glyph-fill"
-         id="path3787" />
+         id="path3787"
+         style="fill:#6f4e37;fill-opacity:1" />
       <ellipse
          cx="7.932"
          cy="3.963"
          rx="1.932"
          ry="1.963"
          class="si-glyph-fill"
-         id="ellipse3789" />
+         id="ellipse3789"
+         style="fill:#6f4e37;fill-opacity:1" />
     </g>
   </g>
   <rect
-     style="fill:#333333;stroke-width:1.30993307"
+     style="fill:#6f4e37;stroke-width:1.30993307;fill-opacity:1"
      id="rect5472"
      width="17.388336"
      height="1.2180052"

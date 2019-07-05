@@ -19,11 +19,15 @@
 <!-- Data Input -->
 <div class="arrival" style="background-color:silver; background-image:url(./public/index.png); background-size: cover;
 background-repeat: no-repeat;">
-  <div class="row align-items-center  justify-content-around h-100">
-    <div class="col-md-3 align-items-center  justify-content-around h-50">
+
+  <div class="row align-items-center  justify-content-around h-50 ">
+    <div classe="col-md-6">
+    <h1> ARABESQUES </h1>
+      </div>
+<div class="col-md-3">
       <div class="card" >
-          <div class="card-body" style="background-color:azure;">
-            <h5 class="card-title">New Map</h5>
+          <div class="card-body" style="background-color:#fef1dd;">
+            <h5 class="card-title">Begin a new Map</h5>
             <div class="custom-file">
               <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
               <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
@@ -34,10 +38,13 @@ background-repeat: no-repeat;">
             </button>
           </div>
       </div>
-    </div>
+  </div>
+</div>
+  <div class="row justify-content-around">
+    
       <div class="col-md-3 align-items-center  justify-content-around h-50">
         <div class="card" >
-          <div class="card-body" style="background-color:azure; z-index:50;">
+          <div class="card-body" style="background-color:#fef1dd; z-index:50;">
             <h5 class="card-title">Example</h5>
 
                 <button type="button" id ="localMap" class="btn btn-dark btn-block" >City Map</button>
@@ -49,7 +56,22 @@ background-repeat: no-repeat;">
       </div>
       <div class="col-md-3 align-items-center  justify-content-around h-50">
         <div class="card" >
-          <div class="card-body" style="background-color:azure;">
+          <div class="card-body" style="background-color:#fef1dd;">
+            <h5 class="card-title">Information</h5>
+            <div class="custom-file">
+              <p> Future place for news about applications or access to <a href="https://github.com/bapaumet/Gflowiz"> git hub</a></p>
+            </div>
+            <h5 class="card-title">Demo</h5>
+            <div class="custom-file">
+              <p> Not implemented yet</p>
+            </div>
+            <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
+          </div>
+      </div>
+      </div>
+      <div class="col-md-3 align-items-center  justify-content-around h-50">
+        <div class="card" >
+          <div class="card-body" style="background-color:#fef1dd;">
             <h5 class="card-title">Load Saved Map</h5>
             <div class="custom-file">
               <input type="file"  id="loadSavedZipMap" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
@@ -68,11 +90,11 @@ background-repeat: no-repeat;">
 <!-- Eploration MAP -->
 <div class="container-fluid h-100">
   <div class="row h-100" >
-    <div class="col-md-2 h-100" style="background-color:darkgrey;" id="layerLayout">
+    <div class="col-md-2 h-100" style="background-color:#fef1dd;" id="layerLayout">
       <div class="row p-0" >
         <div class="accordion w-100" id="accordionExample">
           <div class="card" >
-            <div class="card-header" id="headingFour" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <div class="card-header close" id="headingFour" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" aria-label="Close">
               Projection
             </div>
             <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
@@ -89,8 +111,9 @@ background-repeat: no-repeat;">
             </div>
           </div>
           <div class="card" >
-            <div class="card-header" id="headingTitle" type="button" data-toggle="collapse" data-target="#collapseTitle" aria-expanded="true" aria-controls="collapseTitle">
-              Title and Legend
+            <div class="card-header close" id="headingTitle" type="button" data-toggle="collapse" data-target="#collapseTitle" aria-expanded="true" aria-controls="collapseTitle" aria-label="Close">
+              Title
+              <!-- <button type="button" class="close" aria-label="Close"> -->
             </div>
             <div id="collapseTitle" class="collapse" aria-labelledby="headingTitle" data-parent="#accordionExample">
               <div class="card-body">
@@ -104,8 +127,9 @@ background-repeat: no-repeat;">
             </div>
           </div>
           <div class="card">
-            <div class="card-header" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <div class="card-header close" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" aria-label="Close">
               Add Layers
+              <button type="button" class="close" aria-label="Close">
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
               <div class="card-body">
@@ -142,7 +166,7 @@ background-repeat: no-repeat;">
         </div>
       </div>
     </div>
-    <div class="col-md-4 h-100" id="filterDiv" style="background-color:darkgrey;">
+    <div class="col-md-4 h-100" id="filterDiv" style="background-color:#fef1dd;">
       <div class="row justify-content-md-center mt-3 ">
         <div class="col-md-8">
           <input id="selectFilterButton" class="btn btn-dark btn-block" type="button" value="Add Filter" data-toggle="modal" data-target="#FilterModal">
@@ -187,13 +211,20 @@ background-repeat: no-repeat;">
         <div class="row">
           <div class="col-md-6">
             <label class="text-muted h5" for="fillColorpickerAdd">Fill</label>
-            <input id='fillColorpickerAdd' />
+            <input type="color" id="fillColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
           <div class="col-md-6">
             <label class="text-muted h5" for="strokeColorpickerAdd">Stroke</label>
-            <input id='strokeColorpickerAdd' />
+            <input type="color" id="strokeColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
         </div>
+        <hr>
+        <div class="row">
+
+        <div class="col-md-6 m-2">
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">Import From Url</button>
+        </div>
+      </div>
       </div>
       <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonAdd" data-dismiss="modal">ADD LAYER</button>
     </div>
@@ -228,8 +259,57 @@ background-repeat: no-repeat;">
             </select> -->
           </div>
         </div>
+        <hr>
+        <div class="row">
+
+        <div class="col-md-6 m-2">
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">I Have My Tiles</button>
+        </div>
       </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewTileLayerButtonAdd" data-dismiss="modal">ADD TILE LAYER</button>
+      </div>
+      <button class="modal-footer btn btn-dark justify-content-center"   type="button" id="addNewTileLayerButtonAdd" data-dismiss="modal">ADD TILE LAYER</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="TileModal" tabindex="-1" role="dialog" aria-labelledby="TileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TileModalLabel"> Add My Tile Layer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+                    <label class="text-muted h5">URL</label>
+                    <input type="text" id="URLTileLayer" name="Title">
+      
+                </div>
+            </div>
+          <div class="col-md-6">            
+            <div class="input-group mb-3">
+                  <label class="text-muted h5">Name</label>
+                  <input type="text" id="NameTileLayer" name="Title">
+              
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+                    <label class="text-muted h5">Contributors</label>
+                    <input type="text" id="ContributorsTileLayer" name="Title">
+      
+                </div>
+            </div>
+          
+        </div>
+      </div>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewTileLayerURL" data-dismiss="modal">ADD MY TILE LAYER</button>
     </div>
   </div>
 </div>
@@ -244,7 +324,7 @@ background-repeat: no-repeat;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id='geoJsonModalBody'>
         <div class="row">
           <div class="col-md-6"> 
             <label class="text-muted h5">GeoJson</label>            
@@ -262,29 +342,72 @@ background-repeat: no-repeat;">
             </div>
           </div>
         </div>
+
+      </div>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="baseLayerFromURLModal" tabindex="-1" role="dialog" aria-labelledby="baseLayerFromURLModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="baseLayerFromURLModalLabel"> Import URL GeoJson</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+
+            <label class="text-muted h5">URL</label>
+            <div class="input-group" class="col-md-12">
+                    <input type="text" class="form-control" id="URLBaseLayer" name="Title">
+      
+                </div>
+            </div>
+          </div>
+          <hr>
+        <div class="row">
+          <div class="col-md-6"> 
+                  <label class="text-muted h5">Name</label>           
+            <div class="input-group mb-3">
+                  <input type="text"  class="form-control" id="NameBaseLayer" name="Title">
+              
+              </div>
+          </div>
+          <div class="col-md-6">       
+                  <label class="text-muted h5">Contributors</label>     
+            <div class="input-group mb-3">
+                  <input type="text" class="form-control"  id="attributionsBaseLayer" name="Title">
+              
+              </div>
+            </div>
+          </div>
         <hr>
         <div class="row">
-          <div class="col-md-3">
-            <label class="text-muted h5" for="fillColorpickerGeoJson">Fill</label>
+          <div class="col-md-12">
+            <label class="text-muted h5" for="opacityURL">Opacity</label>
             <div class="input-group">
-              <input id='fillColorpickerGeoJson' />
+              <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerURL">
             </div>
-          </div>
-          <div class="col-md-3">
-            <label class="text-muted h5" for="strokeColorpickerGeoJson">Stroke</label>
-            <div class="input-group">
-              <input id='strokeColorpickerGeoJson' />
             </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="text-muted h5" for="strokeColorpickerURL">Stroke</label>
+            <input type="color" id="strokeColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
           <div class="col-md-6">
-            <label class="text-muted h5" for="opacityGeoJson">Opacity</label>
-            <div class="input-group">
-              <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityGeoJson">
-            </div>
+            <label class="text-muted h5" for="fillColorpickerURL">Fill</label>
+            <input type="color" id="fillColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
         </div>
       </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewURLLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
     </div>
   </div>
 </div>
@@ -310,11 +433,12 @@ background-repeat: no-repeat;">
         <div class="row">
           <div class="col-md-6">
             <label class="text-muted h5" for="customRange3">Fill</label>
-            <input id='fillColorpickerChange' />
+            <input type="color" id="fillColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
           <div class="col-md-6">
             <label  class="text-muted h5" for="customRange3">Stroke</label>
-            <input id='strokeColorpickerChange' />
+            <!-- <input id='strokeColorpickerChange' /> -->
+            <input type="color" id="strokeColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
           </div>
         </div>
       </div>
@@ -442,6 +566,52 @@ background-repeat: no-repeat;">
                     </div>
                   </div>
                 </div>
+            </div>
+          </div>
+        </div>
+      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="changeGeometryModal" tabindex="-1" role="dialog" aria-labelledby="changeGeometryModalLink" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h2" id="changeGeometryModalLink">Choose Semio</h5>
+      </div>
+        <div class="modal-body" >
+          <div class="row">
+            <div class="col-md-12" id="arrowSelector">
+              <label for="select" class="h3 strong">Geometry</label>
+              <div class="row">
+                <div class="col-md-6">
+                    <label for="select" class="text-muted h5">Orientation</label>
+                    <select class="custom-select" id="arrowData">                      
+                      <option selected value="oriented">Oriented</option>
+                      <option value="noOriented">Non Oriented</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="select"class="text-muted h5">Type</label>
+                    <select class="custom-select" id="arrowtype">
+                      <option selected value="StraightArrow">Straight</option>
+                      <option value="StraightNoHookArrow">Straight no Hook</option>
+                      <option value="TriangleArrow">Triangle</option>
+                      <option value="CurveArrow">Curve</option>
+                      <option value="CurveOneArrow">Triangle Curve</option>
+                    </select>
+                </div>
+              </div>
+             <hr>
+              <div class="row" id="ArrowHeadSize">
+              <!--               <hr>
+              <label for="select" class="h4 strong">Arrow</label> -->
+              </div>
+              <div class="row" id="ArrowPlaceSize">
+                <!-- <hr> -->
+              <!-- <label for="select" class="h4 strong">Arrow</label> -->
+              </div>
             </div>
           </div>
         </div>
@@ -588,7 +758,7 @@ background-repeat: no-repeat;">
          <div class="col-md-2">
                 <hr>
 
-         <label for="select" >Text</label>
+         <label for="select" >Label</label>
          <div class="row"  id="semioTextChange">
         </div>
       </div>        

@@ -36,11 +36,13 @@ export function getFeatureStyle (feature) {
         image: new Circle({
           radius: computeNodeDistanceCanvas('node', feature.get('pop'), global_data.style.ratioBounds, global_data.style)/ map.getView().getResolution(), 
           fill: new Fill ({
-            color: "orange",
+            color: [169,169,169,0.3],
+            // opacity: 0.2
           }),
           stroke: new Stroke ({
-            width: 1,
-            color: "orange",
+            width: 2,
+            color: [169,169,169,1],
+            // opacity: 0.2
           })
         }),
         geometry: new Point(getCenter(feature.getGeometry().getExtent() ))

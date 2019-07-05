@@ -11,9 +11,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    viewBox="0 0 17 16"
    version="1.1"
-   class="si-glyph si-glyph-arrow-right"
+   class="si-glyph si-glyph-ruler"
    id="svg10"
-   sodipodi:docname="si-glyph-arrow-right.svg"
+   sodipodi:docname="si-glyph-ruler.svg"
    inkscape:version="0.92.4 (unknown)">
   <metadata
      id="metadata14">
@@ -35,34 +35,31 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1600"
+     inkscape:window-height="851"
      id="namedview12"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="8.5"
+     inkscape:cx="-5.1271186"
      inkscape:cy="8"
      inkscape:window-x="0"
      inkscape:window-y="25"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg10" />
   <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
   <title
-     id="title2">1178</title>
+     id="title2">1081</title>
   <defs
      id="defs4" />
   <g
-     stroke="none"
-     stroke-width="1"
-     fill="none"
-     fill-rule="evenodd"
      id="g8"
-     style="fill:#ffffff">
+     transform="matrix(0.70710678,0.67885819,-0.70710678,0.67885819,7.7505204,-3.404996)"
+     style="fill:#6f4e37;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1">
     <path
-       d="M6.077,1.162 C6.077,1.387 6.139,1.612 6.273,1.812 L10.429,8.041 L6.232,14.078 C5.873,14.619 6.019,15.348 6.56,15.707 C7.099,16.068 7.831,15.922 8.19,15.382 L12.82,8.694 C13.084,8.3 13.086,7.786 12.822,7.39 L8.233,0.51 C7.873,-0.032 7.141,-0.178 6.601,0.181 C6.26,0.409 6.077,0.782 6.077,1.162 L6.077,1.162 Z"
-       fill="#434343"
+       d="m 5,0 v 16 h 8 V 0 Z M 6,2 H 8 V 3 H 6 Z M 6,8 H 8 V 9 H 6 Z m 2,7 H 6 V 14 H 8 Z M 9,12 H 6 V 11 H 9 Z M 9,6 H 6 V 5 h 3 z"
        class="si-glyph-fill"
        id="path6"
-       style="fill:#ffffff" />
+       inkscape:connector-curvature="0"
+       style="fill:#6f4e37;fill-opacity:1" />
   </g>
 </svg>

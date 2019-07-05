@@ -329,6 +329,63 @@ export function addFLayerGestionMenu(name) {
 }
 
 
+export function addLinkLayerGestionMenu(name) {
+    console.log(name)
+
+
+    $("#accordionLayerControl").prepend($("<li>", {
+        class: "card mt-2 border-dark",
+        id : "card"+name,
+        value : name
+    })
+        .append($("<div>", {
+            class: "card-header text-dark h-5 panel-heading",
+            text : name,
+            id: "panel" + name
+            }
+        )
+            .append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonRemoveLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")            
+            ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonChangeLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .attr("data-target", "#changeGeometryModal")
+                .attr("data-toggle", "modal")
+                .append("<img class='icon' src='assets/svg/si-glyph-ruler.svg'/>")
+            ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonChangeLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .attr("data-target", "#changeSemioModal")
+                .attr("data-toggle", "modal")
+                .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
+            ).append($("<button>")
+                .attr("type", "button")
+                .attr("id", "buttonHideLayer" + name)
+                .attr("class", "close center-block ml-1")
+                .attr("aria-label", "Close")
+                .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
+        )
+    ));
+    document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
+       hideFLayer(name)
+    });
+
+    document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {
+        removeFeaturesLayer(name)
+    });
+    document.getElementById("buttonChangeLayer" + name).addEventListener("click", function() {
+        changeSemioParameter(name, global_data.style)
+    });
+}
+
 function removeLayerGestionMenu(name) {
     $("#card" + name).remove();
 }

@@ -6,6 +6,8 @@ import {testLinkDataFilter, applyNodeDataFilter} from "./filter.js";
 
 import * as d3proj from 'd3-geo-projection'
 
+import * as d3rot from 'd3-geo/src/rotation.js'
+
 import  proj4 from 'proj4';
 import {getWidth, getCenter} from 'ol/extent.js';
 import {transform, get as getProjection, addProjection, Projection, addCoordinateTransforms} from 'ol/proj.js';
@@ -24,8 +26,8 @@ global.Proj = {
   "EPSG:3413":{ name: 'EPSG:3413', proj4: '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-4194304, -4194304, 4194304, 4194304], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]}, 
   "EPSG:54009":{ name: "'ESRI:54009", proj4: '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-18e6, -9e6, 18e6, 9e6], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
  "test":{ name: "test", proj4: '+proj=qsc +units=m +ellps=WGS84  +lat_0=0 +lon_0=0',extent:null, worldExtent:null,center:[0,-0]},
- // "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
- // "bert1":{ name: "bert1", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ "bert1":{ name: "bert1", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
 
 };
 
@@ -48,7 +50,9 @@ for(var i in Proj){
       projtt.setExtent(Proj[i].extent);
   }
 }
- console.log(d3proj.geoAiryRaw(0.1))
+        // var cc = d3rot.default()
+        //             var p = cc(0, 0)
+ console.log(d3rot)
       var projection = new Projection({
         code: 'testdf',
         // The extent is used to determine zoom level 0. Recommended values for a
@@ -84,10 +88,10 @@ for(var i in Proj){
       addCoordinateTransforms('EPSG:4326', projection2,
                   function(coordinate) {
                  
-        var cc = d3proj.geoAitoffRaw(coordinate[1], coordinate[0])
-                    // var p = cc(coordinate[1], coordinate[0])
+        var cc = d3rot.default()
+                    var p = cc(coordinate[1], coordinate[0])
                     // console.log(p)
-                   return cc;
+                   return p;
         },
         function(coordinate) {
                   var cc = d3proj.geoAiryRaw(1)
@@ -113,7 +117,7 @@ function refreshBaseLayers(map,layers){
     //   addGeoJsonLayer(map, data[m], m, style.opacity, style.stroke_color, style.fill_color);
     // }
     // else{
-       addLayerFromURL(map, ListUrl[m],m, layers[m].style.opacity, layers[m].style.stroke, layers[m].style.fill)
+       addLayerFromURL(map, ListUrl[m],m,layers[m].attributions , layers[m].style.opacity, layers[m].style.stroke, layers[m].style.fill)
     // }
   // getLayerFromName(map,m).setStyle(oldStyle);
   }
@@ -204,7 +208,7 @@ export function changeProjection(layers, center){
 console.log(iPrj)
   var newView = new View({
     projection: projName,
-    center:transform(map.getView().getCenter(),global_data.projection.name,projName),
+    center:transform([0,0],global_data.projection.name,projName),
     // extent:Proj[iPrj].extent,
     zoom:map.getView().getZoom(),
     maxZoom:25,
@@ -285,16 +289,6 @@ function applyBaseExtent(layers, extent){
 
 export function loadZipProjection(map, center, zoom){
   changeZipProjection(global_data.layers, center, zoom)
-  // console.log(proj)
-  //   var newView = new View({
-  //   // projection: proj.name,
-  //   center:center,
-  //   //extent:newExtent,
-  //   zoom:zoom,
-  //   maxZoom:25,
-  //   minZoom:-2
-  // });
-  //   map.setView(newView);
 }
 
 

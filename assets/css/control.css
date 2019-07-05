@@ -41,17 +41,25 @@
         position: fixed;
         bottom: 50%;
         /*right: 0;*/
-
+        padding:0px;
         border: none;
         height: 50px;
-        width: 50px;
-        background-color:  slategray;
+        width: 40px;
+        background-color:  #38291f;
         cursor :pointer;
 
       }
+
+
 .ol-popup.tooltips {
     background-color: lightgrey !important;
     border-radius: 5px !important;
+}
+
+
+.btn-dark{
+  background-color: #38291f !important;
+        border: none;
 }
 
       .right_icon{
@@ -68,11 +76,11 @@
         position: fixed;
         bottom: 50%;
         /*right: 0;*/
-        
+        padding:0px;
         border: none;
         height: 50px;
-        width: 50px;
-        background-color:  slategray;
+        width: 40px;
+        background-color:  #38291f;
         cursor :pointer;
 
       }
@@ -92,9 +100,18 @@
         float: left;
       }
 
+
+.card-header{
+  border-color:  #38291f !important;
+}
+      .bar {
+        background-color:  #38291f
+      }
+
       body{
         height: 100%;
         overflow:hidden;
+        border-color:  #38291f !important
       }
 
       #filterDiv{
@@ -145,10 +162,15 @@
 
 }
 
+.ol-attribution.ol-uncollapsible {
+  padding-top:0;
+}
+
+
 .ol-scale-line {
 
-    right: 8px !important;
-    left: auto !important;
+    left: 50px !important;
+    right: auto !important;
 }
 
       html {
@@ -209,16 +231,20 @@ fill: red;
 }
 
 .card-body{
-  background-color:   slategray;
+  background-color:   #e0ca9b;
+  border-color: #38291f;
 }
 
 #accordionLayerControl .card{
    background-color:  white;
+  border-color: #38291f;
 
 }
 #accordionLayerControl .card-header{
-   background-color:  white;
 
+  border-color: #38291f;
+   background-color:  white;
+   border-bottom-width: 4px;
 }
 .selected {
     background-color: #999;
@@ -246,7 +272,18 @@ fill: red;
         cursor: move;
     }
 
+.close{
+  color:#38291f !important;
+}
 
+.card-header{
+  color:#38291f !important;
+}
+
+.border-secondary{
+  border-color:   #38291f !important;
+  border-size: 2px;
+}
 
     #title {
       font-size: 20px;
