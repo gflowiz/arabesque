@@ -1002,7 +1002,7 @@ var scalers = getD3ScalersForStyle('node')
     var listallnodes = getAllNodesFromFilteredLinks(links, id_selected_links,global_data.ids.linkID[0], global_data.ids.linkID[1] , sel_node)
     var all_nodes = Object.keys(nodes)
 
-    document.getElementById('percentageNodeData').innerHTML = "Percentage of links represented: "+(listallnodes.length/all_nodes.length*100).toFixed(2)+"%";
+    document.getElementById('percentageNodeData').innerHTML = "Percentage of nodes represented: "+(listallnodes.length/all_nodes.length*100).toFixed(2)+"%";
 
     for( var p = 0; p< listallnodes.length; p++){
         if(sel_node.includes(listallnodes[p])){
