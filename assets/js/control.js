@@ -2,7 +2,8 @@
 Last Update : 19/03/2019
 Bapaume Thomas
 */
-import {showChangeBaseLayerParameter,changeSemioParameter , applyNewStyle} from "./semiology.js";
+import { changeGeometryParameter} from "./geometry.js";
+import {showChangeBaseLayerParameter,changeSemioParameter , applyNewStyle, } from "./semiology.js";
 import {changeBaseLayer, generateLinkLayer, getLayerFromName} from "./layer.js";
 import 'jquery-ui';
 
@@ -352,7 +353,7 @@ export function addLinkLayerGestionMenu(name) {
                 .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")            
             ).append($("<button>")
                 .attr("type", "button")
-                .attr("id", "buttonChangeLayer" + name)
+                .attr("id", "buttonChangeGeoLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeGeometryModal")
@@ -363,7 +364,7 @@ export function addLinkLayerGestionMenu(name) {
                 .attr("id", "buttonChangeLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
-                .attr("data-target", "#changeSemioModal")
+                .attr("data-target", "#changeSemioLinkModal")
                 .attr("data-toggle", "modal")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
             ).append($("<button>")
@@ -376,6 +377,10 @@ export function addLinkLayerGestionMenu(name) {
     ));
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideFLayer(name)
+    });
+
+    document.getElementById("buttonChangeGeoLayer" + name).addEventListener("click", function() {
+       changeGeometryParameter(name, global_data.style.link)
     });
 
     document.getElementById("buttonRemoveLayer" + name).addEventListener("click", function() {

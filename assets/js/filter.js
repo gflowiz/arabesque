@@ -148,6 +148,8 @@ export function addFilterToScreen(){
 }
 
 function addTimeLapseFilter(name_layer, name_variable){
+  timeRemoveCatFilter(name_variable, name_layer)
+  // temporalRemoveCatFilter(name_variable, name_layer)
   var timeFormat = document.getElementById('selectedTimeFilter').value 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
     
@@ -155,13 +157,20 @@ function addTimeLapseFilter(name_layer, name_variable){
                                 .attr("class","row align-items-center border-top border-secondary filter-bar")
                                 
                                 .append($('<div>')
-                                  .attr("class","col-sm-11 p-0")
+                                  .attr("class","col-sm-9 p-0")
                                   .attr("id","filterTime"+id)
                                   .append("<img class='icon-filter' src='assets/svg/si-glyph-"+name_layer+".svg'/>")
                                   .append($("<label>", {text:"  "+name_variable})
                                     .attr('for',"filterTime"+id)
                                     .attr('class',"h5")
                                   )
+                                  )
+                                .append($('<div>')
+                                  .attr("class","col-sm-2 p-0")
+                                  .append($("<label>")
+                                    .attr('for',"filterLabelTime"+id)
+                                    .attr('class',"h5")
+                                    )
                                   )
                                 .append($('<div>')
                                   .attr("class","col-sm-1 p-0")
@@ -191,33 +200,43 @@ function addD3TimeFilter(name_layer, name_variable,values){
   bins.push({date:index_data[i], value:sum_data[i]})
  }
 
- // 
- // data = {y:sum_data,
- //        x:index_data}
- // data = d3.range(1000).map(d3.randomBates(10));
  var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
-// var formatCount = d3.format(",.0f");
 
-var svg = d3.select("#filterTime"+id).append('svg'),
-    margin = {top: 10, right: 15, bottom: 5, left: 15},
-    width = parseInt($("#filterTime"+id).width() - margin.left - margin.right),
-    height = parseInt(100 - margin.top - margin.bottom );
-    svg.attr('width',parseInt($("#filterTime"+id).width()) ).attr('height',150);
-    // svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var margin = {top: 15, right: 0, bottom: 50, left: 70},
+    width = $("#filterTime"+id).width() - margin.left - margin.right,
+    height = 180 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#filterTime"+id).append('svg')
+  .attr('width',width + margin.left + margin.right)
+  .attr('height',height + margin.top + margin.bottom)
+  // .attr('onchange',"alert()");
+
+var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 bins = bins.map((d) => { d.value = +d.value;
    return d;  
         });
-var x = d3.scaleBand().domain(bins.map(function(d) { return d.date; })).rangeRound([0, width]).padding(0.1);
+
+var x = d3.scaleBand().domain(bins.map(function(d) { return d.date; })).rangeRound([0, width]).padding(0.2);
 var y = d3.scaleLinear().rangeRound([height, 0]);
-// 
-var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ y.domain([0, d3.max(bins, function(d) { return d.value; })]);
+// g.append("g")
+//       .attr("transform", "translate(0," + height + ")")
+//       .call(d3.axisBottom(x));
+     // console.log(y.domain())  // d3.hist has to be called before the Y axis obviously
+  g.append("g")
+      .call(d3.axisLeft(y));
+
+  g.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Count")
 
 
-
-  y=       y.domain([0, d3.max(bins, function(d) { return d.value; })]);
-// 
-// 
-// // 
  g.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + height + ")")
@@ -228,12 +247,6 @@ var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + mar
       .attr("dy", ".15em")
       .attr("transform", "rotate(-65)");
 
-
-        // g.append("g")
-        //     .attr("class", "axis axis--y")
-        //     .call(d3.axisLeft(y).tickSize(0))
-          
-
         g.selectAll(".bar")
           .data(bins)
           .enter().append("rect")
@@ -243,7 +256,8 @@ var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + mar
             .attr("y", function(d) { return y(d.value); })
             .attr("width", x.bandwidth() )
             .attr("height", function(d) { return height - y(d.value); });
-    
+
+
 var brush = d3.brushX()
     .extent([[0, 0], [width, height]])
     .on('end', brushed)
@@ -606,7 +620,7 @@ function reducedFilterNumber(number){
 
 
 function addSingleCatFilter(name_layer,name_variable){
-
+  removeCatFilter(name_variable, name_layer)
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")
@@ -739,6 +753,7 @@ function showTemporalValue(name_variable, id, value_id, name_layer){
 
 function addRemoveFilter(name_layer,name_variable){
 
+  removeRemoveCatFilter(name_variable, name_layer)
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
   $('#filterDiv').append($('<div>')
                           .attr("class","row align-items-center m-3 border-top border-secondary filter-bar")                   
@@ -826,7 +841,9 @@ export function loadTemporalFilter(name_layer,name_variable,values){
   changeTemporalFilterArray(name_layer,name_variable,'temporal' ,'temporalfilter'+id);
 return;
 }
+
 export function loadTimeLapseFilter(name_layer,name_variable,values){
+
 
   var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
 
@@ -938,6 +955,12 @@ function addValuesToFilter(){
 
  export function loadNumFilter(name_layer, name_variable, values){
   
+      if(name_layer==='node'){
+        var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[name_variable])})
+      }
+      else if (name_layer ==='link'){
+        var dataArray = data.links.map(function(item){return Number(item[name_variable])})
+      }
     var  id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
 
     $('#filterDiv').append($('<div>')
@@ -966,7 +989,7 @@ function addValuesToFilter(){
                                   .append($('<div>')
                                     .attr("class","row")
                                     .append('<div class="col-md-3">Min:</div>')
-                                    .append('<div class="col-md-9"><input class="form-control" id="numMinFilter'+id+'" step=0.01 type="number" value="15"></div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMinFilter'+id+'" min="'+Math.min(...dataArray)+'" max="'+Math.max(...dataArray)+'" step=0.01 type="number" ></div>')
                                     )
                                   )
                                   .append($('<div>')
@@ -974,7 +997,7 @@ function addValuesToFilter(){
                                   .append($('<div>')
                                     .attr("class","row")
                                     .append('<div class="col-md-3">Max:</div>')
-                                    .append('<div class="col-md-9"><input class="form-control" id="numMaxFilter'+id+'" step=0.01 type="number" value="15"></div>')
+                                    .append('<div class="col-md-9"><input class="form-control" id="numMaxFilter'+id+'" min="'+Math.min(...dataArray)+'" max="'+Math.max(...dataArray)+'" step=0.01 type="number" ></div>')
                                     )
                                   )
                                 );
@@ -986,6 +1009,13 @@ function addValuesToFilter(){
 
 function addNumFilter(name_layer, name_variable){
   
+    removeNumFilter(name_variable, name_layer)
+      if(name_layer==='node'){
+        var dataArray = Object.keys(data.hashedStructureData).map(function(item){return Number(data.hashedStructureData[item].properties[name_variable])})
+      }
+      else if (name_layer ==='link'){
+        var dataArray = data.links.map(function(item){return Number(item[name_variable])})
+      }
     var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '');    // get range and How slae min/2 
     
     $('#filterDiv').append($('<div>')
@@ -1045,59 +1075,63 @@ function addD3NumFilter(name_layer, name_variable,values){
 var id = name_variable.split(' ').join('').replace(/[^\w\s]/gi, '')
 var formatCount = d3.format(",.0f");
 
-var svg = d3.select("#filterNum"+id).append('svg'),
-    margin = {top: 10, right: 15, bottom: 5, left: 15},
+
+
+var margin = {top: 15, right: 0, bottom: 30, left: 70},
     width = $("#filterNum"+id).width() - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom - 5;
-    svg.attr('width',$("#filterNum"+id).width() ).attr('height',130).attr('onchange',"alert()");
+    height = 150 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#filterNum"+id).append('svg')
+  .attr('width',width + margin.left + margin.right)
+  .attr('height',height + margin.top + margin.bottom)
+  // .attr('onchange',"alert()");
+
 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x = d3.scaleLinear().domain([Math.min(...data_histo),Math.max(...data_histo) + 0.0001])
+var x = d3.scaleLinear()
+    .domain([Math.min(...data_histo),Math.max(...data_histo) + 0.0001])
     .rangeRound([0, width]);
-
+g.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
     document.getElementById('numMaxFilter'+id).value = Number(values[1]).toFixed(2)
     document.getElementById('numMinFilter'+id).value = Number(values[0]).toFixed(2)
 
 var bins = d3.histogram()
     .domain(x.domain())
-    .thresholds(40)
+    .thresholds(x.ticks(30))
     (data_histo);
-var y = d3.scaleLinear()
-    .domain([0, d3.max(bins, function(d) { return d.length; })])
-    .range([height, 0]);
+
+console.log(d3.max(bins, function(d) { return d.length; }))
+
+ var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins, function(d) { return d.length; })]); 
+      console.log(y.domain())  // d3.hist has to be called before the Y axis obviously
+  g.append("g")
+      .call(d3.axisLeft(y));
+
+  g.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Count")
+
+ g.selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#38291f")
 
 let xBand = d3.scaleBand().domain(d3.range(-1, bins.length)).range([0, width])
-
-let xAxis2 = d3.axisBottom(x)
-let yAxis2 = d3.axisLeft(y)
-
-var bar = g.selectAll(".bar")
-  .data(bins)
-  .enter().append("g")
-    .attr("class", "bar")
-    .attr("transform", function(d) { 
-      // 
-      return "translate(" + x(d.x0) + "," + Math.round(y(d.length)) + ")"; });
-
-bar.append("rect")
-    .attr("x", 1)
-    .attr("width",  function(d) { return x(d.x1) - x(d.x0) - 1; })
-    .attr("height", function(d) { return height - y(d.length); });
-
-// bar.append("text")
-//     .attr("dy", ".75em")
-//     .attr("y", 6)
-//     .attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
-//     .attr("text-anchor", "middle")
-//     .text(function(d) { return formatCount(d.length); });
-
-g.append("g")
-    .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
-    .selectAll("text")
-    .attr("transform","rotate(45)");
 
 var brush = d3.brushX()
     .extent([[0, 0], [width, height]])
@@ -1124,10 +1158,17 @@ brsuh_to_setup.call(brush.move, [x(values[0]), x(values[1])]);
 }
 
 document.getElementById('numMaxFilter'+id).addEventListener("change", function(){
-  brsuh_to_setup.call(brush.move, [x(document.getElementById('numMinFilter'+id).value), x(document.getElementById('numMaxFilter'+id).value)]);
-  changeNumgFilterArray(name_layer, name_variable, "numeral", [document.getElementById('numMinFilter'+id).value, document.getElementById('numMaxFilter'+id).value])
+  if(Number(document.getElementById('numMaxFilter'+id).max)<= document.getElementById('numMaxFilter'+id).valueAsNumber){
+    document.getElementById('numMaxFilter'+id).value = document.getElementById('numMaxFilter'+id).max
+  }
+    brsuh_to_setup.call(brush.move, [x(document.getElementById('numMinFilter'+id).value), x(document.getElementById('numMaxFilter'+id).value)]);
+    changeNumgFilterArray(name_layer, name_variable, "numeral", [document.getElementById('numMinFilter'+id).value, document.getElementById('numMaxFilter'+id).value])
+  
 }); 
 document.getElementById('numMinFilter'+id).addEventListener("change", function(){
+  if(Number(document.getElementById('numMinFilter'+id).max)>= Number(document.getElementById('numMinFilter'+id).value)){
+    document.getElementById('numMinFilter'+id).value = document.getElementById('numMinFilter'+id).min
+  }
     brsuh_to_setup.call(brush.move, [x(document.getElementById('numMinFilter'+id).value), x(document.getElementById('numMaxFilter'+id).value)]);
     changeNumgFilterArray(name_layer, name_variable, "numeral", [document.getElementById('numMinFilter'+id).value, document.getElementById('numMaxFilter'+id).value])
 });  

@@ -208,7 +208,7 @@ export function changeProjection(layers, center){
 console.log(iPrj)
   var newView = new View({
     projection: projName,
-    center:transform([0,0],global_data.projection.name,projName),
+    center:transform(global_data.center, 'EPSG:4326',projName),
     // extent:Proj[iPrj].extent,
     zoom:map.getView().getZoom(),
     maxZoom:25,
@@ -252,7 +252,7 @@ export function changeZipProjection(layers, center, zoom){
 
   var newView = new View({
     projection: global_data.projection.name,
-    center:center,
+    center:transform(center,"EPSG:4326",projName),
     //extent:newExtent,
     zoom:zoom,
     maxZoom:25,
@@ -297,12 +297,12 @@ export function setNextProj( map, new_projName){
   // console.log(index_proj)
   // var newExtent =[]
   var newProj = getProjection(new_projName);
-  
+  console.log(global_data.center)
  // Proj[index_proj].extent = newExtent
   // newProj.setExtent(newExtent);
   var newView = new View({
     projection: new_projName,
-    // center:center,
+    // center:transform(global_data.center, 'EPSG:4326',new_projName),
     //extent:newExtent,
     zoom:4,
     maxZoom:25,

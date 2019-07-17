@@ -490,11 +490,11 @@ if (global_data.style.link.size.var !== 'fixed'){
       }); 
     setTargetLegend(linkLegend, lastLegend)
     map.addControl(linkLegend);
-    var c = [1,2,4]
+    var c = [global_data.style.link.size.max,global_data.style.link.size.max/2,global_data.style.link.size.min]
     for(var i in c){
         // linkLegend.addRow();        
         linkLegend.addRow();
-        linkLegend.addRow({ title:reducedNumber(style.link.size.max/c[i]), properties: { pop: global_data.style.link.size.max/c[i]   },  typeGeom: 'LineString'});
+        linkLegend.addRow({ title:reducedNumber(c[i]), properties: { pop: c[i]   },  typeGeom: 'LineString'});
 
     }
         linkLegend.addRow();
@@ -539,11 +539,11 @@ if (global_data.style.node.size.var !== 'fixed'){
       });
     // setTargetLegend(nodeLegend, lastLegend)
     map.addControl(nodeLegend);
-    var c = [1,2,4]
+    var c = [global_data.style.node.size.max,global_data.style.node.size.max/2,global_data.style.node.size.min]
         // nodeLegend.addRow();
     for(var i in c){     
         nodeLegend.addRow();
-        nodeLegend.addRow({ title:reducedNumber(style.node.size.max/c[i]), properties: { pop: global_data.style.node.size.max/c[i]   }, typeGeom: 'Point'});
+        nodeLegend.addRow({ title:reducedNumber(c[i]), properties: { pop: c[i]   }, typeGeom: 'Point'});
     }
       
         nodeLegend.addRow();
@@ -589,7 +589,7 @@ function reducedNumber(number){
     {
         return  Number(number).toFixed(2)
     }
-    if(number >= 10000)
+    if(number >= 100000 || number <= -100000)
     {
         return Number(number).toExponential(2)
     }
@@ -733,11 +733,14 @@ function getLinkLegendStyle(feature){
 
 export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest, id_selected_links, selected_nodes) {
 // 
-
-        
+var percentageCount = 0
+var linkCounterOfAggregatelinks = 0
+    var opa = 1;
     // 
     if (getLayerFromName(map, 'link') !== null) {
-        map.removeLayer(getLayerFromName(map, 'link'))   
+        var oldLayer = getLayerFromName(map, 'link')
+        var opa = oldLayer.getOpacity()
+        map.removeLayer(oldLayer)   
     }
     else
     {
@@ -760,6 +763,7 @@ var t1 = performance.now();
 
     var list_width = []
     for (var j = 0; j < oriIDS.length; j++) {
+
          // get the index of the filtered links
         var Dlinks =  Object.keys(ODlinks[oriIDS[j]])
 
@@ -782,6 +786,7 @@ var t1 = performance.now();
                         }
 
             var list_index = ODlinks[oriIDS[j]][Dlinks[i]]
+            linkCounterOfAggregatelinks = list_index.length
             properties.ori = oriIDS[j]
             properties.dest = Dlinks[i]
             var ori = nodes[oriIDS[j]].properties.centroid;
@@ -846,6 +851,7 @@ var t1 = performance.now();
 
 
                 if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
+                    percentageCount = percentageCount + linkCounterOfAggregatelinks;
                     featureList.push(featureTest);
                 // 
             }
@@ -857,6 +863,7 @@ var t1 = performance.now();
         // }
     }
 
+    document.getElementById('percentageLinkData').innerHTML = "Percentage of links represented: "+(percentageCount/data.links.length*100).toFixed(2)+"%";
 
 var t1 = performance.now();
 
@@ -892,7 +899,7 @@ var t1 = performance.now();
 
 var t1 = performance.now();
 
-    
+    linkLayer.setOpacity(opa)
     linkLayer.changed();
     return linkLayer;
 }
@@ -976,9 +983,12 @@ function getAllNodesFromFilteredLinks(links, id_links, ori_id, dest_id, selected
 
 export function addNodeLayer(map, links, nodes, style, id_selected_links, selected_nodes) {
 // 
+var opa = 1;
 var scalers = getD3ScalersForStyle('node')
     if (getLayerFromName(map,'node') !== null) {
-        map.removeLayer(getLayerFromName(map,'node'))
+        var oldLayer = getLayerFromName(map,'node')
+        opa = oldLayer.getOpacity()
+        map.removeLayer(oldLayer)
     }
     else 
     {
@@ -991,6 +1001,8 @@ var scalers = getD3ScalersForStyle('node')
     var sel_node = Object.keys(selected_nodes[0])
     var listallnodes = getAllNodesFromFilteredLinks(links, id_selected_links,global_data.ids.linkID[0], global_data.ids.linkID[1] , sel_node)
     var all_nodes = Object.keys(nodes)
+
+    document.getElementById('percentageNodeData').innerHTML = "Percentage of links represented: "+(listallnodes.length/all_nodes.length*100).toFixed(2)+"%";
 
     for( var p = 0; p< listallnodes.length; p++){
         if(sel_node.includes(listallnodes[p])){
@@ -1038,6 +1050,7 @@ var scalers = getD3ScalersForStyle('node')
 
 
     map.addLayer(nodeLayer);
+    nodeLayer.setOpacity(opa)
     return nodeLayer;
 }
 

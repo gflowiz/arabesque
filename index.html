@@ -1,785 +1,868 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Gflowiz</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-<link href="dist/main.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-<!--     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
- -->
- <link rel="preload" href="assets/svg/si-glyph-triangle-right.svg"  type="image/svg+xml"  as="image" crossorigin="anonymous">
-
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
-	   <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
-</head>
-<body>
-
-<!-- Data Input -->
-<div class="arrival" style="background-color:silver; background-image:url(./public/index.png); background-size: cover;
-background-repeat: no-repeat;">
-
-  <div class="row align-items-center  justify-content-around h-50 ">
-    <div classe="col-md-6">
-    <h1> ARABESQUES </h1>
-      </div>
-<div class="col-md-3">
-      <div class="card" >
-          <div class="card-body" style="background-color:#fef1dd;">
-            <h5 class="card-title">Begin a new Map</h5>
-            <div class="custom-file">
-              <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
+   <head>
+      <meta charset="UTF-8">
+      <title>Gflowiz</title>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+      <link href="dist/main.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+      <!--     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+         -->
+      <link rel="preload" href="assets/svg/si-glyph-triangle-right.svg"  type="image/svg+xml"  as="image" crossorigin="anonymous">
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+      <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+   </head>
+   <body>
+      <!-- Data Input -->
+      <div class="arrival" style="background-color:silver; background-image:url(./public/index.png); background-size: cover;
+         background-repeat: no-repeat;">
+         <div class="row align-items-center  justify-content-around h-50 ">
+            <div classe="col-md-6">
+               <h1> ARABESQUES </h1>
             </div>
-            <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
-            <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importFlowModal">
-              Add
-            </button>
-          </div>
-      </div>
-  </div>
-</div>
-  <div class="row justify-content-around">
-    
-      <div class="col-md-3 align-items-center  justify-content-around h-50">
-        <div class="card" >
-          <div class="card-body" style="background-color:#fef1dd; z-index:50;">
-            <h5 class="card-title">Example</h5>
-
-                <button type="button" id ="localMap" class="btn btn-dark btn-block" >City Map</button>
-                <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Country Map</button>
-                <button type="button" id ="worldMap" class="btn btn-dark btn-block" >World Map</button>
-
-          </div>
-      </div>
-      </div>
-      <div class="col-md-3 align-items-center  justify-content-around h-50">
-        <div class="card" >
-          <div class="card-body" style="background-color:#fef1dd;">
-            <h5 class="card-title">Information</h5>
-            <div class="custom-file">
-              <p> Future place for news about applications or access to <a href="https://github.com/bapaumet/Gflowiz"> git hub</a></p>
+            <div class="col-md-3">
+               <div class="card" >
+                  <div class="card-body" style="background-color:#fef1dd;">
+                     <h5 class="card-title">Begin a new Map</h5>
+                     <div class="custom-file">
+                        <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
+                     </div>
+                     <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
+                     <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importFlowModal">
+                     Add
+                     </button>
+                  </div>
+               </div>
             </div>
-            <h5 class="card-title">Demo</h5>
-            <div class="custom-file">
-              <p> Not implemented yet</p>
+         </div>
+         <div class="row justify-content-around">
+            <div class="col-md-3 align-items-center  justify-content-around h-50">
+               <div class="card" >
+                  <div class="card-body" style="background-color:#fef1dd; z-index:50;">
+                     <h5 class="card-title">Example</h5>
+                     <button type="button" id ="localMap" class="btn btn-dark btn-block" >City Map</button>
+                     <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Country Map</button>
+                     <button type="button" id ="worldMap" class="btn btn-dark btn-block" >World Map</button>
+                  </div>
+               </div>
             </div>
-            <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
-          </div>
-      </div>
-      </div>
-      <div class="col-md-3 align-items-center  justify-content-around h-50">
-        <div class="card" >
-          <div class="card-body" style="background-color:#fef1dd;">
-            <h5 class="card-title">Load Saved Map</h5>
-            <div class="custom-file">
-              <input type="file"  id="loadSavedZipMap" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" id="label_loadSavedZipMap" for="loadSavedZipMap">Load Zip Save</label>
+            <div class="col-md-3 align-items-center  justify-content-around h-50">
+               <div class="card" >
+                  <div class="card-body" style="background-color:#fef1dd;">
+                     <h5 class="card-title">Information</h5>
+                     <div class="custom-file">
+                        <p> Future place for news about applications or access to <a href="https://github.com/bapaumet/Gflowiz"> git hub</a></p>
+                     </div>
+                     <h5 class="card-title">Demo</h5>
+                     <div class="custom-file">
+                        <p> Not implemented yet</p>
+                     </div>
+                     <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
+                  </div>
+               </div>
             </div>
-            <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
-            <button type="button" id="LoadZipMapButton" class="btn btn-dark btn-block" disabled>
-              Load Saved Map
-            </button>
-          </div>
-      </div>
-      </div>  
-    </div>
-</div>
-
-<!-- Eploration MAP -->
-<div class="container-fluid h-100">
-  <div class="row h-100" >
-    <div class="col-md-2 h-100" style="background-color:#fef1dd;" id="layerLayout">
-      <div class="row p-0" >
-        <div class="accordion w-100" id="accordionExample">
-          <div class="card" >
-            <div class="card-header close" id="headingFour" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" aria-label="Close">
-              Projection
+            <div class="col-md-3 align-items-center  justify-content-around h-50">
+               <div class="card" >
+                  <div class="card-body" style="background-color:#fef1dd;">
+                     <h5 class="card-title">Load Saved Map</h5>
+                     <div class="custom-file">
+                        <input type="file"  id="loadSavedZipMap" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" id="label_loadSavedZipMap" for="loadSavedZipMap">Load Zip Save</label>
+                     </div>
+                     <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
+                     <button type="button" id="LoadZipMapButton" class="btn btn-dark btn-block" disabled>
+                     Load Saved Map
+                     </button>
+                  </div>
+               </div>
             </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-              <div class="card-body">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <input type='button' id="buttonProjection" class="btn btn-dark btn-block" value='Change'/>
-                    <select class="custom-select" id="projection">
-                      <option selected>Choose...</option>
-                    </select>
+         </div>
+      </div>
+      <!-- Eploration MAP -->
+      <div class="container-fluid h-100">
+         <div class="row h-100" >
+            <div class="col-md-2 h-100" style="background-color:#fef1dd;" id="layerLayout">
+               <div class="row p-0" >
+                  <div class="accordion w-100" id="accordionExample">
+                     <div class="card" >
+                        <div class="card-header close" id="headingFour" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" aria-label="Close">
+                           Projection
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                           <div class="card-body">
+                              <div class="input-group mb-3">
+                                 <div class="input-group-prepend">
+                                    <select class="custom-select" id="projection">
+                                       <option selected>Choose...</option>
+                                    </select>
+                                    <input type='button' id="buttonProjection" class="btn btn-dark btn-block" value='Change'/>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card" >
+                        <div class="card-header close" id="headingTitle" type="button" data-toggle="collapse" data-target="#collapseTitle" aria-expanded="true" aria-controls="collapseTitle" aria-label="Close">
+                           Title
+                           <!-- <button type="button" class="close" aria-label="Close"> -->
+                        </div>
+                        <div id="collapseTitle" class="collapse" aria-labelledby="headingTitle" data-parent="#accordionExample">
+                           <div class="card-body">
+                              <div class="input-group mb-3">
+                                 <div class="input-group-prepend">
+                                    <label for="titleMap">Title:</label>
+                                    <input type="text" id="titleMap" name="Title">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header close" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" aria-label="Close">
+                           Add Layers
+                           <button type="button" class="close" aria-label="Close">
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                        <button type="button" id="addNewNodeFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioNode">
+                        Add Node Features
+                        </button>
+                        <button type="button" id="addNewLinkFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioLink">
+                        Add Link Features
+                        </button>
+                        <button type="button"  id="baseLayerButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#exampleModal">
+                        Add Base Layer
+                        </button>
+                        <button type="button" id="OSMbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#OSMModal">
+                        Add Tile Layers (OSM)
+                        </button>           
+                        <button type="button" id="importLayerbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#geojsonModal">
+                        Import GeoJson Layers
+                        </button>
+                        </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row p-0 mt-3" id="layerControlList" >
+                  <ul id="accordionLayerControl" class="list-unstyled col-md-12 align-items-center">
+                  </ul>
+               </div>
+            </div>
+            <div class="col-md-6 p-0" id='mapLayout'>
+               <div class="col-md-12 h-100 p-0">
+                  <div id="fullscreen" class="fullscreen">
+                     <div id="map" class="map" height=90%  ></div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4 h-100" id="filterDiv" style="background-color:#fef1dd;">
+               <div class="row justify-content-md-center mt-3 ">
+                  <div class="col-md-8">
+                     <input id="selectFilterButton" class="btn btn-dark btn-block" type="button" value="Add Filter" data-toggle="modal" data-target="#FilterModal">
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="card" >
-            <div class="card-header close" id="headingTitle" type="button" data-toggle="collapse" data-target="#collapseTitle" aria-expanded="true" aria-controls="collapseTitle" aria-label="Close">
-              Title
-              <!-- <button type="button" class="close" aria-label="Close"> -->
-            </div>
-            <div id="collapseTitle" class="collapse" aria-labelledby="headingTitle" data-parent="#accordionExample">
-              <div class="card-body">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <label for="titleMap">Title:</label>
-                    <input type="text" id="titleMap" name="Title">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header close" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" aria-label="Close">
-              Add Layers
-              <button type="button" class="close" aria-label="Close">
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="card-body">
-                <button type="button" id="addNewNodeFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioNode">
-                Add Node Features
-              </button>
-              <button type="button" id="addNewLinkFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioLink">
-                Add Link Features
-              </button>
-              <button type="button"  id="baseLayerButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#exampleModal">
-                Add Base Layer
-              </button>
-              <button type="button" id="OSMbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#OSMModal">
-                Add Tile Layers (OSM)
-              </button>           
-              <button type="button" id="importLayerbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#geojsonModal">
-                Import GeoJson Layers
-              </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row p-0 mt-3" id="layerControlList" >
-          <ul id="accordionLayerControl" class="list-unstyled col-md-12 align-items-center">
-
-          </ul>
-      </div>
-    </div>
-    <div class="col-md-6 p-0" id='mapLayout'>
-      <div class="col-md-12 h-100 p-0">
-        <div id="fullscreen" class="fullscreen">
-          <div id="map" class="map" height=90%  ></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 h-100" id="filterDiv" style="background-color:#fef1dd;">
-      <div class="row justify-content-md-center mt-3 ">
-        <div class="col-md-8">
-          <input id="selectFilterButton" class="btn btn-dark btn-block" type="button" value="Add Filter" data-toggle="modal" data-target="#FilterModal">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <button class="right_button" id="removeFilterLayout">
-    <img src="assets/svg/si-glyph-arrow-right.svg" class="right_icon"></img>
-  </button>
-  <button class="left_button" id="removeLayerLayout">
-    <img src="assets/svg/si-glyph-arrow-left.svg" class="left_icon"></img>
-  </button>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> Add New Base Layer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-muted h5">Layer</label>
-            <select class="custom-select w-100" id="layersAdd">
-              <option selected>Choose...</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="text-muted h5" for="opacityLayerAdd">Opacity</label>
-            <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerAdd">
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-muted h5" for="fillColorpickerAdd">Fill</label>
-            <input type="color" id="fillColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-          <div class="col-md-6">
-            <label class="text-muted h5" for="strokeColorpickerAdd">Stroke</label>
-            <input type="color" id="strokeColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-
-        <div class="col-md-6 m-2">
-          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">Import From Url</button>
-        </div>
-      </div>
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonAdd" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="OSMModal" tabindex="-1" role="dialog" aria-labelledby="OSMModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="OSMModalLabel"> Add Tile Layer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-muted h5">Type</label>
-            <select class="custom-select w-100" id="tileLayersAdd">
-              <option value="base">Base</option>
-              <option value="overlay">Overlay</option>
-              <option value="stamen">Stamen Map</option>CARTO basemap
-              <option value="text">Text Tile</option>
-              <option value="carto">CARTO basemap</option>
-            </select>
-          </div>
-          <div class="col-md-6" id="tileLayersNameSelector">            
-            <!-- <label class="text-muted h5">Layer</label>
-            <select class="custom-select w-100" id="TilelayersAdd">
-              <option selected>Choose...</option>
-            </select> -->
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-
-        <div class="col-md-6 m-2">
-          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">I Have My Tiles</button>
-        </div>
-      </div>
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center"   type="button" id="addNewTileLayerButtonAdd" data-dismiss="modal">ADD TILE LAYER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="TileModal" tabindex="-1" role="dialog" aria-labelledby="TileModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="TileModalLabel"> Add My Tile Layer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="input-group mb-3">
-                    <label class="text-muted h5">URL</label>
-                    <input type="text" id="URLTileLayer" name="Title">
-      
-                </div>
-            </div>
-          <div class="col-md-6">            
-            <div class="input-group mb-3">
-                  <label class="text-muted h5">Name</label>
-                  <input type="text" id="NameTileLayer" name="Title">
-              
-              </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="input-group mb-3">
-                    <label class="text-muted h5">Contributors</label>
-                    <input type="text" id="ContributorsTileLayer" name="Title">
-      
-                </div>
-            </div>
-          
-        </div>
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewTileLayerURL" data-dismiss="modal">ADD MY TILE LAYER</button>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="geojsonModal" tabindex="-1" role="dialog" aria-labelledby="geojsonModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="geojsonModalLabel"> Import GeoJson</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id='geoJsonModalBody'>
-        <div class="row">
-          <div class="col-md-6"> 
-            <label class="text-muted h5">GeoJson</label>            
-            <div class="input-group">
-            <!-- <label class="h5" for="geoJson">Import Data</label> -->
-             <input type="file"  id="geoJson" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-             <label class="custom-file-label" id="label_geoJson" for="geoJson">GeoJson</label> 
-            </div>
-          </div>
-          <div class="col-md-6">
-            <label class="text-muted h5" for="nameGeoJson">Name Layer</label> 
-            <div class="input-group">
-             <input type="text" class="form-control" placeholder="GeoJson" id="nameGeoJson" >
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="baseLayerFromURLModal" tabindex="-1" role="dialog" aria-labelledby="baseLayerFromURLModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="baseLayerFromURLModalLabel"> Import URL GeoJson</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-
-            <label class="text-muted h5">URL</label>
-            <div class="input-group" class="col-md-12">
-                    <input type="text" class="form-control" id="URLBaseLayer" name="Title">
-      
-                </div>
-            </div>
-          </div>
-          <hr>
-        <div class="row">
-          <div class="col-md-6"> 
-                  <label class="text-muted h5">Name</label>           
-            <div class="input-group mb-3">
-                  <input type="text"  class="form-control" id="NameBaseLayer" name="Title">
-              
-              </div>
-          </div>
-          <div class="col-md-6">       
-                  <label class="text-muted h5">Contributors</label>     
-            <div class="input-group mb-3">
-                  <input type="text" class="form-control"  id="attributionsBaseLayer" name="Title">
-              
-              </div>
-            </div>
-          </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-12">
-            <label class="text-muted h5" for="opacityURL">Opacity</label>
-            <div class="input-group">
-              <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerURL">
-            </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-muted h5" for="strokeColorpickerURL">Stroke</label>
-            <input type="color" id="strokeColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-          <div class="col-md-6">
-            <label class="text-muted h5" for="fillColorpickerURL">Fill</label>
-            <input type="color" id="fillColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-        </div>
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewURLLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="changeBaseLayerModal" tabindex="-1" role="dialog" aria-labelledby="changeBaseLayerModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changeBaseLayerModalLabel">Change Layer Style</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <label class="text-muted h5" for="customRange3">Opacity</label>
-            <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerChange">
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-muted h5" for="customRange3">Fill</label>
-            <input type="color" id="fillColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-          <div class="col-md-6">
-            <label  class="text-muted h5" for="customRange3">Stroke</label>
-            <!-- <input id='strokeColorpickerChange' /> -->
-            <input type="color" id="strokeColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
-          </div>
-        </div>
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">ADD</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="FilterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Filter</h5>
-      </div>
-      <div class="modal-body" id="filterLayerBody">
- 
-        
-
-      </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addFilterButton" data-dismiss="modal">ADD FILTER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="semioNode" tabindex="-1" role="dialog" aria-labelledby="semioModalLabelNode" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title h2" id="semioModalLabelNode">Choose Semio</h5>
-      </div>
-        <div class="modal-body" >
-                <label for="select" class="h4 strong mb-3">Color</label>
-                    <div class="row justify-content-between" id="semioColorAddNode">
-                    </div>
-                    <hr>
-                    <label for="select" class="h4 strong">Size</label>
-                    <div class="row"  id="semioSizeAddNode">
-                </div>
-                <div class='row'>
-                  <div class="col-md-2">
-                  
-                      <hr>
-
-                      <label for="select" class="h4 strong">Text</label>
-                      <div class="row"  id="semioTextAddNode">
-                      </div>
-                    </div>        
-                    <div class="col-md-10">
-                      <hr>
-
-                    <label for="select" class="h4 strong">Opacity</label>
-                    <div class="row"  id="semioOpaAddNode">
-                    </div>
-                  </div>
-          </div>
-        </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonNode" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="semioLink" tabindex="-1" role="dialog" aria-labelledby="semioModalLabelLink" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title h2" id="semioModalLabelLink">Choose Semio</h5>
-      </div>
-        <div class="modal-body" >
-          <div class="row">
-            <div class="col-md-4" id="arrowSelector">
-              <label for="select" class="h3 strong">Geometry</label>
-              <div class="row">
-                <div class="col-md-6">
-                    <label for="select" class="text-muted h5">Orientation</label>
-                    <select class="custom-select" id="arrowData">                      
-                      <option selected value="oriented">Oriented</option>
-                      <option value="noOriented">Non Oriented</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="select"class="text-muted h5">Type</label>
-                    <select class="custom-select" id="arrowtype">
-                      <option selected value="StraightArrow">Straight</option>
-                      <option value="StraightNoHookArrow">Straight no Hook</option>
-                      <option value="TriangleArrow">Triangle</option>
-                      <option value="CurveArrow">Curve</option>
-                      <option value="CurveOneArrow">Triangle Curve</option>
-                    </select>
-                </div>
-              </div>
-             <hr>
-              <div class="row" id="ArrowHeadSize">
-              <!--               <hr>
-              <label for="select" class="h4 strong">Arrow</label> -->
-              </div>
-              <div class="row" id="ArrowPlaceSize">
-                <!-- <hr> -->
-              <!-- <label for="select" class="h4 strong">Arrow</label> -->
-              </div>
-            </div>
-            <div class="col-md-8">
-                <label class="h3 strong">Semiology</label>
                 <hr>
-                <label for="select" class="h4 strong mb-3">Color</label>
-                <div class="row justify-content-between" id="semioColorAddLink">
-                </div>
-                    <hr>
-                    <label for="select" class="h4 strong">Size</label>
-                <div class="row"  id="semioSizeAddLink">
-                </div>
-                <div class='row'>
-    <!--               <div class="col-md-2">
-                  
-                      <hr>
-
-                      <label for="select" class="h4 strong">Text</label>
-                      <div class="row"  id="semioTextAddLink">
-                      </div>
-                    </div>       -->  
-                    <div class="col-md-12">
-                      <hr>
-
-                    <label for="select" class="h4 strong">Opacity</label>
-                    <div class="row"  id="semioOpaAddLink">
-                    </div>
+                <div class="row justify-content-md-center mt-3 ">
+                  <div class="col-md-8">
+                     <label id=percentageLinkData>Percentage of links represented: 100%</label>
+                     <label id=percentageNodeData>Percentage of nodes represented: 100%</label>
                   </div>
-                </div>
+               </div>
             </div>
-          </div>
-        </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="changeGeometryModal" tabindex="-1" role="dialog" aria-labelledby="changeGeometryModalLink" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title h2" id="changeGeometryModalLink">Choose Semio</h5>
+         </div>
       </div>
-        <div class="modal-body" >
-          <div class="row">
-            <div class="col-md-12" id="arrowSelector">
-              <label for="select" class="h3 strong">Geometry</label>
-              <div class="row">
-                <div class="col-md-6">
-                    <label for="select" class="text-muted h5">Orientation</label>
-                    <select class="custom-select" id="arrowData">                      
-                      <option selected value="oriented">Oriented</option>
-                      <option value="noOriented">Non Oriented</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="select"class="text-muted h5">Type</label>
-                    <select class="custom-select" id="arrowtype">
-                      <option selected value="StraightArrow">Straight</option>
-                      <option value="StraightNoHookArrow">Straight no Hook</option>
-                      <option value="TriangleArrow">Triangle</option>
-                      <option value="CurveArrow">Curve</option>
-                      <option value="CurveOneArrow">Triangle Curve</option>
-                    </select>
-                </div>
-              </div>
-             <hr>
-              <div class="row" id="ArrowHeadSize">
-              <!--               <hr>
-              <label for="select" class="h4 strong">Arrow</label> -->
-              </div>
-              <div class="row" id="ArrowPlaceSize">
-                <!-- <hr> -->
-              <!-- <label for="select" class="h4 strong">Arrow</label> -->
-              </div>
+      <button class="right_button" id="removeFilterLayout">
+      <img src="assets/svg/si-glyph-arrow-right.svg" class="right_icon"></img>
+      </button>
+      <button class="left_button" id="removeLayerLayout">
+      <img src="assets/svg/si-glyph-arrow-left.svg" class="left_icon"></img>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> Add New Base Layer</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5">Layer</label>
+                        <select class="custom-select w-100" id="layersAdd">
+                           <option selected>Choose...</option>
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="opacityLayerAdd">Opacity</label>
+                        <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerAdd">
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="fillColorpickerAdd">Fill</label>
+                        <input type="color" id="fillColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="strokeColorpickerAdd">Stroke</label>
+                        <input type="color" id="strokeColorpickerAdd" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6 m-2">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">Import From Url</button>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonAdd" data-dismiss="modal">ADD LAYER</button>
             </div>
-          </div>
-        </div>
-      <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="importFlowModal" tabindex="-1" role="dialog" aria-labelledby="importFlowModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="importFlowModalLabel">Flow Import</h5>
+         </div>
       </div>
-      <div class="modal-body" id="importLayerBody">
-        <div class="row">
-          <div class="col-md-6">
-            <p>
-              <label class="text-muted h5" for="select">ID Origin</label>
-              <select  class="custom-select" id="importIDOri"></select>
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p>
-              <label class="text-muted h5" for="select">ID Dest</label>
-              <select class="custom-select" id="importIDDest"></select>
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <p>
-              <label class="text-muted h5" for="select">Volume</label>
-              <select  class="custom-select" id="importIDVol"></select>
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p>
-              <label class="text-muted h5" for="select">Aggregation Function</label>
-              <select  class="custom-select" id="importAggrFun">
-                <option value="sum">Sum</option>
-                <option value="mean">Mean</option>
-                <option value="median">Median</option>
-                <option value="max">Max</option>
-                <option value="min">Min</option>
-              </select>
-            </p>
-          </div>
-        </div>
-        <hr>
-      <div class = "row">
-            <div class = "col-md-6">
-              <button class="btn btn-dark  btn-block justify-content-center mt-2"   type="button" id="importUserLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#importLocationModal">Import Location</button>
+      <div class="modal fade" id="OSMModal" tabindex="-1" role="dialog" aria-labelledby="OSMModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="OSMModalLabel"> Add Tile Layer</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5">Type</label>
+                        <select class="custom-select w-100" id="tileLayersAdd">
+                           <option value="base">Base</option>
+                           <option value="overlay">Overlay</option>
+                           <option value="stamen">Stamen Map</option>
+                           CARTO basemap
+                           <option value="text">Text Tile</option>
+                           <option value="carto">CARTO basemap</option>
+                        </select>
+                     </div>
+                     <div class="col-md-6" id="tileLayersNameSelector">
+                        <!-- <label class="text-muted h5">Layer</label>
+                           <select class="custom-select w-100" id="TilelayersAdd">
+                             <option selected>Choose...</option>
+                           </select> -->
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6 m-2">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#baseLayerFromURLModal" data-dismiss="modal">I Have My Tiles</button>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center"   type="button" id="addNewTileLayerButtonAdd" data-dismiss="modal">ADD TILE LAYER</button>
             </div>
-            <div class = "col-md-6">
-              <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#usePresetLocationModal">Preset Location</button>
+         </div>
+      </div>
+      <div class="modal fade" id="TileModal" tabindex="-1" role="dialog" aria-labelledby="TileModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="TileModalLabel"> Add My Tile Layer</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="input-group mb-3">
+                           <label class="text-muted h5">URL</label>
+                           <input type="text" id="URLTileLayer" name="Title">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="input-group mb-3">
+                           <label class="text-muted h5">Name</label>
+                           <input type="text" id="NameTileLayer" name="Title">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="input-group mb-3">
+                           <label class="text-muted h5">Contributors</label>
+                           <input type="text" id="ContributorsTileLayer" name="Title">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewTileLayerURL" data-dismiss="modal">ADD MY TILE LAYER</button>
             </div>
-          </div>
+         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="modal fade" id="importLocationModal" tabindex="-1" role="dialog" aria-labelledby="importLocationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="importLocationModalLabel">Data Import</h5>
-      </div>
-      <div class="modal-body" id="importLocationLayerBody">
-        <div class="row">
-          <div class="col-md-6">
-
-            <label>Import File</label>
-            <div class="custom-file">
-              <label class="custom-file-label" id="label_node" for="inputGroupFile01">Node Data</label>
-              <input type="file"  id="Node" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+      <div class="modal fade" id="geojsonModal" tabindex="-1" role="dialog" aria-labelledby="geojsonModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="geojsonModalLabel"> Import GeoJson</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body" id='geoJsonModalBody'>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5">GeoJson</label>            
+                        <div class="input-group">
+                           <!-- <label class="h5" for="geoJson">Import Data</label> -->
+                           <input type="file"  id="geoJson" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
+                           <label class="custom-file-label" id="label_geoJson" for="geoJson">GeoJson</label> 
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="nameGeoJson">Name Layer</label> 
+                        <div class="input-group">
+                           <input type="text" class="form-control" placeholder="GeoJson" id="nameGeoJson" >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
             </div>
-          </div>
-           <div class="col-md-6">
-            <div class="custom-file" id="importIDNodeStruct">
-
+         </div>
+      </div>
+      <div class="modal fade" id="baseLayerFromURLModal" tabindex="-1" role="dialog" aria-labelledby="baseLayerFromURLModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="baseLayerFromURLModalLabel"> Import URL GeoJson</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <label class="text-muted h5">URL</label>
+                        <div class="input-group" class="col-md-12">
+                           <input type="text" class="form-control" id="URLBaseLayer" name="Title">
+                        </div>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5">Name</label>           
+                        <div class="input-group mb-3">
+                           <input type="text"  class="form-control" id="NameBaseLayer" name="Title">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="text-muted h5">Contributors</label>     
+                        <div class="input-group mb-3">
+                           <input type="text" class="form-control"  id="attributionsBaseLayer" name="Title">
+                        </div>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-12">
+                        <label class="text-muted h5" for="opacityURL">Opacity</label>
+                        <div class="input-group">
+                           <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerURL">
+                        </div>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="strokeColorpickerURL">Stroke</label>
+                        <input type="color" id="strokeColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="fillColorpickerURL">Fill</label>
+                        <input type="color" id="fillColorpickerURL" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewURLLayerButtonGeoJson" data-dismiss="modal">ADD LAYER</button>
             </div>
-          </div>
-        </div>
-         
-          
-        <hr> 
-         <div class="row" id="importIDImportStructComplement">
-
-
-        </div>
+         </div>
       </div>
-       <div class ="modal-footer">
-          <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
-        </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="usePresetLocationModal" tabindex="-1" role="dialog" aria-labelledby="usePresetLocationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="usePresetLocationModalLabel">Data Import</h5>
+      <div class="modal fade" id="changeBaseLayerModal" tabindex="-1" role="dialog" aria-labelledby="changeBaseLayerModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="changeBaseLayerModalLabel">Change Layer Style</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <label class="text-muted h5" for="customRange3">Opacity</label>
+                        <input type="range" class="custom-range" min="0" max="1" step="0.05" id="opacityLayerChange">
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="text-muted h5" for="customRange3">Fill</label>
+                        <input type="color" id="fillColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                     <div class="col-md-6">
+                        <label  class="text-muted h5" for="customRange3">Stroke</label>
+                        <!-- <input id='strokeColorpickerChange' /> -->
+                        <input type="color" id="strokeColorpickerChange" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">ADD</button>
+            </div>
+         </div>
       </div>
-      <div class="modal-body" id="usePresetLocationLayerBody">
-        <div class="row">
-          <div class="col-md-4">
-            <p>
-              <label class="text-muted h5" id = "label_nodes" for="select">ID Origin</label>
-              <select  class="custom-select" id="importIDStruct"></select>
-            </p>
-          </div>
-        </div>
+      <div class="modal fade" id="FilterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">New Filter</h5>
+               </div>
+               <div class="modal-body" id="filterLayerBody">
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addFilterButton" data-dismiss="modal">ADD FILTER</button>
+            </div>
+         </div>
       </div>
-      <div class ="modal-footer" >
-        <button class=" btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
+      <div class="modal fade" id="semioNode" tabindex="-1" role="dialog" aria-labelledby="semioModalLabelNode" aria-hidden="true">
+         <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title h2" id="semioModalLabelNode">Choose Semio</h5>
+               </div>
+               <div class="modal-body" >
+                  <label for="select" class="h4 strong mb-3">Color</label>
+                  <div class="row">
+                     <div class="col-md-3 p-0">
+                        <div class="col-md-12">
+                           <label for="select" class="text-muted h5">Orientation</label>
+                           <select class="custom-select" id="semioColorBaseTypeAddNode">
+                              <option selected value="fixed">Fixed</option>
+                              <option value="varied">Varied</option>
+                           </select>
+                        </div>
+                        <div class="col-md-12" id="semioColorAddNode">
+                        </div>
+                     </div>
+                     <div class="col-md-9" id="colorPickerAddNode">
+                     </div>
+                  </div>
+                  <hr>
+                  <label for="select" class="h4 strong">Size</label>
+                  <div class="row"  id="semioSizeAddNode">
+                     <div class="col-md-2">
+                        <label for="select" class="text-muted h5">Orientation</label>
+                        <select class="custom-select" id="semioSizeBaseTypeAddNode">
+                           <option selected value="fixed">Fixed</option>
+                           <option value="varied">Varied</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class='row'>
+                     <div class="col-md-2">
+                        <hr>
+                        <label for="select" class="h4 strong">Text</label>
+                        <div class="row"  id="semioTextAddNode">
+                        </div>
+                     </div>
+                     <div class="col-md-10">
+                        <hr>
+                        <label for="select" class="h4 strong">Opacity</label>
+                        <div class="row"  id="semioOpaAddNode">
+                           <div class="col-md-2">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="semioOpaBaseTypeAddNode">
+                                 <option selected value="fixed">Fixed</option>
+                                 <option value="varied">Varied</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonNode" data-dismiss="modal">ADD LAYER</button>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="changeSemioModal" tabindex="-1" role="dialog" aria-labelledby="changeSemioModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changeSemioModalLabel">Change Style</h5>
+      <div class="modal fade" id="semioLink" tabindex="-1" role="dialog" aria-labelledby="semioModalLabelLink" aria-hidden="true">
+         <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title h2" id="semioModalLabelLink">Choose Semio</h5>
+               </div>
+               <div class="modal-body" >
+                  <div class="row">
+                     <div class="col-md-4" id="arrowSelector">
+                        <label for="select" class="h3 strong">Geometry</label>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="arrowData">
+                                 <option selected value="oriented">Oriented</option>
+                                 <option value="noOriented">Non Oriented</option>
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label for="select"class="text-muted h5">Type</label>
+                              <select class="custom-select" id="arrowtype">
+                                 <option selected value="StraightArrow">Straight</option>
+                                 <option value="StraightNoHookArrow">Straight no Hook</option>
+                                 <option value="TriangleArrow">Triangle</option>
+                                 <option value="CurveArrow">Curve</option>
+                                 <option value="CurveOneArrow">Triangle Curve</option>
+                              </select>
+                           </div>
+                        </div>
+                        <hr>
+                        <div class="row" id="ArrowHeadSize">
+                           <!--               <hr>
+                              <label for="select" class="h4 strong">Arrow</label> -->
+                        </div>
+                        <div class="row" id="ArrowPlaceSize">
+                           <!-- <hr> -->
+                           <!-- <label for="select" class="h4 strong">Arrow</label> -->
+                        </div>
+                     </div>
+                     <div class="col-md-8">
+                        <label class="h3 strong">Semiology</label>
+                        <hr>
+                        <label for="select" class="h4 strong">Color</label>
+                        <div class="row">
+                           <div class="col-md-3 p-0">
+                              <div class="col-md-12">
+                                 <label for="select" class="text-muted h5">Orientation</label>
+                                 <select class="custom-select" id="semioColorBaseTypeAddLink">
+                                    <option selected value="fixed">Fixed</option>
+                                    <option value="varied">Varied</option>
+                                 </select>
+                              </div>
+                              <div class="col-md-12" id="semioColorAddLink">
+                              </div>
+                           </div>
+                           <div class="col-md-9" id="colorPickerAddLink">
+                           </div>
+                        </div>
+                        <!--             <div class="row justify-content-between" id="semioColorAddLink">
+                           </div> -->
+                        <hr>
+                        <label for="select" class="h4 strong">Size</label>
+                        <div class="row"  id="semioSizeAddLink">
+                           <div class="col-md-2">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="semioSizeBaseTypeAddLink">
+                                 <option selected value="fixed">Fixed</option>
+                                 <option value="varied">Varied</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class='row'>
+                           <!--               <div class="col-md-2">
+                              <hr>
+                              
+                              <label for="select" class="h4 strong">Text</label>
+                              <div class="row"  id="semioTextAddLink">
+                              </div>
+                              </div>       -->  
+                           <div class="col-md-12">
+                              <hr>
+                              <label for="select" class="h4 strong">Opacity</label>
+                              <div class="row"  id="semioOpaAddLink">
+                                 <div class="col-md-2">
+                                    <label for="select" class="text-muted h5">Orientation</label>
+                                    <select class="custom-select" id="semioOpaBaseTypeAddLink">
+                                       <option selected value="fixed">Fixed</option>
+                                       <option value="varied">Varied</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addSemioButtonLink" data-dismiss="modal">ADD LAYER</button>
+            </div>
+         </div>
       </div>
-      <div class="modal-body" id="importLayerBody">
-        <label for="select">Color</label>
-        <div class="row" id="semioColorChange">
-        </div>
-        <hr>
-         <label for="select">Size</label>
-         <div class="row"  id="semioSizeChange">
-        </div>
-        <div class='row'>
-         <div class="col-md-2">
-                <hr>
-
-         <label for="select" >Label</label>
-         <div class="row"  id="semioTextChange">
-        </div>
-      </div>        
-      <div class="col-md-10">
-                <hr>
-
-         <label for="select" >Opacity</label>
-         <div class="row"  id="semioOpaChange">
-        </div>
+      <div class="modal fade" id="changeGeometryModal" tabindex="-1" role="dialog" aria-labelledby="changeGeometryModalLink" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title h2" id="changeGeometryModalLink">Change Arrow Geometry</h5>
+               </div>
+               <div class="modal-body" >
+                  <div class="row">
+                     <div class="col-md-12" id="arrowSelectorChange">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="arrowDataChange">
+                                 <option selected value="oriented">Oriented</option>
+                                 <option value="noOriented">Non Oriented</option>
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label for="select"class="text-muted h5">Type</label>
+                              <select class="custom-select" id="arrowtypeChange">
+                                 <option selected value="StraightArrow">Straight</option>
+                                 <option value="StraightNoHookArrow">Straight no Hook</option>
+                                 <option value="TriangleArrow">Triangle</option>
+                                 <option value="CurveArrow">Curve</option>
+                                 <option value="CurveOneArrow">Triangle Curve</option>
+                              </select>
+                           </div>
+                        </div>
+                        <hr>
+                        <div class="row" id="ArrowHeadSizeChange">
+                           <!--               <hr>
+                              <label for="select" class="h4 strong">Arrow</label> -->
+                        </div>
+                        <div class="row" id="ArrowPlaceSizeChange">
+                           <!-- <hr> -->
+                           <!-- <label for="select" class="h4 strong">Arrow</label> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addGeometryButtonLink" data-dismiss="modal">ADD LAYER</button>
+            </div>
+         </div>
       </div>
-    </div>
-    </div>
-    <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="changeStyleButton" data-dismiss="modal">Change</button>
-
-    </div>
-  </div>
-</div>
-
-
-
-
-	<script src="dist/bundle.js"></script>
-</body>
+      <div class="modal fade" id="importFlowModal" tabindex="-1" role="dialog" aria-labelledby="importFlowModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="importFlowModalLabel">Flow Import</h5>
+               </div>
+               <div class="modal-body" id="importLayerBody">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <p>
+                           <label class="text-muted h5" for="select">ID Origin</label>
+                           <select  class="custom-select" id="importIDOri"></select>
+                        </p>
+                     </div>
+                     <div class="col-md-6">
+                        <p>
+                           <label class="text-muted h5" for="select">ID Dest</label>
+                           <select class="custom-select" id="importIDDest"></select>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <p>
+                           <label class="text-muted h5" for="select">Volume</label>
+                           <select  class="custom-select" id="importIDVol"></select>
+                        </p>
+                     </div>
+                     <div class="col-md-6">
+                        <p>
+                           <label class="text-muted h5" for="select">Aggregation Function</label>
+                           <select  class="custom-select" id="importAggrFun">
+                              <option value="sum">Sum</option>
+                              <option value="mean">Mean</option>
+                              <option value="median">Median</option>
+                              <option value="max">Max</option>
+                              <option value="min">Min</option>
+                           </select>
+                        </p>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class = "row">
+                     <div class = "col-md-6">
+                        <button class="btn btn-dark  btn-block justify-content-center mt-2"   type="button" id="importUserLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#importLocationModal">Import Location</button>
+                     </div>
+                     <div class = "col-md-6">
+                        <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetLocationButton" data-dismiss="modal" data-toggle="modal" data-target="#usePresetLocationModal">Preset Location</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="importLocationModal" tabindex="-1" role="dialog" aria-labelledby="importLocationModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="importLocationModalLabel">Data Import</h5>
+               </div>
+               <div class="modal-body" id="importLocationLayerBody">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label>Import File</label>
+                        <div class="custom-file">
+                           <label class="custom-file-label" id="label_node" for="inputGroupFile01">Node Data</label>
+                           <input type="file"  id="Node" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="custom-file" id="importIDNodeStruct">
+                        </div>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row" id="importIDImportStructComplement">
+                  </div>
+               </div>
+               <div class ="modal-footer">
+                  <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="usePresetLocationModal" tabindex="-1" role="dialog" aria-labelledby="usePresetLocationModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="usePresetLocationModalLabel">Data Import</h5>
+               </div>
+               <div class="modal-body" id="usePresetLocationLayerBody">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <p>
+                           <label class="text-muted h5" id = "label_nodes" for="select">ID Origin</label>
+                           <select  class="custom-select" id="importIDStruct"></select>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class ="modal-footer" >
+                  <button class=" btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="changeSemioModal" tabindex="-1" role="dialog" aria-labelledby="changeSemioModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="changeSemioModalLabel">Change Style</h5>
+               </div>
+               <div class="modal-body" id="importLayerBody">
+                  <label for="select" class="h4 strong mb-3">Color</label>
+                  <div class="row">
+                     <div class="col-md-3 p-0">
+                        <div class="col-md-12">
+                           <label for="select" class="text-muted h5">Orientation</label>
+                           <select class="custom-select" id="semioColorBaseTypeChangenode">
+                              <option selected value="fixed">Fixed</option>
+                              <option value="varied">Varied</option>
+                           </select>
+                        </div>
+                        <div class="col-md-12" id="semioColorChangenode">
+                        </div>
+                     </div>
+                     <div class="col-md-9" id="colorPickerChangenode">
+                     </div>
+                  </div>
+                  <hr>
+                  <label for="select" class="h4 strong">Size</label>
+                  <div class="row"  id="semioSizeChangenode">
+                     <div class="col-md-2">
+                        <label for="select" class="text-muted h5">Orientation</label>
+                        <select class="custom-select" id="semioSizeBaseTypeChangenode">
+                           <option selected value="fixed">Fixed</option>
+                           <option value="varied">Varied</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class='row'>
+                     <div class="col-md-2">
+                        <hr>
+                        <label for="select" class="h4 strong">Text</label>
+                        <div class="row"  id="semioTextChangenode">
+                        </div>
+                     </div>
+                     <div class="col-md-10">
+                        <hr>
+                        <label for="select" class="h4 strong">Opacity</label>
+                        <div class="row"  id="semioOpaChangenode">
+                           <div class="col-md-2">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="semioOpaBaseTypeChangenode">
+                                 <option selected value="fixed">Fixed</option>
+                                 <option value="varied">Varied</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="changeStyleButtonnode" data-dismiss="modal">Change</button>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="changeSemioLinkModal" tabindex="-1" role="dialog" aria-labelledby="changeSemioLinkModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="changeSemioLinkModalLabel">Change Style</h5>
+               </div>
+               <div class="modal-body" id="importLayerBody">
+                  <label for="select" class="h4 strong mb-3">Color</label>
+                  <div class="row">
+                     <div class="col-md-3 p-0">
+                        <div class="col-md-12">
+                           <label for="select" class="text-muted h5">Orientation</label>
+                           <select class="custom-select" id="semioColorBaseTypeChangelink">
+                              <option selected value="fixed">Fixed</option>
+                              <option value="varied">Varied</option>
+                           </select>
+                        </div>
+                        <div class="col-md-12" id="semioColorChangelink">
+                        </div>
+                     </div>
+                     <div class="col-md-9" id="colorPickerChangelink">
+                     </div>
+                  </div>
+                  <hr>
+                  <label for="select" class="h4 strong">Size</label>
+                  <div class="row"  id="semioSizeChangelink">
+                     <div class="col-md-2">
+                        <label for="select" class="text-muted h5">Orientation</label>
+                        <select class="custom-select" id="semioSizeBaseTypeChangelink">
+                           <option selected value="fixed">Fixed</option>
+                           <option value="varied">Varied</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class='row'>
+                     <div class="col-md-12">
+                        <hr>
+                        <label for="select" class="h4 strong">Opacity</label>
+                        <div class="row"  id="semioOpaChangelink">
+                           <div class="col-md-2">
+                              <label for="select" class="text-muted h5">Orientation</label>
+                              <select class="custom-select" id="semioOpaBaseTypeChangelink">
+                                 <option selected value="fixed">Fixed</option>
+                                 <option value="varied">Varied</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="changeStyleButtonlink" data-dismiss="modal">Change</button>
+            </div>
+         </div>
+      </div>
+      <script src="dist/bundle.js"></script>
+   </body>
 </html>
+

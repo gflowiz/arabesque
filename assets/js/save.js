@@ -7,6 +7,7 @@ import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
 
 import {parse as papaparse} from "papaparse"
+import {transform} from 'ol/proj.js';
 
 
 function  loadMapFromSave(name_savedMap){
@@ -57,7 +58,7 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 				 applyNewStyle("link")
 				 applyNewStyle("node")
 				document.getElementById("addFilterButton").disabled = false;
-				$('.arrival').fadeOut(450, function(){ $(this).remove();});
+				$('.arrival').hide(50);
 
 				return
 			})
@@ -177,7 +178,7 @@ function loadDataForExample(file_json, data_link,data_geo, data){
 
 function loadPojection(savedProj){
 	console.log(savedProj.name)
-	setNextProj( map, savedProj.name);
+	setNextProj( map, savedProj.name );
 return savedProj
 }
 
@@ -197,7 +198,8 @@ export function loadZippedMap(){
 		map.getView().setZoom(global_data.zoom)
 		// loadZipProjection(map, global_data.projection, global_data.center, global_data.zoom)
   $("#featureCard").toggle();
-  $('.arrival').fadeOut(450, function(){ $(this).remove();});
+    $('.arrival').hide(50)
+
 }
 
 function setupMapandHashData(map, data, global_var){
@@ -251,10 +253,13 @@ var lx = maxX - minX
 var ly = maxY - minY
 global_var.style.ratioBounds = Math.max(lx,ly)* 0.0002
 global_var.center =  [minX+lx/2,minY+ly/2]
+  console.log(global_var.center)
+
 data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_var.ids.linkID[0], global_var.ids.linkID[1])
 map.getView().setCenter(global_var.center)
+global_var.center = transform(global_var.center,global_data.projection.name,"EPSG:4326")
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
-
+global_var.zoom = getZoomFromVerticalBounds(ly)
 console.log(data.hashedStructureData)
 return data.hashedStructureData
 }

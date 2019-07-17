@@ -1,4 +1,5 @@
 import smooth from 'chaikin-smooth'
+import {changeSelect} from "./semiology.js"
 
 function tranposeLine(point_ori, point_dest, distance) {
 
@@ -343,6 +344,21 @@ function drawLine(path, iteration){
 	return path;
 }
 
+export function changeGeometryParameter(name_layer, style){
+    console.log("azeaea")
+  changeSelect($("#arrowDataChange").children('[value="'+ style.geometry.oriented+'"]'), "arrowDataChange" )
+  changeSelect($("#arrowtypeChange").children('[value="'+ style.geometry.type+'"]'), "arrowtypeChange")
+    showGeometryParameter('Change')
+    if (style.geometry.type ==="CurveArrow" ||  style.geometry.type ==="CurveOneArrow"){
+        document.getElementById("baseCurveArrowChange").value = style.geometry.place.base
+        document.getElementById("heightCurveArrowChange").value = style.geometry.place.height
+    }
+    if (style.geometry.oriented === 'oriented' && style.geometry.type !=="TriangleArrow"  && style.geometry.type !=="CurveOneArrow"){
+        document.getElementById("widthArrowChange").value = style.geometry.head.width
+        document.getElementById("heightArrowChange").value = style.geometry.head.height
+    }
+}
+
 function getIntersection(ori, dest, radius){
 	var startX = ori[0]
     var startY = ori[1]
@@ -354,22 +370,23 @@ function getIntersection(ori, dest, radius){
 }
 
 
-export function addArrowSizeSelect(){
-    if($("ArrowHeadSize").children() !== null){
-      $('#ArrowHeadSize').children().remove()
+export function addArrowSizeSelect(name = ''){
+    console.log(name)
+    if($("ArrowHeadSize"+name).children() !== null){
+      $('#ArrowHeadSize'+name).children().remove()
     }
 
     var text = '" - Heigth: Choose the distance between the base and the arrow tip, the value is a percentage of the width of the link</br /> - Width: choose the base width of the arrow, the value represent a percentage of the arrow width"'
     // $("#ArrowHeadSize").append('<hr>')
-    $("#ArrowHeadSize").append('<label class="p-2 h5">Arrow Head <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
-	$("#ArrowHeadSize").append($('<div>').attr('class', "row p-2"))
-  	$("#ArrowHeadSize>div").append($('<div>')
+    $("#ArrowHeadSize"+name).append('<label class="p-2 h5">Arrow Head <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
+	$("#ArrowHeadSize"+name).append($('<div>').attr('class', "row p-2"))
+  	$("#ArrowHeadSize"+name+">div").append($('<div>')
                     .attr("class","col-md-6")
 
                     .append('<label class="text-muted h5">Heigth</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","heightArrow")
+                    .attr("id","heightArrow"+name)
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -380,12 +397,12 @@ export function addArrowSizeSelect(){
                 
 
 
-    $("#ArrowHeadSize>div").append($('<div>')
+    $("#ArrowHeadSize"+name+">div").append($('<div>')
                     .attr("class","col-md-6")
                     .append('<label class="text-muted h5">Width</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","widthArrow")
+                    .attr("id","widthArrow"+name)
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -403,21 +420,21 @@ export function drawArrow(style, ori, dest, rad_ori, rad_dest, distance){
 	return window[isOriented + selectedArrowType](style, ori, dest, rad_ori, rad_dest, distance)
 }
 
-export function addArrowPlaceCurveSelect(){
-    if($("ArrowPlaceSize").children() !== null){
-      $('#ArrowPlaceSize').children().remove()
+export function addArrowPlaceCurveSelect(name = ''){
+    if($("ArrowPlaceSize"+name).children() !== null){
+      $('#ArrowPlaceSize'+name).children().remove()
     }
 
     var text = '"The curve is created by the chaikin algorithm </br /></br /> - Heigth: The value is the percentage of the distance between the origin and the destination used to define the maximum height of the link </br /> - Base: The value ([0,1]) is the center of the curve, the point is select by select a percentage of the distance from the origin node of the link "'
     // $("#ArrowPlaceSize").append('<hr>')
-    $("#ArrowPlaceSize").append('<label class="h5 p-2">Curve Arrow  <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
-	$("#ArrowPlaceSize").append($('<div>').attr('class', "row p-2"))
-  	$("#ArrowPlaceSize>div").append($('<div>')
+    $("#ArrowPlaceSize"+name).append('<label class="h5 p-2">Curve Arrow  <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content='+text+' title="Arrow Size Parameter"/></label>')
+	$("#ArrowPlaceSize"+name).append($('<div>').attr('class', "row p-2"))
+  	$("#ArrowPlaceSize"+name+">div").append($('<div>')
                     .attr("class","col-md-6")
                     .append('<label class="text-muted h5">Heigth Curve</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","heightCurveArrow")
+                    .attr("id","heightCurveArrow"+name)
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",10)
@@ -428,12 +445,12 @@ export function addArrowPlaceCurveSelect(){
                 
 
 
-    $("#ArrowPlaceSize>div").append($('<div>')
+    $("#ArrowPlaceSize"+name+">div").append($('<div>')
                     .attr("class","col-md-6")
                     .append('<label class="text-muted h5">Center Curve</label>')
                     .append($('<input>')
                     .attr('class','form-control')
-                    .attr("id","baseCurveArrow")
+                    .attr("id","baseCurveArrow"+name)
                     .attr("min",0.0)
                     .attr("step",0.1)
                     .attr("max",1)
@@ -445,33 +462,34 @@ $('[data-toggle="popover"]').popover()
 }
 
 
-export function showGeometryParameter(){
-	setupHead()
-	setupArrowParameter()
+export function showGeometryParameter(name = ''){
+	setupHead(name)
+	setupArrowParameter(name)
 }
 
-export function setupArrowParameter(){
+export function setupArrowParameter(name = ''){
 
-	if (document.getElementById("arrowtype").value ==="CurveArrow" ||  document.getElementById("arrowtype").value ==="CurveOneArrow"){
- 		addArrowPlaceCurveSelect()
+	if (document.getElementById("arrowtype"+name).value ==="CurveArrow" ||  document.getElementById("arrowtype"+name).value ==="CurveOneArrow"){
+ 		addArrowPlaceCurveSelect(name)
 	}
 	else{
-    	if($("ArrowPlaceSize").children() !== null){
-      	$('#ArrowPlaceSize').children().remove()
+    	if($("ArrowPlaceSize"+name).children() !== null){
+      	$('#ArrowPlaceSize'+name).children().remove()
     }
 
 	}
-    setupHead()
+    setupHead(name)
 }
 
-export function setupHead()
+export function setupHead(name = '')
 {	
-	if (document.getElementById("arrowData").value === 'oriented' && document.getElementById("arrowtype").value !=="TriangleArrow"  && document.getElementById("arrowtype").value !=="CurveOneArrow"){
-		addArrowSizeSelect()
+    console.log(name)
+	if (document.getElementById("arrowData"+name).value === 'oriented' && document.getElementById("arrowtype"+name).value !=="TriangleArrow"  && document.getElementById("arrowtype"+name).value !=="CurveOneArrow"){
+		addArrowSizeSelect(name)
 	}
 	else {
-		if($("ArrowHeadSize").children() !== null){
-      		$('#ArrowHeadSize').children().remove()
+		if($("ArrowHeadSize"+name).children() !== null){
+      		$('#ArrowHeadSize'+name).children().remove()
     	}
 	}}
 
