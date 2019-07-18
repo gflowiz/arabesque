@@ -1126,7 +1126,7 @@ export function addLayerFromURL(map, url, layerName, attributions, opacity, stro
         });
     }
 
-    console.log("etLayerFromName(map,layer_name)")
+    // console.log("etLayerFromName(map,layer_name)")
 
     URLLayer.setOpacity(opacity)
     URLLayer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))

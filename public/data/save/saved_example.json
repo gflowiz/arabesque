@@ -1,433 +1,428 @@
 {
-	
-	"country":{
-		"files":{
-			"node": "public/data/swissLoc.csv",
-			"link": "public/data/swissFlow.csv",
-			"Ltype":"csv",
-			"Ntype":"csv",
-			"aggr":"sum"
-		},
-		"base_layer":[
-			{
-					"name":"bounding_box",
-					"style":{
-						"stroke":"#3498DB",
-						"fill":"#3498DB",
-						"opacity": 0.5
-					},
-          "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
-					"app": true
-				},
-			{
-					"name":"countries",
-					"style":{
-						"stroke":"#864305",
-						"fill":"#666666",
-						"opacity": 0.9
-					},
-          "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
-					"app": true
-				},
-			{
-				"name":"graticules_20",
-				"style":{
-					"stroke":"#000000",
-					"fill":"#000000",
-					"opacity": 0.9
-				},
-        "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
-				"app": true
-			}
-		],
-		"style":{  
-			"link":{
-        		"color":{
-          			"palette":"BuGn",
-			        "cat":"number",
-			        "var":"count",
-			        "max":6143,
-			        "min":0
-        		},          
-        		"opa":{
-			        "cat": "Linear",
-			        "var":"count",
-			        "max":0.8,
-			        "min":0.2,
-			        "vmax":6143
-          		},
-	        	"size":{
-		          	"cat":"Linear",
-		            "var":"count",
-		            "max":6143,
-		            "min":0,
-		            "ratio":100
-          		},
-            "geometry":{
-                "oriented":"oriented",
-                "type": "StraightArrow",
-                "head":{
-                  "height":1,
-                  "width":0.5
-                  },
-                "place":{
-                  "base":null,
-                  "height": null
-                  }
-              },
-          		"text":null
-        	},
-  		"node":{
-    		"color":{
-          		"palette":"Spectral",
-		        "cat":"number",
-		        "var":"balance",
-		        "max":1949,
-		        "min":-2114
-        	},
-        	"size":{
-          		"cat":"Sqrt",
-          		"ratio":100,
-          		"var":"degree",
-          		"max":47144,
-          		"min":850
-          	},
-         	"opa":{
-          		"cat":"Linear",
-          		"var":"fixed",
-          		"vmax":0.9,
-          		"max":0.9,
-          		"min":0.5
-          	},
-        "text":"name"
-        }
-    	},
-		"filter":{
-  "link": [
-    {
-      "variable": "count",
-      "values": [
-        242.9111248747675,
-        6143.0001
-      ],
-      "filter": "numeral"
-    },
-    {
-      "variable": "distance",
-      "values": [
-        6.491051123632014,
-        101.19281816498118
-      ],
-      "filter": "numeral"
-    }
-  ],
-  "node": [
-    {
-      "variable": "name",
-      "values": [
-        "Uri"
-      ],
-      "filter": "remove"
-    }
-  ]
-},
-		"ids":{
-			"nodeID":"id",
-			"linkID":["origin","dest"],
-			"vol":"count",
-			"long":"lat",
-			"lat":"lon"
-		},
-		"projection":{
-			"name":"EPSG:3413",
-			"proj4":null,
-			"extent":null
-		},
-		"date":{
-			"creation":null,
-			"last_modification":null
-		}
-	},
 
-	"local":
-	{	
-		"files":{
-			"node": "public/data/londonLoc.csv",
-			"link": "public/data/londonFlow.csv",
-			"Ltype":"csv",
-			"Ntype":"csv",
-			"aggr":"sum"
-		},
-		"base_layer":[
-		{
-					"name":"countries",
-					"style":{
-						"stroke":"#CD5C5C",
-						"fill":"#666666",
-						"opacity": 0.7
-					},
-					"app": true
-				},
-				{
-					"name":"river",
-					"style":{
-						"stroke":"#0000CD",
-						"fill":"#0000CD",
-						"opacity": 0.9
-					},
-					"app": true
-				}
-		],
-		"style":{  
-			"link":{
-        		"color":{
-          			"palette":"YlOrRd",
-			        "cat":"number",
-			        "var":"count",
-			        "max":2426,
-			        "min":0
-        		},          
-        		"opa":{
-			        "cat":null,
-			        "var":"fixed",
-			        "max":null,
-			        "min":null,
-			        "vmax":0.65
-          		},
-	        	"size":{
-		          	"cat":"Linear",
-		            "var":"count",
-		            "max":2426,
-		            "min":0,
-		            "ratio":100
-          		},
-            "geometry":{
-                "oriented":"oriented",
-                "type": "StraightArrow",
-                "head":{
-                  "height":1,
-                  "width":0.5
-                  },
-                "place":{
-                  "base":null,
-                  "height": null
-                  }
-              },
-          		"text":null
-        	},
-  		"node":{
-    		"color":{
-          		"palette":"PuOr",
-		        "cat":"number",
-		        "var":"balance",
-		        "max":1949,
-		        "min":-2114
-        	},
-        	"size":{
-          		"cat":"Sqrt",
-          		"ratio":150,
-          		"var":"degree",
-          		"max":70657,
-          		"min":0
-          	},
-         	"opa":{
-          		"cat":"Linear",
-          		"var":"fixed",
-          		"max":0.75,
-          		"min":0.3,
-			    "vmax":0.65
-          	},
-          	"text":null
-        }
-    	},
-		"filter":{
-  "link": [
-    {
-      "filter": "numeral",
-      "variable": "distance",
-      "values": [
-        0.013742317255718076,
-        2.0355786317310294
-      ]
+    "country": {
+        "files": {
+            "node": "public/data/swissLoc.csv",
+            "link": "public/data/swissFlow.csv",
+            "Ltype": "csv",
+            "Ntype": "csv",
+            "aggr": "sum"
+        },
+        "base_layer": [{
+                "name": "bounding_box",
+                "style": {
+                    "stroke": "#3498DB",
+                    "fill": "#3498DB",
+                    "opacity": 0.5
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            },
+            {
+                "name": "countries",
+                "style": {
+                    "stroke": "#864305",
+                    "fill": "#666666",
+                    "opacity": 0.9
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            }
+        ],
+        "style": {
+  "link": {
+    "color": {
+      "palette": "YlGnBu",
+      "cat": "number",
+      "var": "count",
+      "max": 6143,
+      "min": 0
     },
-    {
-      "filter": "numeral",
-      "variable": "count",
-      "values": [
-        164.02115832445773,
-        2426.0001
-      ]
-    }
-  ],
-  "node": [
-    {
-      "variable": "balance",
-      "values": [
-        29.992549391774446,
-        3789.000100000001
-      ],
-      "filter": "numeral"
-    }
-  ]
-},
-		"ids":{
-			"nodeID":"id",
-			"linkID":["origin","dest"],
-			"vol":"count",
-			"long":"lat",
-			"lat":"lon"
-		},
-		"projection":{
-			"name":"EPSG:3857" ,
-			"proj4":null,
-			"extent":null
-		},
-		"date":{
-			"creation":null,
-			"last_modification":null
-		}
-	},
-	"world":{
-		"files":{
-			"node": "public/data/capitals.geojson",
-			"link": "public/data/comtrade(8).csv",
-			"Ltype":"csv",
-			"Ntype":"geojson",
-			"aggr":"sum"
-		},
-		"base_layer":[
-			{
-					"name":"bounding_box",
-					"style":{
-						"stroke":"#3498DB",
-						"fill":"#3498DB",
-						"opacity": 0.5
-					},
-					"app": true
-				},
-			{
-					"name":"countries",
-					"style":{
-						"stroke":"#864305",
-						"fill":"#FF7B00",
-						"opacity": 0.9
-					},
-					"app": true
-				},
-			{
-				"name":"graticules_20",
-				"style":{
-					"stroke":"#000000",
-					"fill":"#000000",
-					"opacity": 0.9
-				},
-				"app": true
-			}
-		],
-		"style":{  
-			"link":{
-  "color": {
-    "palette": "YlGnBu",
-    "cat": "number",
-    "var": "Trade Value (US$)",
-    "max": 733715974248,
-    "min": 29072461099
-  },
-  "opa": {
-    "cat": null,
-    "var": "fixed",
-    "max": null,
-    "min": null,
-    "vmax": "0.85"
-  },
-  "size": {
-    "cat": "Linear",
-    "var": "Trade Value (US$)",
-    "max": 31901758962,
-    "min": 3,
-    "ratio": "50"
-  },
-  "geometry": {
-    "oriented": "oriented",
-    "type": "StraightArrow",
-    "head": {
-      "height": 0.5,
-      "width": 0.5
+    "opa": {
+      "cat": null,
+      "var": "fixed",
+      "max": null,
+      "min": null,
+      "vmax": 0.95
     },
-    "place": {
-      "base": 0.5,
-      "height": 0.5
+    "size": {
+      "cat": "Sqrt",
+      "var": "count",
+      "max": 6143,
+      "min": 0,
+      "ratio": "100"
+    },
+    "geometry": {
+      "oriented": "oriented",
+      "type": "StraightArrow",
+      "head": {
+        "height": 0.5,
+        "width": 0.5
+      },
+      "place": {
+        "base": 0.5,
+        "height": 0.5
+      }
     }
   },
-  "text": "Choose..."
-},
-  		"node":{
-  "color": {
-  "palette": "RdYlGn",
-  "cat": "number",
-  "var": "balance",
-  "max": 161534540928,
-  "min": -190901612603
-},
-  "size": {
-    "cat": "Sqrt",
-    "ratio": "20",
-    "var": "degree",
-    "max": 4171220577292,
-    "min": 0
-  },
-  "opa": {
-    "cat": "Linear",
-    "var": "fixed",
-    "max": 0.9,
-    "min": 0.5,
-    "vmax": "0.85"
-  },
-  "text": "Choose..."
-}
-    	},
-		"filter":{
-  "node": [],
-  "link": [
-    {
-      "variable": "Commodity",
-      "values": "Vehicles other than railway or tramway rolling stock",
-      "filter": "temporal"
+  "node": {
+    "color": {
+      "palette": "RdYlBu",
+      "cat": "number",
+      "var": "weigthed balance",
+      "max": -1949,
+      "min": 2114
     },
-    {
-      "variable": "Year",
-      "values": [
-        "2003",
-        "2004",
-        "2005",
-        "2006"
-      ],
-      "filter": "timeLapse",
-      "format": "DateTime"
+    "size": {
+      "cat": "Sqrt",
+      "ratio": "100",
+      "var": "weigthed degree",
+      "max": 180854,
+      "min": 1520
     },
-    {
-      "variable": "Trade Flow",
-      "values": [
-        "Import"
-      ],
-      "filter": "categorial"
-    }
-  ]
+    "opa": {
+      "cat": null,
+      "var": "fixed",
+      "max": null,
+      "min": null,
+      "vmax": 0.95
+    },
+    "text": "Choose...",
+    "ratioBounds": null
+  },
+  "ratioBounds": 77.8522275378485
 },
-		"ids":{
-			"nodeID":"iso3",
-			"linkID":["Reporter ISO","Partner ISO"],
-			"vol":"Trade Value (US$)"
-		},
-		"projection":{
-			"name":"eck6",
-			"proj4":null,
-			"extent":null
-		},
-		"date":{
-			"creation":null,
-			"last_modification":null
-		}
+        "filter": {
+            "link": [{
+                    "variable": "distance",
+                    "values": [
+                        6.491051123632014,
+                        98.90376416899015
+                    ],
+                    "filter": "numeral"
+                },
+                {
+                    "variable": "count",
+                    "values": [
+                        1001.9172929291536,
+                        6143.0001
+                    ],
+                    "filter": "numeral"
+                }
+            ],
+            "node": []
 
-	}
+        },
+        "center": [
+            7.879486732499998,
+            46.9668681974602
+        ],
+        "ids": {
+            "nodeID": "id",
+            "linkID": ["origin", "dest"],
+            "vol": "count",
+            "long": "lat",
+            "lat": "lon"
+        },
+        "projection": {
+            "name": "EPSG:3857",
+            "proj4": null,
+            "extent": null
+        },
+        "date": {
+            "creation": null,
+            "last_modification": null
+        }
+    },
+
+    "local": {
+        "files": {
+            "node": "public/data/londonLoc.csv",
+            "link": "public/data/londonFlow.csv",
+            "Ltype": "csv",
+            "Ntype": "csv",
+            "aggr": "sum"
+        },
+        "base_layer": [{
+                "name": "countries",
+                "style": {
+                    "stroke": "#CD5C5C",
+                    "fill": "#666666",
+                    "opacity": 0.7
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            },
+            {
+                "name": "river",
+                "style": {
+                    "stroke": "#0000CD",
+                    "fill": "#0000CD",
+                    "opacity": 0.9
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            }
+        ],
+        "style": {
+            "link": {
+                "color": {
+                    "palette": "YlOrRd",
+                    "cat": "number",
+                    "var": "count",
+                    "max": 2426,
+                    "min": 0
+                },
+                "opa": {
+                    "cat": null,
+                    "var": "fixed",
+                    "max": null,
+                    "min": null,
+                    "vmax": 0.65
+                },
+                "size": {
+                    "cat": "Linear",
+                    "var": "count",
+                    "max": 2426,
+                    "min": 0,
+                    "ratio": 100
+                },
+                "geometry": {
+                    "oriented": "oriented",
+                    "type": "StraightArrow",
+                    "head": {
+                        "height": 1,
+                        "width": 0.5
+                    },
+                    "place": {
+                        "base": null,
+                        "height": null
+                    }
+                },
+                "text": null
+            },
+            "node": {
+                "color": {
+                  "palette": "Reds",
+                  "cat": "number",
+                  "var": "weigthed outdegree",
+                  "max": 35721,
+                  "min": 0
+                },
+                "size": {
+                  "cat": "Sqrt",
+                  "ratio": "100",
+                  "var": "weigthed degree",
+                  "max": 70657,
+                  "min": 0
+                },
+                "opa": {
+                  "cat": "Linear",
+                  "var": "fixed",
+                  "max": 0.75,
+                  "min": 0.3,
+                  "vmax": 0.8
+                },
+                "text": "Choose..."
+              }
+        },
+        "filter": {
+          "link": [
+            {
+              "filter": "numeral",
+              "variable": "distance",
+              "values": [
+                0.013742317255718076,
+                2.0355786317310294
+              ]
+            },
+            {
+              "filter": "numeral",
+              "variable": "count",
+              "values": [
+                164.02115832445773,
+                2426.0001
+              ]
+            }
+          ],
+          "node": [
+            {
+              "variable": "balance",
+              "values": [
+                -4.922448751076654,
+                5.025887453344819
+              ],
+              "filter": "numeral"
+            }
+          ]
+        },
+        "center": [
+            7.879486732499998,
+            46.9668681974602
+        ],
+        "ids": {
+            "nodeID": "id",
+            "linkID": ["origin", "dest"],
+            "vol": "count",
+            "long": "lat",
+            "lat": "lon"
+        },
+        "projection": {
+            "name": "EPSG:3857",
+            "proj4": null,
+            "extent": null
+        },
+        "date": {
+            "creation": null,
+            "last_modification": null
+        }
+    },
+    "world": {
+        "files": {
+            "node": "public/data/capitals.geojson",
+            "link": "public/data/comtrade(8).csv",
+            "Ltype": "csv",
+            "Ntype": "geojson",
+            "aggr": "sum"
+        },
+        "base_layer": [{
+                "name": "bounding_box",
+                "style": {
+                    "stroke": "#3498DB",
+                    "fill": "#3498DB",
+                    "opacity": 0.5
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            },
+            {
+                "name": "countries",
+                "style": {
+                    "stroke": "#864305",
+                    "fill": "#FF7B00",
+                    "opacity": 0.9
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            },
+            {
+                "name": "graticules_20",
+                "style": {
+                    "stroke": "#000000",
+                    "fill": "#000000",
+                    "opacity": 0.9
+                },
+                "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
+                "app": true
+            }
+        ],
+        "style": {
+            "link": {
+                "color": {
+                    "palette": "YlGnBu",
+                    "cat": "number",
+                    "var": "Trade Value (US$)",
+                    "max": 733715974248,
+                    "min": 29072461099
+                },
+                "opa": {
+                    "cat": null,
+                    "var": "fixed",
+                    "max": null,
+                    "min": null,
+                    "vmax": "0.85"
+                },
+                "size": {
+                    "cat": "Linear",
+                    "var": "Trade Value (US$)",
+                    "max": 31901758962,
+                    "min": 3,
+                    "ratio": "50"
+                },
+                "geometry": {
+                    "oriented": "oriented",
+                    "type": "StraightArrow",
+                    "head": {
+                        "height": 0.5,
+                        "width": 0.5
+                    },
+                    "place": {
+                        "base": 0.5,
+                        "height": 0.5
+                    }
+                },
+                "text": "Choose..."
+            },
+            "node": {
+                "color": {
+                    "palette": "RdYlGn",
+                    "cat": "number",
+                    "var": "balance",
+                    "max": 161534540928,
+                    "min": -190901612603
+                },
+                "size": {
+                    "cat": "Sqrt",
+                    "ratio": "20",
+                    "var": "degree",
+                    "max": 4171220577292,
+                    "min": 0
+                },
+                "opa": {
+                    "cat": "Linear",
+                    "var": "fixed",
+                    "max": 0.9,
+                    "min": 0.5,
+                    "vmax": "0.85"
+                },
+                "text": "Choose..."
+            }
+        },
+        "filter": {
+            "node": [],
+            "link": [{
+                    "variable": "Commodity",
+                    "values": "Vehicles other than railway or tramway rolling stock",
+                    "filter": "temporal"
+                },
+                {
+                    "variable": "Year",
+                    "values": [
+                        "2003",
+                        "2004",
+                        "2005",
+                        "2006"
+                    ],
+                    "filter": "timeLapse",
+                    "format": "DateTime"
+                },
+                {
+                    "variable": "Trade Flow",
+                    "values": [
+                        "Import"
+                    ],
+                    "filter": "categorial"
+                }
+            ]
+        },
+        "ids": {
+            "nodeID": "iso3",
+            "linkID": ["Reporter ISO", "Partner ISO"],
+            "vol": "Trade Value (US$)"
+        },
+        "projection": {
+            "name": "eck6",
+            "proj4": null,
+            "extent": null
+        },
+        "date": {
+            "creation": null,
+            "last_modification": null
+        }
+
+    },
+    "center": [
+        7.879486732499998,
+        46.9668681974602
+    ]
 }

@@ -2,7 +2,7 @@
 
 //TODO remove all funciton in other files like import files 
 import {  refreshFilterModal,  addFilterToScreen,  checkDataToFilter,  testLinkDataFilter,  applyNodeDataFilter} from "./filter.js"
-import {  addOSMLayer,  addBaseLayer,  addGeoJsonLayer,  addNodeLayer,  generateLinkLayer,  addLegendToMap,  showTileLayersName,  addTileLayer,  getTileData,  addBaseUrlLayer} from "./layer.js";
+import {  addOSMLayer,  addBaseLayer,  addGeoJsonLayer,  addNodeLayer,  generateLinkLayer,  addLegendToMap,  showTileLayersName,  addTileLayer,  getTileData,  addBaseUrlLayer, getLayerFromName} from "./layer.js";
 import {  loadMapFromPresetSave,  loadFilter,  loadZippedMap} from "./save.js";
 import {  getCentroid,  changeProjection,  loadAllExtentProjection} from "./projection.js";
 import {  computeMinStatNode,  computeDistance,  checkIDLinks} from "./stat.js";
@@ -615,7 +615,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
         data = JSON.parse(fileData) // These are your file contents      
       })
     })
-    // document.getElementById("LoadZipMapButton").disabled = false;
+    document.getElementById("LoadZipMapButton").disabled = false;
     // console.log(event.target.result);
 
     // data.nodes = readData(data.rawStructureData,global_data.files.Ntype);
@@ -789,7 +789,7 @@ map.addControl(
 function exportDataAndConf() {
   var zip = new JSZip();
   // global_data.center = map.getView().getCenter()
-  global_data.zoom = map.getView().getZoom()
+  // global_data.zoom = map.getView().getZoom()
   let saveLegend = global_data.legend
   delete global_data.legend
 
@@ -989,8 +989,11 @@ map.on('moveend', function (e) {
 
 function centerMap(){
   var view = map.getView()
-  view.setZoom( global_data.zoom) 
-  view.setCenter(transform(global_data.center,"EPSG:4326",global_data.projection.name)) 
+  console.log(getLayerFromName(map, 'link'))
+  console.log(getLayerFromName(map, 'link').getSource().getExtent())
+  view.fit(getLayerFromName(map, 'link').getSource().getExtent())
+  // view.setZoom( global_data.zoom) 
+  // view.setCenter(transform(global_data.center,"EPSG:4326",global_data.projection.name)) 
 }
 
 
@@ -1355,8 +1358,8 @@ function importData() {
   console.log(transform(newCenter,"EPSG:4326",global_data.projection.name))
 
 
-  map.getView().setCenter(newCenter)
-  map.getView().setZoom(getZoomFromVerticalBounds(ly));
+  // map.getView().setCenter(newCenter)
+  // map.getView().setZoom(getZoomFromVerticalBounds(ly));
   global_data.zoom = getZoomFromVerticalBounds(ly)
   newCenter = transform(newCenter,global_data.projection.name,"EPSG:4326")
   global_data.center = newCenter
@@ -1377,6 +1380,10 @@ function importData() {
 
   applyPreselectMap(global_data, global_data.ids.vol, data)
 
+  map.getView().fit(getLayerFromName(map, 'link').getSource().getExtent())
+  if (document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed') === true) {
+    document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed')
+  }
   $('.arrival').hide(50)
 
   // $().children().remove()

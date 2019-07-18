@@ -57,6 +57,11 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 
 				 applyNewStyle("link")
 				 applyNewStyle("node")
+
+ 				map.getView().fit(getLayerFromName(map, 'link').getSource().getExtent())
+ 				if (document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed') === true) {
+				    document.getElementsByClassName('ol-legend')[0].classList.toggle('ol-collapsed')
+				  }
 				document.getElementById("addFilterButton").disabled = false;
 				$('.arrival').hide(50);
 
@@ -176,9 +181,9 @@ function loadDataForExample(file_json, data_link,data_geo, data){
 
 }
 
-function loadPojection(savedProj){
+function loadPojection(savedProj, center){
 	console.log(savedProj.name)
-	setNextProj( map, savedProj.name );
+	setNextProj( map, savedProj.name , center);
 return savedProj
 }
 
@@ -191,10 +196,10 @@ export function loadZippedMap(){
 	loadBaseZipLayerData(global_data.layers.base)
 	loadImportZipLayerData(global_data.layers.import)
 	loadZipOSMLayerData(global_data.layers.osm)
-
+console.log(global_data.center)
 		applyNewStyle("link")
 		applyNewStyle("node")
-		map.getView().setCenter(global_data.center)
+		map.getView().setCenter(transform(global_data.center, 'EPSG:4326',global_data.projection.name))
 		map.getView().setZoom(global_data.zoom)
 		// loadZipProjection(map, global_data.projection, global_data.center, global_data.zoom)
   $("#featureCard").toggle();

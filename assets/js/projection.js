@@ -252,9 +252,9 @@ export function changeZipProjection(layers, center, zoom){
 
   var newView = new View({
     projection: global_data.projection.name,
-    center:transform(center,"EPSG:4326",projName),
+    // center:transform(center,"EPSG:4326",global_data.projection.name),
     //extent:newExtent,
-    zoom:zoom,
+    // zoom:zoom,
     maxZoom:25,
     minZoom:-2
   });
@@ -262,8 +262,8 @@ export function changeZipProjection(layers, center, zoom){
     // newView.setExtent(global_data.projection.extent)
 if(global_data.projection.extent !== null){
     // newView.setExtent(global_data.projection.extent)
-    newView.setCenter(getCenter(global_data.projection.extent))
-    newView.setZoom(0)
+    // newView.setCenter(getCenter(global_data.projection.extent))
+    // newView.setZoom(0)
     // applyExtent(layers,global_data.projection.extent)
     // applyBaseExtent(global_data.layers.base,global_data.projection.extent)
     
@@ -297,12 +297,12 @@ export function setNextProj( map, new_projName){
   // console.log(index_proj)
   // var newExtent =[]
   var newProj = getProjection(new_projName);
-  console.log(global_data.center)
+  // console.log(center)
  // Proj[index_proj].extent = newExtent
   // newProj.setExtent(newExtent);
   var newView = new View({
     projection: new_projName,
-    // center:transform(global_data.center, 'EPSG:4326',new_projName),
+    // center:transform(center, 'EPSG:4326',new_projName),
     //extent:newExtent,
     zoom:4,
     maxZoom:25,
@@ -311,9 +311,9 @@ export function setNextProj( map, new_projName){
     map.setView(newView);
 
     if(Proj[new_projName].extent !== null){
-    // newView.setExtent(global_data.projection.extent)
-    // applyExtent(layers,global_data.projection.extent)
-    // applyBaseExtent(global_data.layers.base,global_data.projection.extent)
+    newView.setExtent(global_data.projection.extent)
+    applyExtent(layers,global_data.projection.extent)
+    applyBaseExtent(global_data.layers.base,global_data.projection.extent)
     
     newView.fit(Proj[new_projName].extent);
 
