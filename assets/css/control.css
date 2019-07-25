@@ -1,4 +1,221 @@
+/*#main-navbar{
+  background-color: white
+}*/
 
+@font-face {
+font-family: "arabesque";
+src: url("./font/freebooterscript.ttf");
+/*src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"),
+url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"),*/
+/*url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");*/
+}
+
+.alert{
+  min-height: 450px 
+}
+
+.carousel-div{
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+.fill{width:100%;height:100%;background-position:center;background-size:cover;}
+/*#carouselDraw .carousel-inner > .item > img { width:300px; height:570px; }*/
+/*##carouselFilter .carousel-inner > .item > img { width:300px; height:570px; }*/
+#carouselDraw > .carousel-inner{
+  height: 300px;
+  /*width: 150px;*/
+}
+#carouselFilter{
+  height: 300px;
+  /*width: 150px;*/
+}
+
+.subheader-title{
+  text-align: center
+}
+
+p {
+  text-align: justify;
+}
+
+h4 {
+  text-align: justify;
+}
+
+h3 {
+  text-align: justify;
+}
+.navbar-brand{ 
+  font-size: 1.5em;
+  font-family: 'arabesque'; }
+
+.home-title{
+  font-size: 10em;
+  font-family: 'arabesque';
+  padding-bottom: 50px;
+  color:#38291f;
+}
+
+.home-subtitle{
+  font-size: 2em;
+  padding-bottom: 50px;
+  color:#38291f;
+}
+
+body h1{
+  font-family: 'arabesque';
+  text-align: center;
+}
+.img-menu{
+  height: 64px;
+  width: 64px;
+}
+.img-menu2{
+  height: 64px;
+  width: 128px;
+}
+
+.showcase-bar{
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border:0;
+    border-top: 2px solid #624531;
+    border-bottom: 2px solid #624531;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.menu-bar{
+    width: 33%;
+    margin-bottom: 0px;
+    border:0;
+    margin-top: 70px;
+    border-top: 5px solid #624531;
+    border-bottom: 5px solid #624531;
+    margin-left: 0;
+    margin-right: 0;
+    position: absolute;
+}
+
+
+.title-menu{
+  margin-top: 45px ;
+  margin-bottom: 45px ;
+
+}
+#main-navbar{
+   background-color:#D2B48C;         
+}
+#main-navbar > a{
+  color:white;
+}
+
+.title-font{
+  font-size: 4em;
+  color:#38291f;
+  text-align: center;
+  background-color:  #FFDEAD
+/*    border-color: #624531;
+  border-width: 0px;
+  border-top-width: 10px;
+  border-bottom-width: 10px;*/
+  /*border-style: solid;*/
+}
+.navbar-brand{
+  margin-left: 5%
+}
+
+#navbarNav{
+  margin-left:  55%
+}
+.menu {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+header{
+padding-top: 8em; 
+}
+
+#gallery {
+  border-color: #624531;
+  border-width: 0px;
+  border-bottom-width: 15px;
+  border-style: solid;
+  background-color: #FFDEAD;
+  padding-bottom: 40px 
+  /*height: 100%; */
+}
+
+
+.ol-scale-line-inner{
+  border: 1px solid !important;
+    border-top-color: currentcolor !important;
+    border-top-style: solid !important;
+    border-top-width: 1px !important;
+border-top: none !important;
+color: black !important;
+ /*text-shadow: 2px 2px white;*/
+}
+
+.ol-scale-line{
+  background-color: white !important;
+}
+
+
+#credits {
+  background-color: #624531;
+  padding-top: 70px;
+  height: 50%; 
+}
+
+#subheader {
+  background-color: #624531;
+  padding-top: 45px;
+  padding-bottom: 45px;
+}
+
+#projet {
+  padding-bottom: 45px;
+  border-color: #624531;
+  border-width: 0px;
+  border-top-width: 15px;
+  border-bottom-width: 15px;
+  border-style: solid;
+  background-color: #FFDEAD;
+  padding-bottom: 40px 
+  /*height: 100%; */
+}
+
+#contact {
+  padding-bottom: 45px;
+  border-color: #624531;
+  border-width: 0px;
+  border-top-width: 15px;
+  border-bottom-width: 15px;
+  border-style: solid;
+  background-color: #FFDEAD;
+  /*height: 100%; */
+}
+#credits h1{
+  color: #fef1dd;
+  padding-bottom: 5px; 
+  border-color: #fef1dd;
+  border-width: 0px;
+  border-bottom-width: 8px;
+  border-style: solid;
+  text-align: center;
+}
+
+#information {
+  padding-bottom: 45px;
+  border-width: 0px;
+  background-color: #FFDEAD;
+  /*height: 100%; */
+}
 
 .rotate-north {
   top: 75px;
@@ -126,7 +343,7 @@
 
 body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   border-color: #38291f !important
 }
 
@@ -247,7 +464,7 @@ html {
 }
 
 .card-body {
-  background-color: #e0ca9b;
+  background-color: #FFDEAD;
   border-color: #38291f;
 }
 
@@ -267,10 +484,12 @@ html {
 }
 
 .arrival {
+  overflow-y: hidden;
   position: absolute;
-  height: 100%;
   width: 100%;
+  height: 100%;
   z-index: 100;
+  /*overflow-y: */
   /*background-image:url("../../public/index.png");*/
 }
 

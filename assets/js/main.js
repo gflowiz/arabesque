@@ -56,6 +56,24 @@ import proj4 from 'proj4';
 import WKT from 'ol/format/WKT.js';
 
 
+// $(window).scroll(function() {
+// // console.log(document.getElementById('main-navbar').style["background-color"])
+// // console.log($(window).scrollTop() )
+//     //After scrolling 100px from the top...
+//     if ( $(window).scrollTop() >= (screen.height/2 ) ) {
+//         // document.getElementById(main-navbar).style
+//          $('#main-navbar').css('background-color', '#D2B48C');
+//         $('#main-navbar>a').css('color', 'white');
+//         // $('#main-navbar').css('padding', '1em');
+//     //Otherwise remove inline styles and thereby revert to original stying
+//     } else {
+//         $('#main-navbar').css('background-color', '');         
+//         $('#main-navbar>a').css('color', '');
+//         // $('#main-navbar').css('padding', '8px');
+
+//     }
+// });
+
 var heighttokeep = $(".container-fluid").height()
 document.getElementById('map').style.height = heighttokeep + "px"
 
@@ -317,7 +335,7 @@ global.global_data = {
   }
 };
 
-global_data.projection = Proj["EPSG:3857"]
+global_data.projection = Proj["Mercator / EPSG:3857"]
 // Add listener to all button of application
 // onclick properties did'nt work with webpack so button must be update manually by adding an event listener
 
@@ -341,7 +359,7 @@ document.getElementById('LoadZipMapButton').addEventListener("click", function (
 // document.getElementById('OSMbutton').addEventListener("click", function(){}); 
 document.getElementById('buttonProjection').addEventListener("click", function () {
   changeProjection(global_data.layers, global_data.center)
-  if (global_data.projection.name === "EPSG:3857") {
+  if (global_data.projection.name === "Mercator / EPSG:3857") {
     document.getElementById("OSMbutton").disabled = false;
   } else {
     document.getElementById("OSMbutton").disabled = true;
@@ -474,6 +492,8 @@ document.getElementById("LoadZipMapButton").disabled = true;
 
 //   importData()
 // }); 
+
+
 
 
 (function () {
@@ -663,8 +683,8 @@ global.map = new Map({
     maxZoom: 25
   })
 });
-map.addControl(new CanvasScaleLine());
-
+var scaleLineControl = new ScaleLine();
+map.addControl(scaleLineControl);
 // map.addControl(attribution);
 // $('.ol-scale-line').css('left', '');
 // document.getElementsByClassName("ol-scale-line")[0].style.left = ""
@@ -1245,14 +1265,20 @@ export function getZoomFromVerticalBounds(distance) {
 
 // convertCSV_JSON()
 export function createGeoJSON(Json_data) {
+  try{
   var len = Json_data.length
   var points = [];
   for (var p = 0; p < len; p++) {
+    // console.log(Number(Json_data[p][global_data.ids.lat]))
     var point = turf.point([Number(Json_data[p][global_data.ids.lat]), Number(Json_data[p][global_data.ids.long])], Json_data[p]);
     points.push(point)
   }
 
   return turf.featureCollection(points)
+  }
+  catch{
+    alert("The nodes file is not well standardised \n Please check your file")
+  }
 }
 
 function importIDSFlow() {
@@ -1345,9 +1371,7 @@ function importData() {
 
   }
 
-  if (list_doublon_nodes.length !== 0) {
-    alert(list_doublon_nodes.length + "nodes have been removed.")
-  }
+
 
   var lx = maxX - minX
   var ly = maxY - minY
@@ -1363,7 +1387,12 @@ function importData() {
   global_data.zoom = getZoomFromVerticalBounds(ly)
   newCenter = transform(newCenter,global_data.projection.name,"EPSG:4326")
   global_data.center = newCenter
-  data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1])
+  var error_message = ""
+    if (list_doublon_nodes.length !== 0) {
+    console.log(list_doublon_nodes)
+    error_message = list_doublon_nodes.length + " nodes have been removed. \n No links have for origin or destination these nodes \n The removed nodes ID are "+list_doublon_nodes.toString()
+  }
+  data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1], error_message)
 
   computeMinStatNode(data.hashedStructureData, data.links, global_data.ids.linkID[0], global_data.ids.linkID[1], global_data.ids.vol);
 
@@ -1550,3 +1579,16 @@ function reduceDataset(geojson) {
   return geojson
 }
 
+$('#carouselDraw').carousel()
+$('#carouselFilter').carousel()
+$('#carouselExampleInterval').carousel()
+console.log($(".arrival"))
+$(".arrival").css('overflow-y', 'visible')
+global.worker = new Worker("./worker/test_worker.js"); // Déclaration du worker
+ worker.onmessage = function(event) {
+  console.log("test")
+  console.log(event)
+    };
+
+worker.postMessage(["bonjour",2])
+// console.log(worker)

@@ -125,7 +125,7 @@
             "lat": "lon"
         },
         "projection": {
-            "name": "EPSG:3857",
+            "name": "Mercator / EPSG:3857",
             "proj4": null,
             "extent": null
         },
@@ -268,7 +268,7 @@
             "lat": "lon"
         },
         "projection": {
-            "name": "EPSG:3857",
+            "name": "Mercator / EPSG:3857",
             "proj4": null,
             "extent": null
         },
@@ -411,7 +411,7 @@
             "vol": "Trade Value (US$)"
         },
         "projection": {
-            "name": "eck6",
+            "name": "Mercator / EPSG:3857",
             "proj4": null,
             "extent": null
         },

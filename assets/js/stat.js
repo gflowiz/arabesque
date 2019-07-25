@@ -77,9 +77,10 @@ export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
-export function checkIDLinks(links, nodes_list, id_ori, id_dest){
+export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_message){
   // var list_id_ori
   // var list_id_dest
+  var list_of_links = [];
   var has_link_removed = false;
   var filtered_links = [];
   var n = 0;
@@ -88,15 +89,17 @@ export function checkIDLinks(links, nodes_list, id_ori, id_dest){
       filtered_links.push(links[p])
     }
     else{
+      list_of_links.push(p)
       n++;
       has_link_removed = true;
     }
   }
-  console.log('-----------------------------------')
 
-  console.log(n)
   if(has_link_removed){
-    alert(n+" Links have been removed. No equivalent nodes have been found.")
+    alert(error_node_message+"\n\n"+n+" Links have been removed. No equivalent nodes have been found. \n The links number  " + list_of_links.toString() +" were removed \n")
+  }
+  else if (error_node_message !== 0){
+    alert(error_node_message)
   }
 return filtered_links
 }
