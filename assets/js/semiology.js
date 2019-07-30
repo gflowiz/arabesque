@@ -161,7 +161,7 @@ export function setupStyleAndAddLayer(style, layer_name) {
   if (layer_name === 'link') {
     loadGeometryParameter(style)
   }
-  console.log(layer_name)
+  
   var layer = layer_name.toLowerCase();
 
   if (layer === 'node') {
@@ -174,7 +174,7 @@ export function setupStyleAndAddLayer(style, layer_name) {
     style[layer].opa.var = 'fixed';
     style[layer].opa.vmax = Number(document.getElementById('ratioMaxOpaAdd' + layer_name).value);
   } else {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    
     var opaVar = document.getElementById('semioSelectorOpaAdd' + layer_name).value;
     style[layer].opa.var = opaVar
     style[layer].opa.vmax = getMinMaxColor(opaVar, layer)[1];
@@ -263,7 +263,7 @@ function getMinMaxColor(colorVar, layer) {
 
     var dataArray = test.flat()
   }
-  // console
+  console.log(dataArray)
   return [Math.min(...dataArray), Math.max(...dataArray)]
 }
 
@@ -418,17 +418,17 @@ export function setupMaxAndMin(var_name, layer_name) {
 
 function addColorSemio(name, id_selector, id_parent, variables) {
 
-  console.log("AAAAAAAAAAAAAAAAAAA")
+  
   if ($("#semioSelectorColor" + id_selector) !== null) {
     $("#semioColor" + id_selector).children().remove()
     $("#typeColor" + id_selector).remove();
     $("#labelTypeColor" + id_selector).remove();
     $('#colorPicker' + id_selector).children().remove();
   }
-  console.log(document.getElementById("semioColorBaseType" + id_selector).value)
+  
   if (document.getElementById("semioColorBaseType" + id_selector).value === "varied") {
 
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    
 
     $("#semioColor" + id_selector).append('<label class="text-muted h5" for="semioSelectorColor"' + id_selector + '>Variable</label>')
       .append($('<select>')
@@ -454,6 +454,7 @@ function addColorSemio(name, id_selector, id_parent, variables) {
 }
 
 function addTextSemio(name, id_selector, id_parent, variables) {
+  console.log(id_selector, id_parent)
   $("#" + id_parent).append($('<div>')
     .attr("class", "col-md-12")
     .append('<label class="text-muted h5">Variable</label>')
@@ -775,7 +776,7 @@ function addSizeRatio(id_parent, id_ele, layer) {
 
 function addColorTypeSelector(id_parent, id_ele) {
 
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
   if ($("#typeColor" + id_ele) !== null) {
 
     $("#inversedColorPalette").parent().remove();
@@ -783,7 +784,7 @@ function addColorTypeSelector(id_parent, id_ele) {
     $("#labelTypeColor" + id_ele).remove();
     $('#colorPicker' + id_ele).children().remove();
   }
-  console.log(id_ele)
+  
   if (document.getElementById('semioSelectorColor' + id_ele).value !== 'fixed') {
     $("#" + id_parent).append('<label class="text-muted h5 mt-2" for="typeColor' + id_ele + '" id="labelTypeColor' + id_ele + '">Type</label>')
       .append($('<select>')
@@ -812,8 +813,8 @@ function addColorTypeSelector(id_parent, id_ele) {
 
 function showColors(ide, idp) {
 
-  console.log(ide)
-  console.log(idp)
+  
+  
   if (document.getElementById("semioSelectorColor" + ide).value === 'fixed') {
     $('#colorPicker' + ide).children().remove();
     showfixed(ide, idp)
@@ -840,7 +841,7 @@ function showColors(ide, idp) {
 
 
 function showfixed(ide, idp) {
-  console.log("colorPicker" + ide)
+  
   var underId = "colorPicker" + ide
   $("#" + underId)
     .append('<label class="text-muted h5" for="semioColorpicker' + ide + '">Choose color</label>')
@@ -1049,14 +1050,14 @@ export function showSemioParameter(featureName) {
   addOpacitySemio(name, 'Add' + featureName, 'semioOpaAdd' + featureName, variables)
 
 
-  if (featureName === 'Node') {
+  if (featureName === 'node') {
     addTextSemio(featureName, 'Add' + featureName, 'semioTextAdd' + featureName, variables)
   }
 }
 
 
 export function changeSemioParameter(name, style) {
-  console.log(name)
+  
   if (document.getElementById('semioTextChange' + name) !== null) {
     $('#semioTextChange' + name).children().remove()
   }
@@ -1094,7 +1095,7 @@ export function changeSemioParameter(name, style) {
 //TODO
 function loadStyleToModify(layer_name, style, variables) {
 
-  console.log(layer_name)
+  
   if (layer_name === 'node') {
     changeSelect($("#semioSelectorTextChange" + layer_name).children('[value="' + style.text + '"]'), "semioSelectorTextChange" + layer_name)
   }

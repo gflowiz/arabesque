@@ -1,9 +1,13 @@
 import * as turf from "@turf/turf"
 import {transform, get as getProjection} from 'ol/proj.js';
+import {testLinkDataFilter,applyNodeDataFilter} from './filter.js'
+import {groupLinksByOD} from './layer.js'
+import JSZip from 'jszip'
+import {saveAs} from 'file-saver';
 
 export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
-  // console.log(nodes)
+  // 
   for(var p = 0; p< keys.length; p++){
     nodes[keys[p]].properties = Object.assign({"weigthed indegree": 0}, nodes[keys[p]].properties)
     nodes[keys[p]].properties = Object.assign({"weigthed outdegree": 0}, nodes[keys[p]].properties)
@@ -42,17 +46,9 @@ export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
-
-
-// export isStatMinMustBeCompute(nodes, links, id_ori, id_dest, id_vol, size_var){
-//   if (['degree','balance', 'indegree', 'outdegree'].includes(size_var)){
-//     computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol)
-//   }
-// }
-
 export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
-  // console.log(nodes)
+  // 
   for(var p = 0; p< keys.length; p++){
     nodes[keys[p]].properties["weigthed indegree"] = 0
     nodes[keys[p]].properties["weigthed outdegree"] = 0
@@ -77,6 +73,16 @@ export function computeReduceMinStatNode(nodes, links, id_ori, id_dest, id_vol){
 
 }
 
+export function computeTotalVolume(links, id_vol, global_data_){
+
+  var totalSum = 0
+  for(var p=0; p<links.length;p++){
+      totalSum = totalSum + Number(links[p][id_vol])
+  }
+  global_data_.totalSum = totalSum
+}
+
+
 export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_message){
   // var list_id_ori
   // var list_id_dest
@@ -98,14 +104,14 @@ export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_mess
   if(has_link_removed){
     alert(error_node_message+"\n\n"+n+" Links have been removed. No equivalent nodes have been found. \n The links number  " + list_of_links.toString() +" were removed \n")
   }
-  else if (error_node_message !== 0){
+  else if (error_node_message.length !== 0){
+    
     alert(error_node_message)
   }
 return filtered_links
 }
 
-export function computeDistance
-(nodes, links, id_ori, id_dest,isCSV,  unit){
+export function computeDistance(nodes, links, id_ori, id_dest,isCSV,  unit){
   var len = links.length
   for(var p = 0; p< len; p++){
     if(isCSV){
@@ -144,6 +150,44 @@ if (feature.geometry.type == "MultiPolygon") {
  
 }
 
+export function exportLinksAndNodes(data, filter, conf) { 
+// get Filter ID links and nodes
+    var id_links = testLinkDataFilter(filter.link, data)
+    var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
+    var removed_nodes = selected_nodes[1]
+    var list_nodes = Object.keys(selected_nodes[0])
+    var ODlinks = groupLinksByOD(data.links, id_links, conf.ids.linkID[0], conf.ids.linkID[1])
+    var oriIDS = Object.keys(ODlinks);
+    var linksListToExport = [];
+    for (var j = 0; j < oriIDS.length; j++) {
+        var Dlinks =  Object.keys(ODlinks[oriIDS[j]])
+        for (var i = 0; i < Dlinks.length ; i++) {
+                if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
+                var listLinksOD = ODlinks[oriIDS[j]][Dlinks[i]]
+                for(var p = 0; p < listLinksOD.length; p++){
+                  linksListToExport.push(data.links[listLinksOD[p]])
+                }
+            }
+        }
+    }
+
+console.log(linksListToExport)
+  // var zip = new JSZip();
+
+  // zip.file("links.json", JSON.stringify(linksListToExport));
+  // // zip.file("nodes.json", JSON.stringify(global_data));
+  // zip.generateAsync({
+  //     type: "blob"
+  //   })
+  //   .then(function (content) {
+  //     // see FileSaver.js
+  //     saveAs(content, "Save_GFlowiz_Map.zip");
+  //   });
+
+  // addLegendToMap()
+}
+
+
 function median(values) {
 
     values.sort( function(a,b) {return a - b;} );
@@ -158,7 +202,7 @@ function median(values) {
 
 export function getAggregateValue(list_value_link){
   var aggrFunction = global_data.files.aggr;
-  // console.log(aggrFunction)
+  // 
   return window[aggrFunction](list_value_link)
 }
 
@@ -186,3 +230,7 @@ window.max = max
 window.sum = sum
 window.median = median
 window.mean = mean
+
+
+
+

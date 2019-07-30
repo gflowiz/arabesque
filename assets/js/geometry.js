@@ -49,7 +49,7 @@ function noOrientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
 	var baseArrow = tranposeLine(reducePointOri, reducePointdest, width / 2);
 	var topArrow = tranposeLine(reducePointdest, reducePointOri, width / 2);
 
-   // console.log([baseArrow, topArrow, baseArrow[0]])
+   // 
     
     return baseArrow.concat(topArrow).concat([baseArrow[0]])
 }
@@ -75,8 +75,8 @@ function orientedStraightArrow(style, ori, dest, rad_ori, rad_dest , width) {
     //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
 
 	// var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
-      // console.log(dist)
-   // console.log/÷((heigth_arrow *width + width)*style.ratioBounds)
+      // 
+   // 
     var testWidth =  Math.min(heigth_arrow *width + width , 0.5 *dist)
     // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
     var topArrowpoint =  getIntersection(baseArrow[1], baseArrow[0],testWidth)
@@ -107,8 +107,8 @@ function orientedStraightNoHookArrow(style, ori, dest, rad_ori, rad_dest , width
     //distance = Math.sqrt( (endX - startX)*(endX - startX )+ (endY - startY)*(endY - startY) ) * ratio_Arrow_Line;
 
     // var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
-      // console.log(dist)
-   // console.log/÷((heigth_arrow *width + width)*style.ratioBounds)
+      // 
+   // 
     var testWidth =  Math.min(heigth_arrow *width + width , 0.5 *dist)
     // topArrowpoint = [Math.cos(angle) * distance + startX, Math.sin(angle) * distance + startY]
     var topArrowpoint =  getIntersection(baseArrow[1], baseArrow[0],testWidth)
@@ -195,7 +195,7 @@ export function orientedCurveArrow(style, ori, dest, rad_ori, rad_dest, width){
 	var max_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist + width/2)
 	var min_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist - width/2)
 	var newOri = getIntersection(ori,center_curve_point,rad_ori)
-	// console.log(Math.min(heigth_arrow *width, 0.5* dist))
+	// 
 	var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
 	var newDest = getIntersection(dest,center_curve_point,rad_dest + heigth_arrow) // The height of the arrow is added tested to see the result
 	var pointArrow = getIntersection(dest,center_curve_point,rad_dest)
@@ -239,16 +239,16 @@ export function orientedCurveOneArrow(style, ori, dest, rad_ori, rad_dest, width
     // compute the point from
     var reducePointdest = getIntersection(dest,ori,rad_dest)
     var reducePointOri = getIntersection(ori,dest,rad_ori)
-// console.log(reducePointdest)
+// 
     var dist = base_curve * Math.sqrt((reducePointdest[0] - reducePointOri[0]) * (reducePointdest[0] - reducePointOri[0]) + (reducePointdest[1] - reducePointOri[1]) * (reducePointdest[1] - reducePointOri[1]))
     var base_curve_point = [-Math.cos(angle) * dist + reducePointdest[0], -Math.sin(angle) * dist + reducePointdest[1]]
-// console.log(dist)
+// 
     // get Origin from the radius of the current nodes
     var center_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest], height_curve * dist)
     var max_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest],height_curve * dist + width/2)
     var min_curve_point = transposePointVerticalyFromLine(base_curve_point, [ori,dest],height_curve * dist - width/2)
     var newOri = getIntersection(ori,center_curve_point,rad_ori)
-    // console.log(Math.min(heigth_arrow *width, 0.5* dist))
+    // 
     // var heigth_arrow = Math.min(heigth_arrow *width + width , 0.5* dist)
     var newDest = getIntersection(dest,center_curve_point,rad_dest) // The height of the arrow is added tested to see the result
     var pointArrow = getIntersection(dest,center_curve_point,rad_dest)
@@ -270,7 +270,7 @@ export function orientedCurveOneArrow(style, ori, dest, rad_ori, rad_dest, width
 
     
 
-// console.log(pathHigh.concat(pathLow))
+// 
     var Polygone = pathHigh.concat(pathLow)
     return Polygone
 }
@@ -345,7 +345,7 @@ function drawLine(path, iteration){
 }
 
 export function changeGeometryParameter(name_layer, style){
-    console.log("azeaea")
+    
   changeSelect($("#arrowDataChange").children('[value="'+ style.geometry.oriented+'"]'), "arrowDataChange" )
   changeSelect($("#arrowtypeChange").children('[value="'+ style.geometry.type+'"]'), "arrowtypeChange")
     showGeometryParameter('Change')
@@ -371,7 +371,7 @@ function getIntersection(ori, dest, radius){
 
 
 export function addArrowSizeSelect(name = ''){
-    console.log(name)
+    
     if($("ArrowHeadSize"+name).children() !== null){
       $('#ArrowHeadSize'+name).children().remove()
     }
@@ -483,7 +483,7 @@ export function setupArrowParameter(name = ''){
 
 export function setupHead(name = '')
 {	
-    console.log(name)
+    
 	if (document.getElementById("arrowData"+name).value === 'oriented' && document.getElementById("arrowtype"+name).value !=="TriangleArrow"  && document.getElementById("arrowtype"+name).value !=="CurveOneArrow"){
 		addArrowSizeSelect(name)
 	}

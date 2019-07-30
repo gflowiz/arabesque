@@ -4,7 +4,7 @@
 <html lang="en">
    <head>
       <meta charset="UTF-8">
-      <title>Gflowiz</title>
+      <title>Arabesque</title>
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
       <link href="dist/main.css" rel="stylesheet">
@@ -37,6 +37,7 @@
       </li>
       
     </ul>
+    <img src="./public/ifsttar.png" width="110" height="50" class="d-inline-block align-top nav-image" alt="">
   </div>
 </nav>
     <!-- Header -->
@@ -46,7 +47,8 @@
             <div class="row justify-content-around">
             <div classe="col-md-6">
                <h1 class="home-title"> Arabesque </h1>
-               <h3 class="home-subtitle">The web application that makes geographical flow vizualisation a breeze 
+               <h3 class="home-subtitle">Arabesque ! and flow mapping becomes a breeze.<br>
+Arabesque is a web application for thematic mapping of flow and networks datasets 
                </h3>
             </div>
           </div>
@@ -92,7 +94,7 @@
           <div class="col-md-12" >
             <h3 class="subheader-title">Arabesques provides a web vizualisation tool to create flow map et explore it. <br>
             Built in javascript and HTML 5</h3> 
-            <h3 class="subheader-title">Download the tutorial of the application here (ADD THE TUTO)</h3>
+            <h3 class="subheader-title"><a href="https://hackmd.io/TZCl0F-SRcq8kp4VCyv9Yg?view" target="_blank">Find the online tutorial of the application here (Temporaire)</a> </h3>
           </div>
         </div>
       </div>
@@ -198,13 +200,22 @@
                   <div id="carouselFilter" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                       <div class="carousel-item active" data-interval="3000">
-                        <img src="./public/img/1.png" class="d-block w-100" alt="...">
+                        <img src="./public/img/f1.png" class="d-block w-100" alt="...">
                       </div>
                       <div class="carousel-item" data-interval="3000">
-                        <img src="./public/img/2.png" class="d-block w-100" alt="...">
+                        <img src="./public/img/f2.png" class="d-block w-100" alt="...">
                       </div>
                       <div class="carousel-item" data-interval="3000">
-                        <img src="./public/img/4.png" class="d-block w-100" alt="...">
+                        <img src="./public/img/f4.png" class="d-block w-100" alt="...">
+                      </div>                      
+                      <div class="carousel-item" data-interval="3000">
+                        <img src="./public/img/f3.png" class="d-block w-100" alt="...">
+                      </div>
+                      <div class="carousel-item" data-interval="3000">
+                        <img src="./public/img/f5.png" class="d-block w-100" alt="...">
+                      </div>
+                      <div class="carousel-item" data-interval="3000">
+                        <img src="./public/img/f6.png" class="d-block w-100" alt="...">
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselFilter" role="button" data-slide="prev">
@@ -275,6 +286,38 @@
                 </div>
     
     </section>
+    <section id="contributors">
+          <div class="container">
+            <div class="row justify-content-center">
+                <hr class="menu-bar">
+                <div class="col-md-3 title-menu justify-content-center">
+
+                 <h1 class="title-font"> Realisation </h1>
+            </div>
+          </div>
+            <div class="row justify-content-around">
+                <div class="col-md-4" >
+                   <h1> Funding</h1> 
+                      <hr class="showcase-bar">
+                      <p>The project is funded by IFSTTAR's scientific direction, with the participation of the Projet federateur Mobilities and numeric transitions. It is also supported by the research group GDR Magis through the GEOWEB prospective action.</p>
+                </div>
+                <div class="col-md-4" >
+                  <h1> Contributors</h1>
+                      <hr class="showcase-bar"> 
+                      <ul> 
+                        <li>Thomas Bapaume : Développement & Conception</li> 
+                        <li>Etienne Côme : Développement & Conception</li> 
+                        <li>Françoise Bahoken, Etienne Côme et Laurent Jégou : Responsabilité scientifique, conception et coordination
+</li> 
+                      </ul>
+
+
+                </div>
+               
+              </div>
+
+        </div>
+    </section>
     <section id="contact">
           <div class="container">
             <div class="row justify-content-center">
@@ -286,7 +329,7 @@
           </div>
             <div class="row justify-content-around">
                 <div class="col-md-4" >
-                   <h1> Poject</h1> 
+                   <h1> Project</h1> 
                       <hr class="showcase-bar">
                       <p>The gFlowiz initiative supports on the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.</p>
                 </div>
@@ -315,6 +358,7 @@
 
         </div>
     </section>
+    
     <section id="projet">
         <div class="container">
                   <div class="container">
@@ -383,6 +427,12 @@ Advanced geospatial analysis for browsers and Node.js
             <div class="row justify-content-around">
                 <div class="col-md-3" >
                    <h1> Licence</h1> 
+                   <p>BSD 2-Clause License
+<br>
+Copyright (c) 2019, IFSTTAR
+<br>
+All rights reserved.
+                   </p>
                 </div>
                 <div class="col-md-3" >
                   <h1> Source Code</h1> 
@@ -404,10 +454,18 @@ Advanced geospatial analysis for browsers and Node.js
     </section>
 
       </div>
+
+
+
+
+
 <!-- Eploration MAP -->
       <div class="container-fluid h-100" style="overflow: hidden;">
          <div class="row h-100" >
             <div class="col-md-2 h-100" style="background-color:#fef1dd;" id="layerLayout">
+                <div class="row" id="logo-div" type="button" data-toggle="modal" data-target="#BackMenuModal" rel="tooltip"title="Go back to homepage">
+                  <h1 class="logo-title"> Arabesque </h1>
+                </div>
                <div class="row p-0" >
                   <div class="accordion w-100" id="accordionExample">
                      <div class="card" >
@@ -450,10 +508,10 @@ Advanced geospatial analysis for browsers and Node.js
                         </div>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                         <div class="card-body">
-                        <button type="button" id="addNewNodeFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioNode">
+                        <button type="button" id="addNewNodeFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioNode" rel="tooltip" data-placement="right" title="Replace the current Node layer" >
                         Add Node Features
                         </button>
-                        <button type="button" id="addNewLinkFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioLink">
+                        <button type="button" id="addNewLinkFeaturesButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#semioLink" data-toggle="tooltip" data-placement="right" title="Replace the current link layer">
                         Add Link Features
                         </button>
                         <button type="button"  id="baseLayerButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#exampleModal">
@@ -462,7 +520,7 @@ Advanced geospatial analysis for browsers and Node.js
                         <button type="button" id="OSMbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#OSMModal">
                         Add Tile Layers (OSM)
                         </button>           
-                        <button type="button" id="importLayerbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#geojsonModal">
+                        <button type="button" id="importLayerbutton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#geojsonModal" >
                         Import GeoJson Layers
                         </button>
                         </div>
@@ -470,7 +528,7 @@ Advanced geospatial analysis for browsers and Node.js
                      </div>
                   </div>
                </div>
-               <div class="row p-0 mt-3" id="layerControlList" >
+               <div class="row p-0 mt-3" id="layerControlList" data-toggle="tooltip" data-placement="right" data-delay="0" title="Drag and Drop layers to change z-index" data-animation="false">
                   <ul id="accordionLayerControl" class="list-unstyled col-md-12 align-items-center">
                   </ul>
                </div>
@@ -492,6 +550,8 @@ Advanced geospatial analysis for browsers and Node.js
                 <div class="row justify-content-md-center mt-3 ">
                   <div class="col-md-8">
                      <label id=percentageLinkData>Percentage of links represented: 100%</label>
+                     <label id=percentageVolumeData>Percentage of volume represented: 100%</label>
+                     <br>
                      <label id=percentageNodeData>Percentage of nodes represented: 100%</label>
                   </div>
                </div>
@@ -773,23 +833,23 @@ Advanced geospatial analysis for browsers and Node.js
                      <div class="col-md-3 p-0">
                         <div class="col-md-12">
                            <label for="select" class="text-muted h5">Orientation</label>
-                           <select class="custom-select" id="semioColorBaseTypeAddNode">
+                           <select class="custom-select" id="semioColorBaseTypeAddnode">
                               <option selected value="fixed">Fixed</option>
                               <option value="varied">Varied</option>
                            </select>
                         </div>
-                        <div class="col-md-12" id="semioColorAddNode">
+                        <div class="col-md-12" id="semioColorAddnode">
                         </div>
                      </div>
-                     <div class="col-md-9" id="colorPickerAddNode">
+                     <div class="col-md-9" id="colorPickerAddnode">
                      </div>
                   </div>
                   <hr>
                   <label for="select" class="h4 strong">Size</label>
-                  <div class="row"  id="semioSizeAddNode">
+                  <div class="row"  id="semioSizeAddnode">
                      <div class="col-md-2">
                         <label for="select" class="text-muted h5">Orientation</label>
-                        <select class="custom-select" id="semioSizeBaseTypeAddNode">
+                        <select class="custom-select" id="semioSizeBaseTypeAddnode">
                            <option selected value="fixed">Fixed</option>
                            <option value="varied">Varied</option>
                         </select>
@@ -799,16 +859,16 @@ Advanced geospatial analysis for browsers and Node.js
                      <div class="col-md-2">
                         <hr>
                         <label for="select" class="h4 strong">Text</label>
-                        <div class="row"  id="semioTextAddNode">
+                        <div class="row"  id="semioTextAddnode">
                         </div>
                      </div>
                      <div class="col-md-10">
                         <hr>
                         <label for="select" class="h4 strong">Opacity</label>
-                        <div class="row"  id="semioOpaAddNode">
+                        <div class="row"  id="semioOpaAddnode">
                            <div class="col-md-2">
                               <label for="select" class="text-muted h5">Orientation</label>
-                              <select class="custom-select" id="semioOpaBaseTypeAddNode">
+                              <select class="custom-select" id="semioOpaBaseTypeAddnode">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
                               </select>
@@ -825,7 +885,7 @@ Advanced geospatial analysis for browsers and Node.js
          <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                <div class="modal-header">
-                  <h5 class="modal-title h2" id="semioModalLabelLink">Choose Semio</h5>
+                  <h5 class="modal-title h2" id="semioModalLabellink">Choose Semio</h5>
                </div>
                <div class="modal-body" >
                   <div class="row">
@@ -868,25 +928,25 @@ Advanced geospatial analysis for browsers and Node.js
                            <div class="col-md-3 p-0">
                               <div class="col-md-12">
                                  <label for="select" class="text-muted h5">Orientation</label>
-                                 <select class="custom-select" id="semioColorBaseTypeAddLink">
+                                 <select class="custom-select" id="semioColorBaseTypeAddlink">
                                     <option selected value="fixed">Fixed</option>
                                     <option value="varied">Varied</option>
                                  </select>
                               </div>
-                              <div class="col-md-12" id="semioColorAddLink">
+                              <div class="col-md-12" id="semioColorAddlink">
                               </div>
                            </div>
-                           <div class="col-md-9" id="colorPickerAddLink">
+                           <div class="col-md-9" id="colorPickerAddlink">
                            </div>
                         </div>
                         <!--             <div class="row justify-content-between" id="semioColorAddLink">
                            </div> -->
                         <hr>
                         <label for="select" class="h4 strong">Size</label>
-                        <div class="row"  id="semioSizeAddLink">
+                        <div class="row"  id="semioSizeAddlink">
                            <div class="col-md-2">
                               <label for="select" class="text-muted h5">Orientation</label>
-                              <select class="custom-select" id="semioSizeBaseTypeAddLink">
+                              <select class="custom-select" id="semioSizeBaseTypeAddlink">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
                               </select>
@@ -906,7 +966,7 @@ Advanced geospatial analysis for browsers and Node.js
                               <div class="row"  id="semioOpaAddLink">
                                  <div class="col-md-2">
                                     <label for="select" class="text-muted h5">Orientation</label>
-                                    <select class="custom-select" id="semioOpaBaseTypeAddLink">
+                                    <select class="custom-select" id="semioOpaBaseTypeAddlink">
                                        <option selected value="fixed">Fixed</option>
                                        <option value="varied">Varied</option>
                                     </select>
@@ -925,7 +985,7 @@ Advanced geospatial analysis for browsers and Node.js
          <div class="modal-dialog" role="document">
             <div class="modal-content">
                <div class="modal-header">
-                  <h5 class="modal-title h2" id="changeGeometryModalLink">Change Arrow Geometry</h5>
+                  <h5 class="modal-title h2" id="changeGeometryModalLink">Change Arrow shep</h5>
                </div>
                <div class="modal-body" >
                   <div class="row">
@@ -961,7 +1021,7 @@ Advanced geospatial analysis for browsers and Node.js
                      </div>
                   </div>
                </div>
-               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addGeometryButtonLink" data-dismiss="modal">ADD LAYER</button>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addGeometryButtonLink" data-dismiss="modal">Change arrow shape</button>
             </div>
          </div>
       </div>
@@ -1044,7 +1104,7 @@ Advanced geospatial analysis for browsers and Node.js
                   </div>
                </div>
                <div class ="modal-footer">
-                  <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Gflowiz</button>
+                  <button class="btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importedFileLocationButton" data-dismiss="modal">Arabesque</button>
                </div>
             </div>
          </div>
@@ -1066,7 +1126,7 @@ Advanced geospatial analysis for browsers and Node.js
                   </div>
                </div>
                <div class ="modal-footer" >
-                  <button class=" btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Gflowiz</button>
+                  <button class=" btn btn-dark btn-block justify-content-center mt-2"   type="button" id="importPresetMapButton" data-dismiss="modal">Arabesque</button>
                </div>
             </div>
          </div>
@@ -1182,6 +1242,37 @@ Advanced geospatial analysis for browsers and Node.js
                   </div>
                </div>
                <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="changeStyleButtonlink" data-dismiss="modal">Change</button>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="BackMenuModal" tabindex="-1" role="dialog" aria-labelledby="BackMenuModalModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="BackMenuModalModalLabel"> Back to Homepage</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <label class="text-muted h5">You want to return to the homepage ? <br> It will suppress your map.</label>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <button type="button" id="QuitButton" class="btn btn-dark" data-dismiss="modal">Quit</button>
+                     </div>
+                    <div class="col-md-4">
+                        <button type="button" id="saveAndQuitButton" class="btn btn-dark" data-dismiss="modal">Save and quit</button>
+                     </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
       </div>

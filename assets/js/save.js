@@ -3,7 +3,7 @@ import {getZoomFromVerticalBounds, createGeoJSON, prepareLinkData} from "./main.
 import {addLayerGestionMenu, addLayerImportGestionMenu} from "./control.js"
 import {refreshFilterModal, addFilterToScreen, loadNumFilter, loadSingleCatFilter, loadRemoveFilter, checkDataToFilter,loadBinFilterData, loadTemporalFilter, loadTimeLapseFilter} from "./filter.js"
 import {addOSMLayer, addNewLayer, addLayerFromURL, addTileLayer, addGeoJsonLayer,getLayerFromName} from "./layer.js";
-import {computeMinStatNode, computeDistance, checkIDLinks} from "./stat.js";
+import {computeMinStatNode, computeDistance, checkIDLinks, computeTotalVolume} from "./stat.js";
 import {applyNewStyle, nodeOrderedCategory, linkOrderedCategory} from "./semiology.js";
 
 import {parse as papaparse} from "papaparse"
@@ -34,7 +34,7 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
  			
  				setupMapandHashData(map, datasets, global_var)
  			
- 				console.log(datasets.hashedStructureData)
+ 				
  				datasets.links =prepareLinkData(datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], datasets.hashedStructureData, global_var.ids.vol);
  				computeMinStatNode(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], global_var.ids.vol);
  				
@@ -49,12 +49,13 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 				 	if(save_para.style.link.color.cat==='categorical'){
 				        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
 				      }
-				      console.log(save_para.style.node.color.cat)
+				      
 				     if(save_para.style.node.color.cat==='categorical'){
 				        nodeOrderedCategory(global_var.style.node.color.var, global_var.style.node)
-				        console.log(global_var.style.node)
+				        
 				      }
 
+  				 computeTotalVolume(datasets.links, global_var.ids.vol, global_var)
 				 applyNewStyle("link")
 				 applyNewStyle("node")
 
@@ -149,7 +150,7 @@ function setupGlobalVariablesFromSave(saved_Json, global_var){
 
 
 function loadBaseLayerFromSaved(){
-	console.log(data.nodes)
+	
 }
 
 function loadDataForExample(file_json, data_link,data_geo, data){
@@ -182,7 +183,7 @@ function loadDataForExample(file_json, data_link,data_geo, data){
 }
 
 function loadPojection(savedProj, center){
-	console.log(savedProj.name)
+	
 	setNextProj( map, savedProj.name , center);
 return savedProj
 }
@@ -196,7 +197,7 @@ export function loadZippedMap(){
 	loadBaseZipLayerData(global_data.layers.base)
 	loadImportZipLayerData(global_data.layers.import)
 	loadZipOSMLayerData(global_data.layers.osm)
-console.log(global_data.center)
+
 		applyNewStyle("link")
 		applyNewStyle("node")
 		map.getView().setCenter(transform(global_data.center, 'EPSG:4326',global_data.projection.name))
@@ -258,14 +259,14 @@ var lx = maxX - minX
 var ly = maxY - minY
 global_var.style.ratioBounds = Math.max(lx,ly)* 0.0002
 global_var.center =  [minX+lx/2,minY+ly/2]
-  console.log(global_var.center)
+  
 
-data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_var.ids.linkID[0], global_var.ids.linkID[1])
+data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_var.ids.linkID[0], global_var.ids.linkID[1], "")
 map.getView().setCenter(global_var.center)
 global_var.center = transform(global_var.center,global_data.projection.name,"EPSG:4326")
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 global_var.zoom = getZoomFromVerticalBounds(ly)
-console.log(data.hashedStructureData)
+
 return data.hashedStructureData
 }
 
@@ -274,10 +275,10 @@ function loadLayerData(base_layers, layers){
 	for(var g= 0; g<base_layers.length;g++){
 		var layer = base_layers[g]
 		layers[layer.name] = {}
-			console.log(layer.style)
+			
 		addLayerFromURL(map, ListUrl[layer.name],layer.name, layer.attributions, layer.style.opacity, layer.style.stroke, layer.style.fill)
 		layers[layer.name].style = layer.style
-		// console.log(getLayerFromName(map, layer.name).getSource().getFeatures())
+		// 
 		addLayerGestionMenu(layer.name);
 	}
 }
@@ -299,7 +300,7 @@ function loadImportZipLayerData(layers){
 }
 
 function loadZipOSMLayerData(layers){
-console.log(layers)
+
 	for(var g in layers){
 		addTileLayer(map, layers, layers[g].url, g, layers[g].attributions)
 		// layers[layer.name].style = layer.style

@@ -52,7 +52,7 @@ for(var i in Proj){
 }
         // var cc = d3rot.default()
         //             var p = cc(0, 0)
- console.log(d3rot)
+ 
       var projection = new Projection({
         code: 'testdf',
         // The extent is used to determine zoom level 0. Recommended values for a
@@ -60,7 +60,7 @@ for(var i in Proj){
         units: 'm'
       });
       addProjection(projection);
-      // console.log(d3.geoEquirectangularRaw().invert)
+      // 
       addCoordinateTransforms('EPSG:4326', projection,
                   function(coordinate) {
           return [
@@ -83,20 +83,20 @@ for(var i in Proj){
         units: 'm'
       });
       addProjection(projection2);
-      // console.log(d3.geoEquirectangularRaw().invert)var cc = d3proj.geoBertin1953Raw()
- // console.log(cc(45,45))
+      // 
+ // 
       addCoordinateTransforms('EPSG:4326', projection2,
                   function(coordinate) {
                  
         var cc = d3rot.default()
                     var p = cc(coordinate[1], coordinate[0])
-                    // console.log(p)
+                    // 
                    return p;
         },
         function(coordinate) {
                   var cc = d3proj.geoAiryRaw(1)
                     var p = cc.invert(coordinate[1], coordinate[0])
-                    // console.log(p)
+                    // 
                    return [p[0]*100,p[1]* 100];
         });
      
@@ -105,11 +105,11 @@ for(var i in Proj){
 function refreshBaseLayers(map,layers){
 
   for(var m in layers){
-  console.log('AAAAAAAAAAAAAA')
+  
 
-  console.log(m)
+  
 
-  console.log(ListUrl[m])
+  
   map.removeLayer(getLayerFromName(map,m)); 
   // var oldStyle = getLayerFromName(map,m).getStyle();  
     // if(layers[m].added){
@@ -135,7 +135,7 @@ function refreshFeaturesLayers(map,layers, old_projection ,new_projection){
 
   // for(var m=0; m<LEN;m++){
     
-    // console.log(data);
+    // 
     if(getLayerFromName(map,'link') !== null){
       // map.removeLayer(getLayerFromName(map,'link'));
       generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
@@ -155,7 +155,7 @@ export function getNameLayers(layers){
 }
 
 // function getLayerUrl(name){
-//   console.log(ListUrl.length);
+//   
 //   for(var p=0; p< ListUrl.length; p++){
 //     if(ListUrl[p].name === name){
 //       return [ListUrl[p].name, ListUrl[p].url];}
@@ -183,7 +183,7 @@ export function getCentroid(feature,projection_name){
     var projectedCentroid = transform(centroid.geometry.coordinates, 'EPSG:4326', projection_name)
     } else if (feature.geometry.type == "Point"){
       
-    // console.log(feature.geometry.coordinates)
+    // 
       return transform(feature.geometry.coordinates, 'EPSG:4326', projection_name)
     }
     else
@@ -205,7 +205,7 @@ export function changeProjection(layers, center){
     var iPrj = document.getElementById("projection").value;
 
     var projName = Proj[iPrj].name;
-console.log(iPrj)
+
   var newView = new View({
     projection: projName,
     center:transform(global_data.center, 'EPSG:4326',projName),
@@ -224,7 +224,7 @@ refreshFeaturesLayers(map,layers, global_data.projection.name,projName);
   // if(Proj[iPrj].extent !== null){
   //   applyExtent(layers,projection.extent)
   // }
-console.log(global_data.projection.extent)
+
   global_data.projection = Proj[iPrj]
 if(global_data.projection.extent !== null){
 
@@ -293,11 +293,11 @@ export function loadZipProjection(map, center, zoom){
 
 
 export function setNextProj( map, new_projName){
-  console.log(new_projName)
-  // console.log(index_proj)
+  
+  // 
   // var newExtent =[]
   var newProj = getProjection(new_projName);
-  // console.log(center)
+  // 
  // Proj[index_proj].extent = newExtent
   // newProj.setExtent(newExtent);
   var newView = new View({

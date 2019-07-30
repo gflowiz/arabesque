@@ -224,7 +224,7 @@ var y = d3.scaleLinear().rangeRound([height, 0]);
 // g.append("g")
 //       .attr("transform", "translate(0," + height + ")")
 //       .call(d3.axisBottom(x));
-     // console.log(y.domain())  // d3.hist has to be called before the Y axis obviously
+     // 
   g.append("g")
       .call(d3.axisLeft(y));
 
@@ -1104,12 +1104,12 @@ var bins = d3.histogram()
     .thresholds(x.ticks(30))
     (data_histo);
 
-console.log(d3.max(bins, function(d) { return d.length; }))
+
 
  var y = d3.scaleLinear()
       .range([height, 0]);
       y.domain([0, d3.max(bins, function(d) { return d.length; })]); 
-      console.log(y.domain())  // d3.hist has to be called before the Y axis obviously
+      
   g.append("g")
       .call(d3.axisLeft(y));
 

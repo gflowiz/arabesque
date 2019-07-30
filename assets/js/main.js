@@ -5,7 +5,7 @@ import {  refreshFilterModal,  addFilterToScreen,  checkDataToFilter,  testLinkD
 import {  addOSMLayer,  addBaseLayer,  addGeoJsonLayer,  addNodeLayer,  generateLinkLayer,  addLegendToMap,  showTileLayersName,  addTileLayer,  getTileData,  addBaseUrlLayer, getLayerFromName} from "./layer.js";
 import {  loadMapFromPresetSave,  loadFilter,  loadZippedMap} from "./save.js";
 import {  getCentroid,  changeProjection,  loadAllExtentProjection} from "./projection.js";
-import {  computeMinStatNode,  computeDistance,  checkIDLinks} from "./stat.js";
+import {  computeMinStatNode,  computeDistance,  checkIDLinks, computeTotalVolume, exportLinksAndNodes} from "./stat.js";
 import {  addLayerGestionMenu,  addLayerImportGestionMenu} from './control.js';
 import {  showGeometryParameter,  setupArrowParameter,  setupHead} from './geometry.js';
 import {  setupStyleAndAddLayer,  showSemioParameter,  generatePaletteMultiHue2,  changeSemioParameter, changeArrowGeometryAndReloadMap} from './semiology.js'
@@ -57,8 +57,8 @@ import WKT from 'ol/format/WKT.js';
 
 
 // $(window).scroll(function() {
-// // console.log(document.getElementById('main-navbar').style["background-color"])
-// // console.log($(window).scrollTop() )
+// // 
+// // 
 //     //After scrolling 100px from the top...
 //     if ( $(window).scrollTop() >= (screen.height/2 ) ) {
 //         // document.getElementById(main-navbar).style
@@ -216,14 +216,14 @@ for (var i in Proj) {
 try {
   register(proj4);
   loadAllExtentProjection()
-  console.log(proj4)
+  
 } catch (error) {
   console.error(error);
   // expected output: ReferenceError: nonExistentFunction is not defined
   // Note - error messages will vary depending on browser
 }
 // loadAllExtentProjection()
-console.log(proj4)
+
 global.data = {
   hashedStructureData: {},
   filter: {
@@ -366,10 +366,10 @@ document.getElementById('buttonProjection').addEventListener("click", function (
   }
 });
 document.getElementById('addNewNodeFeaturesButton').addEventListener("click", function () {
-  showSemioParameter('Node')
+  showSemioParameter('node')
 });
 document.getElementById('addNewLinkFeaturesButton').addEventListener("click", function () {
-  showSemioParameter('Link')
+  showSemioParameter('link')
   showGeometryParameter()
 });
 
@@ -425,10 +425,10 @@ document.getElementById('addGeometryButtonLink').addEventListener("click", funct
   changeArrowGeometryAndReloadMap(global_data.style)
 });
 document.getElementById('addSemioButtonLink').addEventListener("click", function () {
-  setupStyleAndAddLayer(global_data.style, 'Link')
+  setupStyleAndAddLayer(global_data.style, 'link')
 });
 document.getElementById('addSemioButtonNode').addEventListener("click", function () {
-  setupStyleAndAddLayer(global_data.style, 'Node')
+  setupStyleAndAddLayer(global_data.style, 'node')
 });
 // Modal -- Import
 document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", function () {
@@ -437,7 +437,7 @@ document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", fu
   var stroke_color = document.getElementById("strokeColorpickerGeoJson").value;
   var fill_color = document.getElementById("fillColorpickerGeoJson").value;
 
-  console.log(opacity, stroke_color, fill_color)
+  
   addGeoJsonLayer(map, data.geoJson, layer_name, opacity, stroke_color, fill_color)
 
 
@@ -456,7 +456,14 @@ document.getElementById('addNewLayerButtonGeoJson').addEventListener("click", fu
   addLayerImportGestionMenu(layer_name)
 });
 
-// Modal -- import 
+// Modal -- quit 
+document.getElementById('saveAndQuitButton').addEventListener("click", function () {
+  exportDataAndConf()
+  refreshMapAndGoBack()
+});
+document.getElementById('QuitButton').addEventListener("click", function () {
+  refreshMapAndGoBack()
+});
 
 // document.getElementById('importFileLocationButton').addEventListener("click", function(){importFlowToMap()}); 
 document.getElementById('importPresetLocationButton').addEventListener("click", function () {
@@ -475,13 +482,13 @@ document.getElementById('importedFileLocationButton').addEventListener("click", 
 
 // document.getElementById('layerControlList').addEventListener("mouseleave", function(){
 //   $("#layerControlList").removeAttr("data-tooltip")
-// console.log('FFFFFFFFFFFFFFFFFFFFFFFFF')
+// 
 // }
 
 //   ); 
 // Modal -- Change
 // Button -- right
-// console.log(document.getElementById('removeFilterLayout'))
+// 
 // document.getElementById('removeFilterLayout').addEventListener("click", function(){
 
 // })
@@ -499,7 +506,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
 (function () {
 
   function onChange(event) {
-    // console.log(save.loadMapFromPresetSave)
+    // 
     var reader = new FileReader();
     reader.onload = onReaderLoad;
 
@@ -507,7 +514,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
     global_data.files.Ntype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
     // document.getElementById("Node").disabled = true;
     document.getElementById("label_node").innerHTML = event.target.files[0].name;
-    console.log(global_data.files.Ntype)
+    
     // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
     // showParameterIDSNodes()
 
@@ -571,7 +578,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
     var reader = new FileReader();
     reader.onload = onReaderLoad;
     reader.readAsText(event.target.files[0]);
-    //console.log(event.target.files[0])
+    //
     global_data.files.Ltype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
     // document.getElementById("Link").disabled = true; 
     document.getElementById("label_link").innerHTML = event.target.files[0].name;
@@ -581,7 +588,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
 
   function onReaderLoad(event) {
     data.rawLinkData = event.target.result;
-    // console.log(event.target)
+    // 
 
   }
 
@@ -594,15 +601,15 @@ document.getElementById("LoadZipMapButton").disabled = true;
 (function () {
 
   function onChange(event) {
-    // console.log(save.loadMapFromPresetSave)
+    // 
     var reader = new FileReader();
     reader.onload = onReaderLoad;
-    // console.log(event.target.files[0].name;)
+    // 
     reader.readAsArrayBuffer(event.target.files[0]);
     // global_data.files.Ntype = event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length - 1]
 
     document.getElementById("label_loadSavedZipMap").innerHTML = event.target.files[0].name;
-    // console.log(global_data.files.Ntype)
+    // 
     // data.nodes = readData(data.rawStructureData, global_data.files.Ntype);
     // showParameterIDSNodes()
 
@@ -614,7 +621,7 @@ document.getElementById("LoadZipMapButton").disabled = true;
     var new_zip = new JSZip();
     JSZip.loadAsync(event.target.result).then(function (zip) {
       // new_zip.file("conf.json").async("string");
-      // console.log(zip.files["dd.json"]);
+      // 
       zip.files["conf.json"].async('string').then(function (fileData) {
         global_data = JSON.parse(fileData)
         global_data.legend = {
@@ -629,14 +636,14 @@ document.getElementById("LoadZipMapButton").disabled = true;
             "opa": null
           }
         }
-        // console.log(JSON.parse(fileData)) // These are your file contents      
+        // 
       })
       zip.files["data.json"].async('string').then(function (fileData) {
         data = JSON.parse(fileData) // These are your file contents      
       })
     })
     document.getElementById("LoadZipMapButton").disabled = false;
-    // console.log(event.target.result);
+    // 
 
     // data.nodes = readData(data.rawStructureData,global_data.files.Ntype);
     // showParameterIDSNodes()
@@ -656,7 +663,7 @@ for (var i = 0; i < list_nameLayer.length; i++) {
   el.textContent = list_nameLayer[i];
   el.value = list_nameLayer[i];
   select.appendChild(el);
-  //console.log(ListUrl[i].name)
+  //
 }
 
 
@@ -696,7 +703,7 @@ map.addControl(scaleLineControl);
 var titleControl = new CanvasTitle();
 map.addControl(titleControl);
 document.getElementById('titleMap').addEventListener("change", function () {
-  // console.log(this.value)
+  // 
   global_data.title = this.value
   titleControl.setTitle(this.value);
 });
@@ -718,7 +725,7 @@ hover.on('hover', function (e) {
   var nodes_used = ["fixed"]
   var link_used = ["fixed"]
   if ('link' === e.layer.get('name')) {
-    // console.log(e)    
+    // 
     var str_to_show = '<b>' + e.feature.get('ori') + ' <img class="popup-icon" src="assets/svg/si-glyph-triangle-right.svg"/> ' + e.feature.get('dest') + '</b><br/>'
     if (!link_used.includes(global_data.ids.vol)) {
       str_to_show = str_to_show + global_data.ids.vol + " : " + e.feature.get(global_data.ids.vol) +
@@ -770,7 +777,7 @@ hover.on('hover', function (e) {
 
 // map.on('click', function(event) {
 //     var features = map.getFeaturesAtPixel(event.pixel);
-//     console.log(features)
+//     
 //   });
 
 var exportZipMap = (function (Control) {
@@ -778,7 +785,7 @@ var exportZipMap = (function (Control) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-floppy-disk.svg'/>";
+    button.innerHTML = "<img class='icon-button-ol' rel='tooltip' title='Save the map as save file' data-placement='right' src='assets/svg/si-glyph-floppy-disk.svg'/>";
 
     var element = document.createElement('div');
     element.className = 'rotate-north ol-unselectable ol-control';
@@ -815,7 +822,7 @@ function exportDataAndConf() {
 
   zip.file("data.json", JSON.stringify(data));
   zip.file("conf.json", JSON.stringify(global_data));
-  // console.log(isCyclic(global_data))
+  // 
 
   zip.generateAsync({
       type: "blob"
@@ -835,7 +842,7 @@ var printPNGMap = (function (Control) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-print.svg'/>";
+    button.innerHTML = "<img class='icon-button-ol'  rel='tooltip' title='Print the map as png with legend' data-placement='right' src='assets/svg/si-glyph-print.svg'/>";
 
     var element = document.createElement('div');
     element.className = 'rotate-print ol-unselectable ol-control';
@@ -873,6 +880,7 @@ function printMyMaps() {
 
   html2canvas(document.getElementsByClassName('ol-legend')[0]).then(canvas => {
     html2canvas(document.getElementsByClassName('ol-attribution')[0]).then(attributions => {
+      html2canvas(document.getElementsByClassName('ol-scale-line')[0]).then(scale => {
       // document.body.appendChild(canvas)
       // var ctx = new C2S(500,500);
 
@@ -890,11 +898,13 @@ function printMyMaps() {
       ctx.drawImage(mapCanvas, 0, 0)
       ctx.drawImage(canvas, 0, mapCanvas.height)
       ctx.drawImage(attributions, newCanvas.width - attributions.width, mapCanvas.height - attributions.height )
+      ctx.drawImage(scale, 5, mapCanvas.height - scale.height - 5 )
 
       newCanvas.toBlob(function (blob) {
         saveAs(blob, 'map.png');
       }, 'image/png', 1);
 
+      });
     });
   });
   map.renderSync();
@@ -905,7 +915,7 @@ var centerMyMap = (function (Control) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-screen-ful.svg'/>";
+    button.innerHTML = "<img class='icon-button-ol'  rel='tooltip' title='Center the map around the current links' data-placement='right' src='assets/svg/si-glyph-screen-ful.svg'/>";
 
     var element = document.createElement('div');
     element.className = 'rotate-center ol-unselectable ol-control';
@@ -924,7 +934,7 @@ var centerMyMap = (function (Control) {
   centerMyMap.prototype.constructor = centerMyMap;
 
   centerMyMap.prototype.handleCenter = function handleCenter() {
-    console.log()
+    
     centerMap()
   };  
   return centerMyMap;
@@ -938,7 +948,7 @@ var refreshMap = (function (Control) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = "<img class='icon-button-ol' src='assets/svg/si-glyph-backward-page.svg'/>";
+    button.innerHTML = "<img class='icon-button-ol'  rel='tooltip' title='Go back to main Menu (will become get  current filtered data' data-placement='right'  src='assets/svg/si-glyph-backward-page.svg'/>";
 
     var element = document.createElement('div');
     element.className = 'rotate-refresh ol-unselectable ol-control';
@@ -957,7 +967,16 @@ var refreshMap = (function (Control) {
   refreshMap.prototype.constructor = refreshMap;
 
   refreshMap.prototype.handlerefresh = function handlerefresh() {
-    $('.arrival').show(50)
+    exportLinksAndNodes(data, global_data.filter, global_data)
+  }  
+  return refreshMap;
+}(Control));
+map.addControl(
+  new refreshMap()
+)
+
+function refreshMapAndGoBack(){
+  $('.arrival').show(50)
 
     const layers = [...map.getLayers().getArray()]
     layers.forEach((layer) => map.removeLayer(layer))
@@ -982,21 +1001,16 @@ var refreshMap = (function (Control) {
   delete global_data.filter.link
   global_data.filter.link = []
   $('#accordionLayerControl').children().remove()
-  console.log($('#filterDiv').slice(3))
-  console.log($('#filterDiv'))
+  
+  
   $('#filterDiv').children().slice(3).remove()
   // $('#importIDImportStructComplement').remove()
 
-  }  
-  return refreshMap;
-}(Control));
-map.addControl(
-  new refreshMap()
-)
+}
 
 map.on('moveend', function (e) {
   // 
-  // console.log(map.getView().getResolution() )
+  // 
   if (global_data.legend.node.legend !== null) {
     global_data.legend.node.legend.refresh({
       force: true
@@ -1009,8 +1023,8 @@ map.on('moveend', function (e) {
 
 function centerMap(){
   var view = map.getView()
-  console.log(getLayerFromName(map, 'link'))
-  console.log(getLayerFromName(map, 'link').getSource().getExtent())
+  
+  
   view.fit(getLayerFromName(map, 'link').getSource().getExtent())
   // view.setZoom( global_data.zoom) 
   // view.setCenter(transform(global_data.center,"EPSG:4326",global_data.projection.name)) 
@@ -1036,24 +1050,24 @@ function useExistingNodes() {
 
   document.getElementById('label_nodes').innerHTML = "Levels"
   $.getJSON("public/data/save/saved_nodes.json", function (json) {
-    console.log(json)
+    
     data.saved_nodes = json
     var keys = Object.keys(json)
-    console.log(keys)
+    
     for (var p = 0; p < keys.length; p++) {
       $('#importIDStruct').append($('<option>', {
           text: keys[p]
         })
         .attr("value", keys[p]))
     }
-    console.log(data.saved_nodes)
+    
     document.getElementById('importIDStruct').addEventListener("change", function () {
       setupRegions()
     });
     setupRegions()
     // setupNodes()
   })
-  console.log(data.saved_nodes)
+  
 }
 
 function setupRegions() {
@@ -1079,7 +1093,7 @@ function setupRegions() {
     )
   var submap = document.getElementById('importIDStruct').value
   var keys = Object.keys(data.saved_nodes[submap])
-  console.log(keys)
+  
   for (var p = 0; p < keys.length; p++) {
     $('#importSubRegionsStruct').append($('<option>', {
         text: keys[p]
@@ -1101,7 +1115,7 @@ function setupNodes() {
   var region = document.getElementById('importSubRegionsStruct').value
   var keys = Object.keys(data.saved_nodes[submap][region])
   var text = '"- Categorial => qualitative selector' + data.saved_nodes[submap][region] + '  "'
-  console.log(keys)
+  
   $('#importIDStruct').parent().parent().parent()
     .append($('<div>')
       .attr('class', 'col-md-4')
@@ -1137,7 +1151,7 @@ function setupNodes() {
 
 function importFlowToMap() {
   data.links = readData(data.rawLinkData, global_data.files.Ltype);
-  console.log(data.links)
+  
   var keys = Object.keys(data.links[0]);
   for (var p = 0; p < keys.length; p++) {
     $('#importIDOri').append($('<option>', {
@@ -1269,7 +1283,7 @@ export function createGeoJSON(Json_data) {
   var len = Json_data.length
   var points = [];
   for (var p = 0; p < len; p++) {
-    // console.log(Number(Json_data[p][global_data.ids.lat]))
+    // 
     var point = turf.point([Number(Json_data[p][global_data.ids.lat]), Number(Json_data[p][global_data.ids.long])], Json_data[p]);
     points.push(point)
   }
@@ -1347,7 +1361,7 @@ function importData() {
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]] = data.nodes.features[p];
 
       var centroid = getCentroid(data.nodes.features[p], global_data.projection.name)
-      // console.log(centroid)
+      // 
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties["centroid"] = centroid
       data.hashedStructureData[data.nodes.features[p].properties[global_data.ids.nodeID]].properties[global_data.ids.vol] = 0
 
@@ -1378,8 +1392,8 @@ function importData() {
   global_data.style.ratioBounds = Math.max(lx, ly) * 0.0002
   var newCenter = [minX + lx / 2, minY + ly / 2]
 
-  console.log(newCenter)
-  console.log(transform(newCenter,"EPSG:4326",global_data.projection.name))
+  
+  
 
 
   // map.getView().setCenter(newCenter)
@@ -1389,7 +1403,7 @@ function importData() {
   global_data.center = newCenter
   var error_message = ""
     if (list_doublon_nodes.length !== 0) {
-    console.log(list_doublon_nodes)
+    
     error_message = list_doublon_nodes.length + " nodes have been removed. \n No links have for origin or destination these nodes \n The removed nodes ID are "+list_doublon_nodes.toString()
   }
   data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_data.ids.linkID[0], global_data.ids.linkID[1], error_message)
@@ -1402,11 +1416,11 @@ function importData() {
   var isCSV = global_data.files.Ntype !== 'geojson'
   computeDistance(data.hashedStructureData, data.links, global_data.ids.linkID[0], global_data.ids.linkID[1], isCSV, 'kilometers');
 
-  console.log('AYAYAYAY')
+  
   document.getElementById("addFilterButton").disabled = false;
 
   $("#featureCard").toggle();
-
+  computeTotalVolume(data.links, global_data.ids.vol, global_data)
   applyPreselectMap(global_data, global_data.ids.vol, data)
 
   map.getView().fit(getLayerFromName(map, 'link').getSource().getExtent())
@@ -1434,7 +1448,7 @@ function errorModal() {
 }
 
 function progressBarLoading(id, value) {
-  console.log(value)
+  
   $("#" + id).attr("aria-valuenow", value)
   document.getElementById(id).style.width = value + "%";
 }
@@ -1464,9 +1478,9 @@ function applyPreselectMap(main_object, id_volume, data) {
   var id_links = testLinkDataFilter(global_data.filter.link, data)
   var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
 
-  main_object.layers.features.node = addNodeLayer(map, data.links, data.hashedStructureData, main_object.style, id_links, selected_nodes)
-  main_object.layers.features.link = generateLinkLayer(map, data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1], id_links, selected_nodes)
-  main_object.layers.features.node.setZIndex(1)
+  addNodeLayer(map, data.links, data.hashedStructureData, main_object.style, id_links, selected_nodes)
+  generateLinkLayer(map, data.links, data.hashedStructureData, main_object.style, main_object.ids.linkID[0], main_object.ids.linkID[1], id_links, selected_nodes)
+  getLayerFromName(map,'node').setZIndex(1)
   addLegendToMap()
 }
 
@@ -1564,10 +1578,11 @@ function setupPresetMapFilterLink(filter, id_volume, links) {
 
 }
 
+
 function reduceDataset(geojson) {
 
   var geo = geojson.features
-  console.log(geo)
+  
   var len = geo.length
   var gg = []
   for (var i = 0; i < len; i++) {
@@ -1575,20 +1590,47 @@ function reduceDataset(geojson) {
       geo[i] = turf.point(getCentroid(geo[i], "EPSG:4326"), geo[i].properties)
     }
   }
-  console.log(geojson)
+  
   return geojson
 }
 
 $('#carouselDraw').carousel()
 $('#carouselFilter').carousel()
 $('#carouselExampleInterval').carousel()
-console.log($(".arrival"))
-$(".arrival").css('overflow-y', 'visible')
-global.worker = new Worker("./worker/test_worker.js"); // Déclaration du worker
- worker.onmessage = function(event) {
-  console.log("test")
-  console.log(event)
-    };
 
-worker.postMessage(["bonjour",2])
-// console.log(worker)
+$(".arrival").css('overflow-y', 'visible')
+// worker = new Worker("./worker/test_worker.js"); // Déclaration du worker
+//  worker.onmessage = function(event) {
+//   
+//   
+//     };
+
+// worker.postMessage(["bonjour",2])
+// // 
+
+// var onmessage = function(e) {
+//   
+//   // var workerResult = 'Résultat : ' + (e.data[0] * e.data[1]);
+//   
+//   postMessage('e');
+// }
+
+// global.worker = new Worker(URL.createObjectURL(new Blob(['('+fn+')'])))
+
+// worker.onmessage = function(e) {
+//     
+//   }
+// worker.postMessage(["bonjour",2]);
+
+// function run(fn) {
+//   return new Worker(URL.createObjectURL(new Blob(['('+fn+')()'])));
+// }
+
+// const worker = run(function() {
+  
+//   postMessage('I am a worker!');
+  
+//   self.close();
+// });
+
+// worker.onmessage = (event) => 

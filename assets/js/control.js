@@ -21,8 +21,8 @@ require('jquery-ui-bundle');
                 $('.card', panelList).each(function(index, elem) {
                      var $listItem = $(elem),
                          newIndex = $listItem.index();
-                    console.log($listItem.index())
-                    console.log(elem.textContent)
+                    
+                    
 
                      getLayerFromName(map,elem.textContent).setZIndex(- $listItem.index() )
                     
@@ -35,18 +35,18 @@ require('jquery-ui-bundle');
 
 export function refreshZindex(){
     var panelList = $('#accordionLayerControl');
-    // console.log($('#accordionLayerControl'))
+    // 
     if (panelList.childNodes.length > 1){
         
-        // console.log("fqfdqsdfqsdfqfdqsdf")
+        // 
         for(var k = 0; k<panelList.childNodes.length; k++){
             elem = panelList.childNodes[k]
-            console.log(elem.textContent)
+            
             getLayerFromName(map,elem.textContent).setZIndex(- elem.textContent)
 
             }
         }
-// console.log("AYAYAYA")
+// 
     
     return;
 }
@@ -117,17 +117,25 @@ export function addLayerGestionOSMMenu(name){
             .attr("id", "buttonRemoveLayer" + name)
             .attr("class", "close center-block  ml-1")
             .attr("aria-label", "Close")
+            .attr("data-toggle", "tooltip")
+            .attr("data-placement", "right")
+            .attr("title", "Remove the layer")
+            .attr("data-animation", "false")
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("data-toggle", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Hide the layer")
+                .attr("data-animation", "false")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     )));
 
 
-// console.log(global_data.layers.base)
+// 
     // document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.base[name].style)}); 
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideOSMLayer(name)
@@ -157,6 +165,9 @@ export function addLayerGestionMenu(name) {
             .attr("id", "buttonRemoveLayer" + name)
             .attr("class", "close center-block  ml-1")
             .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Remove the layer")
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
@@ -165,17 +176,23 @@ export function addLayerGestionMenu(name) {
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeBaseLayerModal")
                 .attr("data-toggle", "modal")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Change the style layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Hide the layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     )));
 
 
-console.log(global_data.layers.base)
+
     document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.base[name].style)}); 
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideLayer(name)
@@ -205,6 +222,9 @@ export function addLayerImportGestionMenu(name) {
             .attr("id", "buttonRemoveLayer" + name)
             .attr("class", "close center-block  ml-1")
             .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Remove the layer")
             .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
@@ -213,17 +233,23 @@ export function addLayerImportGestionMenu(name) {
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeBaseLayerModal")
                 .attr("data-toggle", "modal")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Change the style layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
         ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Hide the layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
     )));
 
 
-// console.log(global_data.layers.base)
+// 
     document.getElementById("buttonChangeLayer" + name).addEventListener("click", function(){showChangeBaseLayerParameter(map, global_data.layers, "Change", name ,global_data.layers.import[name].style)}); 
     document.getElementById("buttonHideLayer" + name).addEventListener("click", function() {
        hideLayer(name)
@@ -236,7 +262,7 @@ export function addLayerImportGestionMenu(name) {
 
 function hideFLayer(name_layer) {
     var opa = getLayerFromName(map,name_layer).getOpacity();
-    console.log(opa)
+    
     if(opa>0){
         opa = 0
         $("#buttonHideLayer" + name_layer).children().remove()
@@ -252,7 +278,7 @@ function hideFLayer(name_layer) {
 
 function hideLayer(name_layer) {
     var opa = getLayerFromName(map,name_layer).getOpacity();
-    console.log(opa)
+    
     if(opa>0){
         opa = 0
         $("#buttonHideLayer" + name_layer).children().remove()
@@ -270,7 +296,7 @@ function hideLayer(name_layer) {
 
 function hideOSMLayer(name_layer) {
     var opa = getLayerFromName(map,name_layer).getOpacity();
-    console.log(opa)
+    
     if(opa>0){
         opa = 0
     }
@@ -281,7 +307,7 @@ function hideOSMLayer(name_layer) {
 }
 
 export function addFLayerGestionMenu(name) {
-    console.log(name)
+    
 
 
     $("#accordionLayerControl").prepend($("<li>", {
@@ -300,6 +326,10 @@ export function addFLayerGestionMenu(name) {
                 .attr("id", "buttonRemoveLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("data-toggle", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Remove the layer")
+                .attr("data-animation", "false")
                 .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")
             ).append($("<button>")
                 .attr("type", "button")
@@ -308,12 +338,20 @@ export function addFLayerGestionMenu(name) {
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeSemioModal")
                 .attr("data-toggle", "modal")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Change style of the layer")
+                // .attr("data-animation", "false")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
             ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("data-toggle", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Hide the layer")
+                .attr("data-animation", "false")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
         )
     ));
@@ -331,7 +369,7 @@ export function addFLayerGestionMenu(name) {
 
 
 export function addLinkLayerGestionMenu(name) {
-    console.log(name)
+    
 
 
     $("#accordionLayerControl").prepend($("<li>", {
@@ -350,6 +388,9 @@ export function addLinkLayerGestionMenu(name) {
                 .attr("id", "buttonRemoveLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Remove the layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-trash.svg'/>")            
             ).append($("<button>")
                 .attr("type", "button")
@@ -358,7 +399,10 @@ export function addLinkLayerGestionMenu(name) {
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeGeometryModal")
                 .attr("data-toggle", "modal")
-                .append("<img class='icon' src='assets/svg/si-glyph-ruler.svg'/>")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Change shape of the links")
+                .append("<img class='icon' src='assets/svg/si-glyph-ruler.svg' />")
             ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonChangeLayer" + name)
@@ -366,12 +410,18 @@ export function addLinkLayerGestionMenu(name) {
                 .attr("aria-label", "Close")
                 .attr("data-target", "#changeSemioLinkModal")
                 .attr("data-toggle", "modal")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Change style of the links")
                 .append("<img class='icon' src='assets/svg/si-glyph-brush-1.svg'/>")
             ).append($("<button>")
                 .attr("type", "button")
                 .attr("id", "buttonHideLayer" + name)
                 .attr("class", "close center-block ml-1")
                 .attr("aria-label", "Close")
+                .attr("rel", "tooltip")
+                .attr("data-placement", "right")
+                .attr("title", "Hide the layer")
                 .append("<img class='icon' src='assets/svg/si-glyph-view.svg'/>")
         )
     ));
@@ -389,6 +439,8 @@ export function addLinkLayerGestionMenu(name) {
     document.getElementById("buttonChangeLayer" + name).addEventListener("click", function() {
         changeSemioParameter(name, global_data.style)
     });
+    // console.log($('[rel="tooltip"]'))
+    // $('[rel="tooltip"]').tooltip({placement:"right"}); 
 }
 
 function removeLayerGestionMenu(name) {

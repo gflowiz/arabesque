@@ -29,8 +29,8 @@ export function simpleColoredStyle(opacity, stroke, fill){
 
 
 export function getFeatureStyle (feature) {
-    // console.log(getCenter(feature.getGeometry().getExtent() ))
-    // console.log((feature.get('pop') * Math.PI) * global_data.style.ratioBounds/ map.getView().getResolution())
+    // 
+    // 
     return [
       new Style ({
         image: new Circle({
@@ -145,7 +145,7 @@ export function styleLinkPoly(feature){
     }    
     else if(global_data.style.link.color.cat === 'number'){
         var NormalizeColor = (feature.get('color').value-global_data.style.link.color.min)/(global_data.style.link.color.max-global_data.style.link.color.min) 
-        // console.log(NormalizeColor)
+        // 
         var oColor = d3.color(d3["interpolate"+global_data.style.link.color.palette](NormalizeColor))
        // oColor.opacity = opacityFunciton
 

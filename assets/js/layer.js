@@ -25,7 +25,7 @@ import 'spectrum-colorpicker/spectrum.js'
 
 
 
-console.log(new OSM())
+
 global.ListBaseTileUrl = {
      "OSM":  {
                                 url:[
@@ -71,49 +71,49 @@ global.ListBaseTileUrl = {
 
 global.ListStamenTileUrl = {
         "Toner":  {
-                                url:"http://a.tile.stamen.com/toner/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/toner/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "Toner_lite":  {
-                                url:"http://a.tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "Toner_Lines":  {
-                                url:"http://a.tile.stamen.com/toner-lines/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/toner-lines/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "Terrain":  {
-                                url:"http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/terrain/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "Terrain_lines":  {
-                                url:"http://a.tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "Terrain_background":  {
-                                url: "http://a.tile.stamen.com/terrain-background/{z}/{x}/{y}.png",
+                                url: "http://tile.stamen.com/terrain-background/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
                                                 ]
                             },
     "WaterColor":  {
-                                url:"http://a.tile.stamen.com/watercolor/{z}/{x}/{y}.png",
+                                url:"http://tile.stamen.com/watercolor/{z}/{x}/{y}.png",
                                 attributions:   [
                                                     "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
                                                     'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
@@ -490,7 +490,8 @@ if (global_data.style.link.size.var !== 'fixed'){
       }); 
     setTargetLegend(linkLegend, lastLegend)
     map.addControl(linkLegend);
-    var c = [global_data.style.link.size.max,global_data.style.link.size.max/2,global_data.style.link.size.min]
+    var c = [global_data.style.link.size.max,(global_data.style.link.size.max - global_data.style.link.size.min)/2,global_data.style.link.size.min]
+    console.log(c)
     for(var i in c){
         // linkLegend.addRow();        
         linkLegend.addRow();
@@ -539,8 +540,8 @@ if (global_data.style.node.size.var !== 'fixed'){
       });
     // setTargetLegend(nodeLegend, lastLegend)
     map.addControl(nodeLegend);
-    var c = [global_data.style.node.size.max,global_data.style.node.size.max/2,global_data.style.node.size.min]
-        // nodeLegend.addRow();
+    var c = [global_data.style.node.size.max,(global_data.style.node.size.max - global_data.style.node.size.min)/2,global_data.style.node.size.min]
+       console.log(c)
     for(var i in c){     
         nodeLegend.addRow();
         nodeLegend.addRow({ title:reducedNumber(c[i]), properties: { pop: c[i]   }, typeGeom: 'Point'});
@@ -600,6 +601,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
     
     if(colorType === "number"){
         var colors = getNodeColorScaleValue(layer)
+        // console.log(colors)
         var step = (style[layer].color.max - style[layer].color.min)/7 // legend.addRow({ title:reducedNumber(style[layer].color.max)});
         // var x = 0; 
         for(var i = 0; i < 7; i++){
@@ -612,7 +614,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
             });
             }
             else if(i === 3){
-                if(style[layer].color.min < 0){
+                if(style[layer].color.min < 0 || style[layer].color.max < 0){
                     legend.addRow({title: "0", typeGeom: 'Polygon',   
                     style: new Style({
                       // stroke: new Stroke({ color: [255,128,0,1 ], width: 1.5 }),
@@ -620,7 +622,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
                     })
                     });}
                 else {
-                    legend.addRow({title: reducedNumber(colors[i][0]), typeGeom: 'Polygon',   
+                    legend.addRow({title: reducedNumber((style[layer].color.max-style[layer].color.min)/2), typeGeom: 'Polygon',   
                     style: new Style({
                       // stroke: new Stroke({ color: [255,128,0,1 ], width: 1.5 }),
                       fill: new Fill({ color: scaler(style[layer].color.max - i * step)})
@@ -734,6 +736,7 @@ function getLinkLegendStyle(feature){
 export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest, id_selected_links, selected_nodes) {
 // 
 var percentageCount = 0
+var volumeCount = 0
 var linkCounterOfAggregatelinks = 0
     var opa = 1;
     // 
@@ -852,6 +855,8 @@ var t1 = performance.now();
 
                 if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
                     percentageCount = percentageCount + linkCounterOfAggregatelinks;
+                    
+                    volumeCount = volumeCount + sum(list_index.map(function(item){return Number(links[item][global_data.ids.vol])}));
                     featureList.push(featureTest);
                 // 
             }
@@ -861,8 +866,11 @@ var t1 = performance.now();
         }
             // if(){} //FOR THE GRAPHIC CHOICE OF SHOW THE NODES LINKS TO THE SELECTED NODES
         // }
-    }
 
+    }
+        console.log(volumeCount)
+        console.log(global_data.totalSum)
+    document.getElementById('percentageVolumeData').innerHTML = "Percentage of volume represented: "+(volumeCount/global_data.totalSum*100).toFixed(2)+"%";
     document.getElementById('percentageLinkData').innerHTML = "Percentage of links represented: "+(percentageCount/data.links.length*100).toFixed(2)+"%";
 
 var t1 = performance.now();
@@ -964,7 +972,7 @@ export function addTileLayer(map, layers, url, name, attributions) {
     layers[name] = {}
     layers[name].url = url;
     layers[name].attributions = attributions;
-console.log(source)
+
     map.addLayer(layer);
     addLayerGestionOSMMenu(name);
     return layer;
@@ -1126,7 +1134,7 @@ export function addLayerFromURL(map, url, layerName, attributions, opacity, stro
         });
     }
 
-    // console.log("etLayerFromName(map,layer_name)")
+    // 
 
     URLLayer.setOpacity(opacity)
     URLLayer.setStyle(simpleColoredStyle(opacity, stroke_color, fill_color))
@@ -1174,7 +1182,7 @@ export function addLayerFromURLNoStyle(map, url, layerName) {
 
 export function addGeoJsonLayer(map, data, name_layer, opacity, stroke_color, fill_color){
     // 
-    console.log(data)
+    
     var vectorSource = new VectorSource({
         // projection:global_data.projection.name,
         features: new GeoJSON({
