@@ -170,21 +170,27 @@ export function exportLinksAndNodes(data, filter, conf) {
             }
         }
     }
+    var nodes = Object.keys(selected_nodes[0])
+    var nodesToExport = []
+    for (var j = 0; j < nodes.length; j++) {
+      let centroid = data.hashedStructureData[nodes[j]].properties.centroid
+      nodesToExport.push(data.hashedStructureData[nodes[j]].properties)
+      delete nodesToExport[j].centroid
+      nodesToExport[j].lat = data.hashedStructureData[nodes[j]].geometry.coordinates[0]
+      nodesToExport[j].long = data.hashedStructureData[nodes[j]].geometry.coordinates[1]
+      data.hashedStructureData[nodes[j]].properties.centroid = centroid
+    }
+  var zip = new JSZip();
 
-console.log(linksListToExport)
-  // var zip = new JSZip();
-
-  // zip.file("links.json", JSON.stringify(linksListToExport));
-  // // zip.file("nodes.json", JSON.stringify(global_data));
-  // zip.generateAsync({
-  //     type: "blob"
-  //   })
-  //   .then(function (content) {
-  //     // see FileSaver.js
-  //     saveAs(content, "Save_GFlowiz_Map.zip");
-  //   });
-
-  // addLegendToMap()
+  zip.file("links.json", JSON.stringify(linksListToExport));
+  zip.file("nodes.json", JSON.stringify(nodesToExport));
+  zip.generateAsync({
+      type: "blob"
+    })
+    .then(function (content) {
+      // see FileSaver.js
+      saveAs(content, "data.zip");
+    });
 }
 
 

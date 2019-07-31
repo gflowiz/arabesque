@@ -491,7 +491,7 @@ if (global_data.style.link.size.var !== 'fixed'){
     setTargetLegend(linkLegend, lastLegend)
     map.addControl(linkLegend);
     var c = [global_data.style.link.size.max,(global_data.style.link.size.max - global_data.style.link.size.min)/2,global_data.style.link.size.min]
-    console.log(c)
+    
     for(var i in c){
         // linkLegend.addRow();        
         linkLegend.addRow();
@@ -541,7 +541,7 @@ if (global_data.style.node.size.var !== 'fixed'){
     // setTargetLegend(nodeLegend, lastLegend)
     map.addControl(nodeLegend);
     var c = [global_data.style.node.size.max,(global_data.style.node.size.max - global_data.style.node.size.min)/2,global_data.style.node.size.min]
-       console.log(c)
+       
     for(var i in c){     
         nodeLegend.addRow();
         nodeLegend.addRow({ title:reducedNumber(c[i]), properties: { pop: c[i]   }, typeGeom: 'Point'});
@@ -601,7 +601,7 @@ function selectColorLegendForm(legend, colorType, layer, style, scaler){
     
     if(colorType === "number"){
         var colors = getNodeColorScaleValue(layer)
-        // console.log(colors)
+        // 
         var step = (style[layer].color.max - style[layer].color.min)/7 // legend.addRow({ title:reducedNumber(style[layer].color.max)});
         // var x = 0; 
         for(var i = 0; i < 7; i++){
@@ -868,8 +868,8 @@ var t1 = performance.now();
         // }
 
     }
-        console.log(volumeCount)
-        console.log(global_data.totalSum)
+        
+        
     document.getElementById('percentageVolumeData').innerHTML = "Percentage of volume represented: "+(volumeCount/global_data.totalSum*100).toFixed(2)+"%";
     document.getElementById('percentageLinkData').innerHTML = "Percentage of links represented: "+(percentageCount/data.links.length*100).toFixed(2)+"%";
 

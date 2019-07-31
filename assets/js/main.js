@@ -4,7 +4,7 @@
 import {  refreshFilterModal,  addFilterToScreen,  checkDataToFilter,  testLinkDataFilter,  applyNodeDataFilter} from "./filter.js"
 import {  addOSMLayer,  addBaseLayer,  addGeoJsonLayer,  addNodeLayer,  generateLinkLayer,  addLegendToMap,  showTileLayersName,  addTileLayer,  getTileData,  addBaseUrlLayer, getLayerFromName} from "./layer.js";
 import {  loadMapFromPresetSave,  loadFilter,  loadZippedMap} from "./save.js";
-import {  getCentroid,  changeProjection,  loadAllExtentProjection} from "./projection.js";
+import {  getCentroid,  changeProjection,  loadAllExtentProjection, search} from "./projection.js";
 import {  computeMinStatNode,  computeDistance,  checkIDLinks, computeTotalVolume, exportLinksAndNodes} from "./stat.js";
 import {  addLayerGestionMenu,  addLayerImportGestionMenu} from './control.js';
 import {  showGeometryParameter,  setupArrowParameter,  setupHead} from './geometry.js';
@@ -365,6 +365,11 @@ document.getElementById('buttonProjection').addEventListener("click", function (
     document.getElementById("OSMbutton").disabled = true;
   }
 });
+document.getElementById('epsg-search').addEventListener("click", function () {
+      var queryInput = document.getElementById('epsg-query');
+      search(queryInput.value);
+});
+
 document.getElementById('addNewNodeFeaturesButton').addEventListener("click", function () {
   showSemioParameter('node')
 });
@@ -1335,9 +1340,9 @@ function importData() {
   data.rawLinkData = null;
   data.rawStructureData = null;
 
-  var maxX = -Infinity
+  var maxX = - Infinity
   var minX = Infinity
-  var maxY = -Infinity
+  var maxY = - Infinity
   var minY = Infinity
 
   var len = data.links.length;

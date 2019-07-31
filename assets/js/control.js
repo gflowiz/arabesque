@@ -439,7 +439,7 @@ export function addLinkLayerGestionMenu(name) {
     document.getElementById("buttonChangeLayer" + name).addEventListener("click", function() {
         changeSemioParameter(name, global_data.style)
     });
-    // console.log($('[rel="tooltip"]'))
+    // 
     // $('[rel="tooltip"]').tooltip({placement:"right"}); 
 }
 

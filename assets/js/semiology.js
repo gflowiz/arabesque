@@ -263,7 +263,7 @@ function getMinMaxColor(colorVar, layer) {
 
     var dataArray = test.flat()
   }
-  console.log(dataArray)
+  
   return [Math.min(...dataArray), Math.max(...dataArray)]
 }
 
@@ -454,7 +454,7 @@ function addColorSemio(name, id_selector, id_parent, variables) {
 }
 
 function addTextSemio(name, id_selector, id_parent, variables) {
-  console.log(id_selector, id_parent)
+  
   $("#" + id_parent).append($('<div>')
     .attr("class", "col-md-12")
     .append('<label class="text-muted h5">Variable</label>')
@@ -724,10 +724,6 @@ function addSizeRatio(id_parent, id_ele, layer) {
           .attr("id", "typeSize" + id_ele)
           // .attr("onchange",'showRangeSize("'+id_ele+'","'+id_parent+'")')
           .append($('<option>', {
-            text: "Linear",
-            value: 'Linear'
-          }))
-          .append($('<option>', {
             text: "Square",
             value: 'Pow'
           }))
@@ -743,7 +739,7 @@ function addSizeRatio(id_parent, id_ele, layer) {
         )
       )
     }
-    var text = '"It is the percentage of the arrow width."'
+    var text = '"it represent the max width in pixel of the visualisation "'
     $("#" + id_parent).append($('<div>')
       .attr("id", "semioSizeRatio" + id_ele)
       .attr("class", "col-md-4")
@@ -758,10 +754,11 @@ function addSizeRatio(id_parent, id_ele, layer) {
     $('[data-toggle="popover"]').popover()
     return
   } else {
+    var text = '"It is the fixed width in pixel for each links"'
     $("#" + id_parent).append($('<div>')
       .attr("id", "semioSizeRatio" + id_ele)
       .attr("class", "col-md-4")
-      .append('<label class="text-muted h5">Width</label>')
+      .append('<label class="text-muted h5">Width  <img class="small-icon" src="assets/svg/si-glyph-circle-info.svg" data-html="true" data-container="body" data-toggle="popover" data-placement="right" data-content=' + text + '/></label>')
       .append($('<input>')
         .attr('class', 'form-control')
         .attr("id", "ratioMinMaxSize" + id_ele)

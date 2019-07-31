@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -94,7 +92,7 @@ Arabesque is a web application for thematic mapping of flow and networks dataset
           <div class="col-md-12" >
             <h3 class="subheader-title">Arabesques provides a web vizualisation tool to create flow map et explore it. <br>
             Built in javascript and HTML 5</h3> 
-            <h3 class="subheader-title"><a href="https://hackmd.io/TZCl0F-SRcq8kp4VCyv9Yg?view" target="_blank">Find the online tutorial of the application here (Temporaire)</a> </h3>
+            <h3 class="subheader-title"><a href="https://hackmd.io/TZCl0F-SRcq8kp4VCyv9Yg?view" target="_blank">To find the online tutorial of the application, click here (Temporaire)</a> </h3>
           </div>
         </div>
       </div>
@@ -474,7 +472,7 @@ All rights reserved.
                         </div>
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                            <div class="card-body">
-                              <div class="input-group mb-3">
+                              <div class="input-group mb-3" rel="tooltip" data-placement="right" title="quick change of projection">
                                  <div class="input-group-prepend">
                                     <select class="custom-select" id="projection">
                                        <option selected>Choose...</option>
@@ -482,7 +480,16 @@ All rights reserved.
                                     <input type='button' id="buttonProjection" class="btn btn-dark btn-block" value='Change'/>
                                  </div>
                               </div>
-                           </div>
+                              <hr>
+                              <span> EPSG.io </span>
+                              <div class="input-group mb-3" rel="tooltip" data-placement="right" title="Search a projection from the website EPSG.io">
+                                <input type="text" id="epsg-query" placeholder="4326, France ..." class="form-control" />
+                                <div class="input-group-append">
+                                  <button class="btn btn-dark btn-block" type="button" id="epsg-search">Search</button>
+                                </div>
+                                 <span id ="epsg-result"> </span>
+                              </div>
+                            </div>
                         </div>
                      </div>
                      <div class="card" >
