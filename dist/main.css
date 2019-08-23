@@ -11311,7 +11311,13 @@ url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"),*/
 /*url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");*/
 }
 
-
+#logo-ifsttar{
+  display: block;
+  max-width:230px;
+  max-height:50px;
+  width: auto;
+  height: auto;
+}
 .carousel-div{
   margin-top: 50px;
   margin-bottom: 50px
@@ -11385,8 +11391,8 @@ body h1{
   width: 64px;
 }
 .img-menu2{
-  height: 64px;
-  width: 128px;
+  max-height: 64px;
+  /*width: 128px;*/
 }
 
 .showcase-bar{
@@ -11424,6 +11430,8 @@ body h1{
 #main-navbar > a{
   color:white;
 }
+
+
 
 .title-font{
   /*font-size: 4em;*/

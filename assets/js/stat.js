@@ -90,8 +90,11 @@ export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_mess
   var has_link_removed = false;
   var filtered_links = [];
   var n = 0;
+
   for(var p=0; p<links.length;p++){
-    if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest])){
+    if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest]) && Number(links[p][global_data.ids.vol].replace(/\s/g, '')) !== 0){
+      links[p][global_data.ids.vol] = Number(links[p][global_data.ids.vol].replace(/\s/g, ''))
+      
       filtered_links.push(links[p])
     }
     else{

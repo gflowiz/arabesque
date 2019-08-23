@@ -29,7 +29,7 @@ global.Proj = {
   "World Mollweide / EPSG:54009":{ name: "World Mollweide / EPSG:54009", proj4: '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-18e6, -9e6, 18e6, 9e6], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
   "Quadrilateralized Spherical Cube":{ name: "Quadrilateralized Spherical Cube", proj4: '+proj=qsc +units=m +ellps=WGS84  +lat_0=0 +lon_0=0',extent:null, worldExtent:null,center:[0,-0]},
  // "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
- // "bert1":{ name: "bert1", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ "PeirceQuincuncial":{ name: "PeirceQuincuncial", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
 
 };
 // console.log( d3proj.geoArmadillo().parallel(25))
@@ -79,20 +79,21 @@ for(var i in Proj){
         
 
               var projection2 = new Projection({
-        code: 'bert1',
+        code: 'PeirceQuincuncial',
         // The extent is used to determine zoom level 0. Recommended values for a
         // projection's validity extent can be found at https://epsg.io/.
         units: 'm'
       });
       addProjection(projection2);
       // 
- var cc = d3proj.geoArmadillo().parallel(45).clipAngle(180);
+      var cc = d3proj.geoPeirceQuincuncial();
       addCoordinateTransforms('EPSG:4326', projection2,
                   function(coordinate) {
            
         
-        //             var p = cc(coordinate[1], coordinate[0])
-                   return cc([coordinate[0], coordinate[1]]);
+                    var p = cc([coordinate[0],coordinate[1]])
+                    // console.log(p)
+                   return [p[0],-p[1]];
         },
         function(coordinate) {
       // var cc = d3proj.geoAitoffRaw()
@@ -101,6 +102,14 @@ for(var i in Proj){
                    return coordinate;
         });
      
+}
+export function centerMap(){
+  var view = map.getView()
+  
+  
+  view.fit(getLayerFromName(map, 'link').getSource().getExtent())
+  // view.setZoom( global_data.zoom) 
+  // view.setCenter(transform(global_data.center,"EPSG:4326",global_data.projection.name)) 
 }
 
 function refreshBaseLayers(map,layers){
@@ -138,12 +147,13 @@ function refreshFeaturesLayers(map,layers, old_projection ,new_projection){
     if(getLayerFromName(map,'link') !== null){
       // map.removeLayer(getLayerFromName(map,'link'));
       generateLinkLayer(map, data.links, data.hashedStructureData, global_data.style, global_data.ids.linkID[0], global_data.ids.linkID[1], id_links, selected_nodes)
+      
     }
     if (getLayerFromName(map,'node') !== null){
       // map.removeLayer(getLayerFromName(map,'node'));
       addNodeLayer(map, data.links, data.hashedStructureData, global_data.style , id_links, selected_nodes)
     }
-  
+  centerMap()
   // applyExtent(layers.features,global_data.projection.extent)
 }
 
@@ -235,6 +245,7 @@ if(global_data.projection.extent !== null){
     
     newView.fit(global_data.projection.extent);
   }
+  
 
 // applyExtent(layers,global_data.projection.extent)
 
@@ -268,7 +279,6 @@ if(global_data.projection.extent !== null){
     
     newView.fit(global_data.projection.extent);
   }
-  
 // applyExtent(layers,global
 }
 

@@ -4,7 +4,7 @@
 import {  refreshFilterModal,  addFilterToScreen,  checkDataToFilter,  testLinkDataFilter,  applyNodeDataFilter} from "./filter.js"
 import {  addOSMLayer,  addBaseLayer,  addGeoJsonLayer,  addNodeLayer,  generateLinkLayer,  addLegendToMap,  showTileLayersName,  addTileLayer,  getTileData,  addBaseUrlLayer, getLayerFromName} from "./layer.js";
 import {  loadMapFromPresetSave,  loadFilter,  loadZippedMap} from "./save.js";
-import {  getCentroid,  changeProjection,  loadAllExtentProjection, search} from "./projection.js";
+import {  getCentroid,  changeProjection,  loadAllExtentProjection, search, centerMap} from "./projection.js";
 import {  computeMinStatNode,  computeDistance,  checkIDLinks, computeTotalVolume, exportLinksAndNodes} from "./stat.js";
 import {  addLayerGestionMenu,  addLayerImportGestionMenu} from './control.js';
 import {  showGeometryParameter,  setupArrowParameter,  setupHead} from './geometry.js';
@@ -692,7 +692,7 @@ global.map = new Map({
     //projection:projection.name,
     zoom: 0,
     minZoom: -2,
-    maxZoom: 25
+    maxZoom: 50
   })
 });
 var scaleLineControl = new ScaleLine();
@@ -905,9 +905,11 @@ function printMyMaps() {
       ctx.drawImage(attributions, newCanvas.width - attributions.width, mapCanvas.height - attributions.height )
       ctx.drawImage(scale, 5, mapCanvas.height - scale.height - 5 )
 
-      newCanvas.toBlob(function (blob) {
-        saveAs(blob, 'map.png');
-      }, 'image/png', 1);
+      // newCanvas.toBlob(function (blob) {
+      //   saveAs(blob, 'map.png');
+      // }, 'image/png', 1);
+      var dataURL = newCanvas.toDataURL(1,{ pixelRatio: 150 });
+          saveAs(dataURL, 'stage.png');
 
       });
     });
@@ -1026,14 +1028,7 @@ map.on('moveend', function (e) {
   }
 });
 
-function centerMap(){
-  var view = map.getView()
-  
-  
-  view.fit(getLayerFromName(map, 'link').getSource().getExtent())
-  // view.setZoom( global_data.zoom) 
-  // view.setCenter(transform(global_data.center,"EPSG:4326",global_data.projection.name)) 
-}
+
 
 
 export function readData(data, ext) {
