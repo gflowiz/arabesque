@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 17 16"
+   version="1.1"
+   class="si-glyph si-glyph-two-arrow-down"
+   id="svg14"
+   sodipodi:docname="si-glyph-two-arrow-down.svg"
+   inkscape:version="0.92.4 (unknown)">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="816"
+     inkscape:window-height="480"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="8.5"
+     inkscape:cy="8"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg14" />
+  <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">1117</title>
+  <defs
+     id="defs4" />
+  <g
+     id="g12"
+     style="fill:#38291f;fill-rule:evenodd;stroke:none;stroke-width:1;fill-opacity:1">
+    <g
+       transform="translate(3)"
+       id="g10"
+       style="fill:#38291f;fill-opacity:1">
+      <path
+         d="M 5.002,11.854 0.008,8.109 v 3.94 L 5.002,15.992 9.967,11.95 V 8.032 L 9.955,8.021 Z"
+         class="si-glyph-fill"
+         id="path6"
+         style="fill:#38291f;fill-opacity:1"
+         inkscape:connector-curvature="0" />
+      <path
+         d="M 5.002,4.07 0.008,0.119 V 4.058 L 5.002,8.023 9.967,3.959 V 0.041 L 9.955,0.031 Z"
+         class="si-glyph-fill"
+         id="path8"
+         style="fill:#38291f;fill-opacity:1"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

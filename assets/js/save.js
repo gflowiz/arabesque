@@ -31,10 +31,8 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
  				setupGlobalVariablesFromSave(save_para, global_var);
  			
  				loadDataForExample(save_para.files,links,nodes, datasets);
- 			
  				setupMapandHashData(map, datasets, global_var)
- 			
- 				
+
  				datasets.links =prepareLinkData(datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], datasets.hashedStructureData, global_var.ids.vol);
  				computeMinStatNode(datasets.hashedStructureData , datasets.links, global_var.ids.linkID[0],global_var.ids.linkID[1], global_var.ids.vol);
  				
@@ -208,35 +206,36 @@ export function loadZippedMap(){
 
 }
 
-function setupMapandHashData(map, data, global_var){
+function setupMapandHashData(map, dataset, global_var){
 
-  
+  console.log(dataset)
   var maxX = - Infinity;
   var minX = Infinity;
 
   var maxY = - Infinity;
   var minY = Infinity;
-	var len = data.links.length;
+	var len = dataset.links.length;
   var used_nodes = []
   for(var i = 0; i<len; i++)
   {
-    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[0]])){
-      used_nodes.push(data.links[i][global_data.ids.linkID[0]])
+    if (!used_nodes.includes(dataset.links[i][global_data.ids.linkID[0]])){
+      used_nodes.push(dataset.links[i][global_data.ids.linkID[0]])
     }
-    if (!used_nodes.includes(data.links[i][global_data.ids.linkID[1]])){
-      used_nodes.push(data.links[i][global_data.ids.linkID[1]])
+    if (!used_nodes.includes(dataset.links[i][global_data.ids.linkID[1]])){
+      used_nodes.push(dataset.links[i][global_data.ids.linkID[1]])
     }
   }
-var list_id_nodes =[]
-  var len = data.nodes.features.length;
+	var list_id_nodes =[]
+  var len = dataset.nodes.features.length;
+  console.log(len)
   for(var p=0; p<len; p++){
- 	if (!list_id_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID]) && used_nodes.includes(data.nodes.features[p].properties[global_data.ids.nodeID])){
-    data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]] = data.nodes.features[p];
-    var centroid = getCentroid(data.nodes.features[p], global_var.projection.name)
-    data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]].properties["centroid"] = centroid   
-    data.hashedStructureData[data.nodes.features[p].properties[global_var.ids.nodeID]].properties[global_var.ids.vol] = 0
+ 	if (!list_id_nodes.includes(dataset.nodes.features[p].properties[global_data.ids.nodeID]) && used_nodes.includes(dataset.nodes.features[p].properties[global_data.ids.nodeID])){
+    dataset.hashedStructureData[dataset.nodes.features[p].properties[global_var.ids.nodeID]] = dataset.nodes.features[p];
+    var centroid = getCentroid(dataset.nodes.features[p], global_var.projection.name)
+    dataset.hashedStructureData[dataset.nodes.features[p].properties[global_var.ids.nodeID]].properties["centroid"] = centroid   
+    dataset.hashedStructureData[dataset.nodes.features[p].properties[global_var.ids.nodeID]].properties[global_var.ids.vol] = 0
 
-      list_id_nodes.push(data.nodes.features[p].properties[global_data.ids.nodeID])
+      list_id_nodes.push(dataset.nodes.features[p].properties[global_data.ids.nodeID])
 
 
     if(maxX < centroid[0]){
@@ -261,13 +260,13 @@ global_var.style.ratioBounds = Math.max(lx,ly)* 0.0002
 global_var.center =  [minX+lx/2,minY+ly/2]
   
 
-data.links = checkIDLinks(data.links, Object.keys(data.hashedStructureData), global_var.ids.linkID[0], global_var.ids.linkID[1], "")
+data.links = checkIDLinks(dataset.links, list_id_nodes, global_var.ids.linkID[0], global_var.ids.linkID[1], "")
 map.getView().setCenter(global_var.center)
 global_var.center = transform(global_var.center,global_data.projection.name,"EPSG:4326")
 map.getView().setZoom(getZoomFromVerticalBounds(ly));
 global_var.zoom = getZoomFromVerticalBounds(ly)
 
-return data.hashedStructureData
+return dataset.hashedStructureData
 }
 
 function loadLayerData(base_layers, layers){

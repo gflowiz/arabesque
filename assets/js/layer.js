@@ -25,153 +25,152 @@ import 'spectrum-colorpicker/spectrum.js'
 
 
 
-
 global.ListBaseTileUrl = {
-     "OSM":  {
-                                url:[
-                                        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                    ],
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            },
-    "Wikimedia":  {
-                                url:"https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            },
-    "Humanitarian OSM":  {
-                                url:"http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            },
-    "OSM_no_labels":  {
-                                url:"https://tiles.wmflabs.org/osm-no-labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            },
-    "wmflabs_OSM_BW":  {
-                                url:"https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            },
-    "Öpnvkarte_Transport_Map":  {
-                                url: "http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    ]
-                            }
+    "OSM": {
+        url: [
+            "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        ],
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    },
+    "Wikimedia": {
+        url: "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    },
+    "Humanitarian OSM": {
+        url: "http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    },
+    "OSM_no_labels": {
+        url: "https://tiles.wmflabs.org/osm-no-labels/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    },
+    "wmflabs_OSM_BW": {
+        url: "https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    },
+    "Öpnvkarte_Transport_Map": {
+        url: "http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+        ]
+    }
 };
 
 global.ListStamenTileUrl = {
-        "Toner":  {
-                                url:"http://tile.stamen.com/toner/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Toner_lite":  {
-                                url:"http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Toner_Lines":  {
-                                url:"http://tile.stamen.com/toner-lines/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Terrain":  {
-                                url:"http://tile.stamen.com/terrain/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Terrain_lines":  {
-                                url:"http://tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Terrain_background":  {
-                                url: "http://tile.stamen.com/terrain-background/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "WaterColor":  {
-                                url:"http://tile.stamen.com/watercolor/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            }
+    "Toner": {
+        url: "http://tile.stamen.com/toner/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Toner_lite": {
+        url: "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Toner_Lines": {
+        url: "http://tile.stamen.com/toner-lines/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Terrain": {
+        url: "http://tile.stamen.com/terrain/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Terrain_lines": {
+        url: "http://tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Terrain_background": {
+        url: "http://tile.stamen.com/terrain-background/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "WaterColor": {
+        url: "http://tile.stamen.com/watercolor/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    }
 };
 
 global.ListCartoTileUrl = {
 
-    "Carto_Ligth_noLabels":  {
-                                url:"https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "Carto_Light":  {
-                                url:"https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "Carto_Light":  {
-                                url:"https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "Carto_Dark_noLabels":  {
-                                url:"https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "Carto_Dark":  {
-                                url:"https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "voyager_nolabels":  {
-                                url:"https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "voyager":  {
-                                url:"https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            }
+    "Carto_Ligth_noLabels": {
+        url: "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "Carto_Light": {
+        url: "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "Carto_Light": {
+        url: "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "Carto_Dark_noLabels": {
+        url: "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "Carto_Dark": {
+        url: "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "voyager_nolabels": {
+        url: "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "voyager": {
+        url: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    }
 
 
 };
@@ -185,62 +184,62 @@ global.ListOverlayTileUrl = {
     // "OpenRailwayMap_infrastructure": "http://a.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png ",
     // "OpenPtMap": "http://www.openptmap.org/tiles/{z}/{x}/{y}.png",
     // "OSM A": "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "OpenSeaMap":  {
-                                url:"http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors."
-                                                ]
-                            },
-    "waymarkedtrails Cycling":  {
-                                url:"https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    'Données cartographiques © <a href="https://www.openstreetmap.org/#map=3/34.6/-7.9" class="osm-map-link ui-link">OpenStreetMap</a> sous <a href="https://www.openstreetmap.org/copyright" class="ui-link">ODbL</a> données altimétriques par <a href="help/acknowledgements" class="ui-link">SRTM/ASTER</a> Carte de fond: <span id="basemap-attribution"><a href="https://openstreetmap.org">OpenStreetMap</a>(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-by-SA</a>)</span>',
-                                                ]
-                            },
-    "waymarkedtrails Hiking":  {
-                                url:"https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    'Données cartographiques © <a href="https://www.openstreetmap.org/#map=3/34.6/-7.9" class="osm-map-link ui-link">OpenStreetMap</a> sous <a href="https://www.openstreetmap.org/copyright" class="ui-link">ODbL</a> données altimétriques par <a href="help/acknowledgements" class="ui-link">SRTM/ASTER</a> Carte de fond: <span id="basemap-attribution"><a href="https://openstreetmap.org">OpenStreetMap</a>(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-by-SA</a>)</span>',
-                                                ]
-                            }
+    "OpenSeaMap": {
+        url: "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors."
+        ]
+    },
+    "waymarkedtrails Cycling": {
+        url: "https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
+        attributions: [
+            'Données cartographiques © <a href="https://www.openstreetmap.org/#map=3/34.6/-7.9" class="osm-map-link ui-link">OpenStreetMap</a> sous <a href="https://www.openstreetmap.org/copyright" class="ui-link">ODbL</a> données altimétriques par <a href="help/acknowledgements" class="ui-link">SRTM/ASTER</a> Carte de fond: <span id="basemap-attribution"><a href="https://openstreetmap.org">OpenStreetMap</a>(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-by-SA</a>)</span>',
+        ]
+    },
+    "waymarkedtrails Hiking": {
+        url: "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png",
+        attributions: [
+            'Données cartographiques © <a href="https://www.openstreetmap.org/#map=3/34.6/-7.9" class="osm-map-link ui-link">OpenStreetMap</a> sous <a href="https://www.openstreetmap.org/copyright" class="ui-link">ODbL</a> données altimétriques par <a href="help/acknowledgements" class="ui-link">SRTM/ASTER</a> Carte de fond: <span id="basemap-attribution"><a href="https://openstreetmap.org">OpenStreetMap</a>(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-by-SA</a>)</span>',
+        ]
+    }
 };
 global.ListTextTileUrl = {
     // "waymarkedtrails Cycling": "https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
-    "Stamen_Toner_labels":  {
-                                url:"http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                ]
-                            },
-    "Stamen_Terrain_Labels":  {
-                                url:"http://a.tile.stamen.com/terrain-labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    "&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
-                                                    'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-                                                     ]
-                            },
-    "Carto_Dark_labels":  {
-                                url:"https://a.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "Carto_Light_labels":  {
-                                url:"https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            },
-    "voyager_nolabels":  {
-                                url:"https://a.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
-                                attributions:   [
-                                                    '&#169; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
-                                                    '&#169; <a href=\"https://carto.com/attribution/\">CARTO</a>'
-                                                ]
-                            }
+    "Stamen_Toner_labels": {
+        url: "http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Stamen_Terrain_Labels": {
+        url: "http://a.tile.stamen.com/terrain-labels/{z}/{x}/{y}.png",
+        attributions: [
+            "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+        ]
+    },
+    "Carto_Dark_labels": {
+        url: "https://a.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "Carto_Light_labels": {
+        url: "https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    },
+    "voyager_nolabels": {
+        url: "https://a.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
+        attributions: [
+            '© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.',
+            '© <a href=\"https://carto.com/attribution/\">CARTO</a>'
+        ]
+    }
 };
 
 global.ListUrl = {
@@ -445,14 +444,14 @@ function computeDistanceCanvas(layer_name, value, ratio_bounds, styles) {
 
     var cat = styles[layer_name].size.cat
     if (cat === 'Log') {
-        var Catscale = d3["scale" + cat]().domain([1, styles[layer_name].size.max]).range([0, styles[layer_name].size.ratio])
+        var Catscale = d3["scale" + cat]().domain([1, styles[layer_name].size.max]).range([1, styles[layer_name].size.ratio])
         return Catscale(value + 1) * ratio_bounds
     } else  if (cat === 'Pow') {
-        var Catscale = d3["scale" + cat]().exponent(2).domain([1, styles[layer_name].size.max]).range([0, styles[layer_name].size.ratio])
+        var Catscale = d3["scale" + cat]().exponent(2).domain([1, styles[layer_name].size.max]).range([1, styles[layer_name].size.ratio])
         return Catscale(value) * ratio_bounds
     } else{
 
-        var Catscale = d3["scale" + cat]().domain([0, styles[layer_name].size.max]).range([0, styles[layer_name].size.ratio])
+        var Catscale = d3["scale" + cat]().domain([0, styles[layer_name].size.max]).range([1, styles[layer_name].size.ratio])
         return Catscale(value) * ratio_bounds
     }
 }
@@ -737,9 +736,37 @@ function getLinkLegendStyle(feature){
           })
     ];
 }
+function prepareDataToWebWorkers(links, selectedIDLinks, selected_nodes, removed_nodes, id_ori, id_dest, global_data){
+    var dataToPushInThread = {};
+    var dataToCompute = []
+    selectedIDLinks.map(function(item){})
+
+    for(var i = 0; i< mask_links.length; i++){
+        var link = links[mask_links[i]]
+        if(typeof group[link[id_ori]]  === 'undefined'){
+            group[link[id_ori]]  = {}
+            if(typeof group[link[id_ori]][link[id_dest]]  === 'undefined'){
+                group[link[id_ori]][link[id_dest]]   = [mask_links[i]]
+            }
+            else{
+                group[link[id_ori]][link[id_dest]].push(mask_links[i])
+            }
+        }
+        else{
+            if(typeof group[link[id_ori]][link[id_dest]]  === 'undefined'){
+                group[link[id_ori]][link[id_dest]]   = [mask_links[i]]
+            }
+            else{
+                group[link[id_ori]][link[id_dest]].push(mask_links[i])
+            }
+        }
+    }
+
+    return dataToPushInThread;
+}
 
 export function generateLinkLayer(map, links, nodes, style, id_ori, id_dest, id_selected_links, selected_nodes) {
-// 
+
 var percentageCount = 0
 var volumeCount = 0
 var linkCounterOfAggregatelinks = 0
@@ -763,7 +790,8 @@ var t0 = performance.now();
 
     var ODlinks = groupLinksByOD(links, id_selected_links, id_ori, id_dest)
 
-var t1 = performance.now();
+//     var DataToWebWorkers = prepareDataToWebWorkers(links, id_selected_links, list_nodes, removed_nodes, id_ori, id_dest, global_data)
+// console.log(DataToWebWorkers)
 
     var oriIDS = Object.keys(ODlinks);
     var arrow;

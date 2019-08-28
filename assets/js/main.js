@@ -679,7 +679,7 @@ global.map = new Map({
   controls: defaultControls({
     attribution: false
   }).extend([attribution]),
-  //        new FullScreen()
+         
   //      ]),
   renderer: 'webgl',
   // pixelRatio:5,
@@ -697,6 +697,7 @@ global.map = new Map({
 });
 var scaleLineControl = new ScaleLine();
 map.addControl(scaleLineControl);
+map.addControl(new FullScreen());
 // map.addControl(attribution);
 // $('.ol-scale-line').css('left', '');
 // document.getElementsByClassName("ol-scale-line")[0].style.left = ""
@@ -955,7 +956,7 @@ var refreshMap = (function (Control) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = "<img class='icon-button-ol'  rel='tooltip' title='Go back to main Menu (will become get  current filtered data' data-placement='right'  src='assets/svg/si-glyph-backward-page.svg'/>";
+    button.innerHTML = "<img class='icon-button-ol'  rel='tooltip' title='Export data as geojson' data-placement='right'  src='assets/svg/si-glyph-backward-page.svg'/>";
 
     var element = document.createElement('div');
     element.className = 'rotate-refresh ol-unselectable ol-control';

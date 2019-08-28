@@ -184,7 +184,7 @@
                     "cat": "Linear",
                     "var": "count",
                     "max": 2426,
-                    "min": 0,
+                    "min": 1,
                     "ratio": 100
                 },
                 "geometry": {
@@ -279,8 +279,8 @@
     },
     "world": {
         "files": {
-            "node": "public/data/capitals.geojson",
-            "link": "public/data/comtrade(8).csv",
+            "node": "./public/data/ISO_FILES/world_all.geojson",
+            "link": "./public/data/migration.csv",
             "Ltype": "csv",
             "Ntype": "geojson",
             "aggr": "sum"
@@ -298,9 +298,9 @@
             {
                 "name": "countries",
                 "style": {
-                    "stroke": "#864305",
-                    "fill": "#FF7B00",
-                    "opacity": 0.9
+                   "stroke":"#000000",
+                   "fill":"#a14a0c",
+                   "opacity":0.9
                 },
                 "attributions":"Made with <a href='https://www.naturalearthdata.com'>Natural Earth.</a>",
                 "app": true
@@ -316,113 +316,114 @@
                 "app": true
             }
         ],
-        "style": {
-            "link": {
-                "color": {
-                    "palette": "YlGnBu",
-                    "cat": "number",
-                    "var": "Trade Value (US$)",
-                    "max": 733715974248,
-                    "min": 29072461099
-                },
-                "opa": {
-                    "cat": null,
-                    "var": "fixed",
-                    "max": null,
-                    "min": null,
-                    "vmax": "0.85"
-                },
-                "size": {
-                    "cat": "Linear",
-                    "var": "Trade Value (US$)",
-                    "max": 31901758962,
-                    "min": 3,
-                    "ratio": "50"
-                },
-                "geometry": {
-                    "oriented": "oriented",
-                    "type": "StraightArrow",
-                    "head": {
-                        "height": 0.5,
-                        "width": 0.5
-                    },
-                    "place": {
-                        "base": 0.5,
-                        "height": 0.5
-                    }
-                },
-                "text": "Choose..."
+        "style":{
+      "link":{
+         "color":{
+            "palette":"YlOrBr",
+            "cat":"number",
+            "var":"Fij",
+            "max":12683066,
+            "min":1
+         },
+         "opa":{
+            "cat":null,
+            "var":"fixed",
+            "max":null,
+            "min":null,
+            "vmax":0.85
+         },
+         "size":{
+            "cat":"Sqrt",
+            "var":"Fij",
+            "max":12683066,
+            "min":1,
+            "ratio":"100"
+         },
+         "geometry":{
+            "oriented":"oriented",
+            "type":"StraightArrow",
+            "head":{
+               "height":0.5,
+               "width":0.5
             },
-            "node": {
-                "color": {
-                    "palette": "RdYlGn",
-                    "cat": "number",
-                    "var": "balance",
-                    "max": 161534540928,
-                    "min": -190901612603
-                },
-                "size": {
-                    "cat": "Sqrt",
-                    "ratio": "20",
-                    "var": "degree",
-                    "max": 4171220577292,
-                    "min": 0
-                },
-                "opa": {
-                    "cat": "Linear",
-                    "var": "fixed",
-                    "max": 0.9,
-                    "min": 0.5,
-                    "vmax": "0.85"
-                },
-                "text": "Choose..."
+            "place":{
+               "base":0.5,
+               "height":0.5
             }
-        },
+         }
+      },
+      "node":{
+         "color":{
+            "palette":"Spectral",
+            "cat":"number",
+            "var":"balance",
+            "max":173,
+            "min":-123
+         },
+         "size":{
+            "cat":"Sqrt",
+            "ratio":"25",
+            "var":"outdegree",
+            "max":162,
+            "min":0
+         },
+         "opa":{
+            "cat":null,
+            "var":"fixed",
+            "max":null,
+            "min":null,
+            "vmax":0.85
+         },
+         "text":"Choose...",
+         "ratioBounds":null
+      },
+      "ratioBounds":0.09520805168162697
+   },
         "filter": {
-            "node": [],
-            "link": [{
-                    "variable": "Commodity",
-                    "values": "Vehicles other than railway or tramway rolling stock",
-                    "filter": "temporal"
-                },
-                {
-                    "variable": "Year",
-                    "values": [
-                        "2003",
-                        "2004",
-                        "2005",
-                        "2006"
-                    ],
-                    "filter": "timeLapse",
-                    "format": "DateTime"
-                },
-                {
-                    "variable": "Trade Flow",
-                    "values": [
-                        "Import"
-                    ],
-                    "filter": "categorial"
-                }
-            ]
-        },
+      "link":[
+         {
+            "variable":"distance",
+            "values":[
+               5.806113203215232,
+               2926.4454963120043
+            ],
+            "filter":"numeral"
+         },
+         {
+            "variable":"Fij",
+            "values":[
+               70063.5051793951,
+               12681314.437470514
+            ],
+            "filter":"numeral"
+         }
+      ],
+      "node":[
+
+      ]
+   },
         "ids": {
-            "nodeID": "iso3",
-            "linkID": ["Reporter ISO", "Partner ISO"],
-            "vol": "Trade Value (US$)"
-        },
+             "nodeID":"iso_a3",
+      "linkID":[
+         "i",
+         "j"
+      ],
+      "vol":"Fij"
+   },
         "projection": {
-            "name": "Mercator / EPSG:3857",
-            "proj4": null,
-            "extent": null
-        },
+      "name":"PeirceQuincuncial",
+      "proj4":null,
+      "extent":null,
+      "worldExtent":null,
+      "center":[
+         0,
+         0
+      ]
+   },
         "date": {
             "creation": null,
             "last_modification": null
         }
 
-    },
-    "center": [
-        7.879486732499998,
-        46.9668681974602
-    ]
+    }
 }

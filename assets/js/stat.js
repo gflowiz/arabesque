@@ -4,6 +4,8 @@ import {testLinkDataFilter,applyNodeDataFilter} from './filter.js'
 import {groupLinksByOD} from './layer.js'
 import JSZip from 'jszip'
 import {saveAs} from 'file-saver';
+import {getLayerFromName} from "./layer.js";
+import GeoJSON from 'ol/format/GeoJSON.js';
 
 export function computeMinStatNode(nodes, links, id_ori, id_dest, id_vol){
   var keys = Object.keys(nodes)
@@ -154,39 +156,29 @@ if (feature.geometry.type == "MultiPolygon") {
 }
 
 export function exportLinksAndNodes(data, filter, conf) { 
-// get Filter ID links and nodes
-    var id_links = testLinkDataFilter(filter.link, data)
-    var selected_nodes = applyNodeDataFilter(data.hashedStructureData)
-    var removed_nodes = selected_nodes[1]
-    var list_nodes = Object.keys(selected_nodes[0])
-    var ODlinks = groupLinksByOD(data.links, id_links, conf.ids.linkID[0], conf.ids.linkID[1])
-    var oriIDS = Object.keys(ODlinks);
-    var linksListToExport = [];
-    for (var j = 0; j < oriIDS.length; j++) {
-        var Dlinks =  Object.keys(ODlinks[oriIDS[j]])
-        for (var i = 0; i < Dlinks.length ; i++) {
-                if((list_nodes.includes(oriIDS[j]) || list_nodes.includes(Dlinks[i]) ) && !(removed_nodes.includes(Dlinks[i]) || removed_nodes.includes(oriIDS[j]))){
-                var listLinksOD = ODlinks[oriIDS[j]][Dlinks[i]]
-                for(var p = 0; p < listLinksOD.length; p++){
-                  linksListToExport.push(data.links[listLinksOD[p]])
-                }
-            }
-        }
-    }
-    var nodes = Object.keys(selected_nodes[0])
-    var nodesToExport = []
-    for (var j = 0; j < nodes.length; j++) {
-      let centroid = data.hashedStructureData[nodes[j]].properties.centroid
-      nodesToExport.push(data.hashedStructureData[nodes[j]].properties)
-      delete nodesToExport[j].centroid
-      nodesToExport[j].lat = data.hashedStructureData[nodes[j]].geometry.coordinates[0]
-      nodesToExport[j].long = data.hashedStructureData[nodes[j]].geometry.coordinates[1]
-      data.hashedStructureData[nodes[j]].properties.centroid = centroid
-    }
+// get Filter ID links and node
+  var writer = new GeoJSON();
   var zip = new JSZip();
+  var linksListToExport = {}
+  var nodesToExport = {};
+  if (getLayerFromName(map, 'link') !== null) {
+        var linkLayer = getLayerFromName(map, 'link')
+        var features = linkLayer.getSource().getFeatures();
+        var linksListToExport = writer.writeFeatures(features)
+    }   
+  if (getLayerFromName(map, 'node') !== null) {
+        var nodeLayer = getLayerFromName(map, 'node')
+        var features = nodeLayer.getSource().getFeatures();
+        var nodesToExport = writer.writeFeatures(features)
+  }  
+  console.log(linksListToExport)
 
-  zip.file("links.json", JSON.stringify(linksListToExport));
-  zip.file("nodes.json", JSON.stringify(nodesToExport));
+  console.log(nodesToExport)
+  // linksListToExport.crs = global_data.projection.proj4
+  // nodesToExport.crs = global_data.projection.proj4
+  zip.file("links.json", linksListToExport);
+  zip.file("nodes.json", nodesToExport);
+  zip.file("crs.json", JSON.stringify(global_data.projection));
   zip.generateAsync({
       type: "blob"
     })

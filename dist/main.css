@@ -11762,9 +11762,22 @@ html {
   background: none;
 }
 
+.info-center{
+  text-align: center;
+  font-size: 26px;
+  color:#38291f ;
+  font-weight: bolder
+}
 .icon {
   width: 20px;
   height: 20px;
+  border: none;
+  background: none;
+}
+
+.icon-info {
+  width: 40px;
+  height: 40px;
   border: none;
   background: none;
 }

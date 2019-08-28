@@ -20,6 +20,16 @@
  				"file": "./public/data/ISO_FILES/capitals.geojson",
  				"id" :"iso2",
  				"code":"ISO Alpha-2"
+ 			},
+ 			"centroid ISO3 numeric": {
+ 				"file": "./public/data/ISO_FILES/world_all.geojson",
+ 				"id" :"iso3_n3",
+ 				"code":"ISO 3166-1 numeric"
+ 			},
+ 			"centroid ISO2 numeric": {
+ 				"file": "./public/data/ISO_FILES/world_all.geojson",
+ 				"id" :"iso3_n2",
+ 				"code":"ISO Alpha-2"
  			}
  		},
  		"Europe":{

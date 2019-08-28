@@ -1040,9 +1040,13 @@ export function showSemioParameter(featureName) {
     addSizeSemio(featureName, 'Add' + featureName, 'semioSizeAdd' + featureName, variables)
   })
   addSizeSemio(featureName, 'Add' + featureName, 'semioSizeAdd' + featureName, variables)
+
+
+
   $('#semioOpaBaseTypeAdd' + featureName).replaceWith($('#semioOpaBaseTypeAdd' + featureName).clone());
   document.getElementById('semioOpaBaseTypeAdd' + featureName).addEventListener('change', function () {
     addOpacitySemio(name, 'Add' + featureName, 'semioOpaAdd' + featureName, variables)
+
   })
   addOpacitySemio(name, 'Add' + featureName, 'semioOpaAdd' + featureName, variables)
 

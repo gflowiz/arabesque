@@ -14,22 +14,22 @@ import {transform, get as getProjection, addProjection, Projection, addCoordinat
 import {register} from 'ol/proj/proj4.js';
 
 global.Proj = {
-  "Mercator / EPSG:3857":{ name: "Mercator / EPSG:3857", proj4: "+proj=merc +a=6371000 +b=6371000 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +no_defs",extent:null , worldExtent:[-180.0,-85.06,180.0,85.06] ,center:[0.00,-0.00]},
-  "Sphere Mollweide / ESRI:53009":{ name: "Sphere Mollweide / ESRI:53009", proj4: "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs",extent:null, worldExtent:[-179, -89.99, 179, 89.99],center:[0,0]},
-  "RGF93 / Lambert-93 -- France":{ name: "RGF93 / Lambert-93 -- France", proj4: "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",extent:[-378305.81,  6093283.21, 1212610.74, 7186901.68], worldExtent:[-9.86, 41.15, 10.38, 51.56],center:[489353.59, 6587552.20]},
-  "ETRS89 / LAEA Europe":{ name: "ETRS89 / LAEA Europe", proj4: "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",extent:[1896628.62,  1507846.05, 4662111.45, 6829874.45], worldExtent:[-16.1 , 32.88, 40.18, 84.17],center:[4440049.08, 3937680.52]},
-  "World Azimuthal Equidistant":{ name: "World Azimuthal Equidistant", proj4: "+proj=aeqd +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000  +units=m ",extent:null, worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "Transversal Mercator":{ name: "Transversal Mercator", proj4: '+proj=tmerc +lat_0=0 +lon_0=6 +k=1 +x_0=2500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs',extent:[370753.1145, 6382922.7769, 739245.6000, 6624811.0577], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "Gnomonic":{ name: "Gnomonic", proj4: "+proj=gnom +lat_0=90 +lon_0=0 +x_0=6300000 +y_0=6300000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",extent:null, worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "United Kingdom / EPSG:27700":{ name: "EPSG:27700", proj4: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs",extent:[0, 0, 700000, 1300000], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "EPSG:23032":{ name: 'EPSG:23032', proj4: '+proj=utm +zone=32 +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs',extent:[-1206118.71, 4021309.92, 1295389.00, 8051813.28], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]}, 
-  "EPSG:5479":{ name: "EPSG:5479", proj4: '+proj=lcc +lat_1=-76.66666666666667 +lat_2=-79.33333333333333 +lat_0=-78 +lon_0=163 +x_0=7000000 +y_0=5000000 ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',extent:[6825737.53, 4189159.80, 9633741.96, 5782472.71], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "SWITZERLAND /EPSG:21781":{ name: "SWITZERLAND/EPSG:21781", proj4: '+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs',extent:[485071.54, 75346.36, 828515.78, 299941.84], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "NORTH POLE/ EPSG:3413":{ name: 'NORTH POLE/EPSG:3413', proj4: '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-4194304, -4194304, 4194304, 4194304], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]}, 
-  "World Mollweide / EPSG:54009":{ name: "World Mollweide / EPSG:54009", proj4: '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-18e6, -9e6, 18e6, 9e6], worldExtent:[-179, -89.99, 179, 89.99],center:[0,-0]},
-  "Quadrilateralized Spherical Cube":{ name: "Quadrilateralized Spherical Cube", proj4: '+proj=qsc +units=m +ellps=WGS84  +lat_0=0 +lon_0=0',extent:null, worldExtent:null,center:[0,-0]},
+  "Mercator / EPSG:3857":{ name: "Mercator / EPSG:3857", proj4: "+proj=merc +a=6371000 +b=6371000 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +no_defs",extent:null },
+  "Sphere Mollweide / ESRI:53009":{ name: "Sphere Mollweide / ESRI:53009", proj4: "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs",extent:null},
+  "RGF93 / Lambert-93 -- France":{ name: "RGF93 / Lambert-93 -- France", proj4: "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",extent:[-378305.81,  6093283.21, 1212610.74, 7186901.68]},
+  "ETRS89 / LAEA Europe":{ name: "ETRS89 / LAEA Europe", proj4: "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",extent:[1896628.62,  1507846.05, 4662111.45, 6829874.45]},
+  "World Azimuthal Equidistant":{ name: "World Azimuthal Equidistant", proj4: "+proj=aeqd +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000  +units=m ",extent:null},
+  "Transversal Mercator":{ name: "Transversal Mercator", proj4: '+proj=tmerc +lat_0=0 +lon_0=6 +k=1 +x_0=2500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs',extent:[370753.1145, 6382922.7769, 739245.6000, 6624811.0577]},
+  "Gnomonic":{ name: "Gnomonic", proj4: "+proj=gnom +lat_0=90 +lon_0=0 +x_0=6300000 +y_0=6300000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",extent:null},
+  "United Kingdom / EPSG:27700":{ name: "EPSG:27700", proj4: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs",extent:[0, 0, 700000, 1300000]},
+  "EPSG:23032":{ name: 'EPSG:23032', proj4: '+proj=utm +zone=32 +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs',extent:[-1206118.71, 4021309.92, 1295389.00, 8051813.28]}, 
+  "EPSG:5479":{ name: "EPSG:5479", proj4: '+proj=lcc +lat_1=-76.66666666666667 +lat_2=-79.33333333333333 +lat_0=-78 +lon_0=163 +x_0=7000000 +y_0=5000000 ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',extent:[6825737.53, 4189159.80, 9633741.96, 5782472.71]},
+  "SWITZERLAND /EPSG:21781":{ name: "SWITZERLAND/EPSG:21781", proj4: '+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs',extent:[485071.54, 75346.36, 828515.78, 299941.84]},
+  "NORTH POLE/ EPSG:3413":{ name: 'NORTH POLE/EPSG:3413', proj4: '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-4194304, -4194304, 4194304, 4194304]}, 
+  "World Mollweide / EPSG:54009":{ name: "World Mollweide / EPSG:54009", proj4: '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',extent:[-18e6, -9e6, 18e6, 9e6]},
+  "Quadrilateralized Spherical Cube":{ name: "Quadrilateralized Spherical Cube", proj4: '+proj=qsc +units=m +ellps=WGS84  +lat_0=0 +lon_0=0',extent:null},
  // "testdf":{ name: "testdf", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
- "PeirceQuincuncial":{ name: "PeirceQuincuncial", proj4: null,extent:null, worldExtent:null,center:[0,-0]},
+ "PeirceQuincuncial":{ name: "PeirceQuincuncial", proj4: null,extent:null},
 
 };
 // console.log( d3proj.geoArmadillo().parallel(25))
@@ -220,7 +220,7 @@ export function changeProjection(layers, center){
     center:transform(global_data.center, 'EPSG:4326',projName),
     // extent:Proj[iPrj].extent,
     zoom:map.getView().getZoom(),
-    maxZoom:25,
+    maxZoom:50,
     minZoom:-25
   });
 
@@ -265,7 +265,7 @@ export function changeZipProjection(layers, center, zoom){
     // center:transform(center,"EPSG:4326",global_data.projection.name),
     //extent:newExtent,
     // zoom:zoom,
-    maxZoom:25,
+    maxZoom:50,
     minZoom:-2
   });
     map.setView(newView);
@@ -314,7 +314,7 @@ export function setNextProj( map, new_projName){
     // center:transform(center, 'EPSG:4326',new_projName),
     //extent:newExtent,
     zoom:4,
-    maxZoom:25,
+    maxZoom:50,
     minZoom:-2
   });
     map.setView(newView);
@@ -340,7 +340,7 @@ function setProjection(code, name, proj4def, bbox) {
             projection: 'EPSG:3857',
             center:transform(global_data.center, 'EPSG:4326','EPSG:3857'),
             zoom: 1,
-            maxZoom:25,
+            maxZoom:50,
             minZoom:-10
           }));
 
@@ -366,7 +366,7 @@ function setProjection(code, name, proj4def, bbox) {
         var newView = new View({
           projection: newProj,
           center:transform(global_data.center, 'EPSG:4326',newProjCode),
-          maxZoom:25,
+          maxZoom:50,
           minZoom:-10
         });
         map.setView(newView);
@@ -374,6 +374,7 @@ function setProjection(code, name, proj4def, bbox) {
         refreshBaseLayers(map,global_data.layers.base);
         refreshFeaturesLayers(map,global_data.layers, global_data.projection.name,newProjCode);
         global_data.projection.name = newProjCode;
+        global_data.projection.proj4 = proj4def;
         global_data.projection.extent = bbox;
       }
 
@@ -388,6 +389,7 @@ function setProjection(code, name, proj4def, bbox) {
           if (results && results.length > 0) {
             for (var i = 0, ii = results.length; i < ii; i++) {
               var result = results[i];
+              console.log(result)
               if (result) {
                 var code = result['code'];
                 var name = result['name'];
