@@ -343,7 +343,8 @@ export function binTemporalRemoveValue(name_layer, name_var, data){
   }
 
   var len = data.links.length;
-
+  var node_ori = []
+  var node_dest = []
   var list_value = []
   data.filter[name_layer][name_var].temporal.data = {};
   var data_to_bin = data.filter[name_layer][name_var].temporal.data
@@ -487,10 +488,64 @@ export function binDataNumValue(name_layer, name_var, data){
   }
 }
 
+export function binDataNumValue2(name_layer, name_var, data, id_ori, id_dest){
+  if(typeof data.filter[name_layer]['test'] === 'undefined'){
+    data.filter[name_layer]['test'] = {numeral:{
+                                      index: [],
+                                      minima: []
+                                      }
+                                    }
+  }
+  else{
+    data.filter[name_layer]['test'].numeral = {
+                                      index: [],
+                                      minima: []
+                                      }
+  }
+  var emptyMatrix = createEmptyJsonMatrix(Object.keys(data.hashedStructureData))
+  for(var p = 0; p < 150; p++){
+    data.filter[name_layer]['test'].numeral.index.push(JSON.parse(JSON.stringify(emptyMatrix)))
+  }
+  // console.log(data.filter[name_layer]['test'].numeral)
+  var ArrayToBin = data.links.map(function(item){return Number(item[name_var])})
+  
+  var bin_scale = (Math.max(...ArrayToBin) - Math.min(...ArrayToBin)) / 150
+  var min = Math.min(...ArrayToBin)
+  
+  data.filter[name_layer]['test'].numeral.minima = [min, Math.max(...ArrayToBin)]
+  var data_to_bin = data.filter[name_layer]['test'].numeral;
+  var len = data.links.length
+console.log(data_to_bin)
+console.log(data.links[0][id_ori])
+  for(var i = 0; i<len; i++)
+  {
+    var value = Number(data.links[i][name_var])
+
+    for(var p = 0; p < 150; p++){
+      
+      if (value <= (min + (p+1) * bin_scale) && value >= (min + p * bin_scale)){
+        data_to_bin.index[p][data.links[i][id_ori]][data.links[i][id_dest]].push(i)
+        break
+      }
+    }
+  }
+}
+
+function createEmptyJsonMatrix(list_nodes){
+  var matrixNodes = {}
+  for(var p in list_nodes){
+    matrixNodes[list_nodes[p]] = {}
+      for(var m in list_nodes){
+      matrixNodes[list_nodes[p]][list_nodes[m]] = []
+    }
+  }
+  return matrixNodes
+}
 
 export function loadBinFilterData(name_layer, name_variable, filter, data){
   if(filter.filter === 'numeral'){
     binDataNumValue(name_layer,name_variable, data)
+    // binDataNumValue2(name_layer, name_variable, data, global_data.ids.linkID[0],global_data.ids.linkID[1])
   }
   if(filter.filter === 'categorial'){
     binDataCatValue(name_layer,name_variable, data)
@@ -509,6 +564,7 @@ export function loadBinFilterData(name_layer, name_variable, filter, data){
 export function prepareBinFilterData(name_layer, name_variable, filter, data){
   if(filter === 'numeral'){
     binDataNumValue(name_layer,name_variable, data)
+    // binDataNumValue2(name_layer, name_variable, data, global_data.ids.linkID[0],global_data.ids.linkID[1])
   }
   if(filter === 'categorial'){
     binDataCatValue(name_layer,name_variable, data)
@@ -1426,7 +1482,28 @@ export function applyNodeDataFilter(data){
   return [filteredNodeData,filteredRemoveNodeData] ;
 }
 
+// export function applyNodeDataFilter(nodes, links, id_selected_links){
+//   var filteredNodeData = {};
+//   var filteredRemoveNodeData = [];
+//   var keys =Object.keys(data)
+//   var len = keys.length;
+//   for(var p = 0; p<len; p++){
+//     if(toFilterNode(data[keys[p]])){
+//       filteredNodeData[keys[p]] = data[keys[p]];
+//     }
+//     if(toRemoveFilterNode(data[keys[p]]) && global_data.filter.node.length>0){
+      
+//       filteredRemoveNodeData.push(keys[p]);
+//     }
+//   }
+//   var len = id_selected_links.length;
+//   for(var p = 0; p<len; p++){
 
+//   }
+
+  
+//   return [filteredNodeData,filteredRemoveNodeData] ;
+// }
 
 
 function refreshFilterFeaturesLayers(name_layer){

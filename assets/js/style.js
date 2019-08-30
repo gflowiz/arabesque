@@ -4,7 +4,7 @@ import {Point} from 'ol/geom.js';
 import {getCenter} from 'ol/extent.js';
 import {asArray} from 'ol/color.js'
 
-import  {computeNodeDistanceCanvas} from "./layer.js"
+import  {computeNodeDistanceCanvas, getD3ScalersForStyle} from "./layer.js"
 // import * as d3scale from 'd3-scale'
 
 
@@ -185,7 +185,7 @@ export function styleLinkPoly(feature){
 }
 
 export function styleNodeCircle(feature,scalers){
-
+  
     if(global_data.style.node.size.cat === 'fixed'){
     //color setup
         var zindex = 1 //impossible case//impossible case Actually
@@ -240,6 +240,14 @@ export function styleNodeCircle(feature,scalers){
     return style
 }
 
+export function applyGlobalNodeStyle(feature){
+  if(feature.get('selected')){
+    return styleNodeCircle(feature,getD3ScalersForStyle("node"))
+  }
+  else{
+    return styleUnselectedNodeCircle(feature)
+  }
+}
 
 export function styleUnselectedNodeCircle(feature){
 

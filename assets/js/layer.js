@@ -1,5 +1,5 @@
 import {addLayerGestionMenu,addFLayerGestionMenu,removeLayer, addLayerGestionOSMMenu, addLinkLayerGestionMenu} from "./control.js"
-import {simpleColoredStyle, styleLinkPoly, styleNodeCircle, styleUnselectedNodeCircle, getFeatureStyle, getLinkFeatureStyle} from "./style.js"
+import {simpleColoredStyle,applyGlobalNodeStyle, styleLinkPoly, styleNodeCircle, styleUnselectedNodeCircle, getFeatureStyle, getLinkFeatureStyle} from "./style.js"
 import {applyNodeDataFilter, applyLinkDataFilter, getAllNodesToShow, testLinkDataFilter} from "./filter.js"
 import {drawArrow} from "./geometry.js"
 import {getNodeColorScaleValue, getNodeColorCatValue, getNodeOpaScaleValue} from "./semiology.js"
@@ -1063,7 +1063,9 @@ var scalers = getD3ScalersForStyle('node')
             var feat = new Feature(new Circle(point, radius))
             //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
             feat.setProperties(nodes[listallnodes[p]].properties)
-            feat.setStyle(styleNodeCircle(feat, scalers))
+            feat.setProperties({layer:"node"})
+            feat.setProperties({selected:true})
+            // feat.setStyle(styleNodeCircle(feat))
         
             //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
             nodeList.push(feat);
@@ -1077,7 +1079,8 @@ var scalers = getD3ScalersForStyle('node')
             //feat.setStyle(createCircle(Math.round(1000 * nodes[feature].properties.pop_est / SumPop +1)));
             feat.setProperties(nodes[listallnodes[p]].properties)
             feat.setProperties({layer:'node'})
-            feat.setStyle(styleUnselectedNodeCircle(feat))
+            feat.setProperties({selected:false})
+            // feat.setStyle(styleUnselectedNodeCircle(feat))
             //    featureTest.setStyle(styleFunctionLink(featureTest, linkData[j]["Trade Value (US$)"]))
             nodeList.push(feat);
         }
@@ -1089,7 +1092,8 @@ var scalers = getD3ScalersForStyle('node')
     var nodeLayer = new VectorLayer({
         name: "node",
         source: source,
-        renderMode: 'image'
+        renderMode: 'image',
+        style: applyGlobalNodeStyle
     })
 
 

@@ -26,7 +26,6 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 			$.get(save_para.files.link, function(links){
 
 
-
  global_var.projection = loadPojection(save_para.projection);
  				setupGlobalVariablesFromSave(save_para, global_var);
  			

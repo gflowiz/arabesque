@@ -24,10 +24,11 @@ import {  Map,  View} from 'ol';
 import {  ScaleLine,  defaults as defaultControls,  Control,  FullScreen,  Attribution} from 'ol/control.js';
 import {  click,  pointerMove} from 'ol/events/condition.js';
 import Select from 'ol/interaction/Select.js';
+// import {click, pointerMove, altKeyOnly} from 'ol/events/condition.js';
 
 import WebGLMap from 'ol/WebGLMap.js';
 import * as wbg from 'ol/webgl.js';
-
+import Overlay from 'ol/Overlay.js';
 // import * as d3proj from 'd3-geo-projection'
 
 import Hover from 'ol-ext/interaction/Hover'
@@ -671,6 +672,22 @@ for (var i = 0; i < list_nameLayer.length; i++) {
   //
 }
 
+// var container = document.getElementById('popup');
+// var content = document.getElementById('popup-content');
+// var closer = document.getElementById('popup-closer');
+// console.log(closer)
+// var overlay = new Overlay({
+//         element: container,
+//         autoPan: true,
+//         autoPanAnimation: {
+//           duration: 250
+//         }
+//       });
+// closer.onclick = function() {
+//         overlay.setPosition(undefined);
+//         closer.blur();
+//         return false;
+//       };
 
 var attribution = new Attribution({
   collapsible: false
@@ -679,7 +696,7 @@ global.map = new Map({
   controls: defaultControls({
     attribution: false
   }).extend([attribution]),
-         
+  // overlays: [overlay],   
   //      ]),
   renderer: 'webgl',
   // pixelRatio:5,
@@ -695,6 +712,103 @@ global.map = new Map({
     maxZoom: 50
   })
 });
+
+var selectHover = new Select({
+  condition: function(mapBrowserEvent){
+    // console.log(mapBrowserEvent)
+    return pointerMove(mapBrowserEvent)
+  },
+  layers:function (layer) {
+          return layer.get('name') === 'link' || layer.get('name') === 'node';
+        },
+});
+var selectClick = new Select({
+  layers:function (layer) {
+          return layer.get('name') === 'link' || layer.get('name') === 'node';
+        },
+});
+
+selectHover.on('select', function(e) { 
+  var feat = selectHover.getOverlay().getSource().getFeatures()[0]
+
+  if(feat.get('layer') === 'node'){
+    var featToShow = getFeaturesLinksToNode(feat.get(global_data.ids.nodeID))
+    // console.log(featToShow)
+    selectHover.getOverlay().getSource().addFeatures(featToShow)
+  }
+})
+// selectHover.handleEvent(function(mapBrowserEvent){console.log('dsfgqsfdgqsg')})
+// console.log(select)selectHover.addFeature_
+map.addInteraction(selectHover); 
+// map.handleMapBrowserEvent(function(mapBrowserEvent){console.log(mapBrowserEvent)})
+function isNodeInFeatures(features){
+  var feature = null
+  features.forEach(function(feat){if(feat.get('layer') === 'node'){ feature = feat}})
+  return feature
+}
+function getFeaturesLinksToNode(id_node){
+  // console.log(id_node)
+  var layer = getLayerFromName(map, 'link')
+  if(layer === null){
+    return
+  }
+  var featuresToOverlay = []
+  var features = layer.getSource().getFeatures()
+  // console.log(features)
+  features.forEach(function(feature){
+
+    if(feature.get('ori') === id_node || feature.get('dest') === id_node){
+      featuresToOverlay.push(feature)
+    }
+  })
+
+  return featuresToOverlay
+}
+
+
+// map.addInteraction(selectClick);      
+
+// map.on('singleclick', function(evt) {
+//         select.getFeatures().clear();
+//         var features = map.getFeaturesAtPixel(evt.pixel)
+//         // var hdms = toStringHDMS(toLonLat(coordinate));
+//  // console.log(features)
+//         var networkFeature;
+//         for(var p in features){
+//           // console.log(features[p].get('layer'))
+//           if (['node','Node', 'link'].includes(features[p].get('layer'))){
+//             networkFeature = features[p]
+//             break
+//           }
+//         }
+//         // console.log(networkFeature.get('layer'))
+//         if(typeof networkFeature !== 'undefined'){
+//           if(networkFeature.get('layer') === 'link'){
+//              content.innerHTML = showLinkPopup(networkFeature)
+//              overlay.setPosition(evt.coordinate);
+//           }
+//           else if(networkFeature.get('layer') === 'node')
+//             content.innerHTML = showNodePopup(networkFeature)
+//             overlay.setPosition(evt.coordinate);
+//         }
+//         else {
+//                 overlay.setPosition(undefined);
+//               }
+
+//       });
+
+// function showLinkPopup(feature){
+//   return 'link'
+// }
+
+// function showNodePopup(feature){
+//   return 'link'
+// }
+
+
+// var select = null; // ref to currently selected interaction
+
+
 var scaleLineControl = new ScaleLine();
 map.addControl(scaleLineControl);
 map.addControl(new FullScreen());
