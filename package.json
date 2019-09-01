@@ -28,7 +28,6 @@
     "@turf/turf": "^5.1.6",
     "@types/jquery": "2.0.33",
     "@types/proj4": "^2.5.0",
-    "@types/spectrum-colorpicker": "1.5.27",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.9",
     "canvas2svg": "^1.0.16",

@@ -672,22 +672,22 @@ for (var i = 0; i < list_nameLayer.length; i++) {
   //
 }
 
-// var container = document.getElementById('popup');
-// var content = document.getElementById('popup-content');
-// var closer = document.getElementById('popup-closer');
-// console.log(closer)
-// var overlay = new Overlay({
-//         element: container,
-//         autoPan: true,
-//         autoPanAnimation: {
-//           duration: 250
-//         }
-//       });
-// closer.onclick = function() {
-//         overlay.setPosition(undefined);
-//         closer.blur();
-//         return false;
-//       };
+var container = document.getElementById('popup');
+var content = document.getElementById('popup-content');
+var closer = document.getElementById('popup-closer');
+console.log(closer)
+var overlay = new Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+closer.onclick = function() {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
 
 var attribution = new Attribution({
   collapsible: false
@@ -712,6 +712,12 @@ global.map = new Map({
     maxZoom: 50
   })
 });
+
+/*var selectClick = new Select({
+  layers:function (layer) {
+          return layer.get('name') === 'link' || layer.get('name') === 'node';
+        },
+});*/
 
 var selectHover = new Select({
   condition: function(mapBrowserEvent){
@@ -766,44 +772,84 @@ function getFeaturesLinksToNode(id_node){
 }
 
 
-// map.addInteraction(selectClick);      
+map.addInteraction(selectClick);      
 
-// map.on('singleclick', function(evt) {
-//         select.getFeatures().clear();
-//         var features = map.getFeaturesAtPixel(evt.pixel)
-//         // var hdms = toStringHDMS(toLonLat(coordinate));
-//  // console.log(features)
-//         var networkFeature;
-//         for(var p in features){
-//           // console.log(features[p].get('layer'))
-//           if (['node','Node', 'link'].includes(features[p].get('layer'))){
-//             networkFeature = features[p]
-//             break
-//           }
-//         }
-//         // console.log(networkFeature.get('layer'))
-//         if(typeof networkFeature !== 'undefined'){
-//           if(networkFeature.get('layer') === 'link'){
-//              content.innerHTML = showLinkPopup(networkFeature)
-//              overlay.setPosition(evt.coordinate);
-//           }
-//           else if(networkFeature.get('layer') === 'node')
-//             content.innerHTML = showNodePopup(networkFeature)
-//             overlay.setPosition(evt.coordinate);
-//         }
-//         else {
-//                 overlay.setPosition(undefined);
-//               }
+map.on('singleclick', function(evt) {
+        select.getFeatures().clear();
+        var features = map.getFeaturesAtPixel(evt.pixel)
+        // var hdms = toStringHDMS(toLonLat(coordinate));
+ // console.log(features)
+        var networkFeature;
+        for(var p in features){
+          // console.log(features[p].get('layer'))
+          if (['node','Node', 'link'].includes(features[p].get('layer'))){
+            networkFeature = features[p]
+            break
+          }
+        }
+        // console.log(networkFeature.get('layer'))
+        if(typeof networkFeature !== 'undefined'){
+          if(networkFeature.get('layer') === 'link'){
+             content.innerHTML = showLinkPopup(networkFeature)
+             overlay.setPosition(evt.coordinate);
+          }
+          else if(networkFeature.get('layer') === 'node')
+            content.innerHTML = showNodePopup(networkFeature)
+            overlay.setPosition(evt.coordinate);
+        }
+        else {
+                overlay.setPosition(undefined);
+              }
 
-//       });
+      });
 
-// function showLinkPopup(feature){
-//   return 'link'
-// }
+function showLinkPopup(feature){
+  var link_used = ["fixed"]
+   var str_to_show = '<b>' + feature.get('ori') + ' <img class="popup-icon" src="assets/svg/si-glyph-triangle-right.svg"/> ' + feature.get('dest') + '</b><br/>'
+    if (!link_used.includes(global_data.ids.vol)) {
+      str_to_show = str_to_show + global_data.ids.vol + " : " + e.feature.get(global_data.ids.vol) +
+        "<br/>";
+      link_used.push(global_data.ids.vol)
+    }
+    if (!link_used.includes(feature.get('size').name)) {
+      str_to_show = str_to_show + e.feature.get('size').name + " : " + e.feature.get('size').value +
+        "<br/>";
+      link_used.push(feature.get('size').name)
+    }
+    if (!link_used.includes(e.feature.get('color').name)) {
+      str_to_show = str_to_show + e.feature.get('color').name + " : " + e.feature.get('color').value +
+        "<br/>";
+      link_used.push(feature.get('color').name)
+    }
+    if (!link_used.includes(feature.get('opa').name)) {
+      str_to_show = str_to_show + e.feature.get('opa').name + " : " + e.feature.get('opa').value +
+        "<br/>";
+      link_used.push(feature.get('opa').name)
+    }
+  return str_to_show
+}
 
-// function showNodePopup(feature){
-//   return 'link'
-// }
+function showNodePopup(feature){
+  var nodes_used = ["fixed"]
+  var str_to_show = '<b>' + feature.get(global_data.ids.nodeID) + '</b>' +
+      "<br/>"
+    if (!nodes_used.includes(global_data.style.node.size.var)) {
+      str_to_show = str_to_show + global_data.style.node.size.var+" : " + feature.get(global_data.style.node.size.var) +
+        "<br/>"
+      nodes_used.push(global_data.style.node.size.var)
+    }
+    if (!nodes_used.includes(global_data.style.node.color.var)) {
+      str_to_show = str_to_show + global_data.style.node.color.var+" : " + feature.get(global_data.style.node.color.var) +
+        "<br/>"
+      nodes_used.push(global_data.style.node.color.var)
+    }
+    if (!nodes_used.includes(global_data.style.node.opa.var)) {
+      str_to_show = str_to_show + global_data.style.node.opa.var+" : " + feature.get(global_data.style.node.opa.var) +
+        "<br/>"
+      nodes_used.push(global_data.style.node.opa.var)
+    }
+  return str_to_show
+}
 
 
 // var select = null; // ref to currently selected interaction
@@ -830,7 +876,7 @@ document.getElementById('titleMap').addEventListener("change", function () {
 
 
 // Display the style on select
-var popup = new Popup({
+/*var popup = new Popup({
   popupClass: 'tooltips',
   offsetBox: 15
 });
@@ -893,7 +939,7 @@ hover.on('hover', function (e) {
 
   // +'<br/>'
   // +e.feature.get('pop').toLocaleString()+' hab.')
-});
+});*/
 
 // map.on('click', function(event) {
 //     var features = map.getFeaturesAtPixel(event.pixel);
