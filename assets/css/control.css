@@ -432,8 +432,9 @@ body {
 }
 
 .ol-scale-line {
-  left: 50px !important;
-  right: auto !important;
+  left: auto !important;
+  right: 8px !important;
+  bottom: 25px !important;
 }
 
 html {

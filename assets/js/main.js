@@ -13,8 +13,8 @@ import {  setupStyleAndAddLayer,  showSemioParameter,  generatePaletteMultiHue2,
 import * as turf from "@turf/turf"
 
 import CanvasScaleLine from 'ol-ext/control/CanvasScaleLine'
-import Print from 'ol-ext/control/Print'
-import 'ol-ext/control/Print.css'
+//import Print from 'ol-ext/control/Print'
+//import 'ol-ext/control/Print.css'
 import {transform} from 'ol/proj.js';
 
 import {  register} from 'ol/proj/proj4.js';
@@ -674,8 +674,8 @@ for (var i = 0; i < list_nameLayer.length; i++) {
 
 var container = document.getElementById('popup');
 var content = document.getElementById('popup-content');
-var closer = document.getElementById('popup-closer');
-console.log(closer)
+
+
 var overlay = new Overlay({
         element: container,
         autoPan: true,
@@ -683,11 +683,7 @@ var overlay = new Overlay({
           duration: 250
         }
       });
-closer.onclick = function() {
-        overlay.setPosition(undefined);
-        closer.blur();
-        return false;
-      };
+
 
 var attribution = new Attribution({
   collapsible: false

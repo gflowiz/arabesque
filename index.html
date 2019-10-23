@@ -443,14 +443,14 @@ All rights reserved.
                   <h1> Source Code</h1> 
                   <p>
                     Source code and documentation available on Github:
-                    <a href="https://github.com/bapaumet/Gflowiz">github.com/bapaumet/Gflowiz</a>
+                    <a href="https://github.com/gflowiz/Glowiz-Arabesque">https://github.com/gflowiz/Glowiz-Arabesque</a>
                   </p>
                 </div>
                 <div class="col-md-3" >
                    <h1> Contact us</h1> 
                    <p>
                     Share comments and issues on:
-                    <a href="https://github.com/bapaumet/Gflowiz/issues">github.com/bapaumet/Gflowiz/issues</a>
+                    <a href="https://github.com/gflowiz/Glowiz-Arabesque/issues">https://github.com/gflowiz/Glowiz-Arabesque/issues</a>
                   </p>
                 </div>
               </div>
@@ -664,6 +664,7 @@ All rights reserved.
             </div>
          </div>
       </div>
+      <!-- Add tile basemap modal -->
       <div class="modal fade" id="TileModal" tabindex="-1" role="dialog" aria-labelledby="TileModalLabel" aria-hidden="true">
          <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -819,7 +820,7 @@ All rights reserved.
                      </div>
                   </div>
                </div>
-               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">ADD</button>
+               <button class="modal-footer btn btn-dark justify-content-center mt-2"   type="button" id="addNewLayerButtonChange" data-dismiss="modal">CHANGE</button>
             </div>
          </div>
       </div>
@@ -846,7 +847,7 @@ All rights reserved.
                   <div class="row">
                      <div class="col-md-3 p-0">
                         <div class="col-md-12">
-                           <label for="select" class="text-muted h5">Orientation</label>
+                           <label for="select" class="text-muted h5">-</label>
                            <select class="custom-select" id="semioColorBaseTypeAddnode">
                               <option selected value="fixed">Fixed</option>
                               <option value="varied">Varied</option>
@@ -862,7 +863,7 @@ All rights reserved.
                   <label for="select" class="h4 strong">Size</label>
                   <div class="row"  id="semioSizeAddnode">
                      <div class="col-md-2">
-                        <label for="select" class="text-muted h5">Orientation</label>
+                        <label for="select" class="text-muted h5">-</label>
                         <select class="custom-select" id="semioSizeBaseTypeAddnode">
                            <option selected value="fixed">Fixed</option>
                            <option value="varied">Varied</option>
@@ -881,7 +882,7 @@ All rights reserved.
                         <label for="select" class="h4 strong">Opacity</label>
                         <div class="row"  id="semioOpaAddnode">
                            <div class="col-md-2">
-                              <label for="select" class="text-muted h5">Orientation</label>
+                              <label for="select" class="text-muted h5">-</label>
                               <select class="custom-select" id="semioOpaBaseTypeAddnode">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
@@ -900,6 +901,7 @@ All rights reserved.
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title h2" id="semioModalLabellink">Choose Semio</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                </div>
                <div class="modal-body" >
                   <div class="row">
@@ -941,7 +943,7 @@ All rights reserved.
                         <div class="row">
                            <div class="col-md-3 p-0">
                               <div class="col-md-12">
-                                 <label for="select" class="text-muted h5">Orientation</label>
+                                 <label for="select" class="text-muted h5">-</label>
                                  <select class="custom-select" id="semioColorBaseTypeAddlink">
                                     <option selected value="fixed">Fixed</option>
                                     <option value="varied">Varied</option>
@@ -959,7 +961,7 @@ All rights reserved.
                         <label for="select" class="h4 strong">Size</label>
                         <div class="row"  id="semioSizeAddlink">
                            <div class="col-md-2">
-                              <label for="select" class="text-muted h5">Orientation</label>
+                              <label for="select" class="text-muted h5">-</label>
                               <select class="custom-select" id="semioSizeBaseTypeAddlink">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
@@ -979,7 +981,7 @@ All rights reserved.
                               <label for="select" class="h4 strong">Opacity</label>
                               <div class="row"  id="semioOpaAddlink">
                                  <div class="col-md-2">
-                                    <label for="select" class="text-muted h5">Orientation</label>
+                                    <label for="select" class="text-muted h5">-</label>
                                     <select class="custom-select" id="semioOpaBaseTypeAddlink">
                                        <option selected value="fixed">Fixed</option>
                                        <option value="varied">Varied</option>
@@ -999,7 +1001,8 @@ All rights reserved.
          <div class="modal-dialog" role="document">
             <div class="modal-content">
                <div class="modal-header">
-                  <h5 class="modal-title h2" id="changeGeometryModalLink">Change Arrow shep</h5>
+                  <h5 class="modal-title h2" id="changeGeometryModalLink">Change Arrow Shape</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                </div>
                <div class="modal-body" >
                   <div class="row">
@@ -1156,7 +1159,7 @@ All rights reserved.
                   <div class="row">
                      <div class="col-md-3 p-0">
                         <div class="col-md-12">
-                           <label for="select" class="text-muted h5">Orientation</label>
+                           <label for="select" class="text-muted h5">-</label>
                            <select class="custom-select" id="semioColorBaseTypeChangenode">
                               <option selected value="fixed">Fixed</option>
                               <option value="varied">Varied</option>
@@ -1172,7 +1175,7 @@ All rights reserved.
                   <label for="select" class="h4 strong">Size</label>
                   <div class="row"  id="semioSizeChangenode">
                      <div class="col-md-2">
-                        <label for="select" class="text-muted h5">Orientation</label>
+                        <label for="select" class="text-muted h5">-</label>
                         <select class="custom-select" id="semioSizeBaseTypeChangenode">
                            <option selected value="fixed">Fixed</option>
                            <option value="varied">Varied</option>
@@ -1191,7 +1194,7 @@ All rights reserved.
                         <label for="select" class="h4 strong">Opacity</label>
                         <div class="row"  id="semioOpaChangenode">
                            <div class="col-md-2">
-                              <label for="select" class="text-muted h5">Orientation</label>
+                              <label for="select" class="text-muted h5">-</label>
                               <select class="custom-select" id="semioOpaBaseTypeChangenode">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
@@ -1216,7 +1219,7 @@ All rights reserved.
                   <div class="row">
                      <div class="col-md-3 p-0">
                         <div class="col-md-12">
-                           <label for="select" class="text-muted h5">Orientation</label>
+                           <label for="select" class="text-muted h5">-</label>
                            <select class="custom-select" id="semioColorBaseTypeChangelink">
                               <option selected value="fixed">Fixed</option>
                               <option value="varied">Varied</option>
@@ -1232,7 +1235,7 @@ All rights reserved.
                   <label for="select" class="h4 strong">Size</label>
                   <div class="row"  id="semioSizeChangelink">
                      <div class="col-md-2">
-                        <label for="select" class="text-muted h5">Orientation</label>
+                        <label for="select" class="text-muted h5">-</label>
                         <select class="custom-select" id="semioSizeBaseTypeChangelink">
                            <option selected value="fixed">Fixed</option>
                            <option value="varied">Varied</option>
@@ -1245,7 +1248,7 @@ All rights reserved.
                         <label for="select" class="h4 strong">Opacity</label>
                         <div class="row"  id="semioOpaChangelink">
                            <div class="col-md-2">
-                              <label for="select" class="text-muted h5">Orientation</label>
+                              <label for="select" class="text-muted h5">-</label>
                               <select class="custom-select" id="semioOpaBaseTypeChangelink">
                                  <option selected value="fixed">Fixed</option>
                                  <option value="varied">Varied</option>
@@ -1292,11 +1295,7 @@ All rights reserved.
       </div>
 
 
-<!-- POPUP PART FOR SHOW INFORMATION FROM CLICKED LINK -->
-    <div id="popup" class="ol-popup-click">
-      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-      <div id="popup-content"></div>
-    </div>
+
       <script src="dist/bundle.js"></script>
    </body>
 </html>
