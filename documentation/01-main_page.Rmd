@@ -1,0 +1,6 @@
+# Main page
+
+The main page welcomes you and provides several informations about the application
+and a couple ways to enter it.
+
+
