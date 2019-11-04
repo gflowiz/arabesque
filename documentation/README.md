@@ -1,1 +1,4 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+This is the documentation for the [Arabesque](http://arabesque.ifsttar.fr/) web application.
+For more information, see the project on [GitHub](https://github.com/gflowiz/Gflowiz-Arabesques).
+
+This book is n R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
