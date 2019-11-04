@@ -2,3 +2,4 @@ node_modules
 .Rproj.user
 .swp
 .swo
+.Rhistory
