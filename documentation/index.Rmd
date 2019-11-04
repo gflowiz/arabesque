@@ -1,0 +1,28 @@
+--- 
+title: "Arabesque"
+author: "Gflowiz project team"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the online documentation of the Arabesque web application."
+---
+
+
+# Arabesque
+
+Arabesque is a web application for thematic mapping of flow and networks datasets.
+Built in javascript and HTML 5, it provides a full toolset to filter you data
+and simplify it in order to make clearer and understandable maps.
+
+This document aims to presente the application and its fonctionnalities using the
+provided datasets.
+
+It is segmented in several parts:
+
+* [Main page]()
+* [Main functionnalities]()
+* [Import data]()
+  
