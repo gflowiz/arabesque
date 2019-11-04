@@ -10,6 +10,9 @@ link-citations: yes
 description: "This is the online documentation of the Arabesque web application."
 ---
 
+
+# Arabesque
+
 Arabesque is a web application for thematic mapping of flow and networks datasets.
 Built in javascript and HTML 5, it provides a full toolset to filter you data
 and simplify it in order to make clearer and understandable maps.

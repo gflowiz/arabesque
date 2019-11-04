@@ -3,3 +3,5 @@ node_modules
 .swp
 .swo
 .Rhistory
+
+documentation/_book

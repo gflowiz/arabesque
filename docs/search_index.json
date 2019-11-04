@@ -1,0 +1,7 @@
+[
+["index.html", "Arabesque 1 Arabesque", " Arabesque Gflowiz project team 2019-11-04 1 Arabesque Arabesque is a web application for thematic mapping of flow and networks datasets. Built in javascript and HTML 5, it provides a full toolset to filter you data and simplify it in order to make clearer and understandable maps. This document aims to presente the application and its fonctionnalities using the provided datasets. It is segmented in several parts: Main page Main functionnalities Import data "],
+["main-page.html", "2 Main page", " 2 Main page The main page welcomes you and provides several informations about the application and a couple ways to enter it. "],
+["literature.html", "3 Literature", " 3 Literature Here is a review of existing methods. "],
+["methods.html", "4 Methods", " 4 Methods We describe our methods in this chapter. "],
+["references.html", "References", " References "]
+]
