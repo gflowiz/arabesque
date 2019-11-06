@@ -1,7 +1,7 @@
 node_modules
 .Rproj.user
-.swp
-.swo
+[._]*.swp
+[._]*.swo
 .Rhistory
 
 documentation/_book

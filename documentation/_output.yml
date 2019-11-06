@@ -3,7 +3,8 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Arabesque, a web application for flowmap analyzing</a></li>
+        <li><div style="float: left;"><a href="./index.html"><img src="./images/00_arabesque-small-logo.png" alt="Logo Arabesque" id="itemImg"></a></div></li>
+        <li><a href="./index.html"></br>Arabesque</br>flowmap analyzing</a></br></li>
       after: |
         <li><a href="http://arabesque.ifsttar.fr/" target="blank">arabesque.ifsttar.fr</a></li>
     download: ["pdf", "epub"]

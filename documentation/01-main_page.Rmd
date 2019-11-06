@@ -3,4 +3,70 @@
 The main page welcomes you and provides several informations about the application
 and a couple ways to enter it.
 
+It is a page that you can scroll down. It is segmented in several parts:
 
+* Main page
+* Gallery
+* Guide
+* Showcase
+* General informations
+* Detailed informations
+
+
+##  Main page
+
+![Main page](images/01_arabesque_acceuil.png)
+
+1. Arabesque logo : click on it to return to the main page
+2. Gallery button : to go directly to the gallery
+3. Guide button : go to the guide
+4. Project : visit the project website
+5. New map : creating a new map with you own dataset
+6. Load saved map : reload a map you created before
+7. Scroll down to access more informations
+
+## Gallery
+
+This gallery display several screenshots of maps realized with Arabesque.
+
+![Gallery](images/02_arabesque_gallery.png)
+
+## Guide
+
+The guide display informations about the core features of the appplication:
+
+* Import data
+* Draw nodes and links
+* Filter the data
+* Explore
+* Export to image
+
+![Guide](images/03_arabesque_guide.png)
+
+## Showcase
+
+Arabesque comes with 3 preloaded maps on several subjects:
+
+* London Bike Traffic
+* Swiss Migration
+* Europe commercial exchanges
+
+![Showcase](images/04_arabesque_showcase.png)
+
+## General informations
+
+The main page provides general information on the application (funding and
+contributors) but also about the Gflowiz project.
+
+![General informations](images/05_arabesque_general_infos.png)
+
+## Detailed informations
+
+Finally you can find detailled informations about the application :
+
+* Software libraries
+* Source datasets
+* Licence
+* Link to the source code
+* Contact us policy
+![Detailed informations](images/06_arabesque_detailed_infos.png)
