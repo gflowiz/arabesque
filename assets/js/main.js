@@ -1441,8 +1441,13 @@ export function createGeoJSON(Json_data) {
   var points = [];
   for (var p = 0; p < len; p++) {
     // 
+    try{
     var point = turf.point([Number(Json_data[p][global_data.ids.lat]), Number(Json_data[p][global_data.ids.long])], Json_data[p]);
     points.push(point)
+    }catch{
+	console.log("Problem importing some nodes")
+	console.log(point)
+    }
   }
 
   return turf.featureCollection(points)
