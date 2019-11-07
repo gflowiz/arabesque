@@ -136,7 +136,7 @@ body h1{
   /*font-size: 4em;*/
   color:#38291f;
   text-align: center;
-  background-color:  #FFDEAD
+  background-color:  #f9f9f9
 /*    border-color: #624531;
   border-width: 0px;
   border-top-width: 10px;
@@ -167,9 +167,9 @@ padding-top: 8em;
 #gallery {
   border-color: #624531;
   border-width: 0px;
-  border-bottom-width: 15px;
+  border-bottom-width: 0px;
   border-style: solid;
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   padding-bottom: 40px 
   /*height: 100%; */
 }
@@ -177,9 +177,9 @@ padding-top: 8em;
 #contributors {
   border-color: #624531;
   border-width: 0px;
-  border-top-width: 15px;
+  border-top-width: 0px;
   border-style: solid;
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   padding-bottom: 40px 
   /*height: 100%; */
 }
@@ -218,7 +218,7 @@ color: black !important;
   border-color: #624531;
   border-width: 0px;
   border-style: solid;
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   padding-bottom: 40px 
   /*height: 100%; */
 }
@@ -227,10 +227,10 @@ color: black !important;
   padding-bottom: 45px;
   border-color: #624531;
   border-width: 0px;
-  border-top-width: 15px;
-  border-bottom-width: 15px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
   border-style: solid;
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   /*height: 100%; */
 }
 #credits h1{
@@ -238,7 +238,7 @@ color: black !important;
   padding-bottom: 5px; 
   border-color: #fef1dd;
   border-width: 0px;
-  border-bottom-width: 8px;
+  border-bottom-width: 0px;
   border-style: solid;
   text-align: center;
 }
@@ -246,7 +246,7 @@ color: black !important;
 #information {
   padding-bottom: 45px;
   border-width: 0px;
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   /*height: 100%; */
 }
 
@@ -324,7 +324,7 @@ color: black !important;
 }
 
 .btn-dark {
-  background-color: #38291f !important;
+  background-color: #917c6f !important;
   border: none;
 }
 
@@ -511,7 +511,7 @@ html {
 }
 
 .card-body {
-  background-color: #FFDEAD;
+  background-color: #f9f9f9;
   border-color: #38291f;
 }
 

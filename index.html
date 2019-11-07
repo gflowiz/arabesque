@@ -5,7 +5,7 @@
       <title>Arabesque</title>
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-      <link href="./dist/main.css" rel="stylesheet">
+      <link href="dist/main.css" rel="stylesheet">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
       <!--     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          -->
@@ -28,7 +28,7 @@
         <a class="nav-link" href="#gallery">Gallery</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#information">Guide</a>
+        <a class="nav-link" href="./docs/">Guide</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#contact">Project</a>
@@ -39,13 +39,13 @@
   </div>
 </nav>
     <!-- Header -->
-    <header style="background-color:silver; background-size: cover;
+    <header style="background-color:#f9f9f9; background-size: cover;
          background-repeat: no-repeat; height: inherit">
         <div class="container"  >
             <div class="row justify-content-around">
             <div classe="col-md-6">
                <h1 class="home-title"> Arabesque </h1>
-               <h3 class="home-subtitle">Arabesque is a web application for thematic mapping of flow and networks datasets
+               <h3 class="home-subtitle">a web application for thematic flow mapping
                </h3>
             </div>
           </div>
@@ -53,10 +53,10 @@
             <div class="col-md-3">
                <div class="card" >
                   <div class="card-body" style="background-color:#fef1dd;">
-                     <h5 class="card-title">Begin new Map</h5>
+                     <h5 class="card-title">Begin new map</h5>
                      <div class="custom-file">
                         <input type="file"  id="Link" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link Data</label>
+                        <label class="custom-file-label" id="label_link" for="inputGroupFile01">Link data</label>
                      </div>
                      <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
                      <button type="button" id="importDataButton" class="btn btn-dark btn-block" data-toggle="modal" data-target="#importFlowModal">
@@ -70,14 +70,14 @@
             <div class="col-md-3 align-items-center  justify-content-around h-50">
                <div class="card" >
                   <div class="card-body" style="background-color:#fef1dd;">
-                     <h5 class="card-title">Load Saved Map</h5>
+                     <h5 class="card-title">Load saved map</h5>
                      <div class="custom-file">
                         <input type="file"  id="loadSavedZipMap" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" id="label_loadSavedZipMap" for="loadSavedZipMap">Load Zip Save</label>
+                        <label class="custom-file-label" id="label_loadSavedZipMap" for="loadSavedZipMap">Load saved zip</label>
                      </div>
                      <!--         <input type='button' class="btn btn-dark btn-block w-100" value='GFLOWIZ' onclick='importDataToMap()'/>  -->
                      <button type="button" id="LoadZipMapButton" class="btn btn-dark btn-block" disabled>
-                     Load Saved Map
+                     Load saved map
                      </button>
                   </div>
                </div>
@@ -87,7 +87,7 @@
         <div style="position:absolute; bottom: 0px; width: 100%;">
           <div class="row justify-content-around" >
             <div class="col-md-6">
-              <p class="info-center"><img class='icon-info' src='assets/svg/si-glyph-two-arrow-down.svg'/>More Informations Below<img class='icon-info' src='assets/svg/si-glyph-two-arrow-down.svg'/></p>
+              <p class="info-center">More informations and demos below</br><img class='icon-info' src='assets/svg/si-glyph-two-arrow-down.svg'/></p>
             </div>
          </div>
        </div>
@@ -96,56 +96,16 @@
       <div class="container text-white">
         <div class="row justify-content-around">
           <div class="col-md-12" >
-            <h3 class="subheader-title">Arabesques provides a web vizualisation tool to create flow map et explore it. <br>
-            Built in javascript and HTML 5</h3> 
             <h3 class="subheader-title"><a href="./docs/" target="_blank">To find the online tutorial of the application, click here</a> </h3>
           </div>
         </div>
       </div>
     </section>
-    <section id="gallery">
-        <div class="container">
-            <div class="row justify-content-center">
-                <hr class="menu-bar">
-                <div class="col-md-3 title-menu justify-content-center">
 
-                 <h1 class="title-font"> Gallery </h1>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-12">
 
-                <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-                  <div class="carousel-inner">
-                    <div class="carousel-item active" data-interval="3000">
-                      <img src="./public/img/1.png" class="d-block w-100" alt="...">
-                    </div>
-                      <div class="carousel-item" data-interval="3000">
-                        <img src="./public/img/11.png" class="d-block w-100 figure-img img-fluid" alt="...">
-                      </div>
-                    <div class="carousel-item" data-interval="3000">
-                      <img src="./public/img/2.png" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item" data-interval="3000">
-                      <img src="./public/img/4.png" class="d-block w-100" alt="...">
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
     <section id="information" >
         <div class="container">
-            <div class="row justify-content-center">
+      <!--      <div class="row justify-content-center">
                 <hr class="menu-bar">
                 <div class="col-md-3 title-menu justify-content-center">
 
@@ -251,45 +211,88 @@
                       <p><h4>Save the map as a zip file for a future exploration !<br>
                       Or export it as a png to add it to presentation ! </h4></p>
                 </div>
-          </div>
+          </div> -->
 
             <div class="row justify-content-center">
                 <hr class="menu-bar">
                 <div class="col-md-3 title-menu justify-content-center">
 
-                 <h1 class="title-font"> Showcase </h1>
+                 <h1 class="title-font"> Demo </h1>
+            	</div>
             </div>
-          </div>
             <div class="row justify-content-around" id="showcase">
                 <div class="col-md-3" >
-                      <h3 class='showcase-title'> London Bike Traffic </h3>
+                      <h3 class='showcase-title'>Bikes Sharing</h3>
                       <hr class="showcase-bar">
                       <p>
-                        This map is the flow of bicycle in the town of London. it's the perfect example to brush data and filters to explore and try to understand the resident commuting.
+			Number of trips between stations of the London's Santander Cycle Hire Scheme in 2017,
+			<a href="https://data.london.gov.uk/">source: Data London</a>.
                       </p>
-                     <button type="button" id ="localMap" class="btn btn-dark btn-block" >Test it !</button>
+                     <button type="button" id ="localMap" class="btn btn-dark btn-block" >Explore</button>
                    </div>
                      <div class="col-md-3" >
-                                            <h3 class='showcase-title'> Swiss Migration </h3>
+                      <h3 class='showcase-title'>Swiss Commuting</h3>
                       <hr class="showcase-bar">
                       <p>
-                        
+			Daily commutes in Switzerland (2014),
+                      <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/mobilitaet-verkehr/personenverkehr/pendlermobilitaet.html">source: Swiss Federal Statistical Office</a>.
                       </p>
-                     <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Try it !</button>                   
-                   </div>
-                     <div class="col-md-3" >
+                     <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Explore</button>                   
+                  </div>
+                   <!--  <div class="col-md-3" >
                       <h3 class='showcase-title'> Europe commercial exchanges</h3>
                       <hr class="showcase-bar">
                       <p>
-                        A visualisation of ressouce exchanges between five european countries from the 80's. This example show how use date and category filters in Arabesque for explore flows.
+                        A visualisation of ressouce exchanges between five european countries from the 80's. This example show how use date and category filters in Arabesque for exploring flows.
                       </p>
-                     <button type="button" id ="worldMap" class="btn btn-dark btn-block" >Explore it !</button>
-                  </div>
-               
-            </div>
-                </div>
+                     <button type="button" id ="worldMap" class="btn btn-dark btn-block" >Explore</button>
+                     </div> -->
+            	</div>
+              </div>
     
     </section>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="row justify-content-center">
+                <hr class="menu-bar">
+                <div class="col-md-3 title-menu justify-content-center">
+
+                 <h1 class="title-font"> Gallery </h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+
+                <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="3000">
+                      <img src="./public/img/1.png" class="d-block w-100" alt="...">
+                    </div>
+                      <div class="carousel-item" data-interval="3000">
+                        <img src="./public/img/11.png" class="d-block w-100 figure-img img-fluid" alt="...">
+                      </div>
+                    <div class="carousel-item" data-interval="3000">
+                      <img src="./public/img/2.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-interval="3000">
+                      <img src="./public/img/4.png" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contributors">
           <div class="container">
             <div class="row justify-content-center">
@@ -368,59 +371,40 @@
                   <div class="container">
             <div class="row justify-content-center">
                 <hr class="menu-bar">
-                <div class="col-md-4 title-menu justify-content-center">
+                <div class="col-md-3 title-menu justify-content-center">
 
-                 <h1 class="title-font"> Libraries </h1>
+                 <h1 class="title-font">Libs & data</h1>
             </div>
           </div>
             <div class="row justify-content-around">
-                <div class="col-md-3">
+
+
+                <div class="col-md-1">
                   <div class="media">
-                    <img src="./public/img/openlayers.png" class="mr-3 img-menu" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0"><a href="https://openlayers.org/">Openlayers</a></h5>
-OpenLayers is a high-performance, feature-packed library for creating interactive maps on the web
-                    </div>
+                    <a href="https://openlayers.org/"><img src="./public/img/openlayers.png" class="mr-3 img-menu" alt="..."></a>
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-1">
                   <div class="media">
-                    <img src="./public/img/d3.png" class="mr-3 img-menu" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0"><a href="https://d3js.org/">D3</a></h5>
-D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life.
-                    </div>
+                    <a href="https://d3js.org/"><img src="./public/img/d3.png" class="mr-3 img-menu" alt="..."></a>
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-1">
                   <div class="media">
-                    <img src="./public/img/Openstreetmap_logo.svg.png" class="mr-3 img-menu" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0"><a href="https://www.openstreetmap.org/">OpenStreetMap</a></h5>
-                      OpenStreetMap is built by a volunteer cartographer community which contribute to map data everywhere in the world.
-                    </div>
+                    <a href="https://www.openstreetmap.org/"><img src="./public/img/Openstreetmap_logo.svg.png" class="mr-3 img-menu" alt="..."></a>
                   </div>
                 </div>
-            </div>
-            <div class="row justify-content-around">
-                <div class="col-md-5">
+
+                <div class="col-md-1">
                   <div class="media">
-                    <img src="./public/img/NEV-Logo-color.png" class="mr-3 img-menu2" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0"><a href="https://www.naturalearthdata.com/">Natural Earth Data</a></h5>
-                      <p>Natural Earth is a public domain map dataset available at 1:10m, 1:50m, and 1:110 million scales. Featuring tightly integrated vector and raster data, with Natural Earth you can make a variety of visually pleasing, well-crafted maps with cartography or GIS software.</p>
-                    </div>
+                    <a href="https://www.naturalearthdata.com/"><img src="./public/img/NEV-Logo-color.png" class="mr-3 img-menu2" alt="..."></a>
                   </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-1">
                   <div class="media">
-                    <img src="./public/img/turf.png" class="mr-3 img-menu2" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0"><a href="https://turfjs.org/">turf</a></h5>
-Advanced geospatial analysis for browsers and Node.js
-                    </div>
+                    <a href="https://turfjs.org/"><img src="./public/img/turf.png" class="mr-3 img-menu2" alt="..."></a>
                   </div>
                 </div>
               </div>
@@ -1295,7 +1279,7 @@ All rights reserved.
 
 
 
-      <script src="./dist/bundle.js"></script>
+      <script src="dist/bundle.js"></script>
    </body>
 </html>
 

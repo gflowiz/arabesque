@@ -350,9 +350,9 @@ document.getElementById('localMap').addEventListener("click", function () {
 document.getElementById('countryMap').addEventListener("click", function () {
   loadMapFromPresetSave('country', map, global_data, data)
 });
-document.getElementById('worldMap').addEventListener("click", function () {
-  loadMapFromPresetSave('world', map, global_data, data)
-});
+//document.getElementById('worldMap').addEventListener("click", function () {
+//  loadMapFromPresetSave('world', map, global_data, data)
+//});
 document.getElementById('LoadZipMapButton').addEventListener("click", function () {
   loadZippedMap()
 });
