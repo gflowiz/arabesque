@@ -31,18 +31,6 @@ A caroussel display several screenshots of maps realized with Arabesque.
 
 ![Gallery](images/02_arabesque_gallery.png)
 
-## Guide
-
-The guide display informations about the core features of the appplication:
-
-* Import data
-* Draw nodes and links
-* Filter the data
-* Explore
-* Export to image
-
-![Guide](images/03_arabesque_guide.png)
-
 ## Showcase
 
 Arabesque comes with 3 preloaded maps on several subjects:
