@@ -29,7 +29,7 @@ It is a page that you can scroll down. It is segmented in several parts:
 
 A caroussel display several screenshots of maps realized with Arabesque.
 
-![Gallery](images/02_arabesque_gallery.png)
+![Gallery](images/main/02_arabesque_gallery.png)
 
 ## Showcase
 
@@ -38,14 +38,14 @@ Arabesque comes with 3 preloaded maps on several subjects:
 * London Bike Traffic
 * Swiss Migration
 
-![Showcase](images/04_arabesque_showcase.png)
+![Showcase](images/main/04_arabesque_showcase.png)
 
 ## General informations
 
 The main page provides general information on the application (funding and
 contributors) but also about the Gflowiz project.
 
-![General informations](images/05_arabesque_general_infos.png)
+![General informations](images/main/05_arabesque_general_infos.png)
 
 ## Detailed informations
 
@@ -56,4 +56,4 @@ Finally you can find detailled informations about the application :
 * Licence
 * Link to the source code
 * Contact us policy
-![Detailed informations](images/06_arabesque_detailed_infos.png)
+![Detailed informations](images/main/06_arabesque_detailed_infos.png)
