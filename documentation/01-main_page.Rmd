@@ -31,14 +31,15 @@ A caroussel display several screenshots of maps realized with Arabesque.
 
 ![Gallery](images/main/02_arabesque_gallery.png)
 
-## Showcase
+## Documenation and demos
 
-Arabesque comes with 3 preloaded maps on several subjects:
+1. You can come to this documentation by clicking on the link
+2. Arabesque comes with 2 preloaded maps on several subjects:
+  
+  * London Bike Traffic
+  * Swiss Migration
 
-* London Bike Traffic
-* Swiss Migration
-
-![Showcase](images/main/04_arabesque_showcase.png)
+![Demos](images/main/03_arabesque_demos.png)
 
 ## General informations
 
