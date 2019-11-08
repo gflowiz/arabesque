@@ -15,7 +15,7 @@ It is a page that you can scroll down. It is segmented in several parts:
 
 ##  Main page
 
-![Main page](images/01_arabesque_acceuil.png)
+![Main page](images/main/01_arabesque_acceuil.png)
 
 1. Arabesque logo : click on it to return to the main page
 2. Gallery button : to go directly to the gallery
@@ -49,7 +49,6 @@ Arabesque comes with 3 preloaded maps on several subjects:
 
 * London Bike Traffic
 * Swiss Migration
-* Europe commercial exchanges
 
 ![Showcase](images/04_arabesque_showcase.png)
 
