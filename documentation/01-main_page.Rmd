@@ -27,7 +27,7 @@ It is a page that you can scroll down. It is segmented in several parts:
 
 ## Gallery
 
-This gallery display several screenshots of maps realized with Arabesque.
+A caroussel display several screenshots of maps realized with Arabesque.
 
 ![Gallery](images/02_arabesque_gallery.png)
 
