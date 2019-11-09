@@ -43,8 +43,11 @@ A caroussel display several screenshots of maps realized with Arabesque.
 
 ## General informations
 
-The main page provides general information on the application (funding and
-contributors) but also about the Gflowiz project.
+The main page provides general information on :
+
+1. the application (funding and
+contributors)
+2. the Gflowiz project that Arabesque is part of.
 
 ![General informations](images/main/05_arabesque_general_infos.png)
 
