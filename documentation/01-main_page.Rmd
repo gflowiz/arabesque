@@ -25,13 +25,7 @@ It is a page that you can scroll down. It is segmented in several parts:
 6. Load saved map : reload a map you created before
 7. Scroll down to access more informations
 
-## Gallery
-
-A caroussel display several screenshots of maps realized with Arabesque.
-
-![Gallery](images/main/02_arabesque_gallery.png)
-
-## Documenation and demos
+## Documentation and demos
 
 1. You can come to this documentation by clicking on the link
 2. Arabesque comes with 2 preloaded maps on several subjects:
@@ -40,6 +34,12 @@ A caroussel display several screenshots of maps realized with Arabesque.
   * Swiss Migration
 
 ![Demos](images/main/03_arabesque_demos.png)
+
+## Gallery
+
+A caroussel display several screenshots of maps realized with Arabesque.
+
+![Gallery](images/main/02_arabesque_gallery.png)
 
 ## General informations
 
