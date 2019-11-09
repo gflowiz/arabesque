@@ -60,4 +60,5 @@ Finally you can find detailled informations about the application :
 * Licence
 * Link to the source code
 * Contact us policy
+
 ![Detailed informations](images/main/06_arabesque_detailed_infos.png)
