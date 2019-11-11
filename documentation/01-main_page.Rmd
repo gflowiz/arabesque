@@ -5,17 +5,16 @@ and a couple ways to enter it.
 
 It is a page that you can scroll down. It is segmented in several parts:
 
-* Main page
+* Welcome page
+* Documentation and demos
 * Gallery
-* Guide
-* Showcase
-* General informations
-* Detailed informations
+* General informations on the Gflowiz project
+* Detailed informations on the Arabesque application
 
 
-##  Main page
+##  Welcome page
 
-![Main page](images/main/01_arabesque_acceuil.png)
+![Welcome page](images/main/01_arabesque_acceuil.png)
 
 1. Arabesque logo : click on it to return to the main page
 2. Gallery button : to go directly to the gallery
