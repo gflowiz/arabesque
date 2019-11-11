@@ -1,4 +1,9 @@
 # Functionnalities
 
-In order to test the differents functionnalities provided by Arabesque, we will use the Swiss Migration showcase. 
-Please find it in the Showcase section and clic on the `Try it !` button.
+## Launching an example
+
+In order to test the differents functionnalities provided by Arabesque, we will use the Swiss communting demo. 
+Please find it in the Demo section and clic on the `Explore` button.
+
+![Launching Swiss communting example](images/functions/01_functions_launch_swiss_example.png)
+
