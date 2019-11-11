@@ -3,7 +3,15 @@
 ## Launching an example
 
 In order to test the differents functionnalities provided by Arabesque, we will use the Swiss communting demo. 
-Please find it in the Demo section and clic on the `Explore` button.
+Please find it in the Demo section and  click on the `Explore` button (`1`).
 
 ![Launching Swiss communting example](images/functions/01_functions_launch_swiss_example.png)
 
+
+You'll be greeted by a warning message. This is normal, if Arabesque find nodes
+without links or links without nodes, it will remove them. It is based on a 
+join on nodes IDs.
+
+![Cleaning the dataset](images/functions/02_functions_swiss_example_warning.png)
+
+1. Click on `Ok`
