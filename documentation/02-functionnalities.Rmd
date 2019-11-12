@@ -14,4 +14,21 @@ join on nodes IDs.
 
 ![Cleaning the dataset](images/functions/02_functions_swiss_example_warning.png)
 
-1. Click on `Ok`
+1. Click on `Ok`.
+
+## Panels
+
+Arabesque is divided in 3 panels:
+
+1. Layer management panel
+2. Map panel
+3. Data handling panel
+
+
+![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
+
+### Layer management panel
+### Map panel
+### Data handling panel
+
+
