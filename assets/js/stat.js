@@ -88,6 +88,10 @@ export function computeTotalVolume(links, id_vol, global_data_){
 export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_message){
   // var list_id_ori
   // var list_id_dest
+
+	if(links[links.length-1].origin==""){
+		links.splice(-1,1);
+	}
   var list_of_links = [];
   var has_link_removed = false;
   var filtered_links = [];
@@ -96,7 +100,6 @@ export function checkIDLinks(links, nodes_list, id_ori, id_dest, error_node_mess
   for(var p=0; p<links.length;p++){
     if(nodes_list.includes(links[p][id_ori]) && nodes_list.includes(links[p][id_dest]) && Number(links[p][global_data.ids.vol].replace(/\s/g, '')) !== 0){
       links[p][global_data.ids.vol] = Number(links[p][global_data.ids.vol].replace(/\s/g, ''))
-      
       filtered_links.push(links[p])
     }
     else{

@@ -42,7 +42,9 @@ export function loadMapFromPresetSave(name_savedMap, map, global_var, datasets){
 				 loadFilter(save_para.filter)	 //TODO IMPORT  DATA FILTER
 
 				 loadLayerData(save_para.base_layer, global_var.layers.base)
-
+				 if (save_para.layers!=null && save_para.layers.osm!=null){
+				 loadZipOSMLayerData(save_para.layers.osm)
+				 }
 				 	if(save_para.style.link.color.cat==='categorical'){
 				        linkOrderedCategory(global_var.style.link.color.var, global_var.style.link)
 				      }

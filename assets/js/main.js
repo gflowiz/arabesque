@@ -191,11 +191,8 @@ document.getElementById('removeLayerLayout').addEventListener("click", function 
 
 });
 
-var widthlayout = $("#layerLayout").outerWidth();
-document.getElementById("removeLayerLayout").style.left = widthlayout + 'px';
 
-var widthlayout = $("#filterDiv").outerWidth();
-document.getElementById("removeFilterLayout").style.right = widthlayout + 'px';
+
 
 
 generatePaletteMultiHue2()
@@ -1647,15 +1644,21 @@ function applyPreselectMap(main_object, id_volume, data) {
 }
 
 function setupPresetMapStyleLink(style, id_volume, links) {
+  // check for old chrome 
   var arrayVolume = links.map(function (link) {
     return link[id_volume]
   })
+
+console.log(arrayVolume)
+var mmin = Math.min(...arrayVolume);
+var mmax = Math.max(...arrayVolume);
+
   style.color = {
     "palette": "YlGnBu",
     "cat": "number",
     "var": id_volume,
-    "max": Math.max(...arrayVolume),
-    "min": Math.min(...arrayVolume)
+    "max": mmax,
+    "min": mmin
   }
 
   style.opa = {
@@ -1669,8 +1672,8 @@ function setupPresetMapStyleLink(style, id_volume, links) {
   style.size = {
     "cat": "Linear",
     "var": id_volume,
-    "max": Math.max(...arrayVolume),
-    "min": Math.min(...arrayVolume),
+    "max": mmax,
+    "min": mmin,
     "ratio": "100"
   }
 
@@ -1729,11 +1732,12 @@ function setupPresetMapFilterLink(filter, id_volume, links) {
   }).sort(function (a, b) {
     return b - a;
   })
+console.log(arrayVolume)
   filter.push({
     "variable": id_volume,
     "values": [
       arrayVolume[parseInt(arrayVolume.length * 0.1)],
-      Math.max(...arrayVolume)
+      arrayVolume[0]
     ],
     "filter": "numeral"
   })
@@ -1755,6 +1759,19 @@ function reduceDataset(geojson) {
   
   return geojson
 }
+
+function updateBtn(){
+var widthlayout = $("#layerLayout").outerWidth();
+document.getElementById("removeLayerLayout").style.left = widthlayout + 'px';
+var widthlayout = $("#filterDiv").outerWidth();
+document.getElementById("removeFilterLayout").style.right = widthlayout + 'px';
+
+}
+
+updateBtn()
+
+
+window.addEventListener('resize', updateBtn);
 
 $('#carouselDraw').carousel()
 $('#carouselFilter').carousel()
