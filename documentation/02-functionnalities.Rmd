@@ -27,7 +27,7 @@ Arabesque is divided in 3 panels:
 
 ![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
 
-The side panels (layer and data) can be hidden by clicking on the arrows on the side. ![https://i.imgur.com/vVdZkTe.png]
+The side panels (layer and data) can be hidden by clicking on the arrows on the side. ![](https://i.imgur.com/vVdZkTe.png)
 
 ### Layer management panel
 
