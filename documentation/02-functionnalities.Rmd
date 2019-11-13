@@ -1,4 +1,34 @@
 # Functionnalities
 
-In order to test the differents functionnalities provided by Arabesque, we will use the Swiss Migration showcase. 
-Please find it in the Showcase section and clic on the `Try it !` button.
+## Launching an example
+
+In order to test the differents functionnalities provided by Arabesque, we will use the Swiss communting demo. 
+Please find it in the Demo section and  click on the `Explore` button (`1`).
+
+![Launching Swiss communting example](images/functions/01_functions_launch_swiss_example.png)
+
+
+You'll be greeted by a warning message. This is normal, if Arabesque find nodes
+without links or links without nodes, it will remove them. It is based on a 
+join on nodes IDs.
+
+![Cleaning the dataset](images/functions/02_functions_swiss_example_warning.png)
+
+1. Click on `Ok`.
+
+## Panels
+
+Arabesque is divided in 3 panels:
+
+1. Layer management panel
+2. Map panel
+3. Data handling panel
+
+
+![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
+
+### Layer management panel
+### Map panel
+### Data handling panel
+
+
