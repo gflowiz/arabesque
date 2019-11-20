@@ -59,7 +59,15 @@ EPSG code and the application will look for its definition on the website [epsg.
 2. You can choose a projection from the list of provided ones
 3. Or you can enter an EPSG code to get the definition from the web.
 
+##### Use a predefined projection
 
+![Projection toolbox](images/functions/05_functions_swiss_example_projection_tool.png)
+
+1. Click on the button to deploy the drop-down list
+2. Choose the projection you want
+3. Click on *Change* to change the map projection to the new one
+
+![Projection change](images/functions/07_functions_swiss_example_projection_change.png)
 
 ### Map panel
 
