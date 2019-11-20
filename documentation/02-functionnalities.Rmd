@@ -42,6 +42,25 @@ The layer panel contains several buttons and tools to handle the layers.
 4. Add layers: toolbox to add layers
 5. Layers : area where you can manipulate the layer
 
+Let's see those how they work.
+
+#### Projection tool
+
+By default, entry data and project are into WGS84 (EPSG:4326), which is a Geographic Coordinnate system.
+If it is great for dataset on a global scale, for more local ones, it might be
+interesting to use *projected coordinate system*.
+Arabesque provides a series of preset projection but you can also provide an 
+EPSG code and the application will look for its definition on the website [epsg.io](https://epsg.io).
+
+
+![Projection toolbox](images/functions/05_functions_swiss_example_projection_tool.png)
+
+1. Click on the *Projection* button to deploy the toolbox
+2. You can choose a projection from the list of provided ones
+3. Or you can enter an EPSG code to get the definition from the web.
+
+
+
 ### Map panel
 
 ### Data handling panel
