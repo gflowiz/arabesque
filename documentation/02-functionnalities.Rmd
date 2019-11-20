@@ -27,7 +27,7 @@ Arabesque is divided in 3 panels:
 
 ![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
 
-The side panels (layer and data) can be hidden by clicking on the arrows on the side. ![](https://i.imgur.com/vVdZkTe.png)
+The side panels (layer and data) can be hidden by clicking on the arrows on the side. ![](images/functions/00_panels_arrow.png)
 
 ### Layer management panel
 
@@ -41,6 +41,33 @@ The layer panel contains several buttons and tools to handle the layers.
 3. Title : dialog box to change map title
 4. Add layers: toolbox to add layers
 5. Layers : area where you can manipulate the layer
+
+Let's see those how they work.
+
+#### Projection tool
+
+By default, entry data and project are into WGS84 (EPSG:4326), which is a Geographic Coordinnate system.
+If it is great for dataset on a global scale, for more local ones, it might be
+interesting to use *projected coordinate system*.
+Arabesque provides a series of preset projection but you can also provide an 
+EPSG code and the application will look for its definition on the website [epsg.io](https://epsg.io).
+
+
+![Projection toolbox](images/functions/05_functions_swiss_example_projection_tool.png)
+
+1. Click on the *Projection* button to deploy the toolbox
+2. You can choose a projection from the list of provided ones
+3. Or you can enter an EPSG code to get the definition from the web.
+
+##### Use a predefined projection
+
+![Projection toolbox](images/functions/05_functions_swiss_example_projection_tool.png)
+
+1. Click on the button to deploy the drop-down list
+2. Choose the projection you want
+3. Click on *Change* to change the map projection to the new one
+
+![Projection change](images/functions/07_functions_swiss_example_projection_change.png)
 
 ### Map panel
 
