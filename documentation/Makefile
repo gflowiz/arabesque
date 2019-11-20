@@ -1,4 +1,4 @@
-compile: html pdf epub
+compile: html pdf epub move
 
 html:
 	Rscript -e "bookdown::render_book('index.Rmd')"
