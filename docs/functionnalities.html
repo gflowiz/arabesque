@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Functionnalities | Arabesque</title>
   <meta name="description" content="This is the online documentation of the Arabesque web application." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Functionnalities | Arabesque" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Gflowiz project team" />
 
 
-<meta name="date" content="2019-11-09" />
+<meta name="date" content="2019-11-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -73,13 +70,20 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About Arabesque</a></li>
 <li class="chapter" data-level="2" data-path="about-the-gflowiz-project.html"><a href="about-the-gflowiz-project.html"><i class="fa fa-check"></i><b>2</b> About the Gflowiz project</a></li>
 <li class="chapter" data-level="3" data-path="main-page.html"><a href="main-page.html"><i class="fa fa-check"></i><b>3</b> Main page</a><ul>
-<li class="chapter" data-level="3.1" data-path="main-page.html"><a href="main-page.html#main-page-1"><i class="fa fa-check"></i><b>3.1</b> Main page</a></li>
+<li class="chapter" data-level="3.1" data-path="main-page.html"><a href="main-page.html#welcome-page"><i class="fa fa-check"></i><b>3.1</b> Welcome page</a></li>
 <li class="chapter" data-level="3.2" data-path="main-page.html"><a href="main-page.html#documentation-and-demos"><i class="fa fa-check"></i><b>3.2</b> Documentation and demos</a></li>
 <li class="chapter" data-level="3.3" data-path="main-page.html"><a href="main-page.html#gallery"><i class="fa fa-check"></i><b>3.3</b> Gallery</a></li>
 <li class="chapter" data-level="3.4" data-path="main-page.html"><a href="main-page.html#general-informations"><i class="fa fa-check"></i><b>3.4</b> General informations</a></li>
 <li class="chapter" data-level="3.5" data-path="main-page.html"><a href="main-page.html#detailed-informations"><i class="fa fa-check"></i><b>3.5</b> Detailed informations</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="functionnalities.html"><a href="functionnalities.html"><i class="fa fa-check"></i><b>4</b> Functionnalities</a></li>
+<li class="chapter" data-level="4" data-path="functionnalities.html"><a href="functionnalities.html"><i class="fa fa-check"></i><b>4</b> Functionnalities</a><ul>
+<li class="chapter" data-level="4.1" data-path="functionnalities.html"><a href="functionnalities.html#launching-an-example"><i class="fa fa-check"></i><b>4.1</b> Launching an example</a></li>
+<li class="chapter" data-level="4.2" data-path="functionnalities.html"><a href="functionnalities.html#panels"><i class="fa fa-check"></i><b>4.2</b> Panels</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="functionnalities.html"><a href="functionnalities.html#layer-management-panel"><i class="fa fa-check"></i><b>4.2.1</b> Layer management panel</a></li>
+<li class="chapter" data-level="4.2.2" data-path="functionnalities.html"><a href="functionnalities.html#map-panel"><i class="fa fa-check"></i><b>4.2.2</b> Map panel</a></li>
+<li class="chapter" data-level="4.2.3" data-path="functionnalities.html"><a href="functionnalities.html#data-handling-panel"><i class="fa fa-check"></i><b>4.2.3</b> Data handling panel</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="import-a-dataset.html"><a href="import-a-dataset.html"><i class="fa fa-check"></i><b>5</b> Import a dataset</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -104,9 +108,61 @@
             <section class="normal" id="section-">
 <div id="functionnalities" class="section level1">
 <h1><span class="header-section-number">4</span> Functionnalities</h1>
-<p>In order to test the differents functionnalities provided by Arabesque, we will use the Swiss Migration showcase.
-Please find it in the Showcase section and clic on the <code>Try it !</code> button.</p>
+<div id="launching-an-example" class="section level2">
+<h2><span class="header-section-number">4.1</span> Launching an example</h2>
+<p>In order to test the differents functionnalities provided by Arabesque, we will use the Swiss communting demo.
+Please find it in the Demo section and click on the <code>Explore</code> button (<code>1</code>).</p>
+<div class="figure">
+<img src="images/functions/01_functions_launch_swiss_example.png" alt="" />
+<p class="caption">Launching Swiss communting example</p>
+</div>
+<p>You might be greeted by a warning message. This is normal, if Arabesque find nodes
+without links or links without nodes, it will remove them. It is based on a
+join on nodes IDs.</p>
+<div class="figure">
+<img src="images/functions/02_functions_swiss_example_warning.png" alt="" />
+<p class="caption">Cleaning the dataset</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>Click on <code>Ok</code>.</li>
+</ol>
+</div>
+<div id="panels" class="section level2">
+<h2><span class="header-section-number">4.2</span> Panels</h2>
+<p>Arabesque is divided in 3 panels:</p>
+<ol style="list-style-type: decimal">
+<li>Layer management panel</li>
+<li>Map panel</li>
+<li>Data handling panel</li>
+</ol>
+<div class="figure">
+<img src="images/functions/03_functions_swiss_example_main_window.png" alt="" />
+<p class="caption">Arabesques panels</p>
+</div>
+<p>The side panels (layer and data) can be hidden by clicking on the arrows on the side. <img src="https://i.imgur.com/vVdZkTe.png" /></p>
+<div id="layer-management-panel" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Layer management panel</h3>
+<p>The layer panel contains several buttons and tools to handle the layers.</p>
+<div class="figure">
+<img src="images/functions/04_functions_swiss_example_layer_panel.png" alt="" />
+<p class="caption">Arabesques panels</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>Home button to get back to Welcome page</li>
+<li>Projection : click to deploy the projection tool</li>
+<li>Title : dialog box to change map title</li>
+<li>Add layers: toolbox to add layers</li>
+<li>Layers : area where you can manipulate the layer</li>
+</ol>
+</div>
+<div id="map-panel" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Map panel</h3>
+</div>
+<div id="data-handling-panel" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Data handling panel</h3>
 
+</div>
+</div>
 </div>
             </section>
 
@@ -119,13 +175,11 @@ Please find it in the Showcase section and clic on the <code>Try it !</code> but
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
