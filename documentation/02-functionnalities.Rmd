@@ -20,16 +20,16 @@ join on nodes IDs.
 
 Arabesque is divided by default in 3 panels:
 
-1. Layer management panel
+1. Geographical layer management panel
 2. Map panel
-3. Data handling panel
+3. Statistical data filtering panel
 
 
 ![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
 
-The side panels (layer and data) can be hidden by clicking on the arrows on the side. ![](images/functions/00_panels_arrow.png)
+The side panels (geographic layer and data) can be hidden by clicking on the arrows on the side. ![](images/functions/00_panels_arrow.png)
 
-### Layer management panel
+### geographical layer management panel
 
 The layer panel contains several buttons and tools to handle the layers.
 
@@ -39,7 +39,7 @@ The layer panel contains several buttons and tools to handle the layers.
 1. Home button to get back to Welcome page
 2. Projection : click to deploy the projection tool
 3. Title : dialog box to change map title
-4. Add layers: toolbox to add layers
+4. Add layers: toolbox to add geographical layers
 5. Layers : area where you can manipulate the layer
 
 Let's see those how they work.
@@ -78,7 +78,7 @@ The map is automatically redraw when a side panel is opened/close.
 1. Zoom in
 2. Zoom out
 3. Save project (archive the project settings in a zip file)
-4. Export map as png file
+4. Export map as .png or .geojson file
 5. Center map on current links
 6. Export filtered data (csv in zip file)
 7. Display fullscreen map
@@ -88,18 +88,18 @@ The map is automatically redraw when a side panel is opened/close.
 11. Scale
 12. Base map attributions
 
-### Data handling panel
+### Data filtering panel
 
-The data handling provide several tools to handle nodes and links.
+The data handling provide several tools to filtering nodes (places) and links (flows) values.
 
 From this panel, you can filter the data with 
 
-![Data handling panel organisation](images/functions/data_panel/01_data_panel_organisation.png)
+![Data filtering panel organisation](images/functions/data_panel/01_data_panel_organisation.png)
 
 
 1. Add filter button
 2. Data summary
-3. Distance filter
+3. Distance filtering
 4. Count filter
 
 The procedure to add a filter is detailed below.
@@ -118,12 +118,12 @@ The distance and count filters are provided by default.
 
 ## Manipulate filters
 
-The data is represented as an histogram.
+Nodes and links data are represented as an histogram.
 Here is the distribution of links size.
 
 ![Data histogram](images/functions/data_panel/03_data_panel_filter_histogram.png)
 
-The min and max values are also displayed.
+The minimum and maximum values are also displayed.
 
 You can filter the data with 2 ways:
 
