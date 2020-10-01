@@ -162,9 +162,49 @@ Click on the edge and move it to the right or the left to resize the window.
 
 Again, min or max values changes and the data summary too. 
 
-
-
 ## Add a new filter
+
+If the distance and count filters are provided by default, you can also create custom ones.
+
+
+To create a filter, click on the `Add filter button` at the top of the data handling panel.
+
+![`Add filter` button](images/functions/data_panel/07_data_panel_add_filter.png)
+
+A new window will pop up on the screen to parametrize the new filter.
+
+First operation is to select the layer you want to filter.
+
+You can choose between the link layer or the node layer.
+
+![Select the layer](images/functions/data_panel/08_data_panel_add_filter_select_layer.png)
+
+Then you can select a variable from this layer.
+It can be a variable from the dataset like a categorical variable or a variable provided by Arabesque.
+
+Arabesque automatically compute several variables on the data:
+
+- balance (difference input/output)
+- degree informations
+- weigthed informations
+- count
+
+
+![Select variable](images/functions/data_panel/09_data_panel_add_filter_select_variable.png)
+
+Select the type of the variable.
+In this case, the balance is numeral.
+
+![Filter type](images/functions/data_panel/10_data_panel_add_filter_select_type.png)
+
+Click on `ADD FILTER` to finalize the creation of the new filter.
+
+![Add filter](images/functions/data_panel/11_data_panel_add_filter_button.png)
+
+
+The new filter appear in the bottom of the data handling panel.
+
+![New balance filter](images/functions/data_panel/12_data_panel_new_filter.png)
 ## Remove filter
 
 ![Remove filter](images/functions/data_panel/02_data_panel_remove_filter.png)

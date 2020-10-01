@@ -92,7 +92,6 @@
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="functionnalities.html"><a href="functionnalities.html#resize-and-move-the-data-window"><i class="fa fa-check"></i><b>2.4</b> Resize and move the data window</a></li>
 <li class="chapter" data-level="2.5" data-path="functionnalities.html"><a href="functionnalities.html#add-a-new-filter"><i class="fa fa-check"></i><b>2.5</b> Add a new filter</a></li>
-<li class="chapter" data-level="2.6" data-path="functionnalities.html"><a href="functionnalities.html#remove-filter"><i class="fa fa-check"></i><b>2.6</b> Remove filter</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="import-a-dataset.html"><a href="import-a-dataset.html"><i class="fa fa-check"></i><b>3</b> Import a dataset</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -291,9 +290,46 @@ Click on the edge and move it to the right or the left to resize the window.</p>
 </div>
 <div id="add-a-new-filter" class="section level2">
 <h2><span class="header-section-number">2.5</span> Add a new filter</h2>
+<p>If the distance and count filters are provided by default, you can also create custom ones.</p>
+<p>To create a filter, click on the <code>Add filter button</code> at the top of the data handling panel.</p>
+<div class="figure">
+<img src="images/functions/data_panel/07_data_panel_add_filter.png" alt="" />
+<p class="caption"><code>Add filter</code> button</p>
 </div>
-<div id="remove-filter" class="section level2">
-<h2><span class="header-section-number">2.6</span> Remove filter</h2>
+<p>A new window will pop up on the screen to parametrize the new filter.</p>
+<p>First operation is to select the layer you want to filter.</p>
+<p>You can choose between the link layer or the node layer.</p>
+<div class="figure">
+<img src="images/functions/data_panel/08_data_panel_add_filter_select_layer.png" alt="" />
+<p class="caption">Select the layer</p>
+</div>
+<p>Then you can select a variable from this layer.
+It can be a variable from the dataset like a categorical variable or a variable provided by Arabesque.</p>
+<p>Arabesque automatically compute several variables on the data:</p>
+<ul>
+<li>balance (difference input/output)</li>
+<li>degree informations</li>
+<li>weigthed informations</li>
+<li>count</li>
+</ul>
+<div class="figure">
+<img src="images/functions/data_panel/09_data_panel_add_filter_select_variable.png" alt="" />
+<p class="caption">Select variable</p>
+</div>
+<p>Select the type of the variable.
+In this case, the balance is numeral.</p>
+<div class="figure">
+<img src="images/functions/data_panel/10_data_panel_add_filter_select_type.png" alt="" />
+<p class="caption">Filter type</p>
+</div>
+<p>Click on <code>ADD FILTER</code> to finalize the creation of the new filter.</p>
+<div class="figure">
+<img src="images/functions/data_panel/11_data_panel_add_filter_button.png" alt="" />
+<p class="caption">Add filter</p>
+</div>
+<p>The new filter appear in the bottom of the data handling panel.</p>
+<p><img src="images/functions/data_panel/12_data_panel_new_filter.png" alt="New balance filter" />
+## Remove filter</p>
 <div class="figure">
 <img src="images/functions/data_panel/02_data_panel_remove_filter.png" alt="" />
 <p class="caption">Remove filter</p>
