@@ -84,7 +84,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-11-20}
+    \date{2020-10-01}
 
 \usepackage{booktabs}
 
@@ -96,7 +96,8 @@
 \tableofcontents
 }
 \hypertarget{about-arabesque}{%
-\chapter{About Arabesque}\label{about-arabesque}}
+\chapter*{About Arabesque}\label{about-arabesque}}
+\addcontentsline{toc}{chapter}{About Arabesque}
 
 Arabesque is a web application for thematic mapping of flow and networks datasets.
 Built in javascript and HTML 5, it provides a full toolset to filter you data
@@ -122,7 +123,8 @@ Please find the application at this address : \href{http://arabesque.ifsttar.fr/
 Please report any issue on \href{https://github.com/gflowiz/arabesque}{GitHub}. This is a Free and OpenSource project, feel free to help us make it better.
 
 \hypertarget{about-the-gflowiz-project}{%
-\chapter{About the Gflowiz project}\label{about-the-gflowiz-project}}
+\section*{About the Gflowiz project}\label{about-the-gflowiz-project}}
+\addcontentsline{toc}{section}{About the Gflowiz project}
 
 Arabesque is part of the \href{https://geoflowiz.hypotheses.org/}{Gflowiz research project} on flow maps in the geoweb.
 
@@ -294,7 +296,7 @@ join on nodes IDs.
 \hypertarget{panels}{%
 \section{Panels}\label{panels}}
 
-Arabesque is divided in 3 panels:
+Arabesque is divided by default in 3 panels:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -398,8 +400,151 @@ EPSG code and the application will look for its definition on the website \href{
 \hypertarget{map-panel}{%
 \subsection{Map panel}\label{map-panel}}
 
+The map panel cannot be hide, it is always visible.
+The map is automatically redraw when a side panel is opened/close.
+
+\includegraphics{images/functions/map_panel/functions_map_panel_general_view.png}
+1. Zoom in
+2. Zoom out
+3. Save project (archive the project settings in a zip file)
+4. Export map as png file
+5. Center map on current links
+6. Export filtered data (csv in zip file)
+7. Display fullscreen map
+8. Hide/show layer management panel
+9. Hide/show data handling panel
+10. Legend
+11. Scale
+12. Base map attributions
+
 \hypertarget{data-handling-panel}{%
 \subsection{Data handling panel}\label{data-handling-panel}}
+
+The data handling provide several tools to handle nodes and links.
+
+From this panel, you can filter the data with
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/01_data_panel_organisation.png}
+\caption{Data handling panel organisation}
+\end{figure}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Add filter button
+\item
+  Data summary
+\item
+  Distance filter
+\item
+  Count filter
+\end{enumerate}
+
+The procedure to add a filter is detailed below.
+
+The data summary provides some useful information about the filered information:
+
+\begin{itemize}
+\tightlist
+\item
+  Percentage of link represented on the map
+\item
+  Percentage of volume represented
+\item
+  Percentage of node represented
+\end{itemize}
+
+All those values are from the kinks and nodes that were loaded.
+
+Please note that Arabesque automatically filter at first load.
+
+The distance and count filters are provided by default.
+
+\hypertarget{manipulate-filters}{%
+\section{Manipulate filters}\label{manipulate-filters}}
+
+The data is represented as an histogram.
+Here is the distribution of links size.
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/03_data_panel_filter_histogram.png}
+\caption{Data histogram}
+\end{figure}
+
+The min and max values are also displayed.
+
+You can filter the data with 2 ways:
+
+\begin{itemize}
+\tightlist
+\item
+  change min and max value
+\item
+  resize and move the data window
+\end{itemize}
+
+\hypertarget{change-min-max}{%
+\subsection{Change min / max}\label{change-min-max}}
+
+You can change the min and/or the max values in the fields below the histogram.
+For example, you want all data from a distance of 60 to 180.
+When you enter the new values, the grey window will change to fit the new values.
+
+This window represent the filtered data, the data that are displayed.
+This data window can be resized and displaced.
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/04_data_panel_filter_min_max.png}
+\caption{Data filtering}
+\end{figure}
+
+You can also verify that the data summary as changed
+
+\hypertarget{resize-and-move-the-data-window}{%
+\section{Resize and move the data window}\label{resize-and-move-the-data-window}}
+
+You can move the window by moving the cursor other it.
+When the cursor change to a cross, you can click on it and move it to the left or the right using your mouse.
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/05_data_panel_filter_move_window.png}
+\caption{Move the window}
+\end{figure}
+
+You can see that the values in the min and max fields and the data summary has change.
+
+You can also resize the window.
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/06_data_panel_filter_resize_window.png}
+\caption{Resize the data window}
+\end{figure}
+
+When placing the cursor over the edge of the data window, the cursor will change to a left-right arrow.
+Click on the edge and move it to the right or the left to resize the window.
+
+Again, min or max values changes and the data summary too.
+
+\hypertarget{add-a-new-filter}{%
+\section{Add a new filter}\label{add-a-new-filter}}
+
+\hypertarget{remove-filter}{%
+\section{Remove filter}\label{remove-filter}}
+
+\begin{figure}
+\centering
+\includegraphics{images/functions/data_panel/02_data_panel_remove_filter.png}
+\caption{Remove filter}
+\end{figure}
+
+To remove a filter, click on the bin icon on the right side of it.
 
 \hypertarget{import-a-dataset}{%
 \chapter{Import a dataset}\label{import-a-dataset}}

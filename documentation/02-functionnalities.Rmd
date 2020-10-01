@@ -87,6 +87,86 @@ The map is automatically redraw when a side panel is opened/close.
 10. Legend
 11. Scale
 12. Base map attributions
+
 ### Data handling panel
 
+The data handling provide several tools to handle nodes and links.
 
+From this panel, you can filter the data with 
+
+![Data handling panel organisation](images/functions/data_panel/01_data_panel_organisation.png)
+
+
+1. Add filter button
+2. Data summary
+3. Distance filter
+4. Count filter
+
+The procedure to add a filter is detailed below.
+
+The data summary provides some useful information about the filered information:
+
+- Percentage of link represented on the map
+- Percentage of volume represented
+- Percentage of node represented
+
+All those values are from the kinks and nodes that were loaded.
+
+Please note that Arabesque automatically filter at first load.
+
+The distance and count filters are provided by default.
+
+## Manipulate filters
+
+The data is represented as an histogram.
+Here is the distribution of links size.
+
+![Data histogram](images/functions/data_panel/03_data_panel_filter_histogram.png)
+
+The min and max values are also displayed.
+
+You can filter the data with 2 ways:
+
+- change min and max value
+- resize and move the data window
+
+### Change min / max
+
+You can change the min and/or the max values in the fields below the histogram.
+For example, you want all data from a distance of 60 to 180.
+When you enter the new values, the grey window will change to fit the new values.
+
+This window represent the filtered data, the data that are displayed.
+This data window can be resized and displaced.
+
+![Data filtering](images/functions/data_panel/04_data_panel_filter_min_max.png)
+
+You can also verify that the data summary as changed
+
+## Resize and move the data window
+
+You can move the window by moving the cursor other it. 
+When the cursor change to a cross, you can click on it and move it to the left or the right using your mouse.
+
+![Move the window](images/functions/data_panel/05_data_panel_filter_move_window.png)
+
+You can see that the values in the min and max fields and the data summary has change.
+
+You can also resize the window.
+
+![Resize the data window](images/functions/data_panel/06_data_panel_filter_resize_window.png)
+
+
+When placing the cursor over the edge of the data window, the cursor will change to a left-right arrow.
+Click on the edge and move it to the right or the left to resize the window.
+
+Again, min or max values changes and the data summary too. 
+
+
+
+## Add a new filter
+## Remove filter
+
+![Remove filter](images/functions/data_panel/02_data_panel_remove_filter.png)
+
+To remove a filter, click on the bin icon on the right side of it.
