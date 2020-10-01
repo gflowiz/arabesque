@@ -18,7 +18,7 @@ join on nodes IDs.
 
 ## Panels
 
-Arabesque is divided in 3 panels:
+Arabesque is divided by default in 3 panels:
 
 1. Layer management panel
 2. Map panel
@@ -71,6 +71,22 @@ EPSG code and the application will look for its definition on the website [epsg.
 
 ### Map panel
 
+The map panel cannot be hide, it is always visible.
+The map is automatically redraw when a side panel is opened/close.
+
+![Map panel organisation](images/functions/map_panel/functions_map_panel_general_view.png)
+1. Zoom in
+2. Zoom out
+3. Save project (archive the project settings in a zip file)
+4. Export map as png file
+5. Center map on current links
+6. Export filtered data (csv in zip file)
+7. Display fullscreen map
+8. Hide/show layer management panel
+9. Hide/show data handling panel
+10. Legend
+11. Scale
+12. Base map attributions
 ### Data handling panel
 
 
