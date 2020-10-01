@@ -5,3 +5,7 @@ node_modules
 .Rhistory
 
 documentation/_book
+
+documentation/documentation.log
+
+docs/documentation.tex

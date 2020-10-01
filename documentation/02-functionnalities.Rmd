@@ -18,7 +18,7 @@ join on nodes IDs.
 
 ## Panels
 
-Arabesque is divided in 3 panels:
+Arabesque is divided by default in 3 panels:
 
 1. Layer management panel
 2. Map panel
@@ -71,6 +71,142 @@ EPSG code and the application will look for its definition on the website [epsg.
 
 ### Map panel
 
+The map panel cannot be hide, it is always visible.
+The map is automatically redraw when a side panel is opened/close.
+
+![Map panel organisation](images/functions/map_panel/functions_map_panel_general_view.png)
+1. Zoom in
+2. Zoom out
+3. Save project (archive the project settings in a zip file)
+4. Export map as png file
+5. Center map on current links
+6. Export filtered data (csv in zip file)
+7. Display fullscreen map
+8. Hide/show layer management panel
+9. Hide/show data handling panel
+10. Legend
+11. Scale
+12. Base map attributions
+
 ### Data handling panel
 
+The data handling provide several tools to handle nodes and links.
 
+From this panel, you can filter the data with 
+
+![Data handling panel organisation](images/functions/data_panel/01_data_panel_organisation.png)
+
+
+1. Add filter button
+2. Data summary
+3. Distance filter
+4. Count filter
+
+The procedure to add a filter is detailed below.
+
+The data summary provides some useful information about the filered information:
+
+- Percentage of link represented on the map
+- Percentage of volume represented
+- Percentage of node represented
+
+All those values are from the kinks and nodes that were loaded.
+
+Please note that Arabesque automatically filter at first load.
+
+The distance and count filters are provided by default.
+
+## Manipulate filters
+
+The data is represented as an histogram.
+Here is the distribution of links size.
+
+![Data histogram](images/functions/data_panel/03_data_panel_filter_histogram.png)
+
+The min and max values are also displayed.
+
+You can filter the data with 2 ways:
+
+- change min and max value
+- resize and move the data window
+
+### Change min / max
+
+You can change the min and/or the max values in the fields below the histogram.
+For example, you want all data from a distance of 60 to 180.
+When you enter the new values, the grey window will change to fit the new values.
+
+This window represent the filtered data, the data that are displayed.
+This data window can be resized and displaced.
+
+![Data filtering](images/functions/data_panel/04_data_panel_filter_min_max.png)
+
+You can also verify that the data summary as changed
+
+## Resize and move the data window
+
+You can move the window by moving the cursor other it. 
+When the cursor change to a cross, you can click on it and move it to the left or the right using your mouse.
+
+![Move the window](images/functions/data_panel/05_data_panel_filter_move_window.png)
+
+You can see that the values in the min and max fields and the data summary has change.
+
+You can also resize the window.
+
+![Resize the data window](images/functions/data_panel/06_data_panel_filter_resize_window.png)
+
+
+When placing the cursor over the edge of the data window, the cursor will change to a left-right arrow.
+Click on the edge and move it to the right or the left to resize the window.
+
+Again, min or max values changes and the data summary too. 
+
+## Add a new filter
+
+If the distance and count filters are provided by default, you can also create custom ones.
+
+
+To create a filter, click on the `Add filter button` at the top of the data handling panel.
+
+![`Add filter` button](images/functions/data_panel/07_data_panel_add_filter.png)
+
+A new window will pop up on the screen to parametrize the new filter.
+
+First operation is to select the layer you want to filter.
+
+You can choose between the link layer or the node layer.
+
+![Select the layer](images/functions/data_panel/08_data_panel_add_filter_select_layer.png)
+
+Then you can select a variable from this layer.
+It can be a variable from the dataset like a categorical variable or a variable provided by Arabesque.
+
+Arabesque automatically compute several variables on the data:
+
+- balance (difference input/output)
+- degree informations
+- weigthed informations
+- count
+
+
+![Select variable](images/functions/data_panel/09_data_panel_add_filter_select_variable.png)
+
+Select the type of the variable.
+In this case, the balance is numeral.
+
+![Filter type](images/functions/data_panel/10_data_panel_add_filter_select_type.png)
+
+Click on `ADD FILTER` to finalize the creation of the new filter.
+
+![Add filter](images/functions/data_panel/11_data_panel_add_filter_button.png)
+
+
+The new filter appear in the bottom of the data handling panel.
+
+![New balance filter](images/functions/data_panel/12_data_panel_new_filter.png)
+## Remove filter
+
+![Remove filter](images/functions/data_panel/02_data_panel_remove_filter.png)
+
+To remove a filter, click on the bin icon on the right side of it.

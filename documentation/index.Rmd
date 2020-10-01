@@ -11,7 +11,7 @@ description: "This is the online documentation of the Arabesque web application.
 ---
 
 
-# About Arabesque
+# About Arabesque {-}
 
 Arabesque is a web application for thematic mapping of flow and networks datasets.
 Built in javascript and HTML 5, it provides a full toolset to filter you data
@@ -30,7 +30,7 @@ Please find the application at this address : [arabesque.ifsttar.fr](http://arab
 
 Please report any issue on [GitHub](https://github.com/gflowiz/arabesque). This is a Free and OpenSource project, feel free to help us make it better.
 
-# About the Gflowiz project
+## About the Gflowiz project {-}
 
 Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
 
