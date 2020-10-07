@@ -11,7 +11,7 @@ A detailed documentation is available here: [gflowiz.github.io/arabesque](https:
 Please report any issue on [GitHub](https://github.com/gflowiz/arabesque). 
 This is a Free and OpenSource project, feel free to help us make it better.
 
-The application is under BSD 2-Clause License, Copyright (c) 2019, IFSTTAR.All rights reserved. 
+The application is under BSD 2-Clause License, Copyright (c) 2019-2020, IFSTTAR.All rights reserved. 
 
 # About the Gflowiz project
 
