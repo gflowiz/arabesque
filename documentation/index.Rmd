@@ -1,6 +1,6 @@
 --- 
 title: "Arabesque"
-author: "Gflowiz project team"
+author: "gflowiz project team"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -13,7 +13,7 @@ description: "This is the online documentation of the Arabesque web application.
 
 # About Arabesque {-}
 
-Arabesque is a web application for thematic mapping of flow and networks datasets.
+Arabesque is a web application for thematic mapping of flow and spatial networks datasets.
 Built in javascript and HTML 5, it provides a full toolset to filter you data
 and simplify it in order to make clearer and understandable maps.
 
@@ -30,7 +30,21 @@ Please find the application at this address : [arabesque.ifsttar.fr](http://arab
 
 Please report any issue on [GitHub](https://github.com/gflowiz/arabesque). This is a Free and OpenSource project, feel free to help us make it better.
 
-## About the Gflowiz project {-}
+## Contributors
 
+Contributors are:</br>
+- Scientific responsibility, design and coordination </br>
+ Françoise Bahoken, Etienne Côme and Laurent Jégou (coord.) </br>
+ Grégoire Le Campion, Marion Maisonobe, Alain Nguyen and Nicolas Roelandt </br>
+- Development & Design </br>
+Etienne Côme (coord.), Thomas Bapaume and Paul Fabre.
+- Documentation </br>
+Nicolas Roelandt (coord.), Françoise Bahoken
+
+## Funding
+The project is funded by former IFSTTAR's scientific direction (VP Recherche Univ. Gustave Eiffel), with the participation of the Projet federateur Mobilities and numeric transitions (PF MobTransNum). It is also supported by the research GDR Magis through the GEOWEB prospective action.
+  
+## About the geographic flow vizualisation (gflowiz) project {-}
 Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
+One of its goals is the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on statistical and geographical data filtering, spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.
 
