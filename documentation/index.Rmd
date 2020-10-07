@@ -9,16 +9,40 @@ biblio-style: apalike
 link-citations: yes
 description: "This is the online documentation of the Arabesque web application."
 ---
+![](https://i.imgur.com/H8y2jte.png
 
+# About _Arabesque_ {-}
 
-# About Arabesque {-}
-
-Arabesque is a web application for thematic mapping of flow and spatial networks datasets.
+_Arabesque_ is a web application for thematic mapping of flow and spatial networks datasets.
 Built in javascript and HTML 5, it provides a full toolset to filter you data
 and simplify it in order to make clearer and understandable maps.
 
-This document aims to present the application and its fonctionnalities using
-the provided datasets.
+## Challenges
+The challenge of _Arabesque_ consists in offering a set of tools for the analysis and tne cartographic representation of complex matrices (categorical and temporal). Its methodology is innovative : it articulates several dimensions of a matrix, interactivity and animation). Its techniques allow an easy exploration, a fluidity of the display in a simple configuration facilitating the appropriation of flow mapping by different audiences (academic, institutional, socio-economic, educational...).
+
+## Contributors
+Contributors are:</br>
+- Scientific responsibility, design and coordination </br>
+ Françoise Bahoken, Etienne Côme and Laurent Jégou (coord.) </br>
+ Grégoire Le Campion, Marion Maisonobe, Alain Nguyen and Nicolas Roelandt </br>
+- Development & Design </br>
+Etienne Côme (coord.), Thomas Bapaume and Paul Fabre.
+- Documentation </br>
+Nicolas Roelandt (coord.), Françoise Bahoken
+
+## General project and funding {-}
+
+![](https://i.imgur.com/B0QTR7D.jpg)
+
+### The geographic flow vizualisation (gflowiz) project {-}
+Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
+One of its goals is the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on statistical and geographical data filtering, spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.
+
+### Funding
+The project is funded by former IFSTTAR's scientific direction (VP Recherche Univ. Gustave Eiffel), with the participation of the Projet federateur Mobilities and numeric transitions (PF MobTransNum). The team is strengthened by the participation of members of CNRS laboratories, as well as it is  supported by the research GDR Magis through the GEOWEB prospective action (2019).
+
+# About _Arabesque_ documentation {-}
+This document aims to present how _Arabesque_ works and how to use it using example datasets provided.
 
 The documentation is segmented in several parts:
 
@@ -30,21 +54,7 @@ Please find the application at this address : [arabesque.ifsttar.fr](http://arab
 
 Please report any issue on [GitHub](https://github.com/gflowiz/arabesque). This is a Free and OpenSource project, feel free to help us make it better.
 
-## Contributors
 
-Contributors are:</br>
-- Scientific responsibility, design and coordination </br>
- Françoise Bahoken, Etienne Côme and Laurent Jégou (coord.) </br>
- Grégoire Le Campion, Marion Maisonobe, Alain Nguyen and Nicolas Roelandt </br>
-- Development & Design </br>
-Etienne Côme (coord.), Thomas Bapaume and Paul Fabre.
-- Documentation </br>
-Nicolas Roelandt (coord.), Françoise Bahoken
-
-## Funding
-The project is funded by former IFSTTAR's scientific direction (VP Recherche Univ. Gustave Eiffel), with the participation of the Projet federateur Mobilities and numeric transitions (PF MobTransNum). It is also supported by the research GDR Magis through the GEOWEB prospective action.
   
-## About the geographic flow vizualisation (gflowiz) project {-}
-Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
-One of its goals is the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on statistical and geographical data filtering, spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.
+
 
