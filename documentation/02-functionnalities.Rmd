@@ -16,7 +16,7 @@ join on nodes IDs.
 
 1. Click on `Ok`.
 
-## Panels
+## Panels general presentation
 
 Arabesque is divided by default in 3 panels:
 
@@ -25,13 +25,21 @@ Arabesque is divided by default in 3 panels:
 3. Statistical data filtering panel
 
 
+
+**The map panel**
+The central part of the application is dedicated to geovisualization itself. After a few simple settings, it is possible to obtain a meaningful map quite easily, as shown below. 
+
+
+
 ![Arabesques panels](images/functions/03_functions_swiss_example_main_window.png)
 
 The side panels (geographic layer and data) can be hidden by clicking on the arrows on the side. ![](images/functions/00_panels_arrow.png)
 
-### geographical layer management panel
+## Geographical layer management panel
 
-The layer panel contains several buttons and tools to handle the layers.
+The left panel deals with geographical entities: from the addition of internal or external geonumeric layers, whatever their scale, local (OpenStreetMap, for example) or global (naturalearthdata, for example), their possible reprojection, to their graphic symbolization, particularly developed for the design of links. In addition to the fact that several types of linear shapes are already available, it is possible to play on all the geometrical dimensions of the figures (width, length, surface, curvature).
+
+This layer panel contains several buttons and tools to handle the layers.
 
 ![Arabesques panels](images/functions/04_functions_swiss_example_layer_panel.png)
 
@@ -44,7 +52,7 @@ The layer panel contains several buttons and tools to handle the layers.
 
 Let's see those how they work.
 
-#### Projection tool
+### Projection tool
 
 By default, entry data and project are into WGS84 (EPSG:4326), which is a Geographic Coordinnate system.
 If it is great for dataset on a global scale, for more local ones, it might be
@@ -59,7 +67,7 @@ EPSG code and the application will look for its definition on the website [epsg.
 2. You can choose a projection from the list of provided ones
 3. Or you can enter an EPSG code to get the definition from the web.
 
-##### Use a predefined projection
+#### Use a predefined projection
 
 ![Projection toolbox](images/functions/05_functions_swiss_example_projection_tool.png)
 
@@ -69,7 +77,8 @@ EPSG code and the application will look for its definition on the website [epsg.
 
 ![Projection change](images/functions/07_functions_swiss_example_projection_change.png)
 
-### Map panel
+## Map panel
+
 
 The map panel cannot be hide, it is always visible.
 The map is automatically redraw when a side panel is opened/close.
@@ -88,7 +97,8 @@ The map is automatically redraw when a side panel is opened/close.
 11. Scale
 12. Base map attributions
 
-### Data filtering panel
+## Statistical data filtering panel
+The right-hand panel is dedicated to statistical data: it  offers different interactive filtering possibilities to be applied on nodes and/or links, depending on the types of variables available in your dataset. Additional filtering possibilities according to the classical indicators of graph theory (for nodes) and/or distance travelled for links are also proposed by default.
 
 The data handling provide several tools to filtering nodes (places) and links (flows) values.
 
@@ -116,21 +126,18 @@ Please note that Arabesque automatically filter at first load.
 
 The distance and count filters are provided by default.
 
-## Manipulate filters
+### Filtering procedures
 
-Nodes and links data are represented as an histogram.
-Here is the distribution of links size.
+Nodes and links can be filtered using the origin-destination flow distribution diagram
 
 ![Data histogram](images/functions/data_panel/03_data_panel_filter_histogram.png)
 
-The minimum and maximum values are also displayed.
+The distribution diagrams allows to filter the data using a slider, in order to manipulate a range of bounded values (between the MIN and MAX).
+So you can :
+- enter / change min and max value ;
+- resize and move the slider on the dataset
 
-You can filter the data with 2 ways:
-
-- change min and max value
-- resize and move the data window
-
-### Change min / max
+#### Change min / max
 
 You can change the min and/or the max values in the fields below the histogram.
 For example, you want all data from a distance of 60 to 180.
@@ -143,7 +150,7 @@ This data window can be resized and displaced.
 
 You can also verify that the data summary as changed
 
-## Resize and move the data window
+#### Resize and move the data window
 
 You can move the window by moving the cursor other it. 
 When the cursor change to a cross, you can click on it and move it to the left or the right using your mouse.
@@ -162,10 +169,9 @@ Click on the edge and move it to the right or the left to resize the window.
 
 Again, min or max values changes and the data summary too. 
 
-## Add a new filter
+#### Add a new filter
 
 If the distance and count filters are provided by default, you can also create custom ones.
-
 
 To create a filter, click on the `Add filter button` at the top of the data handling panel.
 
@@ -184,9 +190,9 @@ It can be a variable from the dataset like a categorical variable or a variable 
 
 Arabesque automatically compute several variables on the data:
 
-- balance (difference input/output)
-- degree informations
-- weigthed informations
+- balance 
+- degree 
+- weigthed 
 - count
 
 
