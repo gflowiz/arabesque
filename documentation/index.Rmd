@@ -14,8 +14,11 @@ description: "This is the online documentation of the Arabesque web application.
 # About _Arabesque_ {-}
 
 _Arabesque_ is a web application for thematic mapping of flow and spatial networks datasets.
-Built in javascript and HTML 5, it provides a full toolset to filter you data
-and simplify it in order to make clearer and understandable maps.
+This first version allows the exploration, filtering, geovisualization and representation of complex matrices. 
+it provides a full toolset to filter you origin-destination data and simplify it in order to make clearer and understandable maps.
+
+_Arabesque_ allows the creation of flow maps from a web browser - equipped with Mozilla or Chrome, from its own datasets.
+It is based on current technological possibilities, in particular those offered by the new web visualization (built in javascript and HTML 5) and mapping libraries (openlayers, d3, OSM, Turf, NaturalEarthData). 
 
 ## Challenges
 The challenge of _Arabesque_ consists in offering a set of tools for the analysis and tne cartographic representation of complex matrices (categorical and temporal). Its methodology is innovative : it articulates several dimensions of a matrix, interactivity and animation). Its techniques allow an easy exploration, a fluidity of the display in a simple configuration facilitating the appropriation of flow mapping by different audiences (academic, institutional, socio-economic, educational...).
