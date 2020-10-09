@@ -79,7 +79,6 @@ EPSG code and the application will look for its definition on the website [epsg.
 
 ## Map panel
 
-
 The map panel cannot be hide, it is always visible.
 The map is automatically redraw when a side panel is opened/close.
 
@@ -98,6 +97,7 @@ The map is automatically redraw when a side panel is opened/close.
 12. Base map attributions
 
 ## Statistical data filtering panel
+
 The right-hand panel is dedicated to statistical data: it  offers different interactive filtering possibilities to be applied on nodes and/or links, depending on the types of variables available in your dataset. Additional filtering possibilities according to the classical indicators of graph theory (for nodes) and/or distance travelled for links are also proposed by default.
 
 The data handling provide several tools to filtering nodes (places) and links (flows) values.
@@ -169,7 +169,7 @@ Click on the edge and move it to the right or the left to resize the window.
 
 Again, min or max values changes and the data summary too. 
 
-#### Add a new filter
+### Add a new filter
 
 If the distance and count filters are provided by default, you can also create custom ones.
 
@@ -211,7 +211,7 @@ Click on `ADD FILTER` to finalize the creation of the new filter.
 The new filter appear in the bottom of the data handling panel.
 
 ![New balance filter](images/functions/data_panel/12_data_panel_new_filter.png)
-## Remove filter
+### Remove filter
 
 ![Remove filter](images/functions/data_panel/02_data_panel_remove_filter.png)
 

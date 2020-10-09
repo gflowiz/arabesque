@@ -9,42 +9,72 @@ biblio-style: apalike
 link-citations: yes
 description: "This is the online documentation of the Arabesque web application."
 ---
-![](https://i.imgur.com/H8y2jte.png
+
+![Logo d'Arabesque](images/logo-arabesque_clair.png)
 
 # About _Arabesque_ {-}
 
 _Arabesque_ is a web application for thematic mapping of flow and spatial networks datasets.
-This first version allows the exploration, filtering, geovisualization and representation of complex matrices. 
-it provides a full toolset to filter you origin-destination data and simplify it in order to make clearer and understandable maps.
+This first version allows the exploration, filtering, geovisualization 
+and representation of complex matrices. 
+it provides a full toolset to filter you origin-destination data and 
+simplify it in order to make clearer and understandable maps.
 
-_Arabesque_ allows the creation of flow maps from a web browser - equipped with Mozilla or Chrome, from its own datasets.
-It is based on current technological possibilities, in particular those offered by the new web visualization (built in javascript and HTML 5) and mapping libraries (openlayers, d3, OSM, Turf, NaturalEarthData). 
+_Arabesque_ allows the creation of flow maps from a web browser - 
+equipped with Mozilla or Chrome, from its own datasets.
+It is based on current technological possibilities, in particular 
+those offered by the new web visualization (built in javascript and HTML 5) 
+and mapping libraries (openlayers, d3, OSM, Turf, NaturalEarthData). 
 
-## Challenges
-The challenge of _Arabesque_ consists in offering a set of tools for the analysis and tne cartographic representation of complex matrices (categorical and temporal). Its methodology is innovative : it articulates several dimensions of a matrix, interactivity and animation). Its techniques allow an easy exploration, a fluidity of the display in a simple configuration facilitating the appropriation of flow mapping by different audiences (academic, institutional, socio-economic, educational...).
+## Challenges {-}
 
-## Contributors
-Contributors are:</br>
+The challenge of _Arabesque_ consists in offering a set of tools for 
+the analysis and tne cartographic representation of complex matrices 
+(categorical and temporal). Its methodology is innovative : 
+it articulates several dimensions of a matrix, interactivity and animation). 
+Its techniques allow an easy exploration, a fluidity of the display 
+in a simple configuration facilitating the appropriation of flow mapping 
+by different audiences (academic, institutional, socio-economic, educational...).
+
+## Contributors {-}
+
+Contributors are:
+
 - Scientific responsibility, design and coordination </br>
  Françoise Bahoken, Etienne Côme and Laurent Jégou (coord.) </br>
- Grégoire Le Campion, Marion Maisonobe, Alain Nguyen and Nicolas Roelandt </br>
+ Grégoire Le Campion, Marion Maisonobe, Alain Nguyen and Nicolas Roelandt
+ 
 - Development & Design </br>
 Etienne Côme (coord.), Thomas Bapaume and Paul Fabre.
+
 - Documentation </br>
 Nicolas Roelandt (coord.), Françoise Bahoken
 
 ## General project and funding {-}
 
-![](https://i.imgur.com/B0QTR7D.jpg)
+![Logo du projet GFlowiz](images/logo_gflowiz.jpg)
 
 ### The geographic flow vizualisation (gflowiz) project {-}
-Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
-One of its goals is the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on statistical and geographical data filtering, spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.
 
-### Funding
-The project is funded by former IFSTTAR's scientific direction (VP Recherche Univ. Gustave Eiffel), with the participation of the Projet federateur Mobilities and numeric transitions (PF MobTransNum). The team is strengthened by the participation of members of CNRS laboratories, as well as it is  supported by the research GDR Magis through the GEOWEB prospective action (2019).
+Arabesque is part of the [Gflowiz  research project](https://geoflowiz.hypotheses.org/) on flow maps in the geoweb.
+One of its goals is the web design of a geo visualization application for flow
+or traffic data to analyze the geographical determinants of spatial mobility. 
+To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, 
+by focusing on statistical and geographical data filtering, 
+spatial scale issues specific to certain data sets 
+(the world scale or local scale) and their temporality.
+
+### Funding {-}
+
+The project is funded by former IFSTTAR's scientific direction 
+(VP Recherche Univ. Gustave Eiffel), with the participation of the 
+Projet federateur Mobilities and numeric transitions (PF MobTransNum). 
+The team is strengthened by the participation of members of CNRS laboratories,
+as well as it is  supported by the research GDR Magis through the GEOWEB
+prospective action (2019).
 
 # About _Arabesque_ documentation {-}
+
 This document aims to present how _Arabesque_ works and how to use it using example datasets provided.
 
 The documentation is segmented in several parts:
