@@ -15,7 +15,7 @@ Please report any issue on [GitHub](https://github.com/gflowiz/arabesque).
 
 The application is under BSD 2-Clause License, Copyright (c) 2019-2020, Univ. Eiffel/IFSTTAR. All rights reserved. 
 
-# Arabesque is part of geographic flow vizualisation (gFlowiz) project
+Arabesque is part of *geographic flow vizualisation (gFlowiz)* project
 
 More informations are available on our Research notebook [geoflowiz](https://geoflowiz.hypotheses.org/) dedicated to the exploration, analysis and geovisualization of flows and spatial networks
 
