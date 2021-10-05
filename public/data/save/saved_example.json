@@ -1,15 +1,13 @@
-{
-
-    "country": {
-        "files": {
+{"country": {
+    "files": {
             "node": "public/data/swissLoc.csv",
             "link": "public/data/swissFlow.csv",
             "Ltype": "csv",
             "Ntype": "csv",
             "aggr": "sum"
         },
-"layers":{"features":{},"base":{},"osm":{"Stamen_Toner_labels":{"url":"http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png","attributions":["© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.","Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>."]}},"import":{}},
-        "base_layer": [{
+    "layers":{"features":{},"base":{},"osm":{"Stamen_Toner_labels":{"url":"http://a.tile.stamen.com/toner-labels/{z}/{x}/{y}.png","attributions":["© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.","Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>."]}},"import":{}},
+    "base_layer": [{
                 "name": "bounding_box",
                 "style": {
                     "stroke": "#3498DB",
@@ -30,7 +28,17 @@
                 "app": true
             }
         ],
-       "style":{"link":{"color":{"palette":"YlGnBu","cat":"number","var":"count","max":6143,"min":0},"opa":{"cat":null,"var":"fixed","max":null,"min":null,"vmax":0.95},"size":{"cat":"Sqrt","var":"count","max":6143,"min":0,"ratio":"100"},"geometry":{"oriented":"oriented","type":"CurveOneArrow","head":{"height":null,"width":null},"place":{"base":0.5,"height":0.5}}},"node":{"color":{"palette":"RdYlBu","cat":"number","var":"weigthed balance","max":2114,"min":-1949},"size":{"cat":"Sqrt","ratio":"100","var":"weigthed degree","max":47144,"min":850},"opa":{"cat":null,"var":"fixed","max":null,"min":null,"vmax":0.95},"text":"Choose...","ratioBounds":null},"ratioBounds":77.76511254675661},"filter":{"link":[{"variable":"distance","values":[6.491051123632014,277.4747920145835],"filter":"numeral"},{"variable":"count","values":[324.807102281464,6139.8429807527555],"filter":"numeral"}],"node":[]},"ids":{"nodeID":"id","linkID":["origin","dest"],"vol":"count","long":"lat","lat":"lon"},
+       "style":{
+           "link":{"color":{"palette":"YlGnBu","cat":"number","var":"count","max":6143,"min":0},
+                   "opa":{"cat":null,"var":"fixed","max":null,"min":null,"vmax":0.95},
+                   "size":{"cat":"Sqrt","var":"count","max":6143,"min":0,"ratio":"100"},
+                   "geometry":{"oriented":"oriented","type":"CurveOneArrow","head":{"height":null,"width":null},"place":{"base":0.5,"height":0.5}}},
+           "node":{"color":{"palette":"RdYlBu","cat":"number","var":"weigthed balance","max":2114,"min":-1949},
+           "size":{"cat":"Sqrt","ratio":"100","var":"weigthed degree","max":47144,"min":850},
+           "opa":{"cat":null,"var":"fixed","max":null,"min":null,"vmax":0.95},
+           "text":"Choose...","ratioBounds":null},
+           "ratioBounds":77.76511254675661},
+           "filter":{"link":[{"variable":"distance","values":[6.491051123632014,277.4747920145835],"filter":"numeral"},{"variable":"count","values":[324.807102281464,6139.8429807527555],"filter":"numeral"}],"node":[]},"ids":{"nodeID":"id","linkID":["origin","dest"],"vol":"count","long":"lat","lat":"lon"},
         "center": [
             7.879486732499998,
             46.9668681974602
@@ -52,8 +60,7 @@
             "last_modification": null
         }
     },
-
-    "local": {
+"local": {
         "files": {
             "node": "public/data/londonLoc.csv",
             "link": "public/data/londonFlow.csv",
@@ -61,7 +68,7 @@
             "Ntype": "csv",
             "aggr": "sum"
         },
-	"layers": {"features":{},"base":{},"osm":{"Toner":{"url":"http://tile.stamen.com/toner/{z}/{x}/{y}.png","attributions":["© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.","Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>."]}},"import":{}},
+        "layers": {"features":{},"base":{},"osm":{"Toner":{"url":"http://tile.stamen.com/toner/{z}/{x}/{y}.png","attributions":["© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.","Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>."]}},"import":{}},
         "base_layer": [  ],
         "style":{"link":{"color":{"palette":"YlOrRd","cat":"number","var":"count","max":2426,"min":73},"opa":{"cat":null,"var":"fixed","max":null,"min":null,"vmax":0.85},"size":{"cat":"Sqrt","var":"count","max":2426,"min":73,"ratio":"100"},"geometry":{"oriented":"oriented","type":"CurveArrow","head":{"height":0.5,"width":0.5},"place":{"base":0.5,"height":0.5}},"text":null},"node":{"color":{"palette":"RdBu","cat":"number","var":"balance","max":38,"min":-25},"size":{"cat":"Sqrt","ratio":"70","var":"weigthed degree","max":70657,"min":0},"opa":{"cat":"Linear","var":"fixed","max":0.75,"min":0.3,"vmax":0.95},"text":"Choose..."},"ratioBounds":5.214929441408099},
         "filter":{"link":[{"filter":"numeral","variable":"distance","values":[0.8381970376427188,5.345216175758323]},{"filter":"numeral","variable":"count","values":[222.89434642403688,2424.790607687475]}],"node":[{"variable":"balance","values":[-25,27.17325089953738],"filter":"numeral"}]},"ids":{"nodeID":"id","linkID":["origin","dest"],"vol":"count","long":"lat","lat":"lon"},
@@ -234,5 +241,125 @@
             "last_modification": null
         }
 
-    }
+    },
+    "mobsco" :{
+    "files": {
+            "node": "public/data/mobsco/nodes.csv",
+            "link": "public/data/mobsco/links.csv",
+        "Ltype": "csv",
+        "Ntype": "csv",
+        "aggr": "sum"
+    },
+    "layers": {
+        "features": {},
+        "base": {},
+        "osm": {
+            "voyager": {
+                "url": "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+                "attributions": [
+                    "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors.",
+                    "© <a href=\"https://carto.com/attribution/\">CARTO</a>"
+                ]
+            }
+        },
+        "import": {}
+    },
+    "style": {
+        "link": {
+            "color": {
+                "palette": "Blues",
+                "cat": "number",
+                "var": "flow",
+                "max": 0.821610396776512,
+                "min": 47180.15707353461
+            },
+            "opa": {
+                "cat": null,
+                "var": "fixed",
+                "max": null,
+                "min": null,
+                "vmax": 0.85
+            },
+            "size": {
+                "cat": "Sqrt",
+                "var": "flow",
+                "max": 47180.15707353461,
+                "min": 0.821610396776512,
+                "ratio": "97"
+            },
+            "geometry": {
+                "oriented": "oriented",
+                "type": "StraightArrow",
+                "head": {
+                    "height": 0.5,
+                    "width": 0.5
+                },
+                "place": {
+                    "base": null,
+                    "height": null
+                }
+            }
+        },
+        "node": {
+            "color": {
+                "palette": "GnBu",
+                "cat": "number",
+                "var": "degree",
+                "max": 164,
+                "min": 1853
+            },
+            "size": {
+                "cat": "Sqrt",
+                "ratio": "80",
+                "var": "degree",
+                "max": 1853,
+                "min": 164
+            },
+            "opa": {
+                "cat": null,
+                "var": "fixed",
+                "max": null,
+                "min": null,
+                "vmax": 0.85
+            },
+            "text": "Choose...",
+            "ratioBounds": null
+        },
+        "ratioBounds": 295.0187531295213
+    },
+    "filter": {
+        "link": [
+            {
+                "variable": "flow",
+                "values": [
+                    107.28578449679033,
+                    9905.555716453859
+                ],
+                "filter": "numeral"
+            }
+        ],
+        "node": []
+    },
+    "ids": {
+        "nodeID": "INSEE_DEP",
+        "linkID": [
+            "CODE_DEP",
+            "DEP_ETUD"
+        ],
+        "vol": "flow",
+        "long": "Y",
+        "lat": "X"
+    },
+    "projection": {
+        "name": "Mercator / EPSG:3857",
+        "proj4": "+proj=merc +a=6371000 +b=6371000 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +no_defs",
+        "extent": null
+    },
+    "zoom": 3,
+    "center": [
+        2.5733318695378974,
+        46.348978436105237
+    ],
+    "totalSum": 687077.1599962581
+  }
 }
