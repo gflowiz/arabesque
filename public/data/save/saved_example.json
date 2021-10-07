@@ -341,14 +341,14 @@
         "node": []
     },
     "ids": {
-        "nodeID": "INSEE_DEP",
+        "nodeID": "id",
         "linkID": [
-            "CODE_DEP",
-            "DEP_ETUD"
+            "ori",
+            "dest"
         ],
         "vol": "flow",
-        "long": "Y",
-        "lat": "X"
+        "long": "lon",
+        "lat": "lat"
     },
     "projection": {
         "name": "Mercator / EPSG:3857",

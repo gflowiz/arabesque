@@ -1,0 +1,7 @@
+# Create a new dataset
+
+1. export a project to a file
+2. copy project parameter into public\data\save\saved_example.json
+3. from the project files, extract id, lat and lon from nodes.json into nodes.csv
+4. from the project files, extract ori, dest, flow from links.json into links.csv
+5. adapt saved_example.json parameters to adapte to files
