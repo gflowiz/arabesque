@@ -28,14 +28,17 @@
         <a class="nav-link" href="#gallery">Gallery</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="./docs/">Guide</a>
+        <a class="nav-link" href="https://gflowiz.github.io/arabesque-doc/">Guide</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#contact">Project</a>
       </li>
       
     </ul>
+    <!--
     <img src="./public/ifsttar.png" id="logo-ifsttar" class="d-inline-block align-top nav-image" alt="">
+-->
+    <img src="./public/logo_univ_gustave_eiffel_rvb.svg" id="logo-uge" class="d-inline-block align-top nav-image" alt="">
   </div>
 </nav>
     <!-- Header -->
@@ -96,7 +99,7 @@
       <div class="container text-white">
         <div class="row justify-content-around">
           <div class="col-md-12" >
-            <h3 class="subheader-title"><a href="./docs/" target="_blank">To find the online tutorial of the application, click here</a> </h3>
+            <h3 class="subheader-title"><a href="https://gflowiz.github.io/arabesque-doc/" target="_blank">To find the online tutorial of the application, click here</a> </h3>
           </div>
         </div>
       </div>
@@ -239,14 +242,14 @@
                       </p>
                      <button type="button" id ="countryMap" class="btn btn-dark btn-block" >Explore</button>                   
                   </div>
-                   <!--  <div class="col-md-3" >
-                      <h3 class='showcase-title'> Europe commercial exchanges</h3>
+                <div class="col-md-3" >
+                      <h3 class='showcase-title'>French student mobilities</h3>
                       <hr class="showcase-bar">
                       <p>
                         A visualisation of ressouce exchanges between five european countries from the 80's. This example show how use date and category filters in Arabesque for exploring flows.
                       </p>
-                     <button type="button" id ="worldMap" class="btn btn-dark btn-block" >Explore</button>
-                     </div> -->
+                     <button type="button" id ="mobsco" class="btn btn-dark btn-block" >Explore</button>
+                </div>
             	</div>
               </div>
     
@@ -269,7 +272,7 @@
                       <img src="./public/img/1.png" class="d-block w-100" alt="...">
                     </div>
                       <div class="carousel-item" data-interval="3000">
-                        <img src="./public/img/11.png" class="d-block w-100 figure-img img-fluid" alt="...">
+                        <img src="./public/img/4.png" class="d-block w-100 figure-img img-fluid" alt="...">
                       </div>
                     <div class="carousel-item" data-interval="3000">
                       <img src="./public/img/2.png" class="d-block w-100" alt="...">
@@ -312,10 +315,25 @@
                   <h1> Contributors</h1>
                       <hr class="showcase-bar"> 
                       <ul> 
-                        <li>Thomas Bapaume : Développement & Conception</li> 
-                        <li>Etienne Côme : Développement & Conception</li> 
-                        <li>Françoise Bahoken, Etienne Côme et Laurent Jégou : Responsabilité scientifique, conception et coordination
-</li> 
+                        <li>Développement & Conception
+                            <ul>
+                                <li>Thomas Bapaume</li>
+                                <li>Etienne Côme</li> 
+                            </ul>
+                        </li>
+                        <li>Responsabilité scientifique, conception et coordination
+                            <ul>
+                                <li>Françoise Bahoken</li>
+                                <li>Etienne Côme</li>
+                                <li>Laurent Jégou</li>
+                            </ul>
+                        </li>
+                        <li>Documentation
+                            <ul>
+                                <li>Françoise Bahoken</li>
+                                <li>Nicolas Roelandt</li>
+                            </ul>
+                        </li>
                       </ul>
 
 
@@ -338,12 +356,13 @@
                 <div class="col-md-4" >
                    <h1> Project</h1> 
                       <hr class="showcase-bar">
-                      <p>The gFlowiz initiative supports on the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.</p>
+                      <p>The Gflowiz initiative supports on the web design of a geo visualization application for flow or traffic data to analyze the geographical determinants of spatial mobility. To this end, it aims to allow data describing geographical interactions to be explored and represented graphically, from different points of view, by focusing on spatial scale issues specific to certain data sets (the world scale or local scale) and their temporality.</p>
+                      <p>Find more information about the Gflowiz project in it's research blog: <a href="https://geoflowiz.hypotheses.org/" target="_blank">geoflowiz.hypotheses.org</a></p>
                 </div>
                 <div class="col-md-4" >
                   <h1> Objectives</h1>
                       <hr class="showcase-bar"> 
-                      <p>The challenge of gFlowiz therefore consists in offering a set of tools for the analysis and representation of complex geographical interaction matrices (categorical and temporal), which is innovative in terms of methodology (articulation of several dimensions, interactivity, animation), techniques (ease of exploration, fluidity of the display, etc.) in a simple configuration facilitating their appropriation by different audiences (academic, institutional, socio-economic, educational...).</p>
+                      <p>The challenge of Gflowiz therefore consists in offering a set of tools for the analysis and representation of complex geographical interaction matrices (categorical and temporal), which is innovative in terms of methodology (articulation of several dimensions, interactivity, animation), techniques (ease of exploration, fluidity of the display, etc.) in a simple configuration facilitating their appropriation by different audiences (academic, institutional, socio-economic, educational...).</p>
                 </div>
                 <div class="col-md-4" >
                    <h1> Team</h1> 
@@ -355,9 +374,22 @@
     <li>Laurent Jégou, geographer, teacher-researcher, Université Toulouse 2 / UMR 5193 LISST</li>
     <li>Grégoire Le Campion, statistical engineer (UMR Passages, Bordeaux)</li>
     <li>Marion Maisonobe, geographer, Research scientist CNRS, UMR Géographie-Cités</li>
+    <li>Nicolas Roelandt, geomatics engineer, IFSTTAR</li>
     <li>Alain Nguyen, geomatics student, Université Paris 8 (2018-2019)</li>
     <li>Thomas Bapaume, data scientist student, ESIEE Paris (2018-2019)</li>
-    <li>Nicolas Roelandt, geomatics engineer, IFSTTAR</li>
+
+  </ul>
+</p>
+                </div>
+                <div class="col-md-4" >
+                   <h1>Recent works</h1> 
+                      <hr class="showcase-bar">
+                      <p>
+  <ul>
+    <li><a href="https://gflowiz.github.io/article_foss4g2021/articles/article_FOSS4G2021.html" target="_blank">One Arabesque in the small world of OD webmaps</a></li>
+    <li><a href="https://cartomob.sciencesconf.org/resource/page/id/19" target="_blank">Arabesque, une application d’exploration et de visualisation thématique de flux dans le géoweb.</a></li>
+    <li><a href="https://www.youtube.com/watch?v=09bkdNSUNBw" target="_blank"> Arabesque : Explorer et visualiser facilement vos flux géo-localisés sur le web</a></li>
+    <li><a href="https://sageo2019.irstea.fr/actes/" target="_blank">Arabesque, application d’exploration et de géovisualisation de données de flux et de réseaux</a></li>
   </ul>
 </p>
                 </div>
@@ -417,7 +449,7 @@
                    <h1> Licence</h1> 
                    <p>BSD 2-Clause License
 <br>
-Copyright (c) 2019, IFSTTAR
+Copyright (c) 2019-2021, Univ. Gustave Eiffel/IFSTTAR
 <br>
 All rights reserved.
                    </p>

@@ -11294,6 +11294,12 @@ url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"),*/
   width: auto;
   height: auto;
 }
+
+#logo-uge{
+  display: block;
+  max-width:230px;
+  height: auto;
+}
 .carousel-div{
   margin-top: 50px;
   margin-bottom: 50px
