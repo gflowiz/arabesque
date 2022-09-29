@@ -33,7 +33,7 @@
     "canvas2svg": "^1.0.16",
     "chaikin-smooth": "^1.0.4",
     "css-loader": "^2.1.1",
-    "d3": "^5.9.2",
+    "d3": "^7.6.1",
     "d3-geo-projection": "^2.7.0",
     "file-saver": "^2.0.2",
     "html-webpack-plugin": "^3.2.0",
